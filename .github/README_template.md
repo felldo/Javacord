@@ -273,7 +273,7 @@ api.getThreadPool().getScheduler().schedule(() -> {
 
 > **Note**: You should also make sure to remove the channels on bot shutdown (or startup)
 
-# Contributors ✨
+## Contributors ✨
 
 ## 📃 License
 
