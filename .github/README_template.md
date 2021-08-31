@@ -273,6 +273,8 @@ api.getThreadPool().getScheduler().schedule(() -> {
 
 > **Note**: You should also make sure to remove the channels on bot shutdown (or startup)
 
+# Contributors ✨
+
 ## 📃 License
 
 Javacord is distributed under the [Apache license version 2.0](./LICENSE).
