@@ -276,3 +276,5 @@ api.getThreadPool().getScheduler().schedule(() -> {
 ## 📃 License
 
 Javacord is distributed under the [Apache license version 2.0](./LICENSE).
+
+## Contributors
