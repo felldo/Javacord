@@ -35,13 +35,13 @@ public class ChannelDeleteHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public ChannelDeleteHandler(DiscordApi api) {
+    public ChannelDeleteHandler(final DiscordApi api) {
         super(api, true, "CHANNEL_DELETE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        ChannelType type = ChannelType.fromId(packet.get("type").asInt());
+    public void handle(final JsonNode packet) {
+        final ChannelType type = ChannelType.fromId(packet.get("type").asInt());
         switch (type) {
             case SERVER_TEXT_CHANNEL:
                 handleServerTextChannel(packet);
@@ -81,9 +81,9 @@ public class ChannelDeleteHandler extends PacketHandler {
      *
      * @param channelJson The channel data.
      */
-    private void handleCategory(JsonNode channelJson) {
-        long serverId = channelJson.get("guild_id").asLong();
-        long channelId = channelJson.get("id").asLong();
+    private void handleCategory(final JsonNode channelJson) {
+        final long serverId = channelJson.get("guild_id").asLong();
+        final long channelId = channelJson.get("id").asLong();
         api.getPossiblyUnreadyServerById(serverId)
                 .flatMap(server -> server.getChannelCategoryById(channelId))
                 .ifPresent(this::dispatchServerChannelDeleteEvent);
@@ -97,9 +97,9 @@ public class ChannelDeleteHandler extends PacketHandler {
      *
      * @param channelJson The channel data.
      */
-    private void handleServerTextChannel(JsonNode channelJson) {
-        long serverId = channelJson.get("guild_id").asLong();
-        long channelId = channelJson.get("id").asLong();
+    private void handleServerTextChannel(final JsonNode channelJson) {
+        final long serverId = channelJson.get("guild_id").asLong();
+        final long channelId = channelJson.get("id").asLong();
         api.getPossiblyUnreadyServerById(serverId)
                 .flatMap(server -> server.getTextChannelById(channelId))
                 .ifPresent(channel -> {
@@ -120,9 +120,9 @@ public class ChannelDeleteHandler extends PacketHandler {
      *
      * @param channelJson The channel data.
      */
-    private void handleServerVoiceChannel(JsonNode channelJson) {
-        long serverId = channelJson.get("guild_id").asLong();
-        long channelId = channelJson.get("id").asLong();
+    private void handleServerVoiceChannel(final JsonNode channelJson) {
+        final long serverId = channelJson.get("guild_id").asLong();
+        final long channelId = channelJson.get("id").asLong();
         api.getPossiblyUnreadyServerById(serverId)
                 .flatMap(server -> server.getVoiceChannelById(channelId))
                 .ifPresent(this::dispatchServerChannelDeleteEvent);
@@ -137,9 +137,9 @@ public class ChannelDeleteHandler extends PacketHandler {
      *
      * @param channelJson The channel data.
      */
-    private void handleServerStageVoiceChannel(JsonNode channelJson) {
-        long serverId = channelJson.get("guild_id").asLong();
-        long channelId = channelJson.get("id").asLong();
+    private void handleServerStageVoiceChannel(final JsonNode channelJson) {
+        final long serverId = channelJson.get("guild_id").asLong();
+        final long channelId = channelJson.get("id").asLong();
         api.getPossiblyUnreadyServerById(serverId)
                 .flatMap(server -> server.getStageVoiceChannelById(channelId))
                 .ifPresent(this::dispatchServerChannelDeleteEvent);
@@ -155,7 +155,7 @@ public class ChannelDeleteHandler extends PacketHandler {
      *
      * @param channel The channel data.
      */
-    private void handlePrivateChannel(JsonNode channel) {
+    private void handlePrivateChannel(final JsonNode channel) {
         // TODO Do we even have to handle private channel deletes?
         // UserImpl recipient = new UserImpl(api, channel.get("recipients").get(0));
         // recipient.getPrivateChannel().ifPresent(privateChannel -> {
@@ -180,11 +180,11 @@ public class ChannelDeleteHandler extends PacketHandler {
      *
      * @param channel The channel data.
      */
-    private void handleGroupChannel(JsonNode channel) {
-        long channelId = channel.get("id").asLong();
+    private void handleGroupChannel(final JsonNode channel) {
+        final long channelId = channel.get("id").asLong();
 
         api.getGroupChannelById(channelId).ifPresent(groupChannel -> {
-            GroupChannelDeleteEvent event = new GroupChannelDeleteEventImpl(groupChannel);
+            final GroupChannelDeleteEvent event = new GroupChannelDeleteEventImpl(groupChannel);
 
             api.getEventDispatcher().dispatchGroupChannelDeleteEvent(
                     api, Collections.singleton(groupChannel), groupChannel.getMembers(), event);
@@ -204,8 +204,8 @@ public class ChannelDeleteHandler extends PacketHandler {
      *
      * @param channel The channel of the event.
      */
-    private void dispatchServerChannelDeleteEvent(ServerChannel channel) {
-        ServerChannelDeleteEvent event = new ServerChannelDeleteEventImpl(channel);
+    private void dispatchServerChannelDeleteEvent(final ServerChannel channel) {
+        final ServerChannelDeleteEvent event = new ServerChannelDeleteEventImpl(channel);
 
         api.getEventDispatcher().dispatchServerChannelDeleteEvent(
                 (DispatchQueueSelector) channel.getServer(), channel.getServer(), channel, event);

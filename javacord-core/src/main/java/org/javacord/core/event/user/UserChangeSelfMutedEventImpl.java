@@ -17,7 +17,7 @@ public class UserChangeSelfMutedEventImpl extends ServerUserEventImpl implements
      * @param newMember The new member.
      * @param oldMember The old member.
      */
-    public UserChangeSelfMutedEventImpl(Member newMember, Member oldMember) {
+    public UserChangeSelfMutedEventImpl(final Member newMember, final Member oldMember) {
         super(newMember.getUser(), newMember.getServer());
         this.newMember = newMember;
         this.oldMember = oldMember;

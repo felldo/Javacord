@@ -36,15 +36,15 @@ public class WebhookMessageBuilder {
      * @param message The message to copy.
      * @return A webhook message builder which would produce the same text as the given message.
      */
-    public static WebhookMessageBuilder fromMessage(Message message) {
-        WebhookMessageBuilder builder = new WebhookMessageBuilder()
+    public static WebhookMessageBuilder fromMessage(final Message message) {
+        final WebhookMessageBuilder builder = new WebhookMessageBuilder()
                 .setDisplayAvatar(message.getAuthor().getAvatar())
                 .setDisplayName(message.getAuthor().getDisplayName());
         builder.getStringBuilder().append(message.getContent());
         if (!message.getEmbeds().isEmpty()) {
             message.getEmbeds().forEach(embed -> builder.addEmbed(embed.toBuilder()));
         }
-        for (MessageAttachment attachment : message.getAttachments()) {
+        for (final MessageAttachment attachment : message.getAttachments()) {
             // Since spoiler status is encoded in the file name, it is copied automatically.
             builder.addAttachment(attachment.getUrl());
         }
@@ -58,7 +58,7 @@ public class WebhookMessageBuilder {
      * @param code The code.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder appendCode(String language, String code) {
+    public WebhookMessageBuilder appendCode(final String language, final String code) {
         delegate.appendCode(language, code);
         return this;
     }
@@ -70,7 +70,7 @@ public class WebhookMessageBuilder {
      * @param decorations The decorations of the string.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder append(String message, MessageDecoration... decorations) {
+    public WebhookMessageBuilder append(final String message, final MessageDecoration... decorations) {
         delegate.append(message, decorations);
         return this;
     }
@@ -81,7 +81,7 @@ public class WebhookMessageBuilder {
      * @param entity The entity to mention.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder append(Mentionable entity) {
+    public WebhookMessageBuilder append(final Mentionable entity) {
         delegate.append(entity);
         return this;
     }
@@ -93,7 +93,7 @@ public class WebhookMessageBuilder {
      * @return The current instance in order to chain call methods.
      * @see StringBuilder#append(Object)
      */
-    public WebhookMessageBuilder append(Object object) {
+    public WebhookMessageBuilder append(final Object object) {
         delegate.append(object);
         return this;
     }
@@ -114,7 +114,7 @@ public class WebhookMessageBuilder {
      * @param components The component builders.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder addComponents(HighLevelComponent... components) {
+    public WebhookMessageBuilder addComponents(final HighLevelComponent... components) {
         delegate.addComponents(components);
         return this;
     }
@@ -135,7 +135,7 @@ public class WebhookMessageBuilder {
      * @param index The index placement to remove from.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder removeComponent(int index) {
+    public WebhookMessageBuilder removeComponent(final int index) {
         delegate.removeComponent(index);
         return this;
     }
@@ -146,7 +146,7 @@ public class WebhookMessageBuilder {
      * @param builder The component.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder removeComponent(HighLevelComponent builder) {
+    public WebhookMessageBuilder removeComponent(final HighLevelComponent builder) {
         delegate.removeComponent(builder);
         return this;
     }
@@ -159,7 +159,7 @@ public class WebhookMessageBuilder {
      * @param content The new content of the message.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder setContent(String content) {
+    public WebhookMessageBuilder setContent(final String content) {
         delegate.setContent(content);
         return this;
     }
@@ -170,7 +170,7 @@ public class WebhookMessageBuilder {
      * @param embed The embed to add.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder addEmbed(EmbedBuilder embed) {
+    public WebhookMessageBuilder addEmbed(final EmbedBuilder embed) {
         delegate.addEmbed(embed);
         return this;
     }
@@ -181,7 +181,7 @@ public class WebhookMessageBuilder {
      * @param embeds The embeds to add.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder addEmbeds(EmbedBuilder... embeds) {
+    public WebhookMessageBuilder addEmbeds(final EmbedBuilder... embeds) {
         delegate.addEmbeds(Arrays.asList(embeds));
         return this;
     }
@@ -192,7 +192,7 @@ public class WebhookMessageBuilder {
      * @param embed The embed to remove.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder removeEmbed(EmbedBuilder embed) {
+    public WebhookMessageBuilder removeEmbed(final EmbedBuilder embed) {
         delegate.removeEmbed(embed);
         return this;
     }
@@ -203,7 +203,7 @@ public class WebhookMessageBuilder {
      * @param embeds The embeds to remove.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder removeEmbeds(EmbedBuilder... embeds) {
+    public WebhookMessageBuilder removeEmbeds(final EmbedBuilder... embeds) {
         delegate.removeEmbeds(embeds);
         return this;
     }
@@ -224,7 +224,7 @@ public class WebhookMessageBuilder {
      * @param tts Whether the message should be text to speech or not.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder setTts(boolean tts) {
+    public WebhookMessageBuilder setTts(final boolean tts) {
         delegate.setTts(tts);
         return this;
     }
@@ -237,7 +237,7 @@ public class WebhookMessageBuilder {
      * @return The current instance in order to chain call methods.
      * @see #addAttachment(BufferedImage, String)
      */
-    public WebhookMessageBuilder addFile(BufferedImage image, String fileName) {
+    public WebhookMessageBuilder addFile(final BufferedImage image, final String fileName) {
         delegate.addFile(image, fileName);
         return this;
     }
@@ -249,7 +249,7 @@ public class WebhookMessageBuilder {
      * @return The current instance in order to chain call methods.
      * @see #addAttachment(File)
      */
-    public WebhookMessageBuilder addFile(File file) {
+    public WebhookMessageBuilder addFile(final File file) {
         delegate.addFile(file);
         return this;
     }
@@ -261,7 +261,7 @@ public class WebhookMessageBuilder {
      * @return The current instance in order to chain call methods.
      * @see #addAttachment(Icon)
      */
-    public WebhookMessageBuilder addFile(Icon icon) {
+    public WebhookMessageBuilder addFile(final Icon icon) {
         delegate.addFile(icon);
         return this;
     }
@@ -273,7 +273,7 @@ public class WebhookMessageBuilder {
      * @return The current instance in order to chain call methods.
      * @see #addAttachment(URL)
      */
-    public WebhookMessageBuilder addFile(URL url) {
+    public WebhookMessageBuilder addFile(final URL url) {
         delegate.addFile(url);
         return this;
     }
@@ -286,7 +286,7 @@ public class WebhookMessageBuilder {
      * @return The current instance in order to chain call methods.
      * @see #addAttachment(byte[], String)
      */
-    public WebhookMessageBuilder addFile(byte[] bytes, String fileName) {
+    public WebhookMessageBuilder addFile(final byte[] bytes, final String fileName) {
         delegate.addFile(bytes, fileName);
         return this;
     }
@@ -299,7 +299,7 @@ public class WebhookMessageBuilder {
      * @return The current instance in order to chain call methods.
      * @see #addAttachment(InputStream, String)
      */
-    public WebhookMessageBuilder addFile(InputStream stream, String fileName) {
+    public WebhookMessageBuilder addFile(final InputStream stream, final String fileName) {
         delegate.addFile(stream, fileName);
         return this;
     }
@@ -312,7 +312,7 @@ public class WebhookMessageBuilder {
      * @return The current instance in order to chain call methods.
      * @see #addAttachmentAsSpoiler(BufferedImage, String)
      */
-    public WebhookMessageBuilder addFileAsSpoiler(BufferedImage image, String fileName) {
+    public WebhookMessageBuilder addFileAsSpoiler(final BufferedImage image, final String fileName) {
         delegate.addFile(image, "SPOILER_" + fileName);
         return this;
     }
@@ -324,7 +324,7 @@ public class WebhookMessageBuilder {
      * @return The current instance in order to chain call methods.
      * @see #addAttachmentAsSpoiler(File)
      */
-    public WebhookMessageBuilder addFileAsSpoiler(File file) {
+    public WebhookMessageBuilder addFileAsSpoiler(final File file) {
         delegate.addFileAsSpoiler(file);
         return this;
     }
@@ -336,7 +336,7 @@ public class WebhookMessageBuilder {
      * @return The current instance in order to chain call methods.
      * @see #addAttachmentAsSpoiler(Icon)
      */
-    public WebhookMessageBuilder addFileAsSpoiler(Icon icon) {
+    public WebhookMessageBuilder addFileAsSpoiler(final Icon icon) {
         delegate.addFileAsSpoiler(icon);
         return this;
     }
@@ -348,7 +348,7 @@ public class WebhookMessageBuilder {
      * @return The current instance in order to chain call methods.
      * @see #addAttachment(URL)
      */
-    public WebhookMessageBuilder addFileAsSpoiler(URL url) {
+    public WebhookMessageBuilder addFileAsSpoiler(final URL url) {
         delegate.addFileAsSpoiler(url);
         return this;
     }
@@ -361,7 +361,7 @@ public class WebhookMessageBuilder {
      * @return The current instance in order to chain call methods.
      * @see #addAttachmentAsSpoiler(byte[], String)
      */
-    public WebhookMessageBuilder addFileAsSpoiler(byte[] bytes, String fileName) {
+    public WebhookMessageBuilder addFileAsSpoiler(final byte[] bytes, final String fileName) {
         delegate.addFile(bytes, "SPOILER_" + fileName);
         return this;
     }
@@ -374,7 +374,7 @@ public class WebhookMessageBuilder {
      * @return The current instance in order to chain call methods.
      * @see #addAttachment(InputStream, String)
      */
-    public WebhookMessageBuilder addFileAsSpoiler(InputStream stream, String fileName) {
+    public WebhookMessageBuilder addFileAsSpoiler(final InputStream stream, final String fileName) {
         delegate.addFile(stream, "SPOILER_" + fileName);
         return this;
     }
@@ -386,7 +386,7 @@ public class WebhookMessageBuilder {
      * @param fileName The file name of the image.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder addAttachment(BufferedImage image, String fileName) {
+    public WebhookMessageBuilder addAttachment(final BufferedImage image, final String fileName) {
         delegate.addAttachment(image, fileName);
         return this;
     }
@@ -397,7 +397,7 @@ public class WebhookMessageBuilder {
      * @param file The file to add as an attachment.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder addAttachment(File file) {
+    public WebhookMessageBuilder addAttachment(final File file) {
         delegate.addAttachment(file);
         return this;
     }
@@ -408,7 +408,7 @@ public class WebhookMessageBuilder {
      * @param icon The icon to add as an attachment.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder addAttachment(Icon icon) {
+    public WebhookMessageBuilder addAttachment(final Icon icon) {
         delegate.addAttachment(icon);
         return this;
     }
@@ -419,7 +419,7 @@ public class WebhookMessageBuilder {
      * @param url The url of the attachment.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder addAttachment(URL url) {
+    public WebhookMessageBuilder addAttachment(final URL url) {
         delegate.addAttachment(url);
         return this;
     }
@@ -431,7 +431,7 @@ public class WebhookMessageBuilder {
      * @param fileName The name of the file.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder addAttachment(byte[] bytes, String fileName) {
+    public WebhookMessageBuilder addAttachment(final byte[] bytes, final String fileName) {
         delegate.addAttachment(bytes, fileName);
         return this;
     }
@@ -443,7 +443,7 @@ public class WebhookMessageBuilder {
      * @param fileName The name of the file.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder addAttachment(InputStream stream, String fileName) {
+    public WebhookMessageBuilder addAttachment(final InputStream stream, final String fileName) {
         delegate.addAttachment(stream, fileName);
         return this;
     }
@@ -455,7 +455,7 @@ public class WebhookMessageBuilder {
      * @param fileName The file name of the image.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder addAttachmentAsSpoiler(BufferedImage image, String fileName) {
+    public WebhookMessageBuilder addAttachmentAsSpoiler(final BufferedImage image, final String fileName) {
         delegate.addAttachment(image, "SPOILER_" + fileName);
         return this;
     }
@@ -466,7 +466,7 @@ public class WebhookMessageBuilder {
      * @param file The file to add as an attachment.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder addAttachmentAsSpoiler(File file) {
+    public WebhookMessageBuilder addAttachmentAsSpoiler(final File file) {
         delegate.addAttachmentAsSpoiler(file);
         return this;
     }
@@ -477,7 +477,7 @@ public class WebhookMessageBuilder {
      * @param icon The icon to add as an attachment.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder addAttachmentAsSpoiler(Icon icon) {
+    public WebhookMessageBuilder addAttachmentAsSpoiler(final Icon icon) {
         delegate.addAttachmentAsSpoiler(icon);
         return this;
     }
@@ -488,7 +488,7 @@ public class WebhookMessageBuilder {
      * @param url The url of the attachment.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder addAttachmentAsSpoiler(URL url) {
+    public WebhookMessageBuilder addAttachmentAsSpoiler(final URL url) {
         delegate.addAttachmentAsSpoiler(url);
         return this;
     }
@@ -500,7 +500,7 @@ public class WebhookMessageBuilder {
      * @param fileName The name of the file.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder addAttachmentAsSpoiler(byte[] bytes, String fileName) {
+    public WebhookMessageBuilder addAttachmentAsSpoiler(final byte[] bytes, final String fileName) {
         delegate.addAttachment(bytes, "SPOILER_" + fileName);
         return this;
     }
@@ -512,7 +512,7 @@ public class WebhookMessageBuilder {
      * @param fileName The name of the file.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder addAttachmentAsSpoiler(InputStream stream, String fileName) {
+    public WebhookMessageBuilder addAttachmentAsSpoiler(final InputStream stream, final String fileName) {
         delegate.addAttachment(stream, "SPOILER_" + fileName);
         return this;
     }
@@ -523,7 +523,7 @@ public class WebhookMessageBuilder {
      * @param allowedMentions The mention object.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder setAllowedMentions(AllowedMentions allowedMentions) {
+    public WebhookMessageBuilder setAllowedMentions(final AllowedMentions allowedMentions) {
         delegate.setAllowedMentions(allowedMentions);
         return this;
     }
@@ -534,7 +534,7 @@ public class WebhookMessageBuilder {
      * @param displayName The display name of the webhook.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder setDisplayName(String displayName) {
+    public WebhookMessageBuilder setDisplayName(final String displayName) {
         delegate.setDisplayName(displayName);
         return this;
     }
@@ -545,7 +545,7 @@ public class WebhookMessageBuilder {
      * @param avatarUrl The display avatar of the webhook.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder setDisplayAvatar(URL avatarUrl) {
+    public WebhookMessageBuilder setDisplayAvatar(final URL avatarUrl) {
         delegate.setDisplayAvatar(avatarUrl);
         return this;
     }
@@ -556,7 +556,7 @@ public class WebhookMessageBuilder {
      * @param avatar The display avatar of the webhook.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder setDisplayAvatar(Icon avatar) {
+    public WebhookMessageBuilder setDisplayAvatar(final Icon avatar) {
         delegate.setDisplayAvatar(avatar);
         return this;
     }
@@ -567,7 +567,7 @@ public class WebhookMessageBuilder {
      * @param author The author to take display name and display avatar of.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder setDisplayAuthor(MessageAuthor author) {
+    public WebhookMessageBuilder setDisplayAuthor(final MessageAuthor author) {
         delegate.setDisplayAuthor(author);
         return this;
     }
@@ -578,7 +578,7 @@ public class WebhookMessageBuilder {
      * @param author The author to take display name and display avatar of.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookMessageBuilder setDisplayAuthor(User author) {
+    public WebhookMessageBuilder setDisplayAuthor(final User author) {
         delegate.setDisplayAuthor(author);
         return this;
     }
@@ -599,7 +599,7 @@ public class WebhookMessageBuilder {
      * @param webhook The webhook from which the message should be sent.
      * @return The sent message.
      */
-    public CompletableFuture<Message> send(IncomingWebhook webhook) {
+    public CompletableFuture<Message> send(final IncomingWebhook webhook) {
         return delegate.send(webhook);
     }
 
@@ -611,7 +611,7 @@ public class WebhookMessageBuilder {
      * @param webhookToken The token of the webhook from which the message should be sent.
      * @return The sent message.
      */
-    public CompletableFuture<Message> send(DiscordApi api, long webhookId, String webhookToken) {
+    public CompletableFuture<Message> send(final DiscordApi api, final long webhookId, final String webhookToken) {
         return delegate.send(api, Long.toUnsignedString(webhookId), webhookToken);
     }
 
@@ -623,7 +623,7 @@ public class WebhookMessageBuilder {
      * @param webhookToken The token of the webhook from which the message should be sent.
      * @return The sent message.
      */
-    public CompletableFuture<Message> send(DiscordApi api, String webhookId, String webhookToken) {
+    public CompletableFuture<Message> send(final DiscordApi api, final String webhookId, final String webhookToken) {
         return delegate.send(api, webhookId, webhookToken);
     }
 
@@ -635,8 +635,8 @@ public class WebhookMessageBuilder {
      * @return The sent message.
      * @throws IllegalArgumentException If the link isn't valid.
      */
-    public CompletableFuture<Message> send(DiscordApi api, String webhookUrl) throws IllegalArgumentException {
-        Matcher matcher = DiscordRegexPattern.WEBHOOK_URL.matcher(webhookUrl);
+    public CompletableFuture<Message> send(final DiscordApi api, final String webhookUrl) throws IllegalArgumentException {
+        final Matcher matcher = DiscordRegexPattern.WEBHOOK_URL.matcher(webhookUrl);
 
         if (!matcher.matches()) {
             throw new IllegalArgumentException("The webhook url has an invalid format");
@@ -651,7 +651,7 @@ public class WebhookMessageBuilder {
      * @param webhook The webhook from which the message should be sent.
      * @return A CompletableFuture indicating whether sending the request to discord was successful.
      */
-    public CompletableFuture<Void> sendSilently(IncomingWebhook webhook) {
+    public CompletableFuture<Void> sendSilently(final IncomingWebhook webhook) {
         return delegate.sendSilently(webhook);
     }
 
@@ -663,7 +663,7 @@ public class WebhookMessageBuilder {
      * @param webhookToken The token of the webhook from which the message should be sent.
      * @return A CompletableFuture indicating whether sending the request to discord was successful.
      */
-    public CompletableFuture<Void> sendSilently(DiscordApi api, long webhookId, String webhookToken) {
+    public CompletableFuture<Void> sendSilently(final DiscordApi api, final long webhookId, final String webhookToken) {
         return delegate.sendSilently(api, Long.toUnsignedString(webhookId), webhookToken);
     }
 
@@ -675,7 +675,7 @@ public class WebhookMessageBuilder {
      * @param webhookToken The token of the webhook from which the message should be sent.
      * @return A CompletableFuture indicating whether sending the request to discord was successful.
      */
-    public CompletableFuture<Void> sendSilently(DiscordApi api, String webhookId, String webhookToken) {
+    public CompletableFuture<Void> sendSilently(final DiscordApi api, final String webhookId, final String webhookToken) {
         return delegate.sendSilently(api, webhookId, webhookToken);
     }
 
@@ -687,8 +687,8 @@ public class WebhookMessageBuilder {
      * @return A CompletableFuture indicating whether sending the request to discord was successful.
      * @throws IllegalArgumentException If the link isn't valid.
      */
-    public CompletableFuture<Void> sendSilently(DiscordApi api, String webhookUrl) throws IllegalArgumentException {
-        Matcher matcher = DiscordRegexPattern.WEBHOOK_URL.matcher(webhookUrl);
+    public CompletableFuture<Void> sendSilently(final DiscordApi api, final String webhookUrl) throws IllegalArgumentException {
+        final Matcher matcher = DiscordRegexPattern.WEBHOOK_URL.matcher(webhookUrl);
 
         if (!matcher.matches()) {
             throw new IllegalArgumentException("The webhook url has an invalid format");

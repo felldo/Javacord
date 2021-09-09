@@ -25,7 +25,7 @@ public class ServerChangeNameEventImpl extends ServerEventImpl implements Server
      * @param newName The new name of the server.
      * @param oldName The old name of the server.
      */
-    public ServerChangeNameEventImpl(Server server, String newName, String oldName) {
+    public ServerChangeNameEventImpl(final Server server, final String newName, final String oldName) {
         super(server);
         this.newName = newName;
         this.oldName = oldName;

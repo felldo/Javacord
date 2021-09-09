@@ -132,7 +132,7 @@ public enum RestRequestHttpResponseCode {
      * @param code The actual numeric response code.
      * @param meaning The textual meaning.
      */
-    RestRequestHttpResponseCode(int code, String meaning) {
+    RestRequestHttpResponseCode(final int code, final String meaning) {
         this(code, meaning, null, null);
     }
 
@@ -145,8 +145,8 @@ public enum RestRequestHttpResponseCode {
      *                                     instances to throw for this kind of result code.
      */
     <T extends DiscordException> RestRequestHttpResponseCode(
-            int code, String meaning,
-            DiscordExceptionInstantiator<T> discordExceptionInstantiator, Class<T> discordExceptionClass) {
+            final int code, final String meaning,
+            final DiscordExceptionInstantiator<T> discordExceptionInstantiator, final Class<T> discordExceptionClass) {
         this.code = code;
         this.meaning = meaning;
         this.discordExceptionInstantiator = discordExceptionInstantiator;
@@ -165,7 +165,7 @@ public enum RestRequestHttpResponseCode {
      * @param code The actual numeric response code.
      * @return The rest request http response code with the actual numeric response code.
      */
-    public static Optional<RestRequestHttpResponseCode> fromCode(int code) {
+    public static Optional<RestRequestHttpResponseCode> fromCode(final int code) {
         return Optional.ofNullable(instanceByCode.get(code));
     }
 
@@ -179,7 +179,7 @@ public enum RestRequestHttpResponseCode {
      */
     @SuppressWarnings("unchecked")
     public static Optional<RestRequestHttpResponseCode> fromDiscordExceptionClass(
-            Class<? extends DiscordException> discordExceptionClass) {
+            final Class<? extends DiscordException> discordExceptionClass) {
         Class<? extends DiscordException> clazz = discordExceptionClass;
         while (instanceByExceptionClass.get(clazz) == null) {
             if (clazz == DiscordException.class) {
@@ -217,9 +217,9 @@ public enum RestRequestHttpResponseCode {
      * @param response The information about the response.
      * @return The discord exception to throw for this kind of result code.
      */
-    public Optional<? extends DiscordException> getDiscordException(Exception origin, String message,
-                                                                    RestRequestInformation request,
-                                                                    RestRequestResponseInformation response) {
+    public Optional<? extends DiscordException> getDiscordException(final Exception origin, final String message,
+                                                                    final RestRequestInformation request,
+                                                                    final RestRequestResponseInformation response) {
         return Optional.ofNullable(discordExceptionInstantiator)
                 .map(instantiator -> instantiator.createInstance(origin, message, request, response));
     }

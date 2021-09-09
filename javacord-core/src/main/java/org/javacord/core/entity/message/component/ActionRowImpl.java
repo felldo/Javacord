@@ -21,22 +21,22 @@ public class ActionRowImpl extends ComponentImpl implements ActionRow {
      *
      * @param data The json data of the component.
      */
-    public ActionRowImpl(JsonNode data) {
+    public ActionRowImpl(final JsonNode data) {
         super(ComponentType.ACTION_ROW);
 
         this.components = new ArrayList<>();
         if (data.has("components")) {
-            for (JsonNode componentJson : data.get("components")) {
-                int typeInt = componentJson.get("type").asInt();
-                ComponentType type = ComponentType.fromId(typeInt);
+            for (final JsonNode componentJson : data.get("components")) {
+                final int typeInt = componentJson.get("type").asInt();
+                final ComponentType type = ComponentType.fromId(typeInt);
 
                 switch (type) {
                     case BUTTON:
-                        Button button = new ButtonImpl(componentJson);
+                        final Button button = new ButtonImpl(componentJson);
                         components.add(button);
                         break;
                     case SELECT_MENU:
-                        SelectMenu selectMenu = new SelectMenuImpl(componentJson);
+                        final SelectMenu selectMenu = new SelectMenuImpl(componentJson);
                         components.add(selectMenu);
                         break;
                     default:
@@ -53,7 +53,7 @@ public class ActionRowImpl extends ComponentImpl implements ActionRow {
 
     @Override
     public ObjectNode toJsonNode() {
-        ObjectNode object = JsonNodeFactory.instance.objectNode();
+        final ObjectNode object = JsonNodeFactory.instance.objectNode();
         return toJsonNode(object);
     }
 
@@ -64,7 +64,7 @@ public class ActionRowImpl extends ComponentImpl implements ActionRow {
      * @return The button as a ObjectNode.
      * @throws IllegalStateException if the ActionRowBuilder has an ActionRow component
      */
-    public ObjectNode toJsonNode(ObjectNode object) throws IllegalStateException {
+    public ObjectNode toJsonNode(final ObjectNode object) throws IllegalStateException {
         object.put("type", ComponentType.ACTION_ROW.value());
 
         if (components.isEmpty()) {
@@ -72,17 +72,17 @@ public class ActionRowImpl extends ComponentImpl implements ActionRow {
             return object;
         }
 
-        ArrayNode componentsJson = JsonNodeFactory.instance.objectNode().arrayNode();
-        for (LowLevelComponent component : this.components) {
+        final ArrayNode componentsJson = JsonNodeFactory.instance.objectNode().arrayNode();
+        for (final LowLevelComponent component : this.components) {
             switch (component.getType()) {
                 case ACTION_ROW:
                     throw new IllegalStateException("An action row can not contain an action row.");
                 case BUTTON:
-                    ButtonImpl button = (ButtonImpl) component;
+                    final ButtonImpl button = (ButtonImpl) component;
                     componentsJson.add(button.toJsonNode());
                     break;
                 case SELECT_MENU:
-                    SelectMenuImpl selectMenu = (SelectMenuImpl) component;
+                    final SelectMenuImpl selectMenu = (SelectMenuImpl) component;
                     componentsJson.add(selectMenu.toJsonNode());
                     break;
                 default:
@@ -99,7 +99,7 @@ public class ActionRowImpl extends ComponentImpl implements ActionRow {
      *
      * @param data Starting list of components.
      */
-    public ActionRowImpl(List<LowLevelComponent> data) {
+    public ActionRowImpl(final List<LowLevelComponent> data) {
         super(ComponentType.ACTION_ROW);
 
         this.components = data;

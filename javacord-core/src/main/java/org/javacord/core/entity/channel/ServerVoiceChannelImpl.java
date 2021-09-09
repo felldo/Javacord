@@ -52,7 +52,7 @@ public class ServerVoiceChannelImpl extends ServerChannelImpl
      * @param server The server of the channel.
      * @param data The json data of the channel.
      */
-    public ServerVoiceChannelImpl(DiscordApiImpl api, ServerImpl server, JsonNode data) {
+    public ServerVoiceChannelImpl(final DiscordApiImpl api, final ServerImpl server, final JsonNode data) {
         super(api, server, data);
         bitrate = data.get("bitrate").asInt();
         userLimit = data.get("user_limit").asInt();
@@ -64,7 +64,7 @@ public class ServerVoiceChannelImpl extends ServerChannelImpl
      *
      * @param bitrate The new bitrate of the channel.
      */
-    public void setBitrate(int bitrate) {
+    public void setBitrate(final int bitrate) {
         this.bitrate = bitrate;
     }
 
@@ -73,7 +73,7 @@ public class ServerVoiceChannelImpl extends ServerChannelImpl
      *
      * @param userLimit The user limit to set.
      */
-    public void setUserLimit(int userLimit) {
+    public void setUserLimit(final int userLimit) {
         this.userLimit = userLimit;
     }
 
@@ -82,7 +82,7 @@ public class ServerVoiceChannelImpl extends ServerChannelImpl
      *
      * @param parentId The parent id to set.
      */
-    public void setParentId(long parentId) {
+    public void setParentId(final long parentId) {
         this.parentId = parentId;
     }
 
@@ -91,7 +91,7 @@ public class ServerVoiceChannelImpl extends ServerChannelImpl
      *
      * @param userId The id of the user to add.
      */
-    public void addConnectedUser(long userId) {
+    public void addConnectedUser(final long userId) {
         connectedUsers.add(userId);
     }
 
@@ -100,7 +100,7 @@ public class ServerVoiceChannelImpl extends ServerChannelImpl
      *
      * @param userId The id of the user to remove.
      */
-    public void removeConnectedUser(long userId) {
+    public void removeConnectedUser(final long userId) {
         connectedUsers.remove(userId);
     }
 
@@ -116,8 +116,8 @@ public class ServerVoiceChannelImpl extends ServerChannelImpl
                 .map(AudioConnection::close)
                 .orElseGet(() -> CompletableFuture.completedFuture(null))
                 .thenCompose(closedAudioConnection -> {
-                    CompletableFuture<AudioConnection> future = new CompletableFuture<>();
-                    AudioConnectionImpl connection = new AudioConnectionImpl(this, future);
+                    final CompletableFuture<AudioConnection> future = new CompletableFuture<>();
+                    final AudioConnectionImpl connection = new AudioConnectionImpl(this, future);
                     ((ServerImpl) getServer()).setPendingAudioConnection(connection);
                     return future;
                 })
@@ -152,12 +152,12 @@ public class ServerVoiceChannelImpl extends ServerChannelImpl
     }
 
     @Override
-    public boolean isConnected(long userId) {
+    public boolean isConnected(final long userId) {
         return connectedUsers.contains(userId);
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return (this == o)
                || !((o == null)
                     || (getClass() != o.getClass())

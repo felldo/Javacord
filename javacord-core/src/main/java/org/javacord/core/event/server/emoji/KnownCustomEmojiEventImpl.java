@@ -19,7 +19,7 @@ public abstract class KnownCustomEmojiEventImpl extends ServerEventImpl implemen
      *
      * @param emoji The custom emoji of the event.
      */
-    public KnownCustomEmojiEventImpl(KnownCustomEmoji emoji) {
+    public KnownCustomEmojiEventImpl(final KnownCustomEmoji emoji) {
         super(emoji.getServer());
         this.emoji = emoji;
     }

@@ -13,7 +13,7 @@ public class SelectMenuOptionBuilderDelegateImpl implements SelectMenuOptionBuil
     private Emoji emoji = null;
 
     @Override
-    public void copy(SelectMenuOption selectMenuOption) {
+    public void copy(final SelectMenuOption selectMenuOption) {
         label = selectMenuOption.getLabel();
         value = selectMenuOption.getValue();
         selectMenuOption.getDescription().ifPresent(this::setDescription);
@@ -22,27 +22,27 @@ public class SelectMenuOptionBuilderDelegateImpl implements SelectMenuOptionBuil
     }
 
     @Override
-    public void setLabel(String label) {
+    public void setLabel(final String label) {
         this.label = label;
     }
 
     @Override
-    public void setValue(String value) {
+    public void setValue(final String value) {
         this.value = value;
     }
 
     @Override
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
     @Override
-    public void setDefault(boolean isDefault) {
+    public void setDefault(final boolean isDefault) {
         this.isDefault = isDefault;
     }
 
     @Override
-    public void setEmoji(Emoji emoji) {
+    public void setEmoji(final Emoji emoji) {
         this.emoji = emoji;
     }
 

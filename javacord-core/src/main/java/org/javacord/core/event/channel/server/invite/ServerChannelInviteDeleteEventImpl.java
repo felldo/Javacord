@@ -15,7 +15,7 @@ public class ServerChannelInviteDeleteEventImpl extends ServerChannelEventImpl
      * @param code The code for this invite.
      * @param channel The invite of the event.
      */
-    public ServerChannelInviteDeleteEventImpl(String code, ServerChannel channel) {
+    public ServerChannelInviteDeleteEventImpl(final String code, final ServerChannel channel) {
         super(channel);
         this.code = code;
     }

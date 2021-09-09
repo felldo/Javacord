@@ -53,7 +53,7 @@ public class ServerTextChannelImpl extends ServerChannelImpl
      * @param server The server of the channel.
      * @param data The json data of the channel.
      */
-    public ServerTextChannelImpl(DiscordApiImpl api, ServerImpl server, JsonNode data) {
+    public ServerTextChannelImpl(final DiscordApiImpl api, final ServerImpl server, final JsonNode data) {
         super(api, server, data);
         nsfw = data.has("nsfw") && data.get("nsfw").asBoolean();
         parentId = Long.parseLong(data.has("parent_id") ? data.get("parent_id").asText("-1") : "-1");
@@ -69,7 +69,7 @@ public class ServerTextChannelImpl extends ServerChannelImpl
      *
      * @param topic The new topic of the channel.
      */
-    public void setTopic(String topic) {
+    public void setTopic(final String topic) {
         this.topic = topic;
     }
 
@@ -78,7 +78,7 @@ public class ServerTextChannelImpl extends ServerChannelImpl
      *
      * @param nsfw The nsfw flag.
      */
-    public void setNsfwFlag(boolean nsfw) {
+    public void setNsfwFlag(final boolean nsfw) {
         this.nsfw = nsfw;
     }
 
@@ -87,7 +87,7 @@ public class ServerTextChannelImpl extends ServerChannelImpl
      *
      * @param parentId The parent id to set.
      */
-    public void setParentId(long parentId) {
+    public void setParentId(final long parentId) {
         this.parentId = parentId;
     }
 
@@ -96,7 +96,7 @@ public class ServerTextChannelImpl extends ServerChannelImpl
      *
      * @param delay The delay in seconds.
      */
-    public void setSlowmodeDelayInSeconds(int delay) {
+    public void setSlowmodeDelayInSeconds(final int delay) {
         this.delay = delay;
     }
 
@@ -136,7 +136,7 @@ public class ServerTextChannelImpl extends ServerChannelImpl
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return (this == o)
                || !((o == null)
                     || (getClass() != o.getClass())

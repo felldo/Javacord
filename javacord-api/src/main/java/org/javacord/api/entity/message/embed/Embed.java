@@ -110,7 +110,7 @@ public interface Embed {
      * @return A builder with the values of this embed.
      */
     default EmbedBuilder toBuilder() {
-        EmbedBuilder builder = new EmbedBuilder();
+        final EmbedBuilder builder = new EmbedBuilder();
         getTitle().ifPresent(builder::setTitle);
         getDescription().ifPresent(builder::setDescription);
         getUrl().ifPresent(url -> builder.setUrl(url.toString()));

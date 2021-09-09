@@ -24,17 +24,17 @@ public class ReadyHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public ReadyHandler(DiscordApi api) {
+    public ReadyHandler(final DiscordApi api) {
         super(api, false, "READY");
     }
 
     @Override
-    public void handle(JsonNode packet) {
+    public void handle(final JsonNode packet) {
         // Purge the cache first
         api.purgeCache();
 
-        JsonNode guilds = packet.get("guilds");
-        for (JsonNode guildJson : guilds) {
+        final JsonNode guilds = packet.get("guilds");
+        for (final JsonNode guildJson : guilds) {
             if (guildJson.has("unavailable") && guildJson.get("unavailable").asBoolean()) {
                 api.addUnavailableServerToCache(guildJson.get("id").asLong());
                 continue;
@@ -45,8 +45,8 @@ public class ReadyHandler extends PacketHandler {
         // Private channels array is empty for bots, see
         // https://github.com/hammerandchisel/discord-api-docs/issues/184
         if (packet.has("private_channels")) {
-            JsonNode privateChannels = packet.get("private_channels");
-            for (JsonNode channelJson : privateChannels) {
+            final JsonNode privateChannels = packet.get("private_channels");
+            for (final JsonNode channelJson : privateChannels) {
                 switch (ChannelType.fromId(channelJson.get("type").asInt())) {
                     case PRIVATE_CHANNEL:
                         new PrivateChannelImpl(api, channelJson);

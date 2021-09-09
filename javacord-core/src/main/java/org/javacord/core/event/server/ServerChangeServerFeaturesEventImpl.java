@@ -29,9 +29,9 @@ public class ServerChangeServerFeaturesEventImpl extends ServerEventImpl impleme
      * @param newServerFeature The new server feature of the server.
      * @param oldServerFeature The old server feature of the server.
      */
-    public ServerChangeServerFeaturesEventImpl(ServerImpl server,
-                                               Collection<ServerFeature> newServerFeature,
-                                               Collection<ServerFeature> oldServerFeature) {
+    public ServerChangeServerFeaturesEventImpl(final ServerImpl server,
+                                               final Collection<ServerFeature> newServerFeature,
+                                               final Collection<ServerFeature> oldServerFeature) {
         super(server);
         this.oldServerFeature = oldServerFeature;
         this.newServerFeature = newServerFeature;

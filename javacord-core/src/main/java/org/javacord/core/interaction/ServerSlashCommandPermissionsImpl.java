@@ -19,13 +19,13 @@ public class ServerSlashCommandPermissionsImpl implements ServerSlashCommandPerm
      *
      * @param data The json data of the slash command permissions.
      */
-    public ServerSlashCommandPermissionsImpl(JsonNode data) {
+    public ServerSlashCommandPermissionsImpl(final JsonNode data) {
         id = data.get("id").asLong();
         applicationId = data.get("application_id").asLong();
         serverId = data.get("guild_id").asLong();
 
         permissions = new ArrayList<>();
-        for (JsonNode jsonNode : data.get("permissions")) {
+        for (final JsonNode jsonNode : data.get("permissions")) {
             permissions.add(new SlashCommandPermissionsImpl(jsonNode));
         }
     }

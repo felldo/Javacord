@@ -24,8 +24,8 @@ public class ServerStageVoiceChannelChangeTopicEventImpl extends ServerVoiceChan
      * @param oldTopic The old topic of the channel.
      */
 
-    public ServerStageVoiceChannelChangeTopicEventImpl(ServerStageVoiceChannel channel, String newTopic,
-                                                       String oldTopic) {
+    public ServerStageVoiceChannelChangeTopicEventImpl(final ServerStageVoiceChannel channel, final String newTopic,
+                                                       final String oldTopic) {
         super(channel);
         this.newTopic = newTopic;
         this.oldTopic = oldTopic;

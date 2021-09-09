@@ -35,7 +35,7 @@ public class EmbedAuthorImpl implements EmbedAuthor {
      *
      * @param data The json data of the author.
      */
-    public EmbedAuthorImpl(JsonNode data) {
+    public EmbedAuthorImpl(final JsonNode data) {
         name = data.has("name") ? data.get("name").asText() : null;
         url = data.has("url") && !data.get("url").isNull() ? data.get("url").asText() : null;
         iconUrl = data.has("icon_url") && !data.get("icon_url").isNull() ? data.get("icon_url").asText() : null;
@@ -55,7 +55,7 @@ public class EmbedAuthorImpl implements EmbedAuthor {
         }
         try {
             return Optional.of(new URL(url));
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the url of the embed author is malformed! Please contact the developer!", e);
             return Optional.empty();
         }
@@ -68,7 +68,7 @@ public class EmbedAuthorImpl implements EmbedAuthor {
         }
         try {
             return Optional.of(new URL(iconUrl));
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the icon url of the embed author is malformed! Please contact the developer!", e);
             return Optional.empty();
         }
@@ -81,25 +81,25 @@ public class EmbedAuthorImpl implements EmbedAuthor {
         }
         try {
             return Optional.of(new URL(proxyIconUrl));
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the embed author's proxy icon url is malformed! Please contact the developer!", e);
             return Optional.empty();
         }
     }
 
     @Override
-    public Optional<CompletableFuture<BufferedImage>> downloadIconAsBufferedImage(DiscordApi api) {
+    public Optional<CompletableFuture<BufferedImage>> downloadIconAsBufferedImage(final DiscordApi api) {
         return getIconUrl().map(url -> new FileContainer(url).asBufferedImage(api));
     }
 
     @Override
-    public Optional<CompletableFuture<byte[]>> downloadIconAsByteArray(DiscordApi api) {
+    public Optional<CompletableFuture<byte[]>> downloadIconAsByteArray(final DiscordApi api) {
         return getIconUrl().map(url -> new FileContainer(url).asByteArray(api));
     }
 
     @Override
-    public Optional<InputStream> downloadIconAsInputStream(DiscordApi api) throws IOException {
-        URL iconUrl = getIconUrl().orElse(null);
+    public Optional<InputStream> downloadIconAsInputStream(final DiscordApi api) throws IOException {
+        final URL iconUrl = getIconUrl().orElse(null);
         if (iconUrl == null) {
             return Optional.empty();
         }

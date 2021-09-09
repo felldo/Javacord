@@ -60,7 +60,7 @@ public interface ServerTextChannel extends ServerChannel, TextChannel, Mentionab
      * @param topic The new topic of the channel.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateTopic(String topic) {
+    default CompletableFuture<Void> updateTopic(final String topic) {
         return createUpdater().setTopic(topic).update();
     }
 
@@ -73,7 +73,7 @@ public interface ServerTextChannel extends ServerChannel, TextChannel, Mentionab
      * @param nsfw The new nsfw flag of the channel.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateNsfwFlag(boolean nsfw) {
+    default CompletableFuture<Void> updateNsfwFlag(final boolean nsfw) {
         return createUpdater().setNsfwFlag(nsfw).update();
     }
 
@@ -86,7 +86,7 @@ public interface ServerTextChannel extends ServerChannel, TextChannel, Mentionab
      * @param category The new category of the channel.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateCategory(ChannelCategory category) {
+    default CompletableFuture<Void> updateCategory(final ChannelCategory category) {
         return createUpdater().setCategory(category).update();
     }
 
@@ -128,7 +128,7 @@ public interface ServerTextChannel extends ServerChannel, TextChannel, Mentionab
      *
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateSlowmodeDelayInSeconds(int delay) {
+    default CompletableFuture<Void> updateSlowmodeDelayInSeconds(final int delay) {
         return createUpdater().setSlowmodeDelayInSeconds(delay).update();
     }
 
@@ -151,11 +151,11 @@ public interface ServerTextChannel extends ServerChannel, TextChannel, Mentionab
 
     @Override
     default CompletableFuture<ServerTextChannel> getLatestInstance() {
-        Optional<ServerTextChannel> currentCachedInstance = getCurrentCachedInstance();
+        final Optional<ServerTextChannel> currentCachedInstance = getCurrentCachedInstance();
         if (currentCachedInstance.isPresent()) {
             return CompletableFuture.completedFuture(currentCachedInstance.get());
         } else {
-            CompletableFuture<ServerTextChannel> result = new CompletableFuture<>();
+            final CompletableFuture<ServerTextChannel> result = new CompletableFuture<>();
             result.completeExceptionally(new NoSuchElementException());
             return result;
         }

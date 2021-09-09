@@ -19,7 +19,7 @@ public abstract class UserEventImpl extends EventImpl implements UserEvent {
      *
      * @param user The user of the event.
      */
-    public UserEventImpl(User user) {
+    public UserEventImpl(final User user) {
         super(user.getApi());
         this.user = user;
     }

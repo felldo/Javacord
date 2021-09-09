@@ -16,8 +16,8 @@ public class MissingPermissionsException extends DiscordException {
      * @param request The information about the request.
      * @param response The information about the response.
      */
-    public MissingPermissionsException(Exception origin, String message, RestRequestInformation request,
-                                       RestRequestResponseInformation response) {
+    public MissingPermissionsException(final Exception origin, final String message, final RestRequestInformation request,
+                                       final RestRequestResponseInformation response) {
         super(origin, message, request, response);
     }
 

@@ -36,7 +36,7 @@ public interface InteractionCreateEvent extends Event {
      * @param commandId The command it to match.
      * @return The interaction.
      */
-    default Optional<SlashCommandInteraction> getSlashCommandInteractionWithCommandId(long commandId) {
+    default Optional<SlashCommandInteraction> getSlashCommandInteractionWithCommandId(final long commandId) {
         return getInteraction().asSlashCommandInteractionWithCommandId(commandId);
     }
 
@@ -56,7 +56,7 @@ public interface InteractionCreateEvent extends Event {
      * @param customId The custom id to match.
      * @return The interaction.
      */
-    default Optional<MessageComponentInteraction> getMessageComponentInteractionWithCustomId(String customId) {
+    default Optional<MessageComponentInteraction> getMessageComponentInteractionWithCustomId(final String customId) {
         return getInteraction().asMessageComponentInteractionWithCustomId(customId);
     }
 
@@ -72,7 +72,7 @@ public interface InteractionCreateEvent extends Event {
      * @param <T>  The desired type.
      * @return Returns an {@code Optional} of this interaction if it could be cast, otherwise an empty result.
      */
-    default <T extends InteractionBase> Optional<T> getInteractionAs(Class<T> type) {
+    default <T extends InteractionBase> Optional<T> getInteractionAs(final Class<T> type) {
         return getInteraction().as(type);
     }
 }

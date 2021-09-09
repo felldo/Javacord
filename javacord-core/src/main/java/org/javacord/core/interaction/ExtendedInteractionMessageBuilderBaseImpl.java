@@ -21,7 +21,7 @@ public abstract class ExtendedInteractionMessageBuilderBaseImpl<T>
      *
      * @param myClass The interface to cast to for call chaining.
      */
-    public ExtendedInteractionMessageBuilderBaseImpl(Class<T> myClass) {
+    public ExtendedInteractionMessageBuilderBaseImpl(final Class<T> myClass) {
         super(myClass);
     }
 
@@ -31,162 +31,162 @@ public abstract class ExtendedInteractionMessageBuilderBaseImpl<T>
      * @param myClass The interface to cast to for call chaining.
      * @param delegate The delegate to use if required.
      */
-    public ExtendedInteractionMessageBuilderBaseImpl(Class<T> myClass, InteractionMessageBuilderDelegate delegate) {
+    public ExtendedInteractionMessageBuilderBaseImpl(final Class<T> myClass, final InteractionMessageBuilderDelegate delegate) {
         super(myClass, delegate);
     }
 
     @Override
-    public T copy(Message message) {
+    public T copy(final Message message) {
         delegate.copy(message);
         return myClass.cast(this);
     }
 
     @Override
-    public T copy(InteractionBase interaction) {
+    public T copy(final InteractionBase interaction) {
         delegate.copy(interaction);
         return myClass.cast(this);
     }
 
     @Override
-    public T addFile(BufferedImage image, String fileName) {
+    public T addFile(final BufferedImage image, final String fileName) {
         delegate.addFile(image, fileName);
         return myClass.cast(this);
     }
 
     @Override
-    public T addFile(File file) {
+    public T addFile(final File file) {
         delegate.addFile(file);
         return myClass.cast(this);
     }
 
     @Override
-    public T addFile(Icon icon) {
+    public T addFile(final Icon icon) {
         delegate.addFile(icon);
         return myClass.cast(this);
     }
 
     @Override
-    public T addFile(URL url) {
+    public T addFile(final URL url) {
         delegate.addFile(url);
         return myClass.cast(this);
     }
 
     @Override
-    public T addFile(byte[] bytes, String fileName) {
+    public T addFile(final byte[] bytes, final String fileName) {
         delegate.addFile(bytes, fileName);
         return myClass.cast(this);
     }
 
     @Override
-    public T addFile(InputStream stream, String fileName) {
+    public T addFile(final InputStream stream, final String fileName) {
         delegate.addFile(stream, fileName);
         return myClass.cast(this);
     }
 
     @Override
-    public T addFileAsSpoiler(BufferedImage image, String fileName) {
+    public T addFileAsSpoiler(final BufferedImage image, final String fileName) {
         delegate.addFile(image, "SPOILER_" + fileName);
         return myClass.cast(this);
     }
 
     @Override
-    public T addFileAsSpoiler(File file) {
+    public T addFileAsSpoiler(final File file) {
         delegate.addFileAsSpoiler(file);
         return myClass.cast(this);
     }
 
     @Override
-    public T addFileAsSpoiler(Icon icon) {
+    public T addFileAsSpoiler(final Icon icon) {
         delegate.addFileAsSpoiler(icon);
         return myClass.cast(this);
     }
 
     @Override
-    public T addFileAsSpoiler(URL url) {
+    public T addFileAsSpoiler(final URL url) {
         delegate.addFileAsSpoiler(url);
         return myClass.cast(this);
     }
 
     @Override
-    public T addFileAsSpoiler(byte[] bytes, String fileName) {
+    public T addFileAsSpoiler(final byte[] bytes, final String fileName) {
         delegate.addFile(bytes, "SPOILER_" + fileName);
         return myClass.cast(this);
     }
 
     @Override
-    public T addFileAsSpoiler(InputStream stream, String fileName) {
+    public T addFileAsSpoiler(final InputStream stream, final String fileName) {
         delegate.addFile(stream, "SPOILER_" + fileName);
         return myClass.cast(this);
     }
 
     @Override
-    public T addAttachment(BufferedImage image, String fileName) {
+    public T addAttachment(final BufferedImage image, final String fileName) {
         delegate.addAttachment(image, fileName);
         return myClass.cast(this);
     }
 
     @Override
-    public T addAttachment(File file) {
+    public T addAttachment(final File file) {
         delegate.addAttachment(file);
         return myClass.cast(this);
     }
 
     @Override
-    public T addAttachment(Icon icon) {
+    public T addAttachment(final Icon icon) {
         delegate.addAttachment(icon);
         return myClass.cast(this);
     }
 
     @Override
-    public T addAttachment(URL url) {
+    public T addAttachment(final URL url) {
         delegate.addAttachment(url);
         return myClass.cast(this);
     }
 
     @Override
-    public T addAttachment(byte[] bytes, String fileName) {
+    public T addAttachment(final byte[] bytes, final String fileName) {
         delegate.addAttachment(bytes, fileName);
         return myClass.cast(this);
     }
 
     @Override
-    public T addAttachment(InputStream stream, String fileName) {
+    public T addAttachment(final InputStream stream, final String fileName) {
         delegate.addAttachment(stream, fileName);
         return myClass.cast(this);
     }
 
     @Override
-    public T addAttachmentAsSpoiler(BufferedImage image, String fileName) {
+    public T addAttachmentAsSpoiler(final BufferedImage image, final String fileName) {
         delegate.addAttachment(image, "SPOILER_" + fileName);
         return myClass.cast(this);
     }
 
     @Override
-    public T addAttachmentAsSpoiler(File file) {
+    public T addAttachmentAsSpoiler(final File file) {
         delegate.addAttachmentAsSpoiler(file);
         return myClass.cast(this);
     }
 
     @Override
-    public T addAttachmentAsSpoiler(Icon icon) {
+    public T addAttachmentAsSpoiler(final Icon icon) {
         delegate.addAttachmentAsSpoiler(icon);
         return myClass.cast(this);
     }
 
     @Override
-    public T addAttachmentAsSpoiler(URL url) {
+    public T addAttachmentAsSpoiler(final URL url) {
         delegate.addAttachmentAsSpoiler(url);
         return myClass.cast(this);
     }
 
     @Override
-    public T addAttachmentAsSpoiler(byte[] bytes, String fileName) {
+    public T addAttachmentAsSpoiler(final byte[] bytes, final String fileName) {
         delegate.addAttachment(bytes, "SPOILER_" + fileName);
         return myClass.cast(this);
     }
 
     @Override
-    public T addAttachmentAsSpoiler(InputStream stream, String fileName) {
+    public T addAttachmentAsSpoiler(final InputStream stream, final String fileName) {
         delegate.addAttachment(stream, "SPOILER_" + fileName);
         return myClass.cast(this);
     }

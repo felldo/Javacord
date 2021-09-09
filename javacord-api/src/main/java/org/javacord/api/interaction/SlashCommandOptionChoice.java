@@ -53,7 +53,7 @@ public interface SlashCommandOptionChoice {
      * @param value The value of the choice.
      * @return The new choice builder.
      */
-    static SlashCommandOptionChoice create(String name, String value) {
+    static SlashCommandOptionChoice create(final String name, final String value) {
         return new SlashCommandOptionChoiceBuilder()
             .setName(name)
             .setValue(value)
@@ -67,7 +67,7 @@ public interface SlashCommandOptionChoice {
      * @param value The value of the choice.
      * @return The new choice builder.
      */
-    static SlashCommandOptionChoice create(String name, int value) {
+    static SlashCommandOptionChoice create(final String name, final int value) {
         return new SlashCommandOptionChoiceBuilder()
             .setName(name)
             .setValue(value)

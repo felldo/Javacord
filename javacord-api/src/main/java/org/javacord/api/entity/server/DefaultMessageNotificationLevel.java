@@ -19,7 +19,7 @@ public enum DefaultMessageNotificationLevel {
      *
      * @param id The id of the default message notification level.
      */
-    DefaultMessageNotificationLevel(int id) {
+    DefaultMessageNotificationLevel(final int id) {
         this.id = id;
     }
 
@@ -38,8 +38,8 @@ public enum DefaultMessageNotificationLevel {
      * @param id The id of the default message notification level.
      * @return The default message notification level with the given id.
      */
-    public static DefaultMessageNotificationLevel fromId(int id) {
-        for (DefaultMessageNotificationLevel verificationLevel : values()) {
+    public static DefaultMessageNotificationLevel fromId(final int id) {
+        for (final DefaultMessageNotificationLevel verificationLevel : values()) {
             if (verificationLevel.getId() == id) {
                 return verificationLevel;
             }

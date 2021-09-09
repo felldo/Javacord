@@ -133,7 +133,7 @@ public interface Role extends DiscordEntity, Mentionable, Nameable, Permissionab
      * @param name The new name of the role.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateName(String name) {
+    default CompletableFuture<Void> updateName(final String name) {
         return createUpdater().setName(name).update();
     }
 
@@ -146,7 +146,7 @@ public interface Role extends DiscordEntity, Mentionable, Nameable, Permissionab
      * @param permissions The new permissions of the role.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updatePermissions(Permissions permissions) {
+    default CompletableFuture<Void> updatePermissions(final Permissions permissions) {
         return createUpdater().setPermissions(permissions).update();
     }
 
@@ -159,7 +159,7 @@ public interface Role extends DiscordEntity, Mentionable, Nameable, Permissionab
      * @param color The new color of the role.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateColor(Color color) {
+    default CompletableFuture<Void> updateColor(final Color color) {
         return createUpdater().setColor(color).update();
     }
 
@@ -172,7 +172,7 @@ public interface Role extends DiscordEntity, Mentionable, Nameable, Permissionab
      * @param displaySeparately The new display separately flag of the role.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateDisplaySeparatelyFlag(boolean displaySeparately) {
+    default CompletableFuture<Void> updateDisplaySeparatelyFlag(final boolean displaySeparately) {
         return createUpdater().setDisplaySeparatelyFlag(displaySeparately).update();
     }
 
@@ -185,7 +185,7 @@ public interface Role extends DiscordEntity, Mentionable, Nameable, Permissionab
      * @param mentionable The new mentionable flag of the role.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateMentionableFlag(boolean mentionable) {
+    default CompletableFuture<Void> updateMentionableFlag(final boolean mentionable) {
         return createUpdater().setMentionableFlag(mentionable).update();
     }
 
@@ -199,7 +199,7 @@ public interface Role extends DiscordEntity, Mentionable, Nameable, Permissionab
      * @return A future to check if the update was successful.
      * @see Server#addRoleToUser(User, Role)
      */
-    default CompletableFuture<Void> addUser(User user) {
+    default CompletableFuture<Void> addUser(final User user) {
         return addUser(user, null);
     }
 
@@ -214,7 +214,7 @@ public interface Role extends DiscordEntity, Mentionable, Nameable, Permissionab
      * @return A future to check if the update was successful.
      * @see Server#addRoleToUser(User, Role, String)
      */
-    default CompletableFuture<Void> addUser(User user, String reason) {
+    default CompletableFuture<Void> addUser(final User user, final String reason) {
         return getServer().addRoleToUser(user, this, reason);
     }
 
@@ -228,7 +228,7 @@ public interface Role extends DiscordEntity, Mentionable, Nameable, Permissionab
      * @return A future to check if the update was successful.
      * @see Server#removeRoleFromUser(User, Role)
      */
-    default CompletableFuture<Void> removeUser(User user) {
+    default CompletableFuture<Void> removeUser(final User user) {
         return removeUser(user, null);
     }
 
@@ -243,7 +243,7 @@ public interface Role extends DiscordEntity, Mentionable, Nameable, Permissionab
      * @return A future to check if the update was successful.
      * @see Server#removeRoleFromUser(User, Role, String)
      */
-    default CompletableFuture<Void> removeUser(User user, String reason) {
+    default CompletableFuture<Void> removeUser(final User user, final String reason) {
         return getServer().removeRoleFromUser(user, this, reason);
     }
 

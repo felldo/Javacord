@@ -67,7 +67,7 @@ public class RestRequest<T> {
      * @param method The http method of the request.
      * @param endpoint The endpoint to which the request should be sent.
      */
-    public RestRequest(DiscordApi api, RestMethod method, RestEndpoint endpoint) {
+    public RestRequest(final DiscordApi api, final RestMethod method, final RestEndpoint endpoint) {
         this.api = (DiscordApiImpl) api;
         this.method = method;
         this.endpoint = endpoint;
@@ -130,7 +130,7 @@ public class RestRequest<T> {
         if (customMajorParam != null) {
             return Optional.of(customMajorParam);
         }
-        Optional<Integer> majorParameterPosition = endpoint.getMajorParameterPosition();
+        final Optional<Integer> majorParameterPosition = endpoint.getMajorParameterPosition();
         if (!majorParameterPosition.isPresent()) {
             return Optional.empty();
         }
@@ -156,7 +156,7 @@ public class RestRequest<T> {
      * @param value The value of the parameter.
      * @return The current instance in order to chain call methods.
      */
-    public RestRequest<T> addQueryParameter(String key, String value) {
+    public RestRequest<T> addQueryParameter(final String key, final String value) {
         queryParameters.put(key, value);
         return this;
     }
@@ -168,7 +168,7 @@ public class RestRequest<T> {
      * @param value The value of the header.
      * @return The current instance in order to chain call methods.
      */
-    public RestRequest<T> addHeader(String name, String value) {
+    public RestRequest<T> addHeader(final String name, final String value) {
         headers.put(name, value);
         return this;
     }
@@ -179,7 +179,7 @@ public class RestRequest<T> {
      * @param reason The reason.
      * @return The current instance in order to chain call methods.
      */
-    public RestRequest<T> setAuditLogReason(String reason) {
+    public RestRequest<T> setAuditLogReason(final String reason) {
         if (reason != null) {
             addHeader("X-Audit-Log-Reason", reason);
         }
@@ -192,7 +192,7 @@ public class RestRequest<T> {
      * @param parameters The parameters.
      * @return The current instance in order to chain call methods.
      */
-    public RestRequest<T> setUrlParameters(String... parameters) {
+    public RestRequest<T> setUrlParameters(final String... parameters) {
         this.urlParameters = parameters;
         return this;
     }
@@ -204,7 +204,7 @@ public class RestRequest<T> {
      * @param multipartBody The multipart body of the request.
      * @return The current instance in order to chain call methods.
      */
-    public RestRequest<T> setMultipartBody(MultipartBody multipartBody) {
+    public RestRequest<T> setMultipartBody(final MultipartBody multipartBody) {
         this.multipartBody = multipartBody;
         return this;
     }
@@ -215,7 +215,7 @@ public class RestRequest<T> {
      * @param customMajorParam The custom parameter to set.
      * @return The current instance in order to chain call methods.
      */
-    public RestRequest<T> setCustomMajorParam(String customMajorParam) {
+    public RestRequest<T> setCustomMajorParam(final String customMajorParam) {
         this.customMajorParam = customMajorParam;
         return this;
     }
@@ -226,7 +226,7 @@ public class RestRequest<T> {
      * @param body The body of the request.
      * @return The current instance in order to chain call methods.
      */
-    public RestRequest<T> setBody(JsonNode body) {
+    public RestRequest<T> setBody(final JsonNode body) {
         return setBody(body.toString());
     }
 
@@ -236,7 +236,7 @@ public class RestRequest<T> {
      * @param body The body of the request.
      * @return The current instance in order to chain call methods.
      */
-    public RestRequest<T> setBody(String body) {
+    public RestRequest<T> setBody(final String body) {
         this.body = body;
         return this;
     }
@@ -247,7 +247,7 @@ public class RestRequest<T> {
      * @param includeAuthorizationHeader Whether the authorization header should be included or not.
      * @return The current instance in order to chain call methods.
      */
-    public RestRequest<T> includeAuthorizationHeader(boolean includeAuthorizationHeader) {
+    public RestRequest<T> includeAuthorizationHeader(final boolean includeAuthorizationHeader) {
         this.includeAuthorizationHeader = includeAuthorizationHeader;
         return this;
     }
@@ -258,9 +258,9 @@ public class RestRequest<T> {
      * @param function A function which processes the rest response to the requested object.
      * @return A future which will contain the output of the function.
      */
-    public CompletableFuture<T> execute(Function<RestRequestResult, T> function) {
+    public CompletableFuture<T> execute(final Function<RestRequestResult, T> function) {
         api.getRatelimitManager().queueRequest(this);
-        CompletableFuture<T> future = new CompletableFuture<>();
+        final CompletableFuture<T> future = new CompletableFuture<>();
         result.whenComplete((result, throwable) -> {
             if (throwable != null) {
                 future.completeExceptionally(throwable);
@@ -268,7 +268,7 @@ public class RestRequest<T> {
             }
             try {
                 future.complete(function.apply(result));
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 future.completeExceptionally(t);
             }
         });
@@ -293,7 +293,7 @@ public class RestRequest<T> {
         try {
             return new RestRequestInformationImpl(
                     api, new URL(endpoint.getFullUrl(urlParameters)), queryParameters, headers, body);
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             throw new AssertionError(e);
         }
     }
@@ -308,16 +308,16 @@ public class RestRequest<T> {
         api.getGlobalRatelimiter().ifPresent(ratelimiter -> {
             try {
                 ratelimiter.requestQuota();
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 logger.warn("Encountered unexpected ratelimiter interrupt", e);
             }
         });
-        Request.Builder requestBuilder = new Request.Builder();
-        HttpUrl.Builder httpUrlBuilder = endpoint.getOkHttpUrl(urlParameters).newBuilder();
+        final Request.Builder requestBuilder = new Request.Builder();
+        final HttpUrl.Builder httpUrlBuilder = endpoint.getOkHttpUrl(urlParameters).newBuilder();
         queryParameters.forEach(httpUrlBuilder::addQueryParameter);
         requestBuilder.url(httpUrlBuilder.build());
 
-        RequestBody requestBody;
+        final RequestBody requestBody;
         if (multipartBody != null) {
             requestBody = multipartBody;
         } else if (body != null) {
@@ -352,8 +352,8 @@ public class RestRequest<T> {
         logger.debug("Trying to send {} request to {}{}",
                 method::name, () -> endpoint.getFullUrl(urlParameters), () -> body != null ? " with body " + body : "");
 
-        try (Response response = getApi().getHttpClient().newCall(requestBuilder.build()).execute()) {
-            RestRequestResult result = new RestRequestResult(this, response);
+        try (final Response response = getApi().getHttpClient().newCall(requestBuilder.build()).execute()) {
+            final RestRequestResult result = new RestRequestResult(this, response);
             logger.debug("Sent {} request to {} and received status code {} with{} body{}",
                     method::name, () -> endpoint.getFullUrl(urlParameters), response::code,
                     () -> result.getBody().map(b -> "").orElse(" empty"),
@@ -361,19 +361,19 @@ public class RestRequest<T> {
 
             if (response.code() >= 300 || response.code() < 200) {
 
-                RestRequestInformation requestInformation = asRestRequestInformation();
-                RestRequestResponseInformation responseInformation = new RestRequestResponseInformationImpl(
+                final RestRequestInformation requestInformation = asRestRequestInformation();
+                final RestRequestResponseInformation responseInformation = new RestRequestResponseInformationImpl(
                         requestInformation, result);
-                Optional<RestRequestHttpResponseCode> responseCode = RestRequestHttpResponseCode
+                final Optional<RestRequestHttpResponseCode> responseCode = RestRequestHttpResponseCode
                         .fromCode(response.code());
 
                 // Check if the response body contained a know error code
                 if (!result.getJsonBody().isNull() && result.getJsonBody().has("code")) {
-                    int code = result.getJsonBody().get("code").asInt();
-                    String message = result.getJsonBody().has("message")
+                    final int code = result.getJsonBody().get("code").asInt();
+                    final String message = result.getJsonBody().has("message")
                             ? result.getJsonBody().get("message").asText()
                             : null;
-                    Optional<? extends DiscordException> discordException =
+                    final Optional<? extends DiscordException> discordException =
                             RestRequestResultErrorCode.fromCode(code, responseCode.orElse(null))
                                     .flatMap(restRequestResultCode -> restRequestResultCode.getDiscordException(
                                             origin, (message == null) ? restRequestResultCode.getMeaning() : message,
@@ -390,7 +390,7 @@ public class RestRequest<T> {
                         return result;
                     default:
                         // There are specific exceptions for specific response codes (e.g. NotFoundException for 404)
-                        Optional<? extends DiscordException> discordException = responseCode
+                        final Optional<? extends DiscordException> discordException = responseCode
                                 .flatMap(restRequestHttpResponseCode ->
                                                  restRequestHttpResponseCode.getDiscordException(
                                                          origin,

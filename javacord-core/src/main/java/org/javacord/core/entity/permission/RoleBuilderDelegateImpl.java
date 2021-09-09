@@ -58,43 +58,43 @@ public class RoleBuilderDelegateImpl implements RoleBuilderDelegate {
      *
      * @param server The server for which the role should be created.
      */
-    public RoleBuilderDelegateImpl(ServerImpl server) {
+    public RoleBuilderDelegateImpl(final ServerImpl server) {
         this.server = server;
     }
 
     @Override
-    public void setAuditLogReason(String reason) {
+    public void setAuditLogReason(final String reason) {
         this.reason = reason;
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
-    public void setPermissions(Permissions permissions) {
+    public void setPermissions(final Permissions permissions) {
         this.permissions = permissions;
     }
 
     @Override
-    public void setColor(Color color) {
+    public void setColor(final Color color) {
         this.color = color;
     }
 
     @Override
-    public void setMentionable(boolean mentionable) {
+    public void setMentionable(final boolean mentionable) {
         this.mentionable = mentionable;
     }
 
     @Override
-    public void setDisplaySeparately(boolean displaySeparately) {
+    public void setDisplaySeparately(final boolean displaySeparately) {
         this.displaySeparately = displaySeparately;
     }
 
     @Override
     public CompletableFuture<Role> create() {
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         if (name != null) {
             body.put("name", name);
         }

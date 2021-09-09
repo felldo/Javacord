@@ -14,7 +14,7 @@ public class VanityUrlCodeImpl implements VanityUrlCode {
      *
      * @param vanityUrlCode The vanity code
      */
-    public VanityUrlCodeImpl(String vanityUrlCode) {
+    public VanityUrlCodeImpl(final String vanityUrlCode) {
         code = vanityUrlCode;
     }
 
@@ -27,7 +27,7 @@ public class VanityUrlCodeImpl implements VanityUrlCode {
     public URL getUrl() {
         try {
             return new URL("https://discord.com/invite/" + code);
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             throw new AssertionError("Unexpected malformed vanity url", e);
         }
     }

@@ -43,7 +43,7 @@ public enum AuditLogActionType {
      *
      * @param value The value of the entry.
      */
-    AuditLogActionType(int value) {
+    AuditLogActionType(final int value) {
         this.value = value;
     }
 
@@ -63,8 +63,8 @@ public enum AuditLogActionType {
      * @return The action type for the given value,
      *         or {@link AuditLogActionType#UNKNOWN} if there's no with the given value.
      */
-    public static AuditLogActionType fromValue(int value) {
-        for (AuditLogActionType type : values()) {
+    public static AuditLogActionType fromValue(final int value) {
+        for (final AuditLogActionType type : values()) {
             if (type.getValue() == value) {
                 return type;
             }

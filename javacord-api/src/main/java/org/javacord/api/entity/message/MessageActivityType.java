@@ -40,7 +40,7 @@ public enum MessageActivityType {
      *
      * @param id The id of the type.
      */
-    MessageActivityType(int id) {
+    MessageActivityType(final int id) {
         this.id = id;
     }
 
@@ -59,7 +59,7 @@ public enum MessageActivityType {
      * @param id The id of the message activity type.
      * @return The message activity type with the given id or {@link MessageActivityType#UNKNOWN} if unknown id.
      */
-    public static MessageActivityType getMessageActivityTypeById(int id) {
+    public static MessageActivityType getMessageActivityTypeById(final int id) {
         switch (id) {
             case 1:
                 return JOIN;

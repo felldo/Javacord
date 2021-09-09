@@ -28,14 +28,14 @@ public class ThreadFactory implements java.util.concurrent.ThreadFactory {
      * @param namePattern The name pattern, may contain a {@code %d} wildcard where the counter gets filled in.
      * @param daemon Whether to create daemon or non-daemon threads.
      */
-    public ThreadFactory(String namePattern, boolean daemon) {
+    public ThreadFactory(final String namePattern, final boolean daemon) {
         this.namePattern = namePattern;
         this.daemon = daemon;
     }
 
     @Override
-    public Thread newThread(Runnable r) {
-        Thread thread = new Thread(r, String.format(namePattern, counter.incrementAndGet()));
+    public Thread newThread(final Runnable r) {
+        final Thread thread = new Thread(r, String.format(namePattern, counter.incrementAndGet()));
         thread.setDaemon(daemon);
         return thread;
     }

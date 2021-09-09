@@ -14,7 +14,7 @@ public class EditableEmbedFieldImpl implements EditableEmbedField {
      *
      * @param field The field to be edited.
      */
-    public EditableEmbedFieldImpl(EmbedFieldImpl field) {
+    public EditableEmbedFieldImpl(final EmbedFieldImpl field) {
         delegate = field;
     }
 
@@ -41,17 +41,17 @@ public class EditableEmbedFieldImpl implements EditableEmbedField {
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         delegate.setName(name);
     }
 
     @Override
-    public void setValue(String value) {
+    public void setValue(final String value) {
         delegate.setValue(value);
     }
 
     @Override
-    public void setInline(boolean inline) {
+    public void setInline(final boolean inline) {
         delegate.setInline(inline);
     }
 }

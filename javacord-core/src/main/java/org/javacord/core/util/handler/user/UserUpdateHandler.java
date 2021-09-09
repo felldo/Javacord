@@ -14,12 +14,12 @@ public class UserUpdateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public UserUpdateHandler(DiscordApi api) {
+    public UserUpdateHandler(final DiscordApi api) {
         super(api, true, "USER_UPDATE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
+    public void handle(final JsonNode packet) {
         // NOP
     }
 

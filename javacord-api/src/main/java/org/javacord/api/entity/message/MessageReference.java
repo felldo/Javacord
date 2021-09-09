@@ -68,7 +68,7 @@ public interface MessageReference {
      * @return The referenced Message.
      */
     default Optional<CompletableFuture<Message>> requestMessage() {
-        Optional<Message> optionalMessage = getMessage();
+        final Optional<Message> optionalMessage = getMessage();
         if (optionalMessage.isPresent()) {
             return optionalMessage.map(CompletableFuture::completedFuture);
         }

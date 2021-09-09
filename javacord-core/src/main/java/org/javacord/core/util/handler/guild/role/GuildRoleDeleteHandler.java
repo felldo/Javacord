@@ -17,19 +17,19 @@ public class GuildRoleDeleteHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public GuildRoleDeleteHandler(DiscordApi api) {
+    public GuildRoleDeleteHandler(final DiscordApi api) {
         super(api, true, "GUILD_ROLE_DELETE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        long serverId = packet.get("guild_id").asLong();
+    public void handle(final JsonNode packet) {
+        final long serverId = packet.get("guild_id").asLong();
         api.getPossiblyUnreadyServerById(serverId).map(server -> ((ServerImpl) server)).ifPresent(server -> {
-            long roleId = packet.get("role_id").asLong();
+            final long roleId = packet.get("role_id").asLong();
             server.getRoleById(roleId).ifPresent(role -> {
                 server.removeRole(roleId);
 
-                RoleDeleteEvent event = new RoleDeleteEventImpl(role);
+                final RoleDeleteEvent event = new RoleDeleteEventImpl(role);
 
                 api.getEventDispatcher().dispatchRoleDeleteEvent(server, role, server, event);
             });

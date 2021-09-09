@@ -36,17 +36,17 @@ public class ServerVoiceChannelUpdaterDelegateImpl extends ServerChannelUpdaterD
      *
      * @param channel The channel to update.
      */
-    public ServerVoiceChannelUpdaterDelegateImpl(ServerVoiceChannel channel) {
+    public ServerVoiceChannelUpdaterDelegateImpl(final ServerVoiceChannel channel) {
         super(channel);
     }
 
     @Override
-    public void setBitrate(int bitrate) {
+    public void setBitrate(final int bitrate) {
         this.bitrate = bitrate;
     }
 
     @Override
-    public void setUserLimit(int userLimit) {
+    public void setUserLimit(final int userLimit) {
         this.userLimit = userLimit;
     }
 
@@ -56,7 +56,7 @@ public class ServerVoiceChannelUpdaterDelegateImpl extends ServerChannelUpdaterD
     }
 
     @Override
-    public void setCategory(ChannelCategory category) {
+    public void setCategory(final ChannelCategory category) {
         this.category = category;
         this.modifyCategory = true;
     }
@@ -67,7 +67,7 @@ public class ServerVoiceChannelUpdaterDelegateImpl extends ServerChannelUpdaterD
     }
 
     @Override
-    protected boolean prepareUpdateBody(ObjectNode body) {
+    protected boolean prepareUpdateBody(final ObjectNode body) {
         boolean patchChannel = super.prepareUpdateBody(body);
         if (bitrate != null) {
             body.put("bitrate", bitrate.intValue());

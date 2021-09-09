@@ -22,7 +22,7 @@ public class MessageActivityImpl implements MessageActivity {
      * @param message The message of the activity.
      * @param data The json data of the activity.
      */
-    public MessageActivityImpl(Message message, JsonNode data) {
+    public MessageActivityImpl(final Message message, final JsonNode data) {
         type = MessageActivityType.getMessageActivityTypeById(data.get("type").asInt());
         partyId = data.has("party_id") ? data.get("party_id").asText() : null;
         this.message = message;

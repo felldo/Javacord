@@ -25,7 +25,7 @@ public class ServerVoiceChannelMemberJoinEventImpl extends ServerVoiceChannelMem
      * @param oldChannel The old channel of the event.
      */
     public ServerVoiceChannelMemberJoinEventImpl(
-            Member member, ServerVoiceChannel newChannel, ServerVoiceChannel oldChannel) {
+            final Member member, final ServerVoiceChannel newChannel, final ServerVoiceChannel oldChannel) {
         super(member, newChannel);
         this.oldChannel = oldChannel;
     }

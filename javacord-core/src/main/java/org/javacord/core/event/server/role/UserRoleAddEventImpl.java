@@ -15,7 +15,7 @@ public class UserRoleAddEventImpl extends UserRoleEventImpl implements UserRoleA
      * @param role The role of the event.
      * @param member The member of the event.
      */
-    public UserRoleAddEventImpl(Role role, Member member) {
+    public UserRoleAddEventImpl(final Role role, final Member member) {
         super(role, member);
     }
 

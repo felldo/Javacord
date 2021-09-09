@@ -38,28 +38,28 @@ public class ServerVoiceChannelBuilderDelegateImpl extends ServerChannelBuilderD
      *
      * @param server The server of the server voice channel.
      */
-    public ServerVoiceChannelBuilderDelegateImpl(ServerImpl server) {
+    public ServerVoiceChannelBuilderDelegateImpl(final ServerImpl server) {
         super(server);
     }
 
     @Override
-    public void setBitrate(int bitrate) {
+    public void setBitrate(final int bitrate) {
         this.bitrate = bitrate;
     }
 
     @Override
-    public void setUserlimit(int userlimit) {
+    public void setUserlimit(final int userlimit) {
         this.userlimit = userlimit;
     }
 
     @Override
-    public void setCategory(ChannelCategory category) {
+    public void setCategory(final ChannelCategory category) {
         this.category = category;
     }
 
     @Override
     public CompletableFuture<ServerVoiceChannel> create() {
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         body.put("type", 2);
         super.prepareBody(body);
 

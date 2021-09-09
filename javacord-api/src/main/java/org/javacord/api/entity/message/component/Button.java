@@ -58,7 +58,7 @@ public interface Button extends LowLevelComponent {
      * @param label    The label for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button danger(String customId, String label) {
+    static Button danger(final String customId, final String label) {
         return create(customId, ButtonStyle.DANGER, label, (Emoji) null, false);
     }
 
@@ -71,7 +71,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button danger(String customId, String label, boolean disabled) {
+    static Button danger(final String customId, final String label, final boolean disabled) {
         return create(customId, ButtonStyle.DANGER, label, (Emoji) null, disabled);
     }
 
@@ -84,7 +84,7 @@ public interface Button extends LowLevelComponent {
      * @param emoji    The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button danger(String customId, String label, Emoji emoji) {
+    static Button danger(final String customId, final String label, final Emoji emoji) {
         return create(customId, ButtonStyle.DANGER, label, emoji, false);
     }
 
@@ -98,7 +98,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button danger(String customId, String label, Emoji emoji, boolean disabled) {
+    static Button danger(final String customId, final String label, final Emoji emoji, final boolean disabled) {
         return create(customId, ButtonStyle.DANGER, label, emoji, disabled);
     }
 
@@ -111,7 +111,7 @@ public interface Button extends LowLevelComponent {
      * @param unicodeEmoji The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button danger(String customId, String label, String unicodeEmoji) {
+    static Button danger(final String customId, final String label, final String unicodeEmoji) {
         return create(customId, ButtonStyle.DANGER, label, unicodeEmoji, false);
     }
 
@@ -125,7 +125,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled     Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button danger(String customId, String label, String unicodeEmoji, boolean disabled) {
+    static Button danger(final String customId, final String label, final String unicodeEmoji, final boolean disabled) {
         return create(customId, ButtonStyle.DANGER, label, unicodeEmoji, disabled);
     }
 
@@ -139,7 +139,7 @@ public interface Button extends LowLevelComponent {
      * @param emoji    The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button danger(String customId, Emoji emoji) {
+    static Button danger(final String customId, final Emoji emoji) {
         return create(customId, ButtonStyle.DANGER, null, emoji, false);
     }
 
@@ -154,7 +154,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button danger(String customId, Emoji emoji, boolean disabled) {
+    static Button danger(final String customId, final Emoji emoji, final boolean disabled) {
         return create(customId, ButtonStyle.DANGER, null, emoji, disabled);
     }
 
@@ -166,7 +166,7 @@ public interface Button extends LowLevelComponent {
      * @param label    The label for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button primary(String customId, String label) {
+    static Button primary(final String customId, final String label) {
         return create(customId, ButtonStyle.PRIMARY, label, (Emoji) null, false);
     }
 
@@ -179,7 +179,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button primary(String customId, String label, boolean disabled) {
+    static Button primary(final String customId, final String label, final boolean disabled) {
         return create(customId, ButtonStyle.PRIMARY, label, (Emoji) null, disabled);
     }
 
@@ -192,7 +192,7 @@ public interface Button extends LowLevelComponent {
      * @param emoji    The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button primary(String customId, String label, Emoji emoji) {
+    static Button primary(final String customId, final String label, final Emoji emoji) {
         return create(customId, ButtonStyle.PRIMARY, label, emoji, false);
     }
 
@@ -206,7 +206,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button primary(String customId, String label, Emoji emoji, boolean disabled) {
+    static Button primary(final String customId, final String label, final Emoji emoji, final boolean disabled) {
         return create(customId, ButtonStyle.PRIMARY, label, emoji, disabled);
     }
 
@@ -219,7 +219,7 @@ public interface Button extends LowLevelComponent {
      * @param unicodeEmoji The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button primary(String customId, String label, String unicodeEmoji) {
+    static Button primary(final String customId, final String label, final String unicodeEmoji) {
         return create(customId, ButtonStyle.PRIMARY, label, unicodeEmoji, false);
     }
 
@@ -233,7 +233,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled     Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button primary(String customId, String label, String unicodeEmoji, boolean disabled) {
+    static Button primary(final String customId, final String label, final String unicodeEmoji, final boolean disabled) {
         return create(customId, ButtonStyle.PRIMARY, label, unicodeEmoji, disabled);
     }
 
@@ -247,7 +247,7 @@ public interface Button extends LowLevelComponent {
      * @param emoji    The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button primary(String customId, Emoji emoji) {
+    static Button primary(final String customId, final Emoji emoji) {
         return create(customId, ButtonStyle.PRIMARY, null, emoji, false);
     }
 
@@ -262,7 +262,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button primary(String customId, Emoji emoji, boolean disabled) {
+    static Button primary(final String customId, final Emoji emoji, final boolean disabled) {
         return create(customId, ButtonStyle.PRIMARY, null, emoji, disabled);
     }
 
@@ -274,7 +274,7 @@ public interface Button extends LowLevelComponent {
      * @param label    The label for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button secondary(String customId, String label) {
+    static Button secondary(final String customId, final String label) {
         return create(customId, ButtonStyle.SECONDARY, label, (Emoji) null, false);
     }
 
@@ -287,7 +287,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button secondary(String customId, String label, boolean disabled) {
+    static Button secondary(final String customId, final String label, final boolean disabled) {
         return create(customId, ButtonStyle.SECONDARY, label, (Emoji) null, disabled);
     }
 
@@ -300,7 +300,7 @@ public interface Button extends LowLevelComponent {
      * @param emoji    The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button secondary(String customId, String label, Emoji emoji) {
+    static Button secondary(final String customId, final String label, final Emoji emoji) {
         return create(customId, ButtonStyle.SECONDARY, label, emoji, false);
     }
 
@@ -314,7 +314,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button secondary(String customId, String label, Emoji emoji, boolean disabled) {
+    static Button secondary(final String customId, final String label, final Emoji emoji, final boolean disabled) {
         return create(customId, ButtonStyle.SECONDARY, label, emoji, disabled);
     }
 
@@ -327,7 +327,7 @@ public interface Button extends LowLevelComponent {
      * @param unicodeEmoji The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button secondary(String customId, String label, String unicodeEmoji) {
+    static Button secondary(final String customId, final String label, final String unicodeEmoji) {
         return create(customId, ButtonStyle.SECONDARY, label, unicodeEmoji, false);
     }
 
@@ -341,7 +341,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled     Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button secondary(String customId, String label, String unicodeEmoji, boolean disabled) {
+    static Button secondary(final String customId, final String label, final String unicodeEmoji, final boolean disabled) {
         return create(customId, ButtonStyle.SECONDARY, label, unicodeEmoji, disabled);
     }
 
@@ -355,7 +355,7 @@ public interface Button extends LowLevelComponent {
      * @param emoji    The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button secondary(String customId, Emoji emoji) {
+    static Button secondary(final String customId, final Emoji emoji) {
         return create(customId, ButtonStyle.SECONDARY, null, emoji, false);
     }
 
@@ -370,7 +370,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button secondary(String customId, Emoji emoji, boolean disabled) {
+    static Button secondary(final String customId, final Emoji emoji, final boolean disabled) {
         return create(customId, ButtonStyle.SECONDARY, null, emoji, disabled);
     }
 
@@ -382,7 +382,7 @@ public interface Button extends LowLevelComponent {
      * @param label    The label for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button success(String customId, String label) {
+    static Button success(final String customId, final String label) {
         return create(customId, ButtonStyle.SUCCESS, label, (Emoji) null, false);
     }
 
@@ -395,7 +395,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button success(String customId, String label, boolean disabled) {
+    static Button success(final String customId, final String label, final boolean disabled) {
         return create(customId, ButtonStyle.SUCCESS, label, (Emoji) null, disabled);
     }
 
@@ -408,7 +408,7 @@ public interface Button extends LowLevelComponent {
      * @param emoji    The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button success(String customId, String label, Emoji emoji) {
+    static Button success(final String customId, final String label, final Emoji emoji) {
         return create(customId, ButtonStyle.SUCCESS, label, emoji, false);
     }
 
@@ -422,7 +422,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button success(String customId, String label, Emoji emoji, boolean disabled) {
+    static Button success(final String customId, final String label, final Emoji emoji, final boolean disabled) {
         return create(customId, ButtonStyle.SUCCESS, label, emoji, disabled);
     }
 
@@ -435,7 +435,7 @@ public interface Button extends LowLevelComponent {
      * @param unicodeEmoji The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button success(String customId, String label, String unicodeEmoji) {
+    static Button success(final String customId, final String label, final String unicodeEmoji) {
         return create(customId, ButtonStyle.SUCCESS, label, unicodeEmoji, false);
     }
 
@@ -449,7 +449,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled     Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button success(String customId, String label, String unicodeEmoji, boolean disabled) {
+    static Button success(final String customId, final String label, final String unicodeEmoji, final boolean disabled) {
         return create(customId, ButtonStyle.SUCCESS, label, unicodeEmoji, disabled);
     }
 
@@ -463,7 +463,7 @@ public interface Button extends LowLevelComponent {
      * @param emoji    The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button success(String customId, Emoji emoji) {
+    static Button success(final String customId, final Emoji emoji) {
         return create(customId, ButtonStyle.SUCCESS, null, emoji, false);
     }
 
@@ -478,7 +478,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button success(String customId, Emoji emoji, boolean disabled) {
+    static Button success(final String customId, final Emoji emoji, final boolean disabled) {
         return create(customId, ButtonStyle.SUCCESS, null, emoji, disabled);
     }
 
@@ -490,7 +490,7 @@ public interface Button extends LowLevelComponent {
      * @param label The label for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button link(String url, String label) {
+    static Button link(final String url, final String label) {
         return link(url, label, false);
     }
 
@@ -503,7 +503,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button link(String url, String label, boolean disabled) {
+    static Button link(final String url, final String label, final boolean disabled) {
         return new ButtonBuilder()
                 .setStyle(ButtonStyle.LINK)
                 .setUrl(url)
@@ -521,7 +521,7 @@ public interface Button extends LowLevelComponent {
      * @param emoji The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button link(String url, String label, Emoji emoji) {
+    static Button link(final String url, final String label, final Emoji emoji) {
         return link(url, label, emoji, false);
     }
 
@@ -535,7 +535,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button link(String url, String label, Emoji emoji, boolean disabled) {
+    static Button link(final String url, final String label, final Emoji emoji, final boolean disabled) {
         return new ButtonBuilder()
                 .setStyle(ButtonStyle.LINK)
                 .setUrl(url)
@@ -554,7 +554,7 @@ public interface Button extends LowLevelComponent {
      * @param unicodeEmoji The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button link(String url, String label, String unicodeEmoji) {
+    static Button link(final String url, final String label, final String unicodeEmoji) {
         return link(url, label, unicodeEmoji, false);
     }
 
@@ -568,7 +568,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled     Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button link(String url, String label, String unicodeEmoji, boolean disabled) {
+    static Button link(final String url, final String label, final String unicodeEmoji, final boolean disabled) {
         return new ButtonBuilder()
                 .setStyle(ButtonStyle.LINK)
                 .setUrl(url)
@@ -588,7 +588,7 @@ public interface Button extends LowLevelComponent {
      * @param emoji The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button link(String url, Emoji emoji) {
+    static Button link(final String url, final Emoji emoji) {
         return link(url, emoji, false);
     }
 
@@ -603,7 +603,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button link(String url, Emoji emoji, boolean disabled) {
+    static Button link(final String url, final Emoji emoji, final boolean disabled) {
         return new ButtonBuilder()
                 .setStyle(ButtonStyle.LINK)
                 .setUrl(url)
@@ -621,7 +621,7 @@ public interface Button extends LowLevelComponent {
      * @param label    The label for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button create(String customId, ButtonStyle style, String label) {
+    static Button create(final String customId, final ButtonStyle style, final String label) {
         return create(customId, style, label, (Emoji) null, false);
     }
 
@@ -635,7 +635,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button create(String customId, ButtonStyle style, String label, boolean disabled) {
+    static Button create(final String customId, final ButtonStyle style, final String label, final boolean disabled) {
         return create(customId, style, label, (Emoji) null, disabled);
     }
 
@@ -649,7 +649,7 @@ public interface Button extends LowLevelComponent {
      * @param emoji    The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button create(String customId, ButtonStyle style, String label, Emoji emoji) {
+    static Button create(final String customId, final ButtonStyle style, final String label, final Emoji emoji) {
         return create(customId, style, label, emoji, false);
     }
 
@@ -664,7 +664,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button create(String customId, ButtonStyle style, String label, Emoji emoji, boolean disabled) {
+    static Button create(final String customId, final ButtonStyle style, final String label, final Emoji emoji, final boolean disabled) {
         if (style == ButtonStyle.LINK) {
             throw new IllegalArgumentException("You can not use the link style with this method."
                     + "Please use Button#link() instead or create a custom ButtonBuilder by "
@@ -689,7 +689,7 @@ public interface Button extends LowLevelComponent {
      * @param unicodeEmoji The unicode emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button create(String customId, ButtonStyle style, String label, String unicodeEmoji) {
+    static Button create(final String customId, final ButtonStyle style, final String label, final String unicodeEmoji) {
         return create(customId, style, label, unicodeEmoji, false);
     }
 
@@ -704,7 +704,7 @@ public interface Button extends LowLevelComponent {
      * @param disabled     Whether the button is disabled.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button create(String customId, ButtonStyle style, String label, String unicodeEmoji, boolean disabled) {
+    static Button create(final String customId, final ButtonStyle style, final String label, final String unicodeEmoji, final boolean disabled) {
         if (style == ButtonStyle.LINK) {
             throw new IllegalArgumentException("You can not use the link style with this method."
                     + "Please use Button#link() instead or create a custom ButtonBuilder by "
@@ -728,7 +728,7 @@ public interface Button extends LowLevelComponent {
      * @param emoji    The emoji for this button.
      * @return the new button to be used with an ActionRow or a message
      */
-    static Button create(String customId, ButtonStyle style, Emoji emoji) {
+    static Button create(final String customId, final ButtonStyle style, final Emoji emoji) {
         return create(customId, style, null, emoji, false);
     }
 }

@@ -94,7 +94,7 @@ public enum GatewayOpcode {
      *
      * @param code The actual numeric code.
      */
-    GatewayOpcode(int code) {
+    GatewayOpcode(final int code) {
         this.code = code;
     }
 
@@ -104,7 +104,7 @@ public enum GatewayOpcode {
      * @param code The actual numeric code.
      * @return The gateway opcode with the actual numeric code.
      */
-    public static Optional<GatewayOpcode> fromCode(int code) {
+    public static Optional<GatewayOpcode> fromCode(final int code) {
         return Optional.ofNullable(instanceByCode.get(code));
     }
 

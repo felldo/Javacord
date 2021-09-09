@@ -16,7 +16,7 @@ public class ServerChannelInviteCreateEventImpl extends ServerChannelEventImpl
      * @param invite The invite of the event.
      * @param channel The channel the invite is for.
      */
-    public ServerChannelInviteCreateEventImpl(Invite invite, ServerChannel channel) {
+    public ServerChannelInviteCreateEventImpl(final Invite invite, final ServerChannel channel) {
         super(channel);
         this.invite = invite;
     }

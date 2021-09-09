@@ -53,7 +53,7 @@ public class AuditLogImpl implements AuditLog {
      *
      * @param server The server of the audit log.
      */
-    public AuditLogImpl(Server server) {
+    public AuditLogImpl(final Server server) {
         this.api = server.getApi();
         this.server = server;
     }
@@ -63,22 +63,22 @@ public class AuditLogImpl implements AuditLog {
      *
      * @param data The json data of the audit log.
      */
-    public void addEntries(JsonNode data) {
-        for (JsonNode webhookJson : data.get("webhooks")) {
-            boolean alreadyAdded = involvedWebhooks.stream()
+    public void addEntries(final JsonNode data) {
+        for (final JsonNode webhookJson : data.get("webhooks")) {
+            final boolean alreadyAdded = involvedWebhooks.stream()
                     .anyMatch(webhook -> webhook.getId() == webhookJson.get("id").asLong());
             if (!alreadyAdded) {
                 involvedWebhooks.add(WebhookImpl.createWebhook(api, webhookJson));
             }
         }
-        for (JsonNode userJson : data.get("users")) {
-            boolean alreadyAdded = involvedUsers.stream()
+        for (final JsonNode userJson : data.get("users")) {
+            final boolean alreadyAdded = involvedUsers.stream()
                     .anyMatch(user -> user.getId() == userJson.get("id").asLong());
             if (!alreadyAdded) {
                 involvedUsers.add(new UserImpl((DiscordApiImpl) api, userJson, (MemberImpl) null, (ServerImpl) server));
             }
         }
-        for (JsonNode entry : data.get("audit_log_entries")) {
+        for (final JsonNode entry : data.get("audit_log_entries")) {
             entries.add(new AuditLogEntryImpl(this, entry));
         }
     }

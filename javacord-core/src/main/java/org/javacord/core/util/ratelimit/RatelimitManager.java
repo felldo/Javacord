@@ -41,7 +41,7 @@ public class RatelimitManager {
      *
      * @param api The discord api instance for this ratelimit manager.
      */
-    public RatelimitManager(DiscordApiImpl api) {
+    public RatelimitManager(final DiscordApiImpl api) {
         this.api = api;
     }
 
@@ -60,7 +60,7 @@ public class RatelimitManager {
      *
      * @param request The request to queue.
      */
-    public void queueRequest(RestRequest<?> request) {
+    public void queueRequest(final RestRequest<?> request) {
         final RatelimitBucket bucket;
         final boolean alreadyInQueue;
         synchronized (buckets) {
@@ -103,7 +103,7 @@ public class RatelimitManager {
                     while (sleepTime > 0) {
                         try {
                             Thread.sleep(sleepTime);
-                        } catch (InterruptedException e) {
+                        } catch (final InterruptedException e) {
                             logger.warn("We got interrupted while waiting for a rate limit!", e);
                         }
                         // Update in case something changed (e.g. because we hit a global ratelimit)
@@ -115,7 +115,7 @@ public class RatelimitManager {
 
                     // Calculate the time offset, if it wasn't done before
                     responseTimestamp = System.currentTimeMillis();
-                } catch (Throwable t) {
+                } catch (final Throwable t) {
                     responseTimestamp = System.currentTimeMillis();
                     if (currentRequest.getResult().isDone()) {
                         logger.warn("Received exception for a request that is already done. "
@@ -136,7 +136,7 @@ public class RatelimitManager {
                         calculateOffset(responseTimestamp, result);
                         // Handle the response
                         handleResponse(currentRequest, result, bucket, responseTimestamp);
-                    } catch (Throwable t) {
+                    } catch (final Throwable t) {
                         logger.warn("Encountered unexpected exception.", t);
                     }
 
@@ -167,14 +167,14 @@ public class RatelimitManager {
      * @param responseTimestamp The timestamp directly after the response finished.
      */
     private void handleResponse(
-            RestRequest<?> request, RestRequestResult result, RatelimitBucket bucket, long responseTimestamp) {
+            final RestRequest<?> request, final RestRequestResult result, final RatelimitBucket bucket, final long responseTimestamp) {
         if (result == null || result.getResponse() == null) {
             return;
         }
-        Response response = result.getResponse();
-        boolean global = response.header("X-RateLimit-Global", "false").equalsIgnoreCase("true");
-        int remaining = Integer.parseInt(response.header("X-RateLimit-Remaining", "1"));
-        long reset = request
+        final Response response = result.getResponse();
+        final boolean global = response.header("X-RateLimit-Global", "false").equalsIgnoreCase("true");
+        final int remaining = Integer.parseInt(response.header("X-RateLimit-Remaining", "1"));
+        final long reset = request
                 .getEndpoint()
                 .getHardcodedRatelimit()
                 .map(ratelimit -> responseTimestamp + api.getTimeOffset() + ratelimit)
@@ -185,11 +185,11 @@ public class RatelimitManager {
             if (response.header("Via") == null) {
                 logger.warn("Hit a CloudFlare API ban! This means you were sending a very large "
                         + "amount of invalid requests.");
-                long retryAfter = Long.parseLong(response.header("Retry-after")) * 1000;
+                final long retryAfter = Long.parseLong(response.header("Retry-after")) * 1000;
                 RatelimitBucket.setGlobalRatelimitResetTimestamp(api, responseTimestamp + retryAfter);
                 return;
             }
-            long retryAfter =
+            final long retryAfter =
                     result.getJsonBody().isNull()
                             ? 0 : (long) (result.getJsonBody().get("retry_after").asDouble() * 1000);
 
@@ -209,7 +209,7 @@ public class RatelimitManager {
             }
         } else {
             // Check if we didn't already complete it exceptionally.
-            CompletableFuture<RestRequestResult> requestResult = request.getResult();
+            final CompletableFuture<RestRequestResult> requestResult = request.getResult();
             if (!requestResult.isDone()) {
                 requestResult.complete(result);
             }
@@ -226,7 +226,7 @@ public class RatelimitManager {
      * @param currentTime The current time.
      * @param result The result of the rest request.
      */
-    private void calculateOffset(long currentTime, RestRequestResult result) {
+    private void calculateOffset(final long currentTime, final RestRequestResult result) {
         // Double-checked locking for better performance
         if ((api.getTimeOffset() != null) || (result == null) || (result.getResponse() == null)) {
             return;
@@ -235,9 +235,9 @@ public class RatelimitManager {
             if (api.getTimeOffset() == null) {
                 // Discord sends the date in their header in the format RFC_1123_DATE_TIME
                 // We use this header to calculate a possible offset between our local time and the discord time
-                String date = result.getResponse().header("Date");
+                final String date = result.getResponse().header("Date");
                 if (date != null) {
-                    long discordTimestamp = OffsetDateTime.parse(date, DateTimeFormatter.RFC_1123_DATE_TIME)
+                    final long discordTimestamp = OffsetDateTime.parse(date, DateTimeFormatter.RFC_1123_DATE_TIME)
                             .toInstant().toEpochMilli();
                     api.setTimeOffset((discordTimestamp - currentTime));
                     logger.debug("Calculated an offset of {} to the Discord time.", api::getTimeOffset);

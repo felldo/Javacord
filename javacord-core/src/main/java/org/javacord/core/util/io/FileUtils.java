@@ -17,7 +17,7 @@ public class FileUtils {
      * @param file The file.
      * @return The extension of the given file.
      */
-    public static String getExtension(File file) {
+    public static String getExtension(final File file) {
         return getExtension(file.getName());
     }
 
@@ -27,7 +27,7 @@ public class FileUtils {
      * @param fileName The file name.
      * @return The extension of the given file.
      */
-    public static String getExtension(String fileName) {
+    public static String getExtension(final String fileName) {
         if (fileName.contains(".")) {
             return fileName.substring(fileName.lastIndexOf(".") + 1);
         }

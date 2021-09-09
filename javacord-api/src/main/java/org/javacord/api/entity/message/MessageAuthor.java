@@ -35,8 +35,8 @@ public interface MessageAuthor extends DiscordEntity, Nameable {
      * @return The display name of the author.
      */
     default String getDisplayName() {
-        Optional<Server> server = getMessage().getServer();
-        Optional<User> user = asUser();
+        final Optional<Server> server = getMessage().getServer();
+        final Optional<User> user = asUser();
         if (user.isPresent()) {
             return server.map(s -> user.get().getDisplayName(s)).orElseGet(() -> user.get().getName());
         }
@@ -274,7 +274,7 @@ public interface MessageAuthor extends DiscordEntity, Nameable {
      * @param userToKick The user which should be kicked.
      * @return Whether the author can kick the user from the server or not.
      */
-    default boolean canKickUserFromServer(User userToKick) {
+    default boolean canKickUserFromServer(final User userToKick) {
         return getMessage()
                 .getServer()
                 .flatMap(server -> asUser().map(user -> server.canKickUser(user, userToKick)))
@@ -302,7 +302,7 @@ public interface MessageAuthor extends DiscordEntity, Nameable {
      * @param userToBan The user which should be banned.
      * @return Whether the author can ban the user from the server or not.
      */
-    default boolean canBanUserFromServer(User userToBan) {
+    default boolean canBanUserFromServer(final User userToBan) {
         return getMessage()
                 .getServer()
                 .flatMap(server -> asUser().map(user -> server.canBanUser(user, userToBan)))

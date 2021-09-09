@@ -29,7 +29,7 @@ public class VavrSetView<E> implements Set<E> {
      * @param vavrSet The Vavr set.
      * @param unmodifiable Whether the view should be modifiable or not.
      */
-    public VavrSetView(io.vavr.collection.Set<E> vavrSet, boolean unmodifiable) {
+    public VavrSetView(final io.vavr.collection.Set<E> vavrSet, final boolean unmodifiable) {
         this.vavrSet = vavrSet;
         this.unmodifiable = unmodifiable;
     }
@@ -56,7 +56,7 @@ public class VavrSetView<E> implements Set<E> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public boolean contains(Object o) {
+    public boolean contains(final Object o) {
         lock.readLock().lock();
         try {
             return vavrSet.contains((E) o);
@@ -93,7 +93,7 @@ public class VavrSetView<E> implements Set<E> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T[] toArray(T[] a) {
+    public <T> T[] toArray(final T[] a) {
         lock.readLock().lock();
         try {
             if (a.length < size()) {
@@ -110,11 +110,11 @@ public class VavrSetView<E> implements Set<E> {
     }
 
     @Override
-    public boolean add(E e) {
+    public boolean add(final E e) {
         throwIfUnmodifiable();
         lock.writeLock().lock();
         try {
-            int oldSize = vavrSet.size();
+            final int oldSize = vavrSet.size();
             vavrSet = vavrSet.add(e);
             return oldSize != vavrSet.size();
         } finally {
@@ -124,11 +124,11 @@ public class VavrSetView<E> implements Set<E> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public boolean remove(Object o) {
+    public boolean remove(final Object o) {
         throwIfUnmodifiable();
         lock.writeLock().lock();
         try {
-            int oldSize = vavrSet.size();
+            final int oldSize = vavrSet.size();
             vavrSet = vavrSet.remove((E) o);
             return oldSize != vavrSet.size();
         } finally {
@@ -137,7 +137,7 @@ public class VavrSetView<E> implements Set<E> {
     }
 
     @Override
-    public boolean containsAll(Collection<?> c) {
+    public boolean containsAll(final Collection<?> c) {
         lock.readLock().lock();
         try {
             return c.stream().allMatch(this::contains);
@@ -147,11 +147,11 @@ public class VavrSetView<E> implements Set<E> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> c) {
+    public boolean addAll(final Collection<? extends E> c) {
         throwIfUnmodifiable();
         lock.writeLock().lock();
         try {
-            int oldSize = vavrSet.size();
+            final int oldSize = vavrSet.size();
             vavrSet = vavrSet.addAll(c);
             return oldSize != vavrSet.size();
         } finally {
@@ -161,11 +161,11 @@ public class VavrSetView<E> implements Set<E> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public boolean retainAll(Collection<?> c) {
+    public boolean retainAll(final Collection<?> c) {
         throwIfUnmodifiable();
         lock.writeLock().lock();
         try {
-            int oldSize = vavrSet.size();
+            final int oldSize = vavrSet.size();
             vavrSet = vavrSet.retainAll((Collection<E>) c);
             return oldSize != vavrSet.size();
         } finally {
@@ -175,11 +175,11 @@ public class VavrSetView<E> implements Set<E> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public boolean removeAll(Collection<?> c) {
+    public boolean removeAll(final Collection<?> c) {
         throwIfUnmodifiable();
         lock.writeLock().lock();
         try {
-            int oldSize = vavrSet.size();
+            final int oldSize = vavrSet.size();
             vavrSet = vavrSet.removeAll((Collection<E>) c);
             return oldSize != vavrSet.size();
         } finally {

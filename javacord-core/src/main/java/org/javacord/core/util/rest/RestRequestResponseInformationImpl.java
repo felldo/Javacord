@@ -20,7 +20,7 @@ public class RestRequestResponseInformationImpl implements RestRequestResponseIn
      * @param request The request which this response answered.
      * @param restRequestResult The result of the response.
      */
-    public RestRequestResponseInformationImpl(RestRequestInformation request, RestRequestResult restRequestResult) {
+    public RestRequestResponseInformationImpl(final RestRequestInformation request, final RestRequestResult restRequestResult) {
         this.request = request;
         this.restRequestResult = restRequestResult;
     }

@@ -295,7 +295,7 @@ public enum WebSocketCloseCode {
      *
      * @param code The actual numeric close code.
      */
-    WebSocketCloseCode(int code, Usage usage) {
+    WebSocketCloseCode(final int code, final Usage usage) {
         this.code = code;
         this.usage = usage;
     }
@@ -306,7 +306,7 @@ public enum WebSocketCloseCode {
      * @param code The actual numeric close code.
      * @return The web socket close code with the actual numeric close code.
      */
-    public static Optional<WebSocketCloseCode> fromCode(int code) {
+    public static Optional<WebSocketCloseCode> fromCode(final int code) {
         return Optional.ofNullable(instanceByCode.get(code));
     }
 
@@ -316,7 +316,7 @@ public enum WebSocketCloseCode {
      * @param code The actual numeric close code.
      * @return The voice web socket close code with the actual numeric close code.
      */
-    public static Optional<WebSocketCloseCode> fromCodeForVoice(int code) {
+    public static Optional<WebSocketCloseCode> fromCodeForVoice(final int code) {
         return Optional.ofNullable(voiceInstanceByCode.get(code));
     }
 

@@ -17,7 +17,7 @@ public class UserChangeMutedEventImpl extends ServerUserEventImpl implements Use
      * @param newMember The new member.
      * @param oldMember The old member.
      */
-    public UserChangeMutedEventImpl(Member newMember, Member oldMember) {
+    public UserChangeMutedEventImpl(final Member newMember, final Member oldMember) {
         super(newMember.getUser(), newMember.getServer());
         this.newMember = newMember;
         this.oldMember = oldMember;

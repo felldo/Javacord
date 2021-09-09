@@ -90,7 +90,7 @@ public abstract class EventDispatcherBase {
      *
      * @param api The discord api instance.
      */
-    protected EventDispatcherBase(DiscordApiImpl api) {
+    protected EventDispatcherBase(final DiscordApiImpl api) {
         this.api = api;
         queuedListenerTasks.put(null, new ConcurrentLinkedQueue<>());
         api.getThreadPool().getScheduler().scheduleAtFixedRate(() -> {
@@ -99,10 +99,10 @@ public abstract class EventDispatcherBase {
                     return;
                 }
                 synchronized (activeListeners) {
-                    long currentNanoTime = System.nanoTime();
-                    for (Map.Entry<AtomicReference<Future<?>>, Object[]> entry : activeListeners.entrySet()) {
-                        long difference = currentNanoTime - ((long) entry.getValue()[0]);
-                        DispatchQueueSelector queueSelector = (DispatchQueueSelector) entry.getValue()[1];
+                    final long currentNanoTime = System.nanoTime();
+                    for (final Map.Entry<AtomicReference<Future<?>>, Object[]> entry : activeListeners.entrySet()) {
+                        final long difference = currentNanoTime - ((long) entry.getValue()[0]);
+                        final DispatchQueueSelector queueSelector = (DispatchQueueSelector) entry.getValue()[1];
                         if ((difference > DEBUG_WARNING_DELAY)
                                 && (difference <= (DEBUG_WARNING_DELAY + EXECUTION_TIME_CHECKING_INTERVAL))) {
                             logger.debug("Detected {} which is now running for over {} ms ({} ms). This is"
@@ -122,7 +122,7 @@ public abstract class EventDispatcherBase {
                                     () -> TimeUnit.NANOSECONDS.toMillis(difference));
                         }
                         if (difference > MAX_EXECUTION_TIME) {
-                            AtomicReference<Future<?>> listener = entry.getKey();
+                            final AtomicReference<Future<?>> listener = entry.getKey();
                             alreadyCanceledListeners.compute(listener, (l, lastWarning) -> {
                                 if (lastWarning == null) {
                                     listener.get().cancel(true);
@@ -147,7 +147,7 @@ public abstract class EventDispatcherBase {
                         }
                     }
                 }
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 logger.error("Failed to check execution times!", t);
             }
         }, 200, 200, TimeUnit.MILLISECONDS);
@@ -167,7 +167,7 @@ public abstract class EventDispatcherBase {
      *
      * @param enable Whether execution time checking should be enabled or not.
      */
-    public void setExecutionTimeCheckingEnabled(boolean enable) {
+    public void setExecutionTimeCheckingEnabled(final boolean enable) {
         executionTimeCheckingEnabled = enable;
     }
 
@@ -190,21 +190,21 @@ public abstract class EventDispatcherBase {
      *                      {@code onXyz(Event)} method.
      * @param <T>           The type of the listener.
      */
-    protected <T> void dispatchEvent(DispatchQueueSelector queueSelector, List<T> listeners, Consumer<T> consumer) {
+    protected <T> void dispatchEvent(final DispatchQueueSelector queueSelector, final List<T> listeners, final Consumer<T> consumer) {
         api.getThreadPool().getSingleThreadExecutorService("Event Dispatch Queues Manager").submit(() -> {
             if (queueSelector != null) { // Object dependent listeners
                 // Don't allow adding of more events while there are unfinished object independent tasks
-                Queue<Runnable> objectIndependentQueue = queuedListenerTasks.get(null);
+                final Queue<Runnable> objectIndependentQueue = queuedListenerTasks.get(null);
                 while (!objectIndependentQueue.isEmpty()) {
                     try {
                         synchronized (queuedListenerTasks) {
                             // Just to be on the safe side, we use a timeout of 5 seconds
                             queuedListenerTasks.wait(5000);
                         }
-                    } catch (InterruptedException ignored) { }
+                    } catch (final InterruptedException ignored) { }
                 }
             }
-            Queue<Runnable> queue = queuedListenerTasks.computeIfAbsent(
+            final Queue<Runnable> queue = queuedListenerTasks.computeIfAbsent(
                     queueSelector, o -> new ConcurrentLinkedQueue<>());
             listeners.forEach(listener -> queue.add(() -> consumer.accept(listener)));
             checkRunningListenersAndStartIfPossible(queueSelector);
@@ -235,7 +235,7 @@ public abstract class EventDispatcherBase {
                 }
                 // if object-independent tasks to be processed
                 // check whether there are still queued object-dependent tasks
-                boolean moreObjectDependentTasks = queuedListenerTasks.entrySet()
+                final boolean moreObjectDependentTasks = queuedListenerTasks.entrySet()
                         .stream()
                         .filter(entry -> !entry.getValue().isEmpty())
                         .anyMatch(entry -> entry.getKey() != null);
@@ -249,14 +249,14 @@ public abstract class EventDispatcherBase {
                 queueSelector = null;
                 queue = queuedListenerTasks.get(null);
             }
-            DispatchQueueSelector finalQueueSelector = queueSelector;
-            Queue<Runnable> taskQueue = queue;
+            final DispatchQueueSelector finalQueueSelector = queueSelector;
+            final Queue<Runnable> taskQueue = queue;
             // if there is something to execute and there is task running already
             if (!queue.isEmpty() && runningListeners.add(finalQueueSelector)) {
-                AtomicReference<Future<?>> activeListener = new AtomicReference<>();
+                final AtomicReference<Future<?>> activeListener = new AtomicReference<>();
                 activeListener.set(api.getThreadPool().getExecutorService().submit(() -> {
                     if (finalQueueSelector instanceof ServerImpl) {
-                        Object serverReadyNotifier = new Object();
+                        final Object serverReadyNotifier = new Object();
                         ((ServerImpl) finalQueueSelector)
                                 .addServerReadyConsumer(s -> {
                                     synchronized (serverReadyNotifier) {
@@ -268,14 +268,14 @@ public abstract class EventDispatcherBase {
                                 synchronized (serverReadyNotifier) {
                                     serverReadyNotifier.wait(5000);
                                 }
-                            } catch (InterruptedException ignored) { }
+                            } catch (final InterruptedException ignored) { }
                         }
                     }
                     // Add the future to the list of active listeners
                     activeListeners.put(activeListener, new Object[]{System.nanoTime(), finalQueueSelector});
                     try {
                         taskQueue.poll().run();
-                    } catch (Throwable t) {
+                    } catch (final Throwable t) {
                         logger.error("Unhandled exception in {}!", () -> getThreadType(finalQueueSelector), () -> t);
                     }
                     activeListeners.remove(activeListener);
@@ -297,8 +297,8 @@ public abstract class EventDispatcherBase {
      * @param queueSelector The queue selector.
      * @return The name of the thread type.
      */
-    private String getThreadType(DispatchQueueSelector queueSelector) {
-        String threadType;
+    private String getThreadType(final DispatchQueueSelector queueSelector) {
+        final String threadType;
         if (queueSelector instanceof DiscordApi) {
             threadType = "a global listener thread";
         } else if (queueSelector == null) {

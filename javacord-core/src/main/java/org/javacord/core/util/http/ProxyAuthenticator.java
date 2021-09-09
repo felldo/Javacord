@@ -46,15 +46,15 @@ public class ProxyAuthenticator implements okhttp3.Authenticator {
      *
      * @param authenticator The authenticator to delegate work to.
      */
-    public ProxyAuthenticator(Authenticator authenticator) {
+    public ProxyAuthenticator(final Authenticator authenticator) {
         this.authenticator = authenticator;
     }
 
     @Override
-    public okhttp3.Request authenticate(okhttp3.Route route, okhttp3.Response response) throws IOException {
-        okhttp3.Request request = response.request();
+    public okhttp3.Request authenticate(final okhttp3.Route route, final okhttp3.Response response) throws IOException {
+        final okhttp3.Request request = response.request();
 
-        Map<String, List<String>> requestHeaders = authenticator == null
+        final Map<String, List<String>> requestHeaders = authenticator == null
                 ? systemDefaultAuthentication(
                         new OkHttpRouteImpl(route), new OkHttpRequestImpl(request), new OkHttpResponseImpl(response))
                 : authenticator.authenticate(
@@ -64,7 +64,7 @@ public class ProxyAuthenticator implements okhttp3.Authenticator {
             return null;
         }
 
-        okhttp3.Request.Builder resultBuilder = request.newBuilder();
+        final okhttp3.Request.Builder resultBuilder = request.newBuilder();
         requestHeaders.forEach((headerName, headerValues) -> {
             if (headerValues == null) {
                 resultBuilder.removeHeader(headerName);
@@ -73,7 +73,7 @@ public class ProxyAuthenticator implements okhttp3.Authenticator {
             if (headerValues.isEmpty()) {
                 return;
             }
-            String firstHeaderValue = headerValues.get(0);
+            final String firstHeaderValue = headerValues.get(0);
             if (firstHeaderValue == null) {
                 resultBuilder.removeHeader(headerName);
             } else {
@@ -93,27 +93,27 @@ public class ProxyAuthenticator implements okhttp3.Authenticator {
      * @param response The response that demands authentication.
      * @return The {@code Basic} auth header.
      */
-    private Map<String, List<String>> systemDefaultAuthentication(Route route, Request request, Response response) {
-        InetSocketAddress proxyAddress = (InetSocketAddress) route.getProxy().address();
-        String host = proxyAddress.getHostString();
-        InetAddress addr = proxyAddress.getAddress();
-        int port = proxyAddress.getPort();
-        URL url = route.getUrl();
-        String protocol = url.getProtocol();
+    private Map<String, List<String>> systemDefaultAuthentication(final Route route, final Request request, final Response response) {
+        final InetSocketAddress proxyAddress = (InetSocketAddress) route.getProxy().address();
+        final String host = proxyAddress.getHostString();
+        final InetAddress addr = proxyAddress.getAddress();
+        final int port = proxyAddress.getPort();
+        final URL url = route.getUrl();
+        final String protocol = url.getProtocol();
 
         return response.getChallenges("basic")
                 .filter(challenge -> challenge.getRealm().isPresent())
                 .filter(challenge -> {
-                    String charset = challenge.getAuthParams().get("charset");
+                    final String charset = challenge.getAuthParams().get("charset");
                     return charset == null || charset.equalsIgnoreCase("UTF-8");
                 })
                 .map(challenge -> {
-                    String realm = challenge.getRealm().orElseThrow(AssertionError::new);
-                    PasswordAuthentication passwordAuthentication =
+                    final String realm = challenge.getRealm().orElseThrow(AssertionError::new);
+                    final PasswordAuthentication passwordAuthentication =
                             java.net.Authenticator.requestPasswordAuthentication(host, addr, port, protocol,
                                     realm, challenge.getScheme(), url, java.net.Authenticator.RequestorType.PROXY);
                     if (passwordAuthentication != null) {
-                        Charset charset = challenge.getAuthParams().containsKey("charset")
+                        final Charset charset = challenge.getAuthParams().containsKey("charset")
                                 ? StandardCharsets.UTF_8
                                 : StandardCharsets.ISO_8859_1;
                         return Credentials.basic(passwordAuthentication.getUserName(),

@@ -14,7 +14,7 @@ public class ButtonInteractionImpl extends MessageComponentInteractionImpl imple
      * @param channel  The channel in which the interaction happened. Can be {@code null}.
      * @param jsonData The json data of the interaction.
      */
-    public ButtonInteractionImpl(DiscordApiImpl api, TextChannel channel, JsonNode jsonData) {
+    public ButtonInteractionImpl(final DiscordApiImpl api, final TextChannel channel, final JsonNode jsonData) {
         super(api, channel, jsonData);
     }
 

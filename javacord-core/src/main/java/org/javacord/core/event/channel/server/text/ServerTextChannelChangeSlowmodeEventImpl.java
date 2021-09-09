@@ -25,7 +25,7 @@ public class ServerTextChannelChangeSlowmodeEventImpl extends ServerTextChannelE
      * @param oldDelay The old delay of the channel.
      * @param newDelay The new delay of the channel.
      */
-    public ServerTextChannelChangeSlowmodeEventImpl(ServerTextChannel channel, int oldDelay, int newDelay) {
+    public ServerTextChannelChangeSlowmodeEventImpl(final ServerTextChannel channel, final int oldDelay, final int newDelay) {
         super(channel);
         this.oldDelay = oldDelay;
         this.newDelay = newDelay;

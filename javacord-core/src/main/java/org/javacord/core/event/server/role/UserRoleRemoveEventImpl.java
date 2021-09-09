@@ -15,7 +15,7 @@ public class UserRoleRemoveEventImpl extends UserRoleEventImpl implements UserRo
      * @param role The role of the event.
      * @param member The member of the event.
      */
-    public UserRoleRemoveEventImpl(Role role, Member member) {
+    public UserRoleRemoveEventImpl(final Role role, final Member member) {
         super(role, member);
     }
 

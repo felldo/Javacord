@@ -30,12 +30,12 @@ public abstract class MessageComponentInteractionImpl extends InteractionImpl im
      * @param channel  The channel in which the interaction happened. Can be {@code null}.
      * @param jsonData The json data of the interaction.
      */
-    public MessageComponentInteractionImpl(DiscordApiImpl api, TextChannel channel, JsonNode jsonData) {
+    public MessageComponentInteractionImpl(final DiscordApiImpl api, final TextChannel channel, final JsonNode jsonData) {
         super(api, channel, jsonData);
 
         message = new MessageImpl(api, channel, jsonData.get("message"));
 
-        JsonNode data = jsonData.get("data");
+        final JsonNode data = jsonData.get("data");
         this.customId = data.get("custom_id").asText();
     }
 

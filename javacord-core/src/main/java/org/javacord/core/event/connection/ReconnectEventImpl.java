@@ -14,7 +14,7 @@ public class ReconnectEventImpl extends EventImpl implements ReconnectEvent {
      *
      * @param api The api instance of the event.
      */
-    public ReconnectEventImpl(DiscordApi api) {
+    public ReconnectEventImpl(final DiscordApi api) {
         super(api);
     }
 

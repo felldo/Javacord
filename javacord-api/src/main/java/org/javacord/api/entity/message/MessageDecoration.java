@@ -28,7 +28,7 @@ public enum MessageDecoration {
      *
      * @param prefix The prefix of the decoration.
      */
-    MessageDecoration(String prefix) {
+    MessageDecoration(final String prefix) {
         this.prefix = prefix;
         this.suffix = new StringBuilder(prefix).reverse().toString();
     }

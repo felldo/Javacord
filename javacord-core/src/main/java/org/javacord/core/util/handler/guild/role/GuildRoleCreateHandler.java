@@ -19,16 +19,16 @@ public class GuildRoleCreateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public GuildRoleCreateHandler(DiscordApi api) {
+    public GuildRoleCreateHandler(final DiscordApi api) {
         super(api, true, "GUILD_ROLE_CREATE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        long serverId = Long.parseLong(packet.get("guild_id").asText());
+    public void handle(final JsonNode packet) {
+        final long serverId = Long.parseLong(packet.get("guild_id").asText());
         api.getPossiblyUnreadyServerById(serverId).ifPresent(server -> {
-            Role role = ((ServerImpl) server).getOrCreateRole(packet.get("role"));
-            RoleCreateEvent event = new RoleCreateEventImpl(role);
+            final Role role = ((ServerImpl) server).getOrCreateRole(packet.get("role"));
+            final RoleCreateEvent event = new RoleCreateEventImpl(role);
 
             api.getEventDispatcher().dispatchRoleCreateEvent((DispatchQueueSelector) server, server, event);
         });

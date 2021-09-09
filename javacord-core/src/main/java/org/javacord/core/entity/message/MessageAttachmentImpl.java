@@ -74,7 +74,7 @@ public class MessageAttachmentImpl implements MessageAttachment {
      * @param message The message of the attachment.
      * @param data The data of the attachment.
      */
-    public MessageAttachmentImpl(Message message, JsonNode data) {
+    public MessageAttachmentImpl(final Message message, final JsonNode data) {
         this.message = message;
         id = data.get("id").asLong();
         fileName = data.get("filename").asText();
@@ -114,7 +114,7 @@ public class MessageAttachmentImpl implements MessageAttachment {
     public URL getUrl() {
         try {
             return new URL(url);
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the url of the attachment is malformed! Please contact the developer!", e);
             return null;
         }
@@ -124,7 +124,7 @@ public class MessageAttachmentImpl implements MessageAttachment {
     public URL getProxyUrl() {
         try {
             return new URL(proxyUrl);
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the proxy url of the attachment is malformed! Please contact the developer!", e);
             return null;
         }
@@ -156,7 +156,7 @@ public class MessageAttachmentImpl implements MessageAttachment {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return (this == o)
                || !((o == null)
                     || (getClass() != o.getClass())

@@ -28,7 +28,7 @@ public class UnicodeEmojiImpl implements Emoji {
      *
      * @param emoji The emoji string.
      */
-    private UnicodeEmojiImpl(String emoji) {
+    private UnicodeEmojiImpl(final String emoji) {
         this.emoji = emoji;
     }
 
@@ -38,7 +38,7 @@ public class UnicodeEmojiImpl implements Emoji {
      * @param emoji The emoji string.
      * @return The object, representing the emoji from the given string.
      */
-    public static UnicodeEmojiImpl fromString(String emoji) {
+    public static UnicodeEmojiImpl fromString(final String emoji) {
         return unicodeEmojis.computeIfAbsent(emoji, key -> new UnicodeEmojiImpl(emoji));
     }
 

@@ -82,7 +82,7 @@ public class AuditLogEntryImpl implements AuditLogEntry {
      * @param auditLog The audit log this entry belongs to.
      * @param data The json data of the audit log entry.
      */
-    public AuditLogEntryImpl(AuditLog auditLog, JsonNode data) {
+    public AuditLogEntryImpl(final AuditLog auditLog, final JsonNode data) {
         this.auditLog = auditLog;
         this.id = data.get("id").asLong();
         this.userId = data.get("user_id").asLong();
@@ -91,10 +91,10 @@ public class AuditLogEntryImpl implements AuditLogEntry {
         this.target = data.has("target_id") && !data.get("target_id").isNull()
                 ? new AuditLogEntryTargetImpl(data.get("target_id").asLong(), this) : null;
         if (data.has("changes")) {
-            for (JsonNode changeJson : data.get("changes")) {
-                AuditLogChangeType type = AuditLogChangeType.fromName(changeJson.get("key").asText());
-                JsonNode oldValue = changeJson.get("old_value");
-                JsonNode newValue = changeJson.get("new_value");
+            for (final JsonNode changeJson : data.get("changes")) {
+                final AuditLogChangeType type = AuditLogChangeType.fromName(changeJson.get("key").asText());
+                final JsonNode oldValue = changeJson.get("old_value");
+                final JsonNode newValue = changeJson.get("new_value");
                 AuditLogChange<?> change;
                 String baseUrl = null;
                 switch (type) {
@@ -149,8 +149,8 @@ public class AuditLogEntryImpl implements AuditLogEntry {
                                 "https://" + Javacord.DISCORD_CDN_DOMAIN + "/splashes/", type, oldValue, newValue);
                         break;
                     case REGION:
-                        Region oldRegion = Region.getRegionByKey(oldValue != null ? oldValue.asText() : "");
-                        Region newRegion = Region.getRegionByKey(newValue != null ? newValue.asText() : "");
+                        final Region oldRegion = Region.getRegionByKey(oldValue != null ? oldValue.asText() : "");
+                        final Region newRegion = Region.getRegionByKey(newValue != null ? newValue.asText() : "");
                         change = new AuditLogChangeImpl<>(type, oldRegion, newRegion);
                         break;
                     case MFA_LEVEL:
@@ -158,24 +158,24 @@ public class AuditLogEntryImpl implements AuditLogEntry {
                         change = new AuditLogChangeImpl<>(type, oldValue, newValue);
                         break;
                     case VERIFICATION_LEVEL:
-                        VerificationLevel oldVerificationLevel =
+                        final VerificationLevel oldVerificationLevel =
                                 VerificationLevel.fromId(oldValue != null ? oldValue.asInt() : -1);
-                        VerificationLevel newVerificationLevel =
+                        final VerificationLevel newVerificationLevel =
                                 VerificationLevel.fromId(newValue != null ? newValue.asInt() : -1);
                         change = new AuditLogChangeImpl<>(type, oldVerificationLevel, newVerificationLevel);
                         break;
                     case EXPLICIT_CONTENT_FILTER:
-                        ExplicitContentFilterLevel oldExplicitContentFilterLevel =
+                        final ExplicitContentFilterLevel oldExplicitContentFilterLevel =
                                 ExplicitContentFilterLevel.fromId(oldValue != null ? oldValue.asInt() : -1);
-                        ExplicitContentFilterLevel newExplicitContentFilterLevel =
+                        final ExplicitContentFilterLevel newExplicitContentFilterLevel =
                                 ExplicitContentFilterLevel.fromId(newValue != null ? newValue.asInt() : -1);
                         change = new AuditLogChangeImpl<>(
                                 type, oldExplicitContentFilterLevel, newExplicitContentFilterLevel);
                         break;
                     case DEFAULT_MESSAGE_NOTIFICATIONS:
-                        DefaultMessageNotificationLevel oldDefaultMessageNotificationLevel =
+                        final DefaultMessageNotificationLevel oldDefaultMessageNotificationLevel =
                                 DefaultMessageNotificationLevel.fromId(oldValue != null ? oldValue.asInt() : -1);
-                        DefaultMessageNotificationLevel newDefaultMessageNotificationLevel =
+                        final DefaultMessageNotificationLevel newDefaultMessageNotificationLevel =
                                 DefaultMessageNotificationLevel.fromId(newValue != null ? newValue.asInt() : -1);
                         change = new AuditLogChangeImpl<>(
                                 type, oldDefaultMessageNotificationLevel, newDefaultMessageNotificationLevel);
@@ -196,8 +196,8 @@ public class AuditLogEntryImpl implements AuditLogEntry {
                         change = new AuditLogChangeImpl<>(type, oldPermissions, newPermissions);
                         break;
                     case COLOR:
-                        Color oldColor = oldValue != null ? new Color(oldValue.asInt()) : null;
-                        Color newColor = newValue != null ? new Color(newValue.asInt()) : null;
+                        final Color oldColor = oldValue != null ? new Color(oldValue.asInt()) : null;
+                        final Color newColor = newValue != null ? new Color(newValue.asInt()) : null;
                         change = new AuditLogChangeImpl<>(type, oldColor, newColor);
                         break;
                     case DENIED_PERMISSIONS:
@@ -208,15 +208,15 @@ public class AuditLogEntryImpl implements AuditLogEntry {
                     case AVATAR:
                         baseUrl = "https://" + Javacord.DISCORD_CDN_DOMAIN + "/avatars/"
                                 + getTarget().map(DiscordEntity::getIdAsString).orElse("0") + "/";
-                        String oldUrl = oldValue != null ? (baseUrl + oldValue.asText()
+                        final String oldUrl = oldValue != null ? (baseUrl + oldValue.asText()
                                 + (oldValue.asText().startsWith("a_") ? ".gif" : ".png")) : null;
-                        String newUrl = newValue != null ? (baseUrl + newValue.asText()
+                        final String newUrl = newValue != null ? (baseUrl + newValue.asText()
                                 + (newValue.asText().startsWith("a_") ? ".gif" : ".png")) : null;
                         try {
-                            Icon oldIcon = oldValue != null ? new IconImpl(getApi(), new URL(oldUrl)) : null;
-                            Icon newIcon = newValue != null ? new IconImpl(getApi(), new URL(newUrl)) : null;
+                            final Icon oldIcon = oldValue != null ? new IconImpl(getApi(), new URL(oldUrl)) : null;
+                            final Icon newIcon = newValue != null ? new IconImpl(getApi(), new URL(newUrl)) : null;
                             change = new AuditLogChangeImpl<>(type, oldIcon, newIcon);
-                        } catch (MalformedURLException e) {
+                        } catch (final MalformedURLException e) {
                             logger.warn("Seems like the icon's url is malformed! Please contact the developer!", e);
                             change = new AuditLogChangeImpl<>(AuditLogChangeType.UNKNOWN, oldValue, newValue);
                         }
@@ -234,14 +234,14 @@ public class AuditLogEntryImpl implements AuditLogEntry {
         }
     }
 
-    private AuditLogChange<?> iconChange(String baseUrl, AuditLogChangeType type, JsonNode oldVal, JsonNode newVal) {
+    private AuditLogChange<?> iconChange(final String baseUrl, final AuditLogChangeType type, final JsonNode oldVal, final JsonNode newVal) {
         try {
-            Icon oldIcon = oldVal != null ? new IconImpl(getApi(), new URL(baseUrl + getTarget()
+            final Icon oldIcon = oldVal != null ? new IconImpl(getApi(), new URL(baseUrl + getTarget()
                     .map(DiscordEntity::getIdAsString).orElse("0") + "/" + oldVal.asText() + ".png")) : null;
-            Icon newIcon = newVal != null ? new IconImpl(getApi(), new URL(baseUrl + getTarget()
+            final Icon newIcon = newVal != null ? new IconImpl(getApi(), new URL(baseUrl + getTarget()
                     .map(DiscordEntity::getIdAsString).orElse("0") + "/" + newVal.asText() + ".png")) : null;
             return new AuditLogChangeImpl<>(type, oldIcon, newIcon);
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the icon's url is malformed! Please contact the developer!", e);
             return new AuditLogChangeImpl<>(AuditLogChangeType.UNKNOWN, oldVal, newVal);
         }
@@ -288,7 +288,7 @@ public class AuditLogEntryImpl implements AuditLogEntry {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return (this == o)
                || !((o == null)
                     || (getClass() != o.getClass())

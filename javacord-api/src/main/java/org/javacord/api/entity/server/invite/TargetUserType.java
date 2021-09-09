@@ -18,7 +18,7 @@ public enum TargetUserType {
      *
      * @param id The id of the target user type.
      */
-    TargetUserType(int id) {
+    TargetUserType(final int id) {
         this.id = id;
     }
 
@@ -37,8 +37,8 @@ public enum TargetUserType {
      * @param id The id of the target user type.
      * @return The target user type with the given id.
      */
-    public static TargetUserType fromId(int id) {
-        for (TargetUserType targetUserType : values()) {
+    public static TargetUserType fromId(final int id) {
+        for (final TargetUserType targetUserType : values()) {
             if (targetUserType.getId() == id) {
                 return targetUserType;
             }

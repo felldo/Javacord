@@ -16,7 +16,7 @@ public class ButtonClickEventImpl extends EventImpl implements ButtonClickEvent 
      *
      * @param interaction The created interaction.
      */
-    public ButtonClickEventImpl(Interaction interaction) {
+    public ButtonClickEventImpl(final Interaction interaction) {
         super(interaction.getApi());
         this.interaction = interaction;
     }

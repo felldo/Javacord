@@ -18,7 +18,7 @@ public enum WebhookType {
     
     private final int value;
 
-    WebhookType(int value) {
+    WebhookType(final int value) {
         this.value = value;
     }
 
@@ -38,8 +38,8 @@ public enum WebhookType {
      * @return The webhook type for the given value,
      *         or {@link WebhookType#UNKNOWN} if there's none with the given value.
      */
-    public static WebhookType fromValue(int value) {
-        for (WebhookType type : values()) {
+    public static WebhookType fromValue(final int value) {
+        for (final WebhookType type : values()) {
             if (type.getValue() == value) {
                 return type;
             }

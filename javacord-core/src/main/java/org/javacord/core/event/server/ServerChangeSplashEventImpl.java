@@ -39,7 +39,7 @@ public class ServerChangeSplashEventImpl extends ServerEventImpl implements Serv
      * @param newSplashHash The new splash hash of the server.
      * @param oldSplashHash The old splash hash of the server.
      */
-    public ServerChangeSplashEventImpl(Server server, String newSplashHash, String oldSplashHash) {
+    public ServerChangeSplashEventImpl(final Server server, final String newSplashHash, final String oldSplashHash) {
         super(server);
         this.newSplashHash = newSplashHash;
         this.oldSplashHash = oldSplashHash;
@@ -61,7 +61,7 @@ public class ServerChangeSplashEventImpl extends ServerEventImpl implements Serv
      * @param splashHash The hash of the splash.
      * @return The splash with the given hash.
      */
-    private Optional<Icon> getSplash(String splashHash) {
+    private Optional<Icon> getSplash(final String splashHash) {
         if (splashHash == null) {
             return Optional.empty();
         }
@@ -69,7 +69,7 @@ public class ServerChangeSplashEventImpl extends ServerEventImpl implements Serv
             return Optional.of(new IconImpl(getApi(), new URL(
                     "https://" + Javacord.DISCORD_CDN_DOMAIN + "/splashs/" + getServer().getIdAsString()
                             + "/" + splashHash + ".png")));
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the url of the splash is malformed! Please contact the developer!", e);
             return Optional.empty();
         }

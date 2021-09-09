@@ -55,12 +55,12 @@ public class Javacord {
     public static final String DISPLAY_VERSION;
 
     static {
-        Properties versionProperties = new Properties();
-        try (InputStream versionPropertiesStream = Javacord.class.getResourceAsStream("/version.properties")) {
+        final Properties versionProperties = new Properties();
+        try (final InputStream versionPropertiesStream = Javacord.class.getResourceAsStream("/version.properties")) {
             versionProperties.load(versionPropertiesStream);
-        } catch (IOException ignored) { }
+        } catch (final IOException ignored) { }
 
-        String version = versionProperties.getProperty("version", "$version");
+        final String version = versionProperties.getProperty("version", "$version");
         switch (version) {
             case "$version":
                 VERSION = "<unknown>";
@@ -70,7 +70,7 @@ public class Javacord {
                 VERSION = version;
         }
 
-        String commitId = versionProperties.getProperty("commitId", "$commitId");
+        final String commitId = versionProperties.getProperty("commitId", "$commitId");
         switch (commitId) {
             case "$commitId":
                 COMMIT_ID = "<unknown>";
@@ -80,7 +80,7 @@ public class Javacord {
                 COMMIT_ID = commitId;
         }
 
-        String buildTimestamp = versionProperties.getProperty("buildTimestamp", "$buildTimestamp");
+        final String buildTimestamp = versionProperties.getProperty("buildTimestamp", "$buildTimestamp");
         switch (buildTimestamp) {
             case "$buildTimestamp":
                 BUILD_TIMESTAMP = null;

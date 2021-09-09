@@ -22,13 +22,13 @@ public class ChannelCategoryBuilderDelegateImpl extends ServerChannelBuilderDele
      *
      * @param server The server of the channel category.
      */
-    public ChannelCategoryBuilderDelegateImpl(ServerImpl server) {
+    public ChannelCategoryBuilderDelegateImpl(final ServerImpl server) {
         super(server);
     }
 
     @Override
     public CompletableFuture<ChannelCategory> create() {
-        ObjectNode body = JsonNodeFactory.instance.objectNode()
+        final ObjectNode body = JsonNodeFactory.instance.objectNode()
                 .put("type", 4);
         super.prepareBody(body);
         return new RestRequest<ChannelCategory>(server.getApi(), RestMethod.POST, RestEndpoint.SERVER_CHANNEL)

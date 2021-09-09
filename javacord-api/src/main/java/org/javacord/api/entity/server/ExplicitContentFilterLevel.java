@@ -20,7 +20,7 @@ public enum ExplicitContentFilterLevel {
      *
      * @param id The id of the explicit content filter level.
      */
-    ExplicitContentFilterLevel(int id) {
+    ExplicitContentFilterLevel(final int id) {
         this.id = id;
     }
 
@@ -39,8 +39,8 @@ public enum ExplicitContentFilterLevel {
      * @param id The id of the explicit content filter level.
      * @return The explicit content filter level with the given id.
      */
-    public static ExplicitContentFilterLevel fromId(int id) {
-        for (ExplicitContentFilterLevel verificationLevel : values()) {
+    public static ExplicitContentFilterLevel fromId(final int id) {
+        for (final ExplicitContentFilterLevel verificationLevel : values()) {
             if (verificationLevel.getId() == id) {
                 return verificationLevel;
             }

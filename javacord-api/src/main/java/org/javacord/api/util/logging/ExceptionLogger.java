@@ -43,8 +43,8 @@ public class ExceptionLogger {
      * @return A consumer which logs the given throwable.
      */
     @SafeVarargs
-    public static Consumer<Throwable> getConsumer(Predicate<Throwable> logFilter,
-                                                  Class<? extends Throwable>... ignoredThrowableTypes) {
+    public static Consumer<Throwable> getConsumer(final Predicate<Throwable> logFilter,
+                                                  final Class<? extends Throwable>... ignoredThrowableTypes) {
         return get(logFilter, ignoredThrowableTypes)::apply;
     }
 
@@ -60,7 +60,7 @@ public class ExceptionLogger {
      * @return A consumer which logs the given throwable.
      */
     @SafeVarargs
-    public static Consumer<Throwable> getConsumer(Class<? extends Throwable>... ignoredThrowableTypes) {
+    public static Consumer<Throwable> getConsumer(final Class<? extends Throwable>... ignoredThrowableTypes) {
         return getConsumer(null, ignoredThrowableTypes);
     }
 
@@ -80,13 +80,13 @@ public class ExceptionLogger {
      */
     @SafeVarargs
     public static <T> Function<Throwable, T> get(
-            Predicate<Throwable> logFilter, Class<? extends Throwable>... ignoredThrowableTypes) {
-        StackTraceElement[] stackTrace = Arrays.stream(Thread.currentThread().getStackTrace())
+            final Predicate<Throwable> logFilter, final Class<? extends Throwable>... ignoredThrowableTypes) {
+        final StackTraceElement[] stackTrace = Arrays.stream(Thread.currentThread().getStackTrace())
                 .filter(element -> !element.getClassName().equals(ExceptionLogger.class.getName()))
                 .filter(element -> !(element.getClassName().equals(Thread.class.getName())
                                      && "getStackTrace".equals(element.getMethodName())))
                 .toArray(StackTraceElement[]::new);
-        Collection<Class<? extends Throwable>> ignoredThrowableTypesList = Arrays.asList(ignoredThrowableTypes);
+        final Collection<Class<? extends Throwable>> ignoredThrowableTypesList = Arrays.asList(ignoredThrowableTypes);
         return delegate.get(logFilter, ignoredThrowableTypesList, stackTrace);
     }
 
@@ -103,7 +103,7 @@ public class ExceptionLogger {
      * @return A function which logs the given throwable and returns {@code null}.
      */
     @SafeVarargs
-    public static <T> Function<Throwable, T> get(Class<? extends Throwable>... ignoredThrowableTypes) {
+    public static <T> Function<Throwable, T> get(final Class<? extends Throwable>... ignoredThrowableTypes) {
         return get(null, ignoredThrowableTypes);
     }
 
@@ -130,7 +130,7 @@ public class ExceptionLogger {
      * @param throwable The throwable to unwrap.
      * @return The unwrapped throwable.
      */
-    public static Throwable unwrapThrowable(Throwable throwable) {
+    public static Throwable unwrapThrowable(final Throwable throwable) {
         return ExceptionLoggerDelegate.unwrapThrowable(throwable);
     }
 

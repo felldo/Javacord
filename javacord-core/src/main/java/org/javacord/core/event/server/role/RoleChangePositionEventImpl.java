@@ -37,8 +37,8 @@ public class RoleChangePositionEventImpl extends RoleEventImpl implements RoleCh
      * @param newRawPosition The new raw position of the role.
      * @param oldRawPosition The old raw position of the role.
      */
-    public RoleChangePositionEventImpl(Role role, int newPosition, int oldPosition,
-                                                    int newRawPosition, int oldRawPosition) {
+    public RoleChangePositionEventImpl(final Role role, final int newPosition, final int oldPosition,
+                                       final int newRawPosition, final int oldRawPosition) {
         super(role);
         this.newPosition = newPosition;
         this.oldPosition = oldPosition;

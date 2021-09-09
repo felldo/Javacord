@@ -154,16 +154,16 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
     private final BlockingQueue<Long> requestGuildMembersQueue = new LinkedBlockingQueue<>();
 
     // A queue which contains web socket frame sending requests
-    private BlockingQueue<WebSocketFrameSendingQueueEntry> webSocketFrameSendingQueue = new PriorityBlockingQueue<>();
-    private AtomicReference<Thread> webSocketFrameSenderThread = new AtomicReference<>();
-    private AtomicInteger webSocketFrameSendingLimit = new AtomicInteger(WEB_SOCKET_FRAME_SENDING_RATELIMIT);
+    private final BlockingQueue<WebSocketFrameSendingQueueEntry> webSocketFrameSendingQueue = new PriorityBlockingQueue<>();
+    private final AtomicReference<Thread> webSocketFrameSenderThread = new AtomicReference<>();
+    private final AtomicInteger webSocketFrameSendingLimit = new AtomicInteger(WEB_SOCKET_FRAME_SENDING_RATELIMIT);
 
     /**
      * Creates a new discord websocket adapter.
      *
      * @param api The discord api instance.
      */
-    public DiscordWebSocketAdapter(DiscordApiImpl api) {
+    public DiscordWebSocketAdapter(final DiscordApiImpl api) {
         this(api, true);
     }
 
@@ -173,7 +173,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      * @param api       The discord api instance.
      * @param reconnect Whether to try to reconnect.
      */
-    DiscordWebSocketAdapter(DiscordApiImpl api, boolean reconnect) {
+    DiscordWebSocketAdapter(final DiscordApiImpl api, final boolean reconnect) {
         this.api = api;
         this.reconnect = reconnect;
         this.heart = new Heart(
@@ -185,13 +185,13 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
         registerHandlers();
         connect();
 
-        ExecutorService requestGuildMembersQueueConsumer =
+        final ExecutorService requestGuildMembersQueueConsumer =
                 api.getThreadPool().getSingleDaemonThreadExecutorService("Request Server Members Queue Consumer");
         requestGuildMembersQueueConsumer.submit(() -> {
             while (!requestGuildMembersQueueConsumer.isShutdown()) {
                 try {
                     // wait 1 minute for a request being queued
-                    Long nextServerId = requestGuildMembersQueue.poll(1, TimeUnit.MINUTES);
+                    final Long nextServerId = requestGuildMembersQueue.poll(1, TimeUnit.MINUTES);
                     // timed out => check whether the abort condition triggers
                     if (nextServerId == null) {
                         continue;
@@ -202,9 +202,9 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
                     requestGuildMembersQueue.stream().distinct()
                             .forEach(serverId -> {
                                 requestGuildMembersQueue.remove(serverId);
-                                ObjectNode requestGuildMembersPacket = JsonNodeFactory.instance.objectNode()
+                                final ObjectNode requestGuildMembersPacket = JsonNodeFactory.instance.objectNode()
                                         .put("op", GatewayOpcode.REQUEST_GUILD_MEMBERS.getCode());
-                                ObjectNode data = requestGuildMembersPacket.putObject("d")
+                                final ObjectNode data = requestGuildMembersPacket.putObject("d")
                                         .put("query", "")
                                         .put("limit", 0);
                                 data.put("guild_id", Long.toUnsignedString(serverId));
@@ -213,21 +213,21 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
                                 sendTextFrame(requestGuildMembersPacket.toString());
                             });
                     Thread.sleep(1000);
-                } catch (InterruptedException ignored) {
-                } catch (Throwable t) {
+                } catch (final InterruptedException ignored) {
+                } catch (final Throwable t) {
                     logger.error("Failed to process request guild members queue!", t);
                 }
             }
         });
 
-        ExecutorService webSocketFrameSenderService =
+        final ExecutorService webSocketFrameSenderService =
                 api.getThreadPool().getSingleDaemonThreadExecutorService("Web Socket Frame Sender");
         webSocketFrameSenderService.submit(() -> {
             // remember the current thread to be able to interrupt it
             webSocketFrameSenderThread.set(Thread.currentThread());
 
             // Lists of send times per web socket which are used to control the 120/60 web socket frame ratelimit
-            Map<WebSocket, List<Long>> sendTimeLists = new WeakHashMap<>();
+            final Map<WebSocket, List<Long>> sendTimeLists = new WeakHashMap<>();
 
             while (!webSocketFrameSenderService.isShutdown()) {
                 WebSocketFrameSendingQueueEntry webSocketFrameSendingQueueEntry = null;
@@ -239,11 +239,11 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
                         continue;
                     }
 
-                    WebSocket webSocket = webSocketFrameSendingQueueEntry.getWebSocket().orElseGet(websocket::get);
-                    List<Long> sendTimeList = sendTimeLists.computeIfAbsent(
+                    final WebSocket webSocket = webSocketFrameSendingQueueEntry.getWebSocket().orElseGet(websocket::get);
+                    final List<Long> sendTimeList = sendTimeLists.computeIfAbsent(
                             webSocket, key -> new ArrayList<>(WEB_SOCKET_FRAME_SENDING_RATELIMIT));
 
-                    long currentNanoTime = System.nanoTime();
+                    final long currentNanoTime = System.nanoTime();
                     if (!sendTimeList.isEmpty()
                             && (currentNanoTime - sendTimeList.get(0) > WEB_SOCKET_FRAME_SENDING_RATELIMIT_DURATION)) {
                         // bucket defining send expired, clear the list
@@ -251,7 +251,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
                     }
 
                     // reserve some places for heartbeats
-                    int webSocketFrameSendingLimit = webSocketFrameSendingQueueEntry.isPriorityLifecycle()
+                    final int webSocketFrameSendingLimit = webSocketFrameSendingQueueEntry.isPriorityLifecycle()
                             ? WEB_SOCKET_FRAME_SENDING_RATELIMIT
                             : this.webSocketFrameSendingLimit.get();
 
@@ -283,14 +283,14 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
 
                     // store the current send time and actually send the frame
                     sendTimeList.add(currentNanoTime);
-                    WebSocketFrame frame = webSocketFrameSendingQueueEntry.getFrame();
+                    final WebSocketFrame frame = webSocketFrameSendingQueueEntry.getFrame();
                     logger.debug("Sending {}frame {}",
                             webSocketFrameSendingQueueEntry.isPriorityLifecycle() ? "priority lifecycle " : "",
                             frame);
                     webSocket.sendFrame(frame);
                     webSocketFrameSendingQueueEntry = null;
-                } catch (InterruptedException ignored) {
-                } catch (Throwable t) {
+                } catch (final InterruptedException ignored) {
+                } catch (final Throwable t) {
                     logger.error("Failed to process web socket frame sending queue!", t);
                 } finally {
                     // sending failed, throttling still in effect or interrupt arrived
@@ -310,7 +310,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      * @param api The api used to make the rest call.
      * @return The gateway url as string.
      */
-    private static String getGateway(DiscordApiImpl api) {
+    private static String getGateway(final DiscordApiImpl api) {
         gatewayReadLock.lock();
         if (gateway == null) {
             gatewayReadLock.unlock();
@@ -340,7 +340,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      *
      * @param gateway The gateway to set.
      */
-    public static void setGateway(String gateway) {
+    public static void setGateway(final String gateway) {
         gatewayWriteLock.lock();
         try {
             DiscordWebSocketAdapter.gateway = gateway;
@@ -364,10 +364,10 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      */
     private void connect() {
         try {
-            WebSocketFactory factory = new WebSocketFactory();
-            String webSocketUri = getGateway(api) + "?encoding=json&v=" + Javacord.DISCORD_GATEWAY_VERSION;
-            Proxy proxy = api.getProxy().orElseGet(() -> {
-                List<Proxy> proxies = api.getProxySelector().orElseGet(ProxySelector::getDefault).select(URI.create(
+            final WebSocketFactory factory = new WebSocketFactory();
+            final String webSocketUri = getGateway(api) + "?encoding=json&v=" + Javacord.DISCORD_GATEWAY_VERSION;
+            final Proxy proxy = api.getProxy().orElseGet(() -> {
+                final List<Proxy> proxies = api.getProxySelector().orElseGet(ProxySelector::getDefault).select(URI.create(
                         webSocketUri.replace("wss://", "https://").replace("ws://", "http://")));
 
                 return proxies.stream()
@@ -384,22 +384,22 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
                     break;
 
                 case HTTP:
-                    SocketAddress proxyAddress = proxy.address();
+                    final SocketAddress proxyAddress = proxy.address();
                     if (!(proxyAddress instanceof InetSocketAddress)) {
                         throw new WebSocketException(
                                 null, "HTTP proxies without an InetSocketAddress are not supported currently");
                     }
-                    InetSocketAddress proxyInetAddress = ((InetSocketAddress) proxyAddress);
-                    String proxyHost = proxyInetAddress.getHostString();
-                    int proxyPort = proxyInetAddress.getPort();
-                    ProxySettings proxySettings = factory.getProxySettings();
+                    final InetSocketAddress proxyInetAddress = ((InetSocketAddress) proxyAddress);
+                    final String proxyHost = proxyInetAddress.getHostString();
+                    final int proxyPort = proxyInetAddress.getPort();
+                    final ProxySettings proxySettings = factory.getProxySettings();
                     proxySettings.setHost(proxyHost).setPort(proxyPort);
 
-                    Optional<Authenticator> proxyAuthenticator = api.getProxyAuthenticator();
-                    URL webSocketUrl = URI.create(
+                    final Optional<Authenticator> proxyAuthenticator = api.getProxyAuthenticator();
+                    final URL webSocketUrl = URI.create(
                             webSocketUri.replace("wss://", "https://").replace("ws://", "http://")).toURL();
                     if (proxyAuthenticator.isPresent()) {
-                        Map<String, List<String>> requestHeaders = proxyAuthenticator.get().authenticate(
+                        final Map<String, List<String>> requestHeaders = proxyAuthenticator.get().authenticate(
                                 new NvWebSocketRouteImpl(webSocketUrl, proxy, proxyInetAddress),
                                 new Request() { },
                                 new NvWebSocketResponseImpl());
@@ -412,7 +412,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
                                 if (headerValues.isEmpty()) {
                                     return;
                                 }
-                                String firstHeaderValue = headerValues.get(0);
+                                final String firstHeaderValue = headerValues.get(0);
                                 if (firstHeaderValue == null) {
                                     proxySettings.getHeaders().remove(headerName);
                                 } else {
@@ -423,7 +423,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
                             });
                         }
                     } else {
-                        PasswordAuthentication credentials = java.net.Authenticator.requestPasswordAuthentication(
+                        final PasswordAuthentication credentials = java.net.Authenticator.requestPasswordAuthentication(
                                 proxyHost, proxyInetAddress.getAddress(), proxyPort, webSocketUrl.getProtocol(), null,
                                 "Basic", webSocketUrl, java.net.Authenticator.RequestorType.PROXY);
                         if (credentials != null) {
@@ -441,7 +441,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
             if (api.isTrustAllCertificates()) {
                 factory.setSSLSocketFactory(new TrustAllTrustManager().createSslSocketFactory());
             }
-            WebSocket websocket = factory.createSocket(webSocketUri);
+            final WebSocket websocket = factory.createSocket(webSocketUri);
             this.websocket.set(websocket);
             websocket.addHeader("Accept-Encoding", "gzip");
             websocket.addListener(this);
@@ -451,7 +451,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
                 api.getGatewayIdentifyRatelimiter().requestQuota();
             }
             websocket.connect();
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             logger.warn("An error occurred while connecting to websocket", t);
             if (reconnect) {
                 reconnectingOrResumingLock.lock();
@@ -477,18 +477,18 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
     }
 
     @Override
-    public void onDisconnected(WebSocket websocket, WebSocketFrame serverCloseFrame,
-                               WebSocketFrame clientCloseFrame, boolean closedByServer) {
-        Optional<WebSocketFrame> closeFrameOptional =
+    public void onDisconnected(final WebSocket websocket, final WebSocketFrame serverCloseFrame,
+                               final WebSocketFrame clientCloseFrame, final boolean closedByServer) {
+        final Optional<WebSocketFrame> closeFrameOptional =
                 Optional.ofNullable(closedByServer ? serverCloseFrame : clientCloseFrame);
 
-        String closeReason = closeFrameOptional
+        final String closeReason = closeFrameOptional
                 .map(WebSocketFrame::getCloseReason)
                 .orElse("unknown");
 
-        String closeCodeString = closeFrameOptional
+        final String closeCodeString = closeFrameOptional
                 .map(closeFrame -> {
-                    int code = closeFrame.getCloseCode();
+                    final int code = closeFrame.getCloseCode();
                     return WebSocketCloseCode.fromCode(code)
                             .map(closeCode -> closeCode + " (" + code + ")")
                             .orElseGet(() -> String.valueOf(code));
@@ -498,7 +498,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
         logger.info("Websocket closed with reason '{}' and code {} by {}!",
                     closeReason, closeCodeString, closedByServer ? "server" : "client");
 
-        LostConnectionEvent lostConnectionEvent = new LostConnectionEventImpl(api);
+        final LostConnectionEvent lostConnectionEvent = new LostConnectionEventImpl(api);
         api.getEventDispatcher().dispatchLostConnectionEvent(null, lostConnectionEvent);
 
         // Squash it, until it stops beating
@@ -525,14 +525,14 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
     }
 
     @Override
-    public void onTextMessage(WebSocket websocket, String text) throws Exception {
-        ObjectMapper mapper = api.getObjectMapper();
-        JsonNode packet = mapper.readTree(text);
+    public void onTextMessage(final WebSocket websocket, final String text) throws Exception {
+        final ObjectMapper mapper = api.getObjectMapper();
+        final JsonNode packet = mapper.readTree(text);
 
         heart.handlePacket(packet);
 
-        int op = packet.get("op").asInt();
-        Optional<GatewayOpcode> opcode = GatewayOpcode.fromCode(op);
+        final int op = packet.get("op").asInt();
+        final Optional<GatewayOpcode> opcode = GatewayOpcode.fromCode(op);
         if (!opcode.isPresent()) {
             logger.debug("Received unknown packet (op: {}, content: {})", op, packet);
             return;
@@ -541,8 +541,8 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
         switch (opcode.get()) {
             case DISPATCH:
                 lastSeq = packet.get("s").asInt();
-                String type = packet.get("t").asText();
-                PacketHandler handler = handlers.get(type);
+                final String type = packet.get("t").asText();
+                final PacketHandler handler = handlers.get(type);
                 if (handler != null) {
                     handler.handlePacket(packet.get("d"));
                 } else {
@@ -562,7 +562,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
                     }
                     logger.debug("Received RESUMED packet");
 
-                    ResumeEvent resumeEvent = new ResumeEventImpl(api);
+                    final ResumeEvent resumeEvent = new ResumeEventImpl(api);
                     api.getEventDispatcher().dispatchResumeEvent(null, resumeEvent);
                 }
                 if (type.equals("READY")) {
@@ -605,9 +605,9 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
                             }
                             try {
                                 Thread.sleep(100);
-                            } catch (InterruptedException ignored) { }
+                            } catch (final InterruptedException ignored) { }
                         }
-                        ReconnectEvent reconnectEvent = new ReconnectEventImpl(api);
+                        final ReconnectEvent reconnectEvent = new ReconnectEventImpl(api);
                         api.getEventDispatcher().dispatchReconnectEvent(null, reconnectEvent);
                         ready.complete(true);
                     });
@@ -627,13 +627,13 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
                     logger.info("Hit identifying rate limit. Retrying in 5 seconds...");
                 } else {
                     // Invalid session :(
-                    int oneToFiveSeconds = 1000 + (int) (Math.random() * 4000);
+                    final int oneToFiveSeconds = 1000 + (int) (Math.random() * 4000);
                     logger.info("Could not resume session. Reconnecting in {}.{} seconds...",
                             () -> oneToFiveSeconds / 1000,
                             () -> oneToFiveSeconds / 100 % 10);
                     try {
                         Thread.sleep(oneToFiveSeconds);
-                    } catch (InterruptedException e) {
+                    } catch (final InterruptedException e) {
                         logger.error("Interrupted while delaying reconnect!");
                         return;
                     }
@@ -644,8 +644,8 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
             case HELLO:
                 logger.debug("Received HELLO packet");
 
-                JsonNode data = packet.get("d");
-                int heartbeatInterval = data.get("heartbeat_interval").asInt();
+                final JsonNode data = packet.get("d");
+                final int heartbeatInterval = data.get("heartbeat_interval").asInt();
 
                 // calculate reserved places for heartbeats
                 webSocketFrameSendingLimit.set(WEB_SOCKET_FRAME_SENDING_RATELIMIT - 1 - (60_000 / heartbeatInterval));
@@ -667,11 +667,11 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
     }
 
     @Override
-    public void onBinaryMessage(WebSocket websocket, byte[] binary) throws Exception {
-        String message;
+    public void onBinaryMessage(final WebSocket websocket, final byte[] binary) throws Exception {
+        final String message;
         try {
             message = BinaryMessageDecompressor.decompress(binary);
-        } catch (DataFormatException e) {
+        } catch (final DataFormatException e) {
             logger.warn("An error occurred while decompressing data", e);
             return;
         }
@@ -684,8 +684,8 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      *
      * @param websocket The websocket the resume packet should be sent to.
      */
-    private void sendResume(WebSocket websocket) {
-        ObjectNode resumePacket = JsonNodeFactory.instance.objectNode()
+    private void sendResume(final WebSocket websocket) {
+        final ObjectNode resumePacket = JsonNodeFactory.instance.objectNode()
                 .put("op", GatewayOpcode.RESUME.getCode());
         resumePacket.putObject("d")
                 .put("token", api.getPrefixedToken())
@@ -700,11 +700,11 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      *
      * @param websocket The websocket the identify packet should be sent to.
      */
-    private void sendIdentify(WebSocket websocket) {
-        ObjectNode identifyPacket = JsonNodeFactory.instance.objectNode()
+    private void sendIdentify(final WebSocket websocket) {
+        final ObjectNode identifyPacket = JsonNodeFactory.instance.objectNode()
                 .put("op", GatewayOpcode.IDENTIFY.getCode());
-        ObjectNode data = identifyPacket.putObject("d");
-        String token = api.getPrefixedToken();
+        final ObjectNode data = identifyPacket.putObject("d");
+        final String token = api.getPrefixedToken();
         data.put("token", token)
                 .put("compress", true)
                 .put("large_threshold", 250)
@@ -725,11 +725,11 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
             websocket.removeListeners(identifyFrameListeners);
             identifyFrameListeners.clear();
         }
-        WebSocketFrame identifyFrame = WebSocketFrame.createTextFrame(identifyPacket.toString());
+        final WebSocketFrame identifyFrame = WebSocketFrame.createTextFrame(identifyPacket.toString());
         lastSentFrameWasIdentify.set(identifyFrame, false);
-        WebSocketAdapter identifyFrameListener = new WebSocketAdapter() {
+        final WebSocketAdapter identifyFrameListener = new WebSocketAdapter() {
             @Override
-            public void onFrameSent(WebSocket websocket, WebSocketFrame frame) {
+            public void onFrameSent(final WebSocket websocket, final WebSocketFrame frame) {
                 if (lastSentFrameWasIdentify.isMarked()) {
                     // sending non-heartbeat frame after identify was sent => unset mark
                     if (!nextHeartbeatFrame.compareAndSet(frame, null)) {
@@ -759,8 +759,8 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      * @param selfDeafened Whether to self-deafen on the given server. If {@code null}, current state remains unchanged.
      */
     public void sendVoiceStateUpdate(
-            Server server, ServerVoiceChannel channel, Boolean selfMuted, Boolean selfDeafened) {
-        ObjectNode updateVoiceStatePacket = JsonNodeFactory.instance.objectNode()
+            Server server, final ServerVoiceChannel channel, final Boolean selfMuted, final Boolean selfDeafened) {
+        final ObjectNode updateVoiceStatePacket = JsonNodeFactory.instance.objectNode()
                 .put("op", GatewayOpcode.VOICE_STATE_UPDATE.getCode());
         if (server == null) {
             if (channel == null) {
@@ -768,7 +768,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
             }
             server = channel.getServer();
         }
-        User yourself = api.getYourself();
+        final User yourself = api.getYourself();
         updateVoiceStatePacket.putObject("d")
                 .put("guild_id", server.getIdAsString())
                 .put("channel_id", (channel == null) ? null : channel.getIdAsString())
@@ -844,7 +844,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      *
      * @param handler The handler to add.
      */
-    private void addHandler(PacketHandler handler) {
+    private void addHandler(final PacketHandler handler) {
         handlers.put(handler.getType(), handler);
     }
 
@@ -870,18 +870,18 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      * Sends the update status packet.
      */
     public void updateStatus() {
-        Optional<Activity> activity = api.getActivity();
-        ObjectNode updateStatus = JsonNodeFactory.instance.objectNode()
+        final Optional<Activity> activity = api.getActivity();
+        final ObjectNode updateStatus = JsonNodeFactory.instance.objectNode()
                 .put("op", GatewayOpcode.STATUS_UPDATE.getCode());
-        ObjectNode data = updateStatus.putObject("d")
+        final ObjectNode data = updateStatus.putObject("d")
                 .put("status", api.getStatus().getStatusString())
                 .put("afk", false)
                 .putNull("since");
 
-        ObjectNode activityJson = data.putObject("game");
+        final ObjectNode activityJson = data.putObject("game");
         activityJson.put("name", activity.map(Nameable::getName).orElse(null));
         activityJson.put("type", activity.flatMap(g -> {
-            int type = g.getType().getId();
+            final int type = g.getType().getId();
             if (type == 4) {
                 logger.warn("Can't set the activity to ActivityType.CUSTOM"
                         + ", using ActivityType.PLAYING instead");
@@ -900,7 +900,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      *
      * @param closeCode The close code for the close frame.
      */
-    public void sendCloseFrame(int closeCode) {
+    public void sendCloseFrame(final int closeCode) {
         sendCloseFrame(null, closeCode);
     }
 
@@ -910,7 +910,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      * @param webSocket The web socket to send the close frame to.
      * @param closeCode The close code for the close frame.
      */
-    public void sendCloseFrame(WebSocket webSocket, int closeCode) {
+    public void sendCloseFrame(final WebSocket webSocket, final int closeCode) {
         sendLifecycleFrame(webSocket, WebSocketFrame.createCloseFrame(closeCode));
     }
 
@@ -920,7 +920,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      * @param closeCode The close code for the close frame.
      * @param reason The reason for the close frame.
      */
-    public void sendCloseFrame(int closeCode, String reason) {
+    public void sendCloseFrame(final int closeCode, final String reason) {
         sendCloseFrame(null, closeCode, reason);
     }
 
@@ -931,7 +931,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      * @param closeCode The close code for the close frame.
      * @param reason The reason for the close frame.
      */
-    public void sendCloseFrame(WebSocket webSocket, int closeCode, String reason) {
+    public void sendCloseFrame(final WebSocket webSocket, final int closeCode, final String reason) {
         sendLifecycleFrame(webSocket, WebSocketFrame.createCloseFrame(closeCode, reason));
     }
 
@@ -940,7 +940,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      *
      * @param message The message for the text frame.
      */
-    public void sendLifecycleTextFrame(String message) {
+    public void sendLifecycleTextFrame(final String message) {
         sendLifecycleTextFrame(null, message);
     }
 
@@ -950,7 +950,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      * @param webSocket The web socket to send the text frame to.
      * @param message The message for the text frame.
      */
-    public void sendLifecycleTextFrame(WebSocket webSocket, String message) {
+    public void sendLifecycleTextFrame(final WebSocket webSocket, final String message) {
         sendLifecycleFrame(webSocket, WebSocketFrame.createTextFrame(message));
     }
 
@@ -959,7 +959,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      *
      * @param message The message for the text frame.
      */
-    public void sendTextFrame(String message) {
+    public void sendTextFrame(final String message) {
         sendFrame(null, WebSocketFrame.createTextFrame(message), false, false);
     }
 
@@ -968,7 +968,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      *
      * @param frame The web socket frame to send.
      */
-    public void sendLifecycleFrame(WebSocketFrame frame) {
+    public void sendLifecycleFrame(final WebSocketFrame frame) {
         sendLifecycleFrame(null, frame);
     }
 
@@ -978,7 +978,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      * @param webSocket The web socket to send the frame to.
      * @param frame The web socket frame to send.
      */
-    public void sendLifecycleFrame(WebSocket webSocket, WebSocketFrame frame) {
+    public void sendLifecycleFrame(final WebSocket webSocket, final WebSocketFrame frame) {
         sendFrame(webSocket, frame, false, true);
     }
 
@@ -987,7 +987,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      *
      * @param frame The web socket frame to send.
      */
-    public void sendFrame(WebSocketFrame frame) {
+    public void sendFrame(final WebSocketFrame frame) {
         sendFrame(null, frame, false, false);
     }
 
@@ -1000,7 +1000,7 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      * @param priority Whether the frame should be sent with priority.
      * @param lifecycle Whether the frame is a lifecycle frame and should only be sent over the given or current socket.
      */
-    private void sendFrame(WebSocket webSocket, WebSocketFrame frame, boolean priority, boolean lifecycle) {
+    private void sendFrame(final WebSocket webSocket, final WebSocketFrame frame, final boolean priority, final boolean lifecycle) {
         logger.debug("Queued {}lifecycle frame for sending with{} priority: {}",
                      lifecycle ? "" : "non-", priority ? "" : "out", frame);
         webSocketFrameSendingQueue.add(new WebSocketFrameSendingQueueEntry(
@@ -1018,13 +1018,13 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
      *
      * @param server The server.
      */
-    public void queueRequestGuildMembers(Server server) {
+    public void queueRequestGuildMembers(final Server server) {
         logger.debug("Queued {} for request guild members packet", server);
         requestGuildMembersQueue.add(server.getId());
     }
 
     @Override
-    public void onError(WebSocket websocket, WebSocketException cause) {
+    public void onError(final WebSocket websocket, final WebSocketException cause) {
         switch (cause.getMessage()) {
             // TODO This is copied from v2. I'm unsure if that's something we should do. Probably not ^^
             case "Flushing frames to the server failed: Connection closed by remote host":
@@ -1040,17 +1040,17 @@ public class DiscordWebSocketAdapter extends WebSocketAdapter {
     }
 
     @Override
-    public void handleCallbackError(WebSocket websocket, Throwable cause) {
+    public void handleCallbackError(final WebSocket websocket, final Throwable cause) {
         logger.error("Websocket callback error!", cause);
     }
 
     @Override
-    public void onUnexpectedError(WebSocket websocket, WebSocketException cause) {
+    public void onUnexpectedError(final WebSocket websocket, final WebSocketException cause) {
         logger.warn("Websocket onUnexpected error!", cause);
     }
 
     @Override
-    public void onConnectError(WebSocket websocket, WebSocketException exception) {
+    public void onConnectError(final WebSocket websocket, final WebSocketException exception) {
         logger.warn("Websocket onConnect error!", exception);
     }
 }

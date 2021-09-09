@@ -41,64 +41,64 @@ public class AccountUpdaterDelegateImpl implements AccountUpdaterDelegate {
      *
      * @param api The discord api instance.
      */
-    public AccountUpdaterDelegateImpl(DiscordApiImpl api) {
+    public AccountUpdaterDelegateImpl(final DiscordApiImpl api) {
         this.api = api;
     }
 
     @Override
-    public void setUsername(String username) {
+    public void setUsername(final String username) {
         this.username = username;
     }
 
     @Override
-    public void setAvatar(BufferedImage avatar) {
+    public void setAvatar(final BufferedImage avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, "png");
     }
 
     @Override
-    public void setAvatar(BufferedImage avatar, String fileType) {
+    public void setAvatar(final BufferedImage avatar, final String fileType) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, fileType);
     }
 
     @Override
-    public void setAvatar(File avatar) {
+    public void setAvatar(final File avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar);
     }
 
     @Override
-    public void setAvatar(Icon avatar) {
+    public void setAvatar(final Icon avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar);
     }
 
     @Override
-    public void setAvatar(URL avatar) {
+    public void setAvatar(final URL avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar);
     }
 
     @Override
-    public void setAvatar(byte[] avatar) {
+    public void setAvatar(final byte[] avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, "png");
     }
 
     @Override
-    public void setAvatar(byte[] avatar, String fileType) {
+    public void setAvatar(final byte[] avatar, final String fileType) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, fileType);
     }
 
     @Override
-    public void setAvatar(InputStream avatar) {
+    public void setAvatar(final InputStream avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, "png");
     }
 
     @Override
-    public void setAvatar(InputStream avatar, String fileType) {
+    public void setAvatar(final InputStream avatar, final String fileType) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, fileType);
     }
 
     @Override
     public CompletableFuture<Void> update() {
         boolean patchAccount = false;
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         if (username != null) {
             body.put("username", username);
             patchAccount = true;
@@ -109,7 +109,7 @@ public class AccountUpdaterDelegateImpl implements AccountUpdaterDelegate {
         if (patchAccount) {
             if (avatar != null) {
                 return avatar.asByteArray(api).thenAccept(bytes -> {
-                    String base64Avatar = "data:image/" + avatar.getFileType() + ";base64,"
+                    final String base64Avatar = "data:image/" + avatar.getFileType() + ";base64,"
                             + Base64.getEncoder().encodeToString(bytes);
                     body.put("avatar", base64Avatar);
                 }).thenCompose(aVoid -> new RestRequest<Void>(api, RestMethod.PATCH, RestEndpoint.CURRENT_USER)

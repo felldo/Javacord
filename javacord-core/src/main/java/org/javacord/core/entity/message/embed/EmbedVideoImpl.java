@@ -27,7 +27,7 @@ public class EmbedVideoImpl implements EmbedVideo {
      *
      * @param data The json data of the video.
      */
-    public EmbedVideoImpl(JsonNode data) {
+    public EmbedVideoImpl(final JsonNode data) {
         url = data.has("url") ? data.get("url").asText() : null;
         height = data.has("height") ? data.get("height").asInt() : -1;
         width = data.has("width") ? data.get("width").asInt() : -1;
@@ -40,7 +40,7 @@ public class EmbedVideoImpl implements EmbedVideo {
         }
         try {
             return new URL(url);
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the url of the embed video is malformed! Please contact the developer!", e);
             return null;
         }

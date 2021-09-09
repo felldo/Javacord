@@ -46,7 +46,7 @@ public enum ChannelType {
      * @param voiceChannelType Whether this type is a voice channel type or not.
      * @param serverChannelType Whether this type is a server channel type or not.
      */
-    ChannelType(int id, boolean textChannelType, boolean voiceChannelType, boolean serverChannelType) {
+    ChannelType(final int id, final boolean textChannelType, final boolean voiceChannelType, final boolean serverChannelType) {
         this.id = id;
         this.textChannelType = textChannelType;
         this.voiceChannelType = voiceChannelType;
@@ -95,8 +95,8 @@ public enum ChannelType {
      * @param id The id of the channel type.
      * @return The channel type with the given id.
      */
-    public static ChannelType fromId(int id) {
-        for (ChannelType type : values()) {
+    public static ChannelType fromId(final int id) {
+        for (final ChannelType type : values()) {
             if (type.getId() == id) {
                 return type;
             }

@@ -13,7 +13,7 @@ public class MessageCreateEventImpl extends CertainMessageEventImpl implements M
      *
      * @param message The created message.
      */
-    public MessageCreateEventImpl(Message message) {
+    public MessageCreateEventImpl(final Message message) {
         super(message);
     }
 

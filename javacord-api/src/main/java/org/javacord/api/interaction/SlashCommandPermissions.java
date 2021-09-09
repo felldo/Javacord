@@ -35,7 +35,7 @@ public interface SlashCommandPermissions {
      * @param permission True if the command should be enabled.
      * @return The built SlashCommandPermissions.
      */
-    static SlashCommandPermissions create(long id, SlashCommandPermissionType type, boolean permission) {
+    static SlashCommandPermissions create(final long id, final SlashCommandPermissionType type, final boolean permission) {
         return new SlashCommandPermissionsBuilder()
                 .setId(id)
                 .setType(type)

@@ -26,8 +26,8 @@ public class ServerChangeRulesChannelEventImpl extends ServerEventImpl implement
      * @param newRulesChannel The new rules channel of the server.
      * @param oldRulesChannel The old rules channel of the server.
      */
-    public ServerChangeRulesChannelEventImpl(ServerImpl server,
-                                             ServerTextChannel newRulesChannel, ServerTextChannel oldRulesChannel) {
+    public ServerChangeRulesChannelEventImpl(final ServerImpl server,
+                                             final ServerTextChannel newRulesChannel, final ServerTextChannel oldRulesChannel) {
         super(server);
         this.newRulesChannel = newRulesChannel;
         this.oldRulesChannel = oldRulesChannel;

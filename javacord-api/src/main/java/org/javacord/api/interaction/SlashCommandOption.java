@@ -63,10 +63,10 @@ public interface SlashCommandOption {
      * @param required Whether this option is required.
      * @return The new slash command option builder.
      */
-    static SlashCommandOption create(SlashCommandOptionType type,
-                                     String name,
-                                     String description,
-                                     boolean required) {
+    static SlashCommandOption create(final SlashCommandOptionType type,
+                                     final String name,
+                                     final String description,
+                                     final boolean required) {
         return new SlashCommandOptionBuilder()
             .setType(type)
             .setName(name)
@@ -84,7 +84,7 @@ public interface SlashCommandOption {
      * @param description The description of the option.
      * @return The new slash command option builder.
      */
-    static SlashCommandOption create(SlashCommandOptionType type, String name, String description) {
+    static SlashCommandOption create(final SlashCommandOptionType type, final String name, final String description) {
         return new SlashCommandOptionBuilder()
             .setType(type)
             .setName(name)
@@ -102,10 +102,10 @@ public interface SlashCommandOption {
      * @param options The options of this subcommand or subcommand group.
      * @return The new slash command option builder.
      */
-    static SlashCommandOption createWithOptions(SlashCommandOptionType type,
-                                                String name,
-                                                String description,
-                                                SlashCommandOptionBuilder... options) {
+    static SlashCommandOption createWithOptions(final SlashCommandOptionType type,
+                                                final String name,
+                                                final String description,
+                                                final SlashCommandOptionBuilder... options) {
         return createWithOptions(type, name, description,
             Arrays.stream(options)
                 .map(SlashCommandOptionBuilder::build)
@@ -122,10 +122,10 @@ public interface SlashCommandOption {
      * @param options The options of this subcommand or subcommand group.
      * @return The new slash command option builder.
      */
-    static SlashCommandOption createWithOptions(SlashCommandOptionType type,
-                                                String name,
-                                                String description,
-                                                List<SlashCommandOption> options) {
+    static SlashCommandOption createWithOptions(final SlashCommandOptionType type,
+                                                final String name,
+                                                final String description,
+                                                final List<SlashCommandOption> options) {
         return new SlashCommandOptionBuilder()
             .setType(type)
             .setName(name)
@@ -145,11 +145,11 @@ public interface SlashCommandOption {
      * @param choices The choices of the option.
      * @return The new slash command option builder.
      */
-    static SlashCommandOption createWithChoices(SlashCommandOptionType type,
-                                                String name,
-                                                String description,
-                                                boolean required,
-                                                SlashCommandOptionChoiceBuilder... choices) {
+    static SlashCommandOption createWithChoices(final SlashCommandOptionType type,
+                                                final String name,
+                                                final String description,
+                                                final boolean required,
+                                                final SlashCommandOptionChoiceBuilder... choices) {
         return createWithChoices(type, name, description, required, Arrays.stream(choices)
             .map(SlashCommandOptionChoiceBuilder::build)
             .collect(Collectors.toList()));
@@ -166,11 +166,11 @@ public interface SlashCommandOption {
      * @param choices The choices of the option.
      * @return The new slash command option builder.
      */
-    static SlashCommandOption createWithChoices(SlashCommandOptionType type,
-                                                String name,
-                                                String description,
-                                                boolean required,
-                                                List<SlashCommandOptionChoice> choices) {
+    static SlashCommandOption createWithChoices(final SlashCommandOptionType type,
+                                                final String name,
+                                                final String description,
+                                                final boolean required,
+                                                final List<SlashCommandOptionChoice> choices) {
         return new SlashCommandOptionBuilder()
             .setType(type)
             .setName(name)

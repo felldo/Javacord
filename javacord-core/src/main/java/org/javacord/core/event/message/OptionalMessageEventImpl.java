@@ -24,7 +24,7 @@ public abstract class OptionalMessageEventImpl extends MessageEventImpl implemen
      * @param messageId The id of the message.
      * @param channel The text channel in which the message was sent.
      */
-    public OptionalMessageEventImpl(DiscordApi api, long messageId, TextChannel channel) {
+    public OptionalMessageEventImpl(final DiscordApi api, final long messageId, final TextChannel channel) {
         super(api, messageId, channel);
         message = api.getCachedMessageById(messageId).orElse(null);
     }

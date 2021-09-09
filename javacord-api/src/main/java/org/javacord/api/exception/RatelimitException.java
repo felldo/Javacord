@@ -14,7 +14,7 @@ public class RatelimitException extends DiscordException {
      * @param message The message of the exception.
      * @param request The information about the request.
      */
-    public RatelimitException(Exception origin, String message, RestRequestInformation request) {
+    public RatelimitException(final Exception origin, final String message, final RestRequestInformation request) {
         super(origin, message, request, null);
     }
 

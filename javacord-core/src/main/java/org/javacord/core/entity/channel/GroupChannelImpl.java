@@ -56,7 +56,7 @@ public class GroupChannelImpl implements GroupChannel, Cleanupable, InternalText
     /**
      * The icon id of the channel.
      */
-    private volatile String iconId;
+    private final String iconId;
 
     /**
      * The recipients of the group channel.
@@ -74,10 +74,10 @@ public class GroupChannelImpl implements GroupChannel, Cleanupable, InternalText
      * @param api The discord api instance.
      * @param data The json data of the channel.
      */
-    public GroupChannelImpl(DiscordApiImpl api, JsonNode data) {
+    public GroupChannelImpl(final DiscordApiImpl api, final JsonNode data) {
         this.api = api;
 
-        for (JsonNode recipientJson : data.get("recipients")) {
+        for (final JsonNode recipientJson : data.get("recipients")) {
             recipients.add(new UserImpl(api, recipientJson, (MemberImpl) null, null));
         }
 
@@ -122,7 +122,7 @@ public class GroupChannelImpl implements GroupChannel, Cleanupable, InternalText
      *
      * @param name The new name of the channel.
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -136,7 +136,7 @@ public class GroupChannelImpl implements GroupChannel, Cleanupable, InternalText
                     getApi(),
                     new URL("https://" + Javacord.DISCORD_CDN_DOMAIN
                             + "/channel-icons/" + getIdAsString() + "/" + iconId + ".png")));
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the url of the icon is malformed! Please contact the developer!", e);
             return Optional.empty();
         }
@@ -148,7 +148,7 @@ public class GroupChannelImpl implements GroupChannel, Cleanupable, InternalText
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return (this == o)
                || !((o == null)
                     || (getClass() != o.getClass())

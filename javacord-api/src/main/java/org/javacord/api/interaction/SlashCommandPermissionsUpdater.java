@@ -16,7 +16,7 @@ public class SlashCommandPermissionsUpdater {
      *
      * @param server The server where the slash command permissions should be applied on.
      */
-    public SlashCommandPermissionsUpdater(Server server) {
+    public SlashCommandPermissionsUpdater(final Server server) {
         delegate = DelegateFactory.createSlashCommandPermissionsUpdaterDelegate(server);
     }
 
@@ -26,7 +26,7 @@ public class SlashCommandPermissionsUpdater {
      * @param permissions The permissions.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandPermissionsUpdater setPermissions(List<SlashCommandPermissions> permissions) {
+    public SlashCommandPermissionsUpdater setPermissions(final List<SlashCommandPermissions> permissions) {
         delegate.setPermissions(permissions);
         return this;
     }
@@ -37,7 +37,7 @@ public class SlashCommandPermissionsUpdater {
      * @param permission The permission.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandPermissionsUpdater addPermission(SlashCommandPermissions permission) {
+    public SlashCommandPermissionsUpdater addPermission(final SlashCommandPermissions permission) {
         delegate.addPermission(permission);
         return this;
     }
@@ -51,7 +51,7 @@ public class SlashCommandPermissionsUpdater {
      * @return The current instance in order to chain call methods.
      */
     public SlashCommandPermissionsUpdater addPermission(
-            long id, SlashCommandPermissionType type, boolean permission) {
+            final long id, final SlashCommandPermissionType type, final boolean permission) {
         delegate.addPermission(SlashCommandPermissions.create(id, type, permission));
         return this;
     }
@@ -62,7 +62,7 @@ public class SlashCommandPermissionsUpdater {
      * @param permissions The permissions.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandPermissionsUpdater addPermissions(List<SlashCommandPermissions> permissions) {
+    public SlashCommandPermissionsUpdater addPermissions(final List<SlashCommandPermissions> permissions) {
         delegate.addPermissions(permissions);
         return this;
     }
@@ -75,7 +75,7 @@ public class SlashCommandPermissionsUpdater {
      * @param commandId The ID of the command which should be updated.
      * @return The updated server slash command permissions.
      */
-    public CompletableFuture<ServerSlashCommandPermissions> update(long commandId) {
+    public CompletableFuture<ServerSlashCommandPermissions> update(final long commandId) {
         return delegate.update(commandId);
     }
 

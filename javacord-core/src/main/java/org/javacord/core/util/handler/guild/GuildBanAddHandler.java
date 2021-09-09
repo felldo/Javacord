@@ -20,19 +20,19 @@ public class GuildBanAddHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public GuildBanAddHandler(DiscordApi api) {
+    public GuildBanAddHandler(final DiscordApi api) {
         super(api, true, "GUILD_BAN_ADD");
     }
 
     @Override
-    public void handle(JsonNode packet) {
+    public void handle(final JsonNode packet) {
         api.getPossiblyUnreadyServerById(packet.get("guild_id").asLong())
                 .map(server -> (ServerImpl) server)
                 .ifPresent(server -> {
-                    User user = new UserImpl(api, packet.get("user"), (MemberImpl) null, server);
+                    final User user = new UserImpl(api, packet.get("user"), (MemberImpl) null, server);
                     server.removeMember(user.getId());
 
-                    ServerMemberBanEvent event = new ServerMemberBanEventImpl(server, user);
+                    final ServerMemberBanEvent event = new ServerMemberBanEventImpl(server, user);
 
                     api.getEventDispatcher().dispatchServerMemberBanEvent(server, server, user, event);
                 });

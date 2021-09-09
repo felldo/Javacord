@@ -74,9 +74,9 @@ public class DelegateFactory {
 
     // Load it static, because it has a better performance to load it only once
     static {
-        ServiceLoader<DelegateFactoryDelegate> delegateServiceLoader =
+        final ServiceLoader<DelegateFactoryDelegate> delegateServiceLoader =
                 ServiceLoader.load(DelegateFactoryDelegate.class, DelegateFactory.class.getClassLoader());
-        Iterator<DelegateFactoryDelegate> delegateIterator = delegateServiceLoader.iterator();
+        final Iterator<DelegateFactoryDelegate> delegateIterator = delegateServiceLoader.iterator();
         if (delegateIterator.hasNext()) {
             delegateFactoryDelegate = delegateIterator.next();
             if (delegateIterator.hasNext()) {
@@ -198,7 +198,7 @@ public class DelegateFactory {
      * @param permissions The permissions which should be copied.
      * @return A new permissions builder delegate initialized with the given permissions.
      */
-    public static PermissionsBuilderDelegate createPermissionsBuilderDelegate(Permissions permissions) {
+    public static PermissionsBuilderDelegate createPermissionsBuilderDelegate(final Permissions permissions) {
         return delegateFactoryDelegate.createPermissionsBuilderDelegate(permissions);
     }
 
@@ -208,7 +208,7 @@ public class DelegateFactory {
      * @param server The server of the channel category.
      * @return A new channel category builder delegate.
      */
-    public static ChannelCategoryBuilderDelegate createChannelCategoryBuilderDelegate(Server server) {
+    public static ChannelCategoryBuilderDelegate createChannelCategoryBuilderDelegate(final Server server) {
         return delegateFactoryDelegate.createChannelCategoryBuilderDelegate(server);
     }
 
@@ -218,7 +218,7 @@ public class DelegateFactory {
      * @param server The server of the server text channel.
      * @return A new server text channel builder delegate.
      */
-    public static ServerTextChannelBuilderDelegate createServerTextChannelBuilderDelegate(Server server) {
+    public static ServerTextChannelBuilderDelegate createServerTextChannelBuilderDelegate(final Server server) {
         return delegateFactoryDelegate.createServerTextChannelBuilderDelegate(server);
     }
 
@@ -228,7 +228,7 @@ public class DelegateFactory {
      * @param server The server of the server voice channel.
      * @return A new server voice channel builder delegate.
      */
-    public static ServerVoiceChannelBuilderDelegate createServerVoiceChannelBuilderDelegate(Server server) {
+    public static ServerVoiceChannelBuilderDelegate createServerVoiceChannelBuilderDelegate(final Server server) {
         return delegateFactoryDelegate.createServerVoiceChannelBuilderDelegate(server);
     }
 
@@ -238,7 +238,7 @@ public class DelegateFactory {
      * @param server The server of the custom emoji.
      * @return A new custom emoji builder delegate.
      */
-    public static CustomEmojiBuilderDelegate createCustomEmojiBuilderDelegate(Server server) {
+    public static CustomEmojiBuilderDelegate createCustomEmojiBuilderDelegate(final Server server) {
         return delegateFactoryDelegate.createCustomEmojiBuilderDelegate(server);
     }
 
@@ -248,7 +248,7 @@ public class DelegateFactory {
      * @param channel The server text channel of the webhook.
      * @return A new webhook builder delegate.
      */
-    public static WebhookBuilderDelegate createWebhookBuilderDelegate(ServerTextChannel channel) {
+    public static WebhookBuilderDelegate createWebhookBuilderDelegate(final ServerTextChannel channel) {
         return delegateFactoryDelegate.createWebhookBuilderDelegate(channel);
     }
 
@@ -258,7 +258,7 @@ public class DelegateFactory {
      * @param api The discord api instance.
      * @return A new server builder delegate.
      */
-    public static ServerBuilderDelegate createServerBuilderDelegate(DiscordApi api) {
+    public static ServerBuilderDelegate createServerBuilderDelegate(final DiscordApi api) {
         return delegateFactoryDelegate.createServerBuilderDelegate(api);
     }
 
@@ -268,7 +268,7 @@ public class DelegateFactory {
      * @param server The server for which the role should be created.
      * @return A new role builder delegate.
      */
-    public static RoleBuilderDelegate createRoleBuilderDelegate(Server server) {
+    public static RoleBuilderDelegate createRoleBuilderDelegate(final Server server) {
         return delegateFactoryDelegate.createRoleBuilderDelegate(server);
     }
 
@@ -278,7 +278,7 @@ public class DelegateFactory {
      * @param channel The channel for the invite.
      * @return A new invite builder delegate.
      */
-    public static InviteBuilderDelegate createInviteBuilderDelegate(ServerChannel channel) {
+    public static InviteBuilderDelegate createInviteBuilderDelegate(final ServerChannel channel) {
         return delegateFactoryDelegate.createInviteBuilderDelegate(channel);
     }
 
@@ -288,7 +288,7 @@ public class DelegateFactory {
      * @param api The discord api instance.
      * @return A new account updater delegate.
      */
-    public static AccountUpdaterDelegate createAccountUpdaterDelegate(DiscordApi api) {
+    public static AccountUpdaterDelegate createAccountUpdaterDelegate(final DiscordApi api) {
         return delegateFactoryDelegate.createAccountUpdaterDelegate(api);
     }
 
@@ -298,7 +298,7 @@ public class DelegateFactory {
      * @param commandId The slash command id.
      * @return A new slash command updater delegate.
      */
-    public static SlashCommandUpdaterDelegate createSlashCommandUpdaterDelegate(long commandId) {
+    public static SlashCommandUpdaterDelegate createSlashCommandUpdaterDelegate(final long commandId) {
         return delegateFactoryDelegate.createSlashCommandUpdaterDelegate(commandId);
     }
 
@@ -308,7 +308,7 @@ public class DelegateFactory {
      * @param channel The channel to update.
      * @return A new group channel updater delegate.
      */
-    public static GroupChannelUpdaterDelegate createGroupChannelUpdaterDelegate(GroupChannel channel) {
+    public static GroupChannelUpdaterDelegate createGroupChannelUpdaterDelegate(final GroupChannel channel) {
         return delegateFactoryDelegate.createGroupChannelUpdaterDelegate(channel);
     }
 
@@ -318,7 +318,7 @@ public class DelegateFactory {
      * @param channel The channel to update.
      * @return A new server channel updater delegate.
      */
-    public static ServerChannelUpdaterDelegate createServerChannelUpdaterDelegate(ServerChannel channel) {
+    public static ServerChannelUpdaterDelegate createServerChannelUpdaterDelegate(final ServerChannel channel) {
         return delegateFactoryDelegate.createServerChannelUpdaterDelegate(channel);
     }
 
@@ -328,7 +328,7 @@ public class DelegateFactory {
      * @param channel The channel to update.
      * @return A new server text channel updater delegate.
      */
-    public static ServerTextChannelUpdaterDelegate createServerTextChannelUpdaterDelegate(ServerTextChannel channel) {
+    public static ServerTextChannelUpdaterDelegate createServerTextChannelUpdaterDelegate(final ServerTextChannel channel) {
         return delegateFactoryDelegate.createServerTextChannelUpdaterDelegate(channel);
     }
 
@@ -339,7 +339,7 @@ public class DelegateFactory {
      * @return A new server voice channel updater delegate.
      */
     public static ServerVoiceChannelUpdaterDelegate createServerVoiceChannelUpdaterDelegate(
-            ServerVoiceChannel channel) {
+            final ServerVoiceChannel channel) {
         return delegateFactoryDelegate.createServerVoiceChannelUpdaterDelegate(channel);
     }
 
@@ -349,7 +349,7 @@ public class DelegateFactory {
      * @param emoji The custom emoji to update.
      * @return A new custom emoji updater delegate.
      */
-    public static CustomEmojiUpdaterDelegate createCustomEmojiUpdaterDelegate(KnownCustomEmoji emoji) {
+    public static CustomEmojiUpdaterDelegate createCustomEmojiUpdaterDelegate(final KnownCustomEmoji emoji) {
         return delegateFactoryDelegate.createCustomEmojiUpdaterDelegate(emoji);
     }
 
@@ -359,7 +359,7 @@ public class DelegateFactory {
      * @param role The role to update.
      * @return A new role updater delegate.
      */
-    public static RoleUpdaterDelegate createRoleUpdaterDelegate(Role role) {
+    public static RoleUpdaterDelegate createRoleUpdaterDelegate(final Role role) {
         return delegateFactoryDelegate.createRoleUpdaterDelegate(role);
     }
 
@@ -369,7 +369,7 @@ public class DelegateFactory {
      * @param server The server to update.
      * @return A new server updater delegate.
      */
-    public static ServerUpdaterDelegate createServerUpdaterDelegate(Server server) {
+    public static ServerUpdaterDelegate createServerUpdaterDelegate(final Server server) {
         return delegateFactoryDelegate.createServerUpdaterDelegate(server);
     }
 
@@ -379,7 +379,7 @@ public class DelegateFactory {
      * @param webhook The webhook to update.
      * @return A new webhook updater delegate.
      */
-    public static WebhookUpdaterDelegate createWebhookUpdaterDelegate(Webhook webhook) {
+    public static WebhookUpdaterDelegate createWebhookUpdaterDelegate(final Webhook webhook) {
         return delegateFactoryDelegate.createWebhookUpdaterDelegate(webhook);
     }
 
@@ -389,7 +389,7 @@ public class DelegateFactory {
      * @param api The discord api instance.
      * @return A new audio source base delegate.
      */
-    public static AudioSourceBaseDelegate createAudioSourceBaseDelegate(DiscordApi api) {
+    public static AudioSourceBaseDelegate createAudioSourceBaseDelegate(final DiscordApi api) {
         return delegateFactoryDelegate.createAudioSourceBaseDelegate(api);
     }
 
@@ -418,7 +418,7 @@ public class DelegateFactory {
      * @return The slash command permissions updater delegate.
      */
     public static SlashCommandPermissionsUpdaterDelegate createSlashCommandPermissionsUpdaterDelegate(
-            Server server) {
+            final Server server) {
         return delegateFactoryDelegate.createSlashCommandPermissionsUpdaterDelegate(server);
     }
 

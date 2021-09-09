@@ -43,29 +43,29 @@ public class ServerTextChannelBuilderDelegateImpl extends ServerChannelBuilderDe
      *
      * @param server The server of the server text channel.
      */
-    public ServerTextChannelBuilderDelegateImpl(ServerImpl server) {
+    public ServerTextChannelBuilderDelegateImpl(final ServerImpl server) {
         super(server);
     }
 
     @Override
-    public void setTopic(String topic) {
+    public void setTopic(final String topic) {
         this.topic = topic;
     }
 
     @Override
-    public void setCategory(ChannelCategory category) {
+    public void setCategory(final ChannelCategory category) {
         this.category = category;
     }
 
     @Override
-    public void setSlowmodeDelayInSeconds(int delay) {
+    public void setSlowmodeDelayInSeconds(final int delay) {
         this.delay = delay;
         delayModified = true;
     }
 
     @Override
     public CompletableFuture<ServerTextChannel> create() {
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         body.put("type", 0);
         super.prepareBody(body);
         if (topic != null) {

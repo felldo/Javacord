@@ -31,7 +31,7 @@ public class IconImpl implements Icon {
      * @param api The discord api instance.
      * @param url The url of the icon.
      */
-    public IconImpl(DiscordApi api, URL url) {
+    public IconImpl(final DiscordApi api, final URL url) {
         this.api = api;
         this.url = url;
     }

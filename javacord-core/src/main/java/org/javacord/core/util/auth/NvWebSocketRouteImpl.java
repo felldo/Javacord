@@ -22,7 +22,7 @@ public class NvWebSocketRouteImpl implements Route {
      * @param proxy             The proxy that is used to connect to the URL.
      * @param inetSocketAddress The inet socket address to which the connection is done.
      */
-    public NvWebSocketRouteImpl(URL url, Proxy proxy, InetSocketAddress inetSocketAddress) {
+    public NvWebSocketRouteImpl(final URL url, final Proxy proxy, final InetSocketAddress inetSocketAddress) {
         this.url = url;
         this.proxy = proxy;
         this.inetSocketAddress = inetSocketAddress;

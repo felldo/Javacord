@@ -19,7 +19,7 @@ public abstract class ServerVoiceChannelEventImpl extends ServerEventImpl implem
      *
      * @param channel The channel of the event.
      */
-    public ServerVoiceChannelEventImpl(ServerVoiceChannel channel) {
+    public ServerVoiceChannelEventImpl(final ServerVoiceChannel channel) {
         super(channel.getServer());
         this.channel = channel;
     }

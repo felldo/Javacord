@@ -18,7 +18,7 @@ public abstract class EventImpl implements Event {
      *
      * @param api The api instance of the event.
      */
-    public EventImpl(DiscordApi api) {
+    public EventImpl(final DiscordApi api) {
         this.api = api;
     }
 

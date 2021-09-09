@@ -28,7 +28,7 @@ public class CustomEmojiBuilder {
      *
      * @param server The server of the custom emoji.
      */
-    public CustomEmojiBuilder(Server server) {
+    public CustomEmojiBuilder(final Server server) {
         delegate = DelegateFactory.createCustomEmojiBuilderDelegate(server);
     }
 
@@ -38,7 +38,7 @@ public class CustomEmojiBuilder {
      * @param reason The reason for this update.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiBuilder setAuditLogReason(String reason) {
+    public CustomEmojiBuilder setAuditLogReason(final String reason) {
         delegate.setAuditLogReason(reason);
         return this;
     }
@@ -49,7 +49,7 @@ public class CustomEmojiBuilder {
      * @param name The name of the emoji.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiBuilder setName(String name) {
+    public CustomEmojiBuilder setName(final String name) {
         delegate.setName(name);
         return this;
     }
@@ -60,7 +60,7 @@ public class CustomEmojiBuilder {
      * @param image The image of the emoji.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiBuilder setImage(Icon image) {
+    public CustomEmojiBuilder setImage(final Icon image) {
         delegate.setImage(image);
         return this;
     }
@@ -71,7 +71,7 @@ public class CustomEmojiBuilder {
      * @param image The image of the emoji.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiBuilder setImage(URL image) {
+    public CustomEmojiBuilder setImage(final URL image) {
         delegate.setImage(image);
         return this;
     }
@@ -82,7 +82,7 @@ public class CustomEmojiBuilder {
      * @param image The image file of the emoji.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiBuilder setImage(File image) {
+    public CustomEmojiBuilder setImage(final File image) {
         delegate.setImage(image);
         return this;
     }
@@ -94,7 +94,7 @@ public class CustomEmojiBuilder {
      * @param image The image of the emoji.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiBuilder setImage(BufferedImage image) {
+    public CustomEmojiBuilder setImage(final BufferedImage image) {
         delegate.setImage(image);
         return this;
     }
@@ -106,7 +106,7 @@ public class CustomEmojiBuilder {
      * @param type The type of the image, e.g. "png", "jpg" or "gif".
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiBuilder setImage(BufferedImage image, String type) {
+    public CustomEmojiBuilder setImage(final BufferedImage image, final String type) {
         delegate.setImage(image, type);
         return this;
     }
@@ -118,7 +118,7 @@ public class CustomEmojiBuilder {
      * @param image The image of the emoji.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiBuilder setImage(byte[] image) {
+    public CustomEmojiBuilder setImage(final byte[] image) {
         delegate.setImage(image);
         return this;
     }
@@ -130,7 +130,7 @@ public class CustomEmojiBuilder {
      * @param type The type of the image, e.g. "png", "jpg" or "gif".
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiBuilder setImage(byte[] image, String type) {
+    public CustomEmojiBuilder setImage(final byte[] image, final String type) {
         delegate.setImage(image, type);
         return this;
     }
@@ -142,7 +142,7 @@ public class CustomEmojiBuilder {
      * @param image The image of the emoji.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiBuilder setImage(InputStream image) {
+    public CustomEmojiBuilder setImage(final InputStream image) {
         delegate.setImage(image);
         return this;
     }
@@ -154,7 +154,7 @@ public class CustomEmojiBuilder {
      * @param type The type of the image, e.g. "png", "jpg" or "gif".
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiBuilder setImage(InputStream image, String type) {
+    public CustomEmojiBuilder setImage(final InputStream image, final String type) {
         delegate.setImage(image, type);
         return this;
     }
@@ -166,7 +166,7 @@ public class CustomEmojiBuilder {
      * @param role The role to add.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiBuilder addRoleToWhitelist(Role role) {
+    public CustomEmojiBuilder addRoleToWhitelist(final Role role) {
         delegate.addRoleToWhitelist(role);
         return this;
     }
@@ -178,7 +178,7 @@ public class CustomEmojiBuilder {
      * @param roles The roles which should be whitelisted.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiBuilder setWhitelist(Collection<Role> roles) {
+    public CustomEmojiBuilder setWhitelist(final Collection<Role> roles) {
         delegate.setWhitelist(roles);
         return this;
     }
@@ -190,7 +190,7 @@ public class CustomEmojiBuilder {
      * @param roles The roles which should be whitelisted.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiBuilder setWhitelist(Role... roles) {
+    public CustomEmojiBuilder setWhitelist(final Role... roles) {
         delegate.setWhitelist(roles);
         return this;
     }

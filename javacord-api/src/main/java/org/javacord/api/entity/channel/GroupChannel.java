@@ -46,7 +46,7 @@ public interface GroupChannel extends TextChannel, VoiceChannel, GroupChannelAtt
      * @param user The user to check.
      * @return Whether the user is a member of this group channel or not.
      */
-    default boolean isMember(User user) {
+    default boolean isMember(final User user) {
         return user.isYourself() || getMembers().contains(user);
     }
 
@@ -68,7 +68,7 @@ public interface GroupChannel extends TextChannel, VoiceChannel, GroupChannelAtt
      * @param name The new name of the channel.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateName(String name) {
+    default CompletableFuture<Void> updateName(final String name) {
         return createUpdater().setName(name).update();
     }
 
@@ -79,11 +79,11 @@ public interface GroupChannel extends TextChannel, VoiceChannel, GroupChannelAtt
 
     @Override
     default CompletableFuture<GroupChannel> getLatestInstance() {
-        Optional<GroupChannel> currentCachedInstance = getCurrentCachedInstance();
+        final Optional<GroupChannel> currentCachedInstance = getCurrentCachedInstance();
         if (currentCachedInstance.isPresent()) {
             return CompletableFuture.completedFuture(currentCachedInstance.get());
         } else {
-            CompletableFuture<GroupChannel> result = new CompletableFuture<>();
+            final CompletableFuture<GroupChannel> result = new CompletableFuture<>();
             result.completeExceptionally(new NoSuchElementException());
             return result;
         }

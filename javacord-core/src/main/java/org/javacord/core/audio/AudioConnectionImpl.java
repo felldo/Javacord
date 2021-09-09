@@ -114,7 +114,7 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
      * @param channel The channel of the audio connection.
      * @param readyFuture An uncompleted future that gets completed when the connection is fully established.
      */
-    public AudioConnectionImpl(ServerVoiceChannel channel, CompletableFuture<AudioConnection> readyFuture) {
+    public AudioConnectionImpl(final ServerVoiceChannel channel, final CompletableFuture<AudioConnection> readyFuture) {
         this.channel = channel;
         this.readyFuture = readyFuture;
         id = idCounter.getAndIncrement();
@@ -173,7 +173,7 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
      *
      * @param channel The channel of the connection.
      */
-    public void setChannel(ServerVoiceChannel channel) {
+    public void setChannel(final ServerVoiceChannel channel) {
         this.channel = channel;
     }
 
@@ -182,7 +182,7 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
      *
      * @param sessionId The session id of the connection.
      */
-    public void setSessionId(String sessionId) {
+    public void setSessionId(final String sessionId) {
         this.sessionId = sessionId;
     }
 
@@ -191,7 +191,7 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
      *
      * @param token The token for the audio connection.
      */
-    public void setToken(String token) {
+    public void setToken(final String token) {
         this.token = token;
     }
 
@@ -200,7 +200,7 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
      *
      * @param endpoint The endpoint for the audio websocket.
      */
-    public void setEndpoint(String endpoint) {
+    public void setEndpoint(final String endpoint) {
         this.endpoint = endpoint;
     }
 
@@ -209,8 +209,8 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
      *
      * @param speaking The speaking mode to set
      */
-    public void setSpeaking(boolean speaking) {
-        EnumSet<SpeakingFlag> newSpeakingFlags = speakingFlags.clone();
+    public void setSpeaking(final boolean speaking) {
+        final EnumSet<SpeakingFlag> newSpeakingFlags = speakingFlags.clone();
         if (speaking) {
             newSpeakingFlags.add(SpeakingFlag.SPEAKING);
         } else {
@@ -233,8 +233,8 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
      *
      * @param prioritySpeaking Whether to speak with priority.
      */
-    public void setPrioritySpeaking(boolean prioritySpeaking) {
-        EnumSet<SpeakingFlag> newSpeakingFlags = speakingFlags.clone();
+    public void setPrioritySpeaking(final boolean prioritySpeaking) {
+        final EnumSet<SpeakingFlag> newSpeakingFlags = speakingFlags.clone();
         if (prioritySpeaking) {
             newSpeakingFlags.add(SpeakingFlag.PRIORITY_SPEAKER);
         } else {
@@ -257,7 +257,7 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
      *
      * @param speakingFlags The new speaking flags to set.
      */
-    public void setSpeakingFlags(EnumSet<SpeakingFlag> speakingFlags) {
+    public void setSpeakingFlags(final EnumSet<SpeakingFlag> speakingFlags) {
         if (!speakingFlags.equals(this.speakingFlags)) {
             this.speakingFlags = speakingFlags;
             websocketAdapter.sendSpeaking();
@@ -316,7 +316,7 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
      * @return The current audio source, or {@code null} if the specified waiting time elapsed.
      * @throws InterruptedException If interrupted while waiting.
      */
-    public AudioSource getCurrentAudioSourceBlocking(long timeout, TimeUnit unit) throws InterruptedException {
+    public AudioSource getCurrentAudioSourceBlocking(final long timeout, final TimeUnit unit) throws InterruptedException {
         return currentSource.get(timeout, unit);
     }
 
@@ -331,12 +331,12 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
     }
 
     @Override
-    public CompletableFuture<Void> moveTo(ServerVoiceChannel destChannel) {
+    public CompletableFuture<Void> moveTo(final ServerVoiceChannel destChannel) {
         return moveTo(destChannel, muted, deafened);
     }
 
     @Override
-    public CompletableFuture<Void> moveTo(ServerVoiceChannel destChannel, boolean selfMute, boolean selfDeafen) {
+    public CompletableFuture<Void> moveTo(final ServerVoiceChannel destChannel, final boolean selfMute, final boolean selfDeafen) {
         movingFuture = new CompletableFuture<>();
         if (!destChannel.getServer().equals(getChannel().getServer())) {
             movingFuture.completeExceptionally(
@@ -366,13 +366,13 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
     public Optional<AudioSource> getAudioSource() {
         try {
             return Optional.ofNullable(currentSource.get(0, TimeUnit.MILLISECONDS));
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
             return Optional.empty();
         }
     }
 
     @Override
-    public void setAudioSource(AudioSource source) {
+    public void setAudioSource(final AudioSource source) {
         currentSource.set(source);
     }
 
@@ -392,7 +392,7 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
     }
 
     @Override
-    public void setSelfMuted(boolean muted) {
+    public void setSelfMuted(final boolean muted) {
         this.muted = muted;
         api.getWebSocketAdapter()
                 .sendVoiceStateUpdate(getChannel().getServer(), getChannel(), muted, deafened);
@@ -404,7 +404,7 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
     }
 
     @Override
-    public void setSelfDeafened(boolean deafened) {
+    public void setSelfDeafened(final boolean deafened) {
         this.deafened = deafened;
         api.getWebSocketAdapter()
                 .sendVoiceStateUpdate(getChannel().getServer(), getChannel(), muted, deafened);

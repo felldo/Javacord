@@ -86,7 +86,7 @@ public interface KnownCustomEmoji extends CustomEmoji, UpdatableFromCache<KnownC
      * @param name The new name of the emoji.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateName(String name) {
+    default CompletableFuture<Void> updateName(final String name) {
         return createUpdater().setName(name).update();
     }
 
@@ -100,7 +100,7 @@ public interface KnownCustomEmoji extends CustomEmoji, UpdatableFromCache<KnownC
      * @param roles The new whitelist.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateWhitelist(Collection<Role> roles) {
+    default CompletableFuture<Void> updateWhitelist(final Collection<Role> roles) {
         return createUpdater().setWhitelist(roles).update();
     }
 
@@ -114,7 +114,7 @@ public interface KnownCustomEmoji extends CustomEmoji, UpdatableFromCache<KnownC
      * @param roles The new whitelist.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateWhitelist(Role... roles) {
+    default CompletableFuture<Void> updateWhitelist(final Role... roles) {
         return createUpdater().setWhitelist(roles).update();
     }
 

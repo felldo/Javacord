@@ -60,7 +60,7 @@ public interface MessageEvent extends TextChannelEvent {
      * @param embeds An array of the new embeds of the message.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Message> editMessage(EmbedBuilder... embeds) {
+    default CompletableFuture<Message> editMessage(final EmbedBuilder... embeds) {
         return editMessage(Arrays.asList(embeds));
     }
 
@@ -79,7 +79,7 @@ public interface MessageEvent extends TextChannelEvent {
      * @param embeds  An array of the new embeds of the message.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Message> editMessage(String content, EmbedBuilder... embeds) {
+    default CompletableFuture<Message> editMessage(final String content, final EmbedBuilder... embeds) {
         return editMessage(content, Arrays.asList(embeds));
     }
 

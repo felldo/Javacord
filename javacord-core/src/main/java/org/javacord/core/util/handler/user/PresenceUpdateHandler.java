@@ -32,29 +32,29 @@ public class PresenceUpdateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public PresenceUpdateHandler(DiscordApi api) {
+    public PresenceUpdateHandler(final DiscordApi api) {
         super(api, true, "PRESENCE_UPDATE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
+    public void handle(final JsonNode packet) {
         // ignore the guild_id and send to all mutual servers instead, or we must track the properties per server
         // or all packets after the first do not detect a change and will not send around an event for the server
-        long userId = packet.get("user").get("id").asLong();
+        final long userId = packet.get("user").get("id").asLong();
 
-        AtomicReference<UserPresence> presence = new AtomicReference<>(
+        final AtomicReference<UserPresence> presence = new AtomicReference<>(
                 api.getEntityCache().get().getUserPresenceCache().getPresenceByUserId(userId)
                         .orElseGet(() -> new UserPresence(userId, null, null, io.vavr.collection.HashMap.empty()))
         );
 
         if (packet.hasNonNull("activities")) {
-            Set<Activity> newActivities = new HashSet<>();
-            for (JsonNode activityJson : packet.get("activities")) {
+            final Set<Activity> newActivities = new HashSet<>();
+            for (final JsonNode activityJson : packet.get("activities")) {
                 if (!activityJson.isNull()) {
                     newActivities.add(new ActivityImpl(api, activityJson));
                 }
             }
-            Set<Activity> oldActivities = api.getEntityCache().get()
+            final Set<Activity> oldActivities = api.getEntityCache().get()
                     .getUserPresenceCache()
                     .getPresenceByUserId(userId)
                     .map(UserPresence::getActivities)
@@ -66,25 +66,25 @@ public class PresenceUpdateHandler extends PacketHandler {
             }
         }
 
-        UserStatus oldStatus = api.getEntityCache().get().getUserPresenceCache().getPresenceByUserId(userId)
+        final UserStatus oldStatus = api.getEntityCache().get().getUserPresenceCache().getPresenceByUserId(userId)
                 .map(UserPresence::getStatus)
                 .orElse(UserStatus.OFFLINE);
-        UserStatus newStatus;
+        final UserStatus newStatus;
         if (packet.has("status")) {
             newStatus = UserStatus.fromString(packet.get("status").asText(null));
             presence.set(presence.get().setStatus(newStatus));
         } else {
             newStatus = oldStatus;
         }
-        Map<DiscordClient, UserStatus> oldClientStatus = api.getEntityCache().get().getUserPresenceCache()
+        final Map<DiscordClient, UserStatus> oldClientStatus = api.getEntityCache().get().getUserPresenceCache()
                 .getPresenceByUserId(userId)
                 .map(UserPresence::getClientStatus)
                 .orElse(HashMap.empty());
-        for (DiscordClient client : DiscordClient.values()) {
+        for (final DiscordClient client : DiscordClient.values()) {
             if (packet.has("client_status")) {
-                JsonNode clientStatus = packet.get("client_status");
+                final JsonNode clientStatus = packet.get("client_status");
                 if (clientStatus.hasNonNull(client.getName())) {
-                    UserStatus status = UserStatus.fromString(clientStatus.get(client.getName()).asText());
+                    final UserStatus status = UserStatus.fromString(clientStatus.get(client.getName()).asText());
                     presence.set(presence.get().setClientStatus(presence.get().getClientStatus().put(client, status)));
                 } else {
                     presence.set(presence.get()
@@ -92,7 +92,7 @@ public class PresenceUpdateHandler extends PacketHandler {
                 }
             }
         }
-        Map<DiscordClient, UserStatus> newClientStatus = api.getEntityCache().get().getUserPresenceCache()
+        final Map<DiscordClient, UserStatus> newClientStatus = api.getEntityCache().get().getUserPresenceCache()
                 .getPresenceByUserId(userId)
                 .map(UserPresence::getClientStatus)
                 .orElse(HashMap.empty());
@@ -102,10 +102,10 @@ public class PresenceUpdateHandler extends PacketHandler {
         dispatchUserStatusChangeEventIfChangeDetected(userId, newStatus, oldStatus, newClientStatus, oldClientStatus);
     }
 
-    private void dispatchUserActivityChangeEvent(long userId, Set<Activity> newActivities,
-                                                 Set<Activity> oldActivities) {
-        UserImpl user = api.getCachedUserById(userId).map(UserImpl.class::cast).orElse(null);
-        UserChangeActivityEvent event = new UserChangeActivityEventImpl(api, userId, newActivities, oldActivities);
+    private void dispatchUserActivityChangeEvent(final long userId, final Set<Activity> newActivities,
+                                                 final Set<Activity> oldActivities) {
+        final UserImpl user = api.getCachedUserById(userId).map(UserImpl.class::cast).orElse(null);
+        final UserChangeActivityEvent event = new UserChangeActivityEventImpl(api, userId, newActivities, oldActivities);
 
         api.getEventDispatcher().dispatchUserChangeActivityEvent(
                 api,
@@ -115,16 +115,16 @@ public class PresenceUpdateHandler extends PacketHandler {
         );
     }
 
-    private void dispatchUserStatusChangeEventIfChangeDetected(long userId, UserStatus newStatus, UserStatus oldStatus,
-                                                               Map<DiscordClient, UserStatus> newClientStatus,
-                                                               Map<DiscordClient, UserStatus> oldClientStatus) {
-        UserImpl user = api.getCachedUserById(userId).map(UserImpl.class::cast).orElse(null);
+    private void dispatchUserStatusChangeEventIfChangeDetected(final long userId, final UserStatus newStatus, final UserStatus oldStatus,
+                                                               final Map<DiscordClient, UserStatus> newClientStatus,
+                                                               final Map<DiscordClient, UserStatus> oldClientStatus) {
+        final UserImpl user = api.getCachedUserById(userId).map(UserImpl.class::cast).orElse(null);
         // Only dispatch the event if something changed
         boolean shouldDispatch = false;
         if (newClientStatus != oldClientStatus) {
             shouldDispatch = true;
         }
-        for (DiscordClient client : DiscordClient.values()) {
+        for (final DiscordClient client : DiscordClient.values()) {
             if (newClientStatus.get(client) != oldClientStatus.get(client)) {
                 shouldDispatch = true;
             }
@@ -133,7 +133,7 @@ public class PresenceUpdateHandler extends PacketHandler {
             return;
         }
 
-        UserChangeStatusEvent event =
+        final UserChangeStatusEvent event =
                 new UserChangeStatusEventImpl(api, userId, newStatus, oldStatus, newClientStatus, oldClientStatus);
 
         api.getEventDispatcher().dispatchUserChangeStatusEvent(

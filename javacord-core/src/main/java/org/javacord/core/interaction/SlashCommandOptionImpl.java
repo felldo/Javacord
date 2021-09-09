@@ -26,21 +26,21 @@ public class SlashCommandOptionImpl implements SlashCommandOption {
      *
      * @param data The json data of the slash command option.
      */
-    public SlashCommandOptionImpl(JsonNode data) {
+    public SlashCommandOptionImpl(final JsonNode data) {
         type = SlashCommandOptionType.fromValue(data.get("type").intValue());
         name = data.get("name").asText();
         description = data.get("description").asText();
         required = data.has("required") && data.get("required").asBoolean(false);
         choices = new ArrayList<>();
         if (data.has("choices")) {
-            for (JsonNode choiceJson : data.get("choices")) {
+            for (final JsonNode choiceJson : data.get("choices")) {
                 choices.add(new SlashCommandOptionChoiceImpl(choiceJson));
             }
         }
 
         options = new ArrayList<>();
         if (data.has("options")) {
-            for (JsonNode optionJson : data.get("options")) {
+            for (final JsonNode optionJson : data.get("options")) {
                 options.add(new SlashCommandOptionImpl(optionJson));
             }
         }
@@ -57,12 +57,12 @@ public class SlashCommandOptionImpl implements SlashCommandOption {
      * @param options The options.
      */
     public SlashCommandOptionImpl(
-            SlashCommandOptionType type,
-            String name,
-            String description,
-            boolean required,
-            List<SlashCommandOptionChoice> choices,
-            List<SlashCommandOption> options
+            final SlashCommandOptionType type,
+            final String name,
+            final String description,
+            final boolean required,
+            final List<SlashCommandOptionChoice> choices,
+            final List<SlashCommandOption> options
     ) {
         this.type = type;
         this.name = name;
@@ -108,17 +108,17 @@ public class SlashCommandOptionImpl implements SlashCommandOption {
      * @return The json node.
      */
     public JsonNode toJsonNode() {
-        ObjectNode node = JsonNodeFactory.instance.objectNode();
+        final ObjectNode node = JsonNodeFactory.instance.objectNode();
         node.put("type", type.getValue());
         node.put("name", name);
         node.put("description", description);
         node.put("required", required);
         if (!choices.isEmpty()) {
-            ArrayNode jsonChoices = node.putArray("choices");
+            final ArrayNode jsonChoices = node.putArray("choices");
             choices.forEach(choice -> jsonChoices.add(((SlashCommandOptionChoiceImpl) choice).toJsonNode()));
         }
         if (!options.isEmpty()) {
-            ArrayNode jsonOptions = node.putArray("options");
+            final ArrayNode jsonOptions = node.putArray("options");
             options.forEach(option -> jsonOptions.add(((SlashCommandOptionImpl) option).toJsonNode()));
         }
         return node;

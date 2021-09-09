@@ -21,7 +21,7 @@ public interface Reaction {
      * @param emoji The emoji of the reaction.
      * @return A list with all users who used this reaction.
      */
-    static CompletableFuture<List<User>> getUsers(DiscordApi api, long channelId, long messageId, Emoji emoji) {
+    static CompletableFuture<List<User>> getUsers(final DiscordApi api, final long channelId, final long messageId, final Emoji emoji) {
         return api.getUncachedMessageUtil().getUsersWhoReactedWithEmoji(channelId, messageId, emoji);
     }
 
@@ -34,7 +34,7 @@ public interface Reaction {
      * @param emoji The emoji of the reaction.
      * @return A list with all users who used this reaction.
      */
-    static CompletableFuture<List<User>> getUsers(DiscordApi api, String channelId, String messageId, Emoji emoji) {
+    static CompletableFuture<List<User>> getUsers(final DiscordApi api, final String channelId, final String messageId, final Emoji emoji) {
         return api.getUncachedMessageUtil().getUsersWhoReactedWithEmoji(channelId, messageId, emoji);
     }
 
@@ -59,7 +59,7 @@ public interface Reaction {
      * @return A future to tell us if the action was successful.
      */
     static CompletableFuture<Void> removeUser(
-            DiscordApi api, long channelId, long messageId, Emoji emoji, long userId) {
+            final DiscordApi api, final long channelId, final long messageId, final Emoji emoji, final long userId) {
         return api.getUncachedMessageUtil().removeUserReactionByEmoji(channelId, messageId, emoji, userId);
     }
 
@@ -73,8 +73,8 @@ public interface Reaction {
      * @param userId The id of the user to remove.
      * @return A future to tell us if the action was successful.
      */
-    static CompletableFuture<Void> removeUser(DiscordApi api, String channelId, String messageId, Emoji emoji,
-                                              String userId) {
+    static CompletableFuture<Void> removeUser(final DiscordApi api, final String channelId, final String messageId, final Emoji emoji,
+                                              final String userId) {
         return api.getUncachedMessageUtil().removeUserReactionByEmoji(channelId, messageId, emoji, userId);
     }
 
@@ -84,7 +84,7 @@ public interface Reaction {
      * @param user The user to remove.
      * @return A future to tell us if the action was successful.
      */
-    default CompletableFuture<Void> removeUser(User user) {
+    default CompletableFuture<Void> removeUser(final User user) {
         return Reaction.removeUser(getMessage().getApi(), getMessage().getChannel().getId(), getMessage().getId(),
                 getEmoji(), user.getId());
     }

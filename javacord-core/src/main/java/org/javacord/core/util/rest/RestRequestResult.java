@@ -35,7 +35,7 @@ public class RestRequestResult {
      * @param response The response of the RestRequest.
      * @throws IOException Passed on from {@link ResponseBody#string()}.
      */
-    public RestRequestResult(RestRequest<?> request, Response response) throws IOException {
+    public RestRequestResult(final RestRequest<?> request, final Response response) throws IOException {
         this.request = request;
         this.response = response;
         this.body = response.body();
@@ -44,11 +44,11 @@ public class RestRequestResult {
             jsonBody = NullNode.getInstance();
         } else {
             stringBody = body.string();
-            ObjectMapper mapper = request.getApi().getObjectMapper();
+            final ObjectMapper mapper = request.getApi().getObjectMapper();
             JsonNode jsonBody;
             try {
                 jsonBody = mapper.readTree(stringBody);
-            } catch (JsonParseException e) {
+            } catch (final JsonParseException e) {
                 // This can happen if Discord sends garbage (see https://github.com/Javacord/Javacord/issues/526)
                 logger.debug("Failed to parse json response", e);
                 jsonBody = null;

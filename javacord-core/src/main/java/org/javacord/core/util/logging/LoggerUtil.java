@@ -29,8 +29,8 @@ public class LoggerUtil {
      * @param name The name of the logger.
      * @return The logger with the given name.
      */
-    public static Logger getLogger(String name) {
-        AtomicBoolean logWarning = new AtomicBoolean(false);
+    public static Logger getLogger(final String name) {
+        final AtomicBoolean logWarning = new AtomicBoolean(false);
         initialized.updateAndGet(initialized -> {
             if (!initialized && !ProviderUtil.hasProviders()) {
                 noLogger.set(true);
@@ -41,10 +41,10 @@ public class LoggerUtil {
 
         if (noLogger.get()) {
             return loggers.computeIfAbsent(name, key -> {
-                Level level = FallbackLoggerConfiguration.isTraceEnabled()
+                final Level level = FallbackLoggerConfiguration.isTraceEnabled()
                         ? Level.TRACE
                         : (FallbackLoggerConfiguration.isDebugEnabled() ? Level.DEBUG : Level.INFO);
-                Logger logger = new SimpleLogger(name, level, true, false, true, true, "yyyy-MM-dd HH:mm:ss.SSSZ", null,
+                final Logger logger = new SimpleLogger(name, level, true, false, true, true, "yyyy-MM-dd HH:mm:ss.SSSZ", null,
                                                  new PropertiesUtil(new Properties()), System.out);
                 if (logWarning.get()) {
                     logger.info("No Log4j2 compatible logger was found. Using default Javacord implementation!");
@@ -62,7 +62,7 @@ public class LoggerUtil {
      * @param clazz The class of the logger.
      * @return A logger for the given class.
      */
-    public static Logger getLogger(Class clazz) {
+    public static Logger getLogger(final Class clazz) {
         return getLogger(clazz.getName());
     }
 
@@ -72,7 +72,7 @@ public class LoggerUtil {
      * @param logger The logger of the event.
      * @param channelId The id of the missing channel.
      */
-    public static void logMissingChannel(Logger logger, long channelId) {
+    public static void logMissingChannel(final Logger logger, final long channelId) {
         logger.warn("Couldn't get the Channel with the id {} for a {}. Please update to the latest "
                 + "Javacord version or create an issue on the Javacord GitHub page if you are already "
                 + "on the latest version.", channelId, logger.getName());

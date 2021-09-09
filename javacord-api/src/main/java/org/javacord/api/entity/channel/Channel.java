@@ -123,17 +123,17 @@ public interface Channel extends DiscordEntity, UpdatableFromCache, ChannelAttac
      * @param user The user to check.
      * @return Whether the given user can see this channel or not.
      */
-    default boolean canSee(User user) {
-        Optional<PrivateChannel> privateChannel = asPrivateChannel();
+    default boolean canSee(final User user) {
+        final Optional<PrivateChannel> privateChannel = asPrivateChannel();
         if (privateChannel.isPresent()) {
             return user.isYourself() || privateChannel.get().getRecipient()
                     .map(recipient -> recipient.equals(user)).orElse(false);
         }
-        Optional<GroupChannel> groupChannel = asGroupChannel();
+        final Optional<GroupChannel> groupChannel = asGroupChannel();
         if (groupChannel.isPresent()) {
             return user.isYourself() || groupChannel.get().getMembers().contains(user);
         }
-        Optional<ServerChannel> severChannel = asServerChannel();
+        final Optional<ServerChannel> severChannel = asServerChannel();
         return !severChannel.isPresent()
                 || severChannel.get().hasAnyPermission(user,
                                                        PermissionType.ADMINISTRATOR,
@@ -158,11 +158,11 @@ public interface Channel extends DiscordEntity, UpdatableFromCache, ChannelAttac
 
     @Override
     default CompletableFuture<? extends Channel> getLatestInstance() {
-        Optional<? extends Channel> currentCachedInstance = getCurrentCachedInstance();
+        final Optional<? extends Channel> currentCachedInstance = getCurrentCachedInstance();
         if (currentCachedInstance.isPresent()) {
             return CompletableFuture.completedFuture(currentCachedInstance.get());
         } else {
-            CompletableFuture<? extends Channel> result = new CompletableFuture<>();
+            final CompletableFuture<? extends Channel> result = new CompletableFuture<>();
             result.completeExceptionally(new NoSuchElementException());
             return result;
         }

@@ -77,7 +77,7 @@ public interface SlashCommand extends DiscordEntity {
      * @param description The description of the new slash command.
      * @return The new slash command builder
      */
-    static SlashCommandBuilder with(String name, String description) {
+    static SlashCommandBuilder with(final String name, final String description) {
         return new SlashCommandBuilder()
                 .setName(name)
                 .setDescription(description);
@@ -93,7 +93,7 @@ public interface SlashCommand extends DiscordEntity {
      * @param options The options to add to the command
      * @return The new slash command builder
      */
-    static SlashCommandBuilder with(String name, String description, SlashCommandOptionBuilder... options) {
+    static SlashCommandBuilder with(final String name, final String description, final SlashCommandOptionBuilder... options) {
         return with(name, description, Arrays.stream(options)
                 .map(SlashCommandOptionBuilder::build)
                 .collect(Collectors.toList()));
@@ -109,7 +109,7 @@ public interface SlashCommand extends DiscordEntity {
      * @param options The options to add to the command
      * @return The new slash command builder
      */
-    static SlashCommandBuilder with(String name, String description, List<SlashCommandOption> options) {
+    static SlashCommandBuilder with(final String name, final String description, final List<SlashCommandOption> options) {
         return with(name, description).setOptions(options);
     }
 
@@ -121,7 +121,7 @@ public interface SlashCommand extends DiscordEntity {
      * @param slashCommand The slash command which the slash command builder should be prefilled with.
      * @return The new prefilled slash command builder.
      */
-    static SlashCommandBuilder createPrefilledSlashCommandBuilder(SlashCommand slashCommand) {
+    static SlashCommandBuilder createPrefilledSlashCommandBuilder(final SlashCommand slashCommand) {
         return with(slashCommand.getName(), slashCommand.getDescription())
                 .setOptions(slashCommand.getOptions());
     }

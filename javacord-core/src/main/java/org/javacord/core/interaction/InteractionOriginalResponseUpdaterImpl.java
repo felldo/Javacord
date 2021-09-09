@@ -32,8 +32,8 @@ public class InteractionOriginalResponseUpdaterImpl
      * @param interaction The interaction to use.
      * @param delegate    An already used delegate if the caller just sent the initial response
      */
-    public InteractionOriginalResponseUpdaterImpl(InteractionBase interaction,
-                                                  InteractionMessageBuilderDelegate delegate) {
+    public InteractionOriginalResponseUpdaterImpl(final InteractionBase interaction,
+                                                  final InteractionMessageBuilderDelegate delegate) {
         super(InteractionOriginalResponseUpdater.class, delegate);
         this.interaction = (InteractionImpl) interaction;
     }
@@ -43,7 +43,7 @@ public class InteractionOriginalResponseUpdaterImpl
      *
      * @param interaction The interaction to use.
      */
-    public InteractionOriginalResponseUpdaterImpl(InteractionBase interaction) {
+    public InteractionOriginalResponseUpdaterImpl(final InteractionBase interaction) {
         super(InteractionOriginalResponseUpdater.class);
         this.interaction = (InteractionImpl) interaction;
     }
@@ -59,25 +59,25 @@ public class InteractionOriginalResponseUpdaterImpl
     }
 
     @Override
-    public InteractionOriginalResponseUpdater appendCode(String language, String code) {
+    public InteractionOriginalResponseUpdater appendCode(final String language, final String code) {
         delegate.appendCode(language, code);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater append(String message, MessageDecoration... decorations) {
+    public InteractionOriginalResponseUpdater append(final String message, final MessageDecoration... decorations) {
         delegate.append(message, decorations);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater append(Mentionable entity) {
+    public InteractionOriginalResponseUpdater append(final Mentionable entity) {
         delegate.append(entity);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater append(Object object) {
+    public InteractionOriginalResponseUpdater append(final Object object) {
         delegate.append(object);
         return this;
     }
@@ -89,37 +89,37 @@ public class InteractionOriginalResponseUpdaterImpl
     }
 
     @Override
-    public InteractionOriginalResponseUpdater setContent(String content) {
+    public InteractionOriginalResponseUpdater setContent(final String content) {
         delegate.setContent(content);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addEmbed(EmbedBuilder embed) {
+    public InteractionOriginalResponseUpdater addEmbed(final EmbedBuilder embed) {
         delegate.addEmbed(embed);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addEmbeds(EmbedBuilder... embeds) {
+    public InteractionOriginalResponseUpdater addEmbeds(final EmbedBuilder... embeds) {
         delegate.addEmbeds(Arrays.asList(embeds));
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addComponents(HighLevelComponent... components) {
+    public InteractionOriginalResponseUpdater addComponents(final HighLevelComponent... components) {
         delegate.addComponents(components);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater copy(Message message) {
+    public InteractionOriginalResponseUpdater copy(final Message message) {
         delegate.copy(message);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater copy(InteractionBase interaction) {
+    public InteractionOriginalResponseUpdater copy(final InteractionBase interaction) {
         delegate.copy(interaction);
         return this;
     }
@@ -131,25 +131,25 @@ public class InteractionOriginalResponseUpdaterImpl
     }
 
     @Override
-    public InteractionOriginalResponseUpdater removeComponent(int index) {
+    public InteractionOriginalResponseUpdater removeComponent(final int index) {
         delegate.removeComponent(index);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater removeComponent(HighLevelComponent component) {
+    public InteractionOriginalResponseUpdater removeComponent(final HighLevelComponent component) {
         delegate.removeComponent(component);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater removeEmbed(EmbedBuilder embed) {
+    public InteractionOriginalResponseUpdater removeEmbed(final EmbedBuilder embed) {
         delegate.removeEmbed(embed);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater removeEmbeds(EmbedBuilder... embeds) {
+    public InteractionOriginalResponseUpdater removeEmbeds(final EmbedBuilder... embeds) {
         delegate.removeEmbeds(embeds);
         return this;
     }
@@ -161,169 +161,169 @@ public class InteractionOriginalResponseUpdaterImpl
     }
 
     @Override
-    public InteractionOriginalResponseUpdater setTts(boolean tts) {
+    public InteractionOriginalResponseUpdater setTts(final boolean tts) {
         delegate.setTts(tts);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addFile(BufferedImage image, String fileName) {
+    public InteractionOriginalResponseUpdater addFile(final BufferedImage image, final String fileName) {
         delegate.addFile(image, fileName);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addFile(File file) {
+    public InteractionOriginalResponseUpdater addFile(final File file) {
         delegate.addFile(file);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addFile(Icon icon) {
+    public InteractionOriginalResponseUpdater addFile(final Icon icon) {
         delegate.addFile(icon);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addFile(URL url) {
+    public InteractionOriginalResponseUpdater addFile(final URL url) {
         delegate.addFile(url);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addFile(byte[] bytes, String fileName) {
+    public InteractionOriginalResponseUpdater addFile(final byte[] bytes, final String fileName) {
         delegate.addFile(bytes, fileName);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addFile(InputStream stream, String fileName) {
+    public InteractionOriginalResponseUpdater addFile(final InputStream stream, final String fileName) {
         delegate.addFile(stream, fileName);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addFileAsSpoiler(BufferedImage image, String fileName) {
+    public InteractionOriginalResponseUpdater addFileAsSpoiler(final BufferedImage image, final String fileName) {
         delegate.addFile(image, "SPOILER_" + fileName);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addFileAsSpoiler(File file) {
+    public InteractionOriginalResponseUpdater addFileAsSpoiler(final File file) {
         delegate.addFileAsSpoiler(file);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addFileAsSpoiler(Icon icon) {
+    public InteractionOriginalResponseUpdater addFileAsSpoiler(final Icon icon) {
         delegate.addFileAsSpoiler(icon);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addFileAsSpoiler(URL url) {
+    public InteractionOriginalResponseUpdater addFileAsSpoiler(final URL url) {
         delegate.addFileAsSpoiler(url);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addFileAsSpoiler(byte[] bytes, String fileName) {
+    public InteractionOriginalResponseUpdater addFileAsSpoiler(final byte[] bytes, final String fileName) {
         delegate.addFile(bytes, "SPOILER_" + fileName);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addFileAsSpoiler(InputStream stream, String fileName) {
+    public InteractionOriginalResponseUpdater addFileAsSpoiler(final InputStream stream, final String fileName) {
         delegate.addFile(stream, "SPOILER_" + fileName);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addAttachment(BufferedImage image, String fileName) {
+    public InteractionOriginalResponseUpdater addAttachment(final BufferedImage image, final String fileName) {
         delegate.addAttachment(image, fileName);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addAttachment(File file) {
+    public InteractionOriginalResponseUpdater addAttachment(final File file) {
         delegate.addAttachment(file);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addAttachment(Icon icon) {
+    public InteractionOriginalResponseUpdater addAttachment(final Icon icon) {
         delegate.addAttachment(icon);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addAttachment(URL url) {
+    public InteractionOriginalResponseUpdater addAttachment(final URL url) {
         delegate.addAttachment(url);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addAttachment(byte[] bytes, String fileName) {
+    public InteractionOriginalResponseUpdater addAttachment(final byte[] bytes, final String fileName) {
         delegate.addAttachment(bytes, fileName);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addAttachment(InputStream stream, String fileName) {
+    public InteractionOriginalResponseUpdater addAttachment(final InputStream stream, final String fileName) {
         delegate.addAttachment(stream, fileName);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addAttachmentAsSpoiler(BufferedImage image, String fileName) {
+    public InteractionOriginalResponseUpdater addAttachmentAsSpoiler(final BufferedImage image, final String fileName) {
         delegate.addAttachment(image, "SPOILER_" + fileName);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addAttachmentAsSpoiler(File file) {
+    public InteractionOriginalResponseUpdater addAttachmentAsSpoiler(final File file) {
         delegate.addAttachmentAsSpoiler(file);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addAttachmentAsSpoiler(Icon icon) {
+    public InteractionOriginalResponseUpdater addAttachmentAsSpoiler(final Icon icon) {
         delegate.addAttachmentAsSpoiler(icon);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addAttachmentAsSpoiler(URL url) {
+    public InteractionOriginalResponseUpdater addAttachmentAsSpoiler(final URL url) {
         delegate.addAttachmentAsSpoiler(url);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addAttachmentAsSpoiler(byte[] bytes, String fileName) {
+    public InteractionOriginalResponseUpdater addAttachmentAsSpoiler(final byte[] bytes, final String fileName) {
         delegate.addAttachment(bytes, "SPOILER_" + fileName);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater addAttachmentAsSpoiler(InputStream stream, String fileName) {
+    public InteractionOriginalResponseUpdater addAttachmentAsSpoiler(final InputStream stream, final String fileName) {
         delegate.addAttachment(stream, "SPOILER_" + fileName);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater setAllowedMentions(AllowedMentions allowedMentions) {
+    public InteractionOriginalResponseUpdater setAllowedMentions(final AllowedMentions allowedMentions) {
         delegate.setAllowedMentions(allowedMentions);
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater setFlags(MessageFlag... messageFlags) {
+    public InteractionOriginalResponseUpdater setFlags(final MessageFlag... messageFlags) {
         setFlags(EnumSet.copyOf(Arrays.asList(messageFlags)));
         return this;
     }
 
     @Override
-    public InteractionOriginalResponseUpdater setFlags(EnumSet<MessageFlag> messageFlags) {
+    public InteractionOriginalResponseUpdater setFlags(final EnumSet<MessageFlag> messageFlags) {
         delegate.setFlags(messageFlags);
         return this;
     }

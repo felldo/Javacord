@@ -16,8 +16,8 @@ public class UnknownEmojiException extends BadRequestException {
      * @param request The information about the request.
      * @param response The information about the response.
      */
-    public UnknownEmojiException(Exception origin, String message, RestRequestInformation request,
-                                 RestRequestResponseInformation response) {
+    public UnknownEmojiException(final Exception origin, final String message, final RestRequestInformation request,
+                                 final RestRequestResponseInformation response) {
         super(origin, message, request, response);
     }
 

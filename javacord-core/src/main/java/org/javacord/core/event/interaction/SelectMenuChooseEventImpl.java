@@ -12,7 +12,7 @@ public class SelectMenuChooseEventImpl extends EventImpl implements SelectMenuCh
      *
      * @param interaction The created interaction.
      */
-    public SelectMenuChooseEventImpl(Interaction interaction) {
+    public SelectMenuChooseEventImpl(final Interaction interaction) {
         super(interaction.getApi());
         this.interaction = interaction;
     }

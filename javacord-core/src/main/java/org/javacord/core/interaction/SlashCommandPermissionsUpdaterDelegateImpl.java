@@ -25,31 +25,31 @@ public class SlashCommandPermissionsUpdaterDelegateImpl implements SlashCommandP
      *
      * @param server The server where the update should be performed on.
      */
-    public SlashCommandPermissionsUpdaterDelegateImpl(Server server) {
+    public SlashCommandPermissionsUpdaterDelegateImpl(final Server server) {
         this.server = server;
         this.permissions = new ArrayList<>();
     }
 
     @Override
-    public void setPermissions(List<SlashCommandPermissions> permission) {
+    public void setPermissions(final List<SlashCommandPermissions> permission) {
         this.permissions = permission;
     }
 
     @Override
-    public void addPermissions(List<SlashCommandPermissions> permissions) {
+    public void addPermissions(final List<SlashCommandPermissions> permissions) {
         this.permissions.addAll(permissions);
     }
 
     @Override
-    public void addPermission(SlashCommandPermissions permission) {
+    public void addPermission(final SlashCommandPermissions permission) {
         this.permissions.add(permission);
     }
 
     @Override
-    public CompletableFuture<ServerSlashCommandPermissions> update(long commandId) {
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
-        ArrayNode array = body.putArray("permissions");
-        for (SlashCommandPermissions permission : permissions) {
+    public CompletableFuture<ServerSlashCommandPermissions> update(final long commandId) {
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
+        final ArrayNode array = body.putArray("permissions");
+        for (final SlashCommandPermissions permission : permissions) {
             array.add(((SlashCommandPermissionsImpl) permission).toJsonNode());
         }
 

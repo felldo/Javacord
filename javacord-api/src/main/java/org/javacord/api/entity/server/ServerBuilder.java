@@ -27,7 +27,7 @@ public class ServerBuilder {
      *
      * @param api The discord api instance.
      */
-    public ServerBuilder(DiscordApi api) {
+    public ServerBuilder(final DiscordApi api) {
         delegate = DelegateFactory.createServerBuilderDelegate(api);
     }
 
@@ -37,7 +37,7 @@ public class ServerBuilder {
      * @param name The name of the server.
      * @return The current instance in order to chain call methods.
      */
-    public ServerBuilder setName(String name) {
+    public ServerBuilder setName(final String name) {
         delegate.setName(name);
         return this;
     }
@@ -48,7 +48,7 @@ public class ServerBuilder {
      * @param region The region of the server.
      * @return The current instance in order to chain call methods.
      */
-    public ServerBuilder setRegion(Region region) {
+    public ServerBuilder setRegion(final Region region) {
         delegate.setRegion(region);
         return this;
     }
@@ -59,7 +59,7 @@ public class ServerBuilder {
      * @param explicitContentFilterLevel The explicit content filter level of the server.
      * @return The current instance in order to chain call methods.
      */
-    public ServerBuilder setExplicitContentFilterLevel(ExplicitContentFilterLevel explicitContentFilterLevel) {
+    public ServerBuilder setExplicitContentFilterLevel(final ExplicitContentFilterLevel explicitContentFilterLevel) {
         delegate.setExplicitContentFilterLevel(explicitContentFilterLevel);
         return this;
     }
@@ -70,7 +70,7 @@ public class ServerBuilder {
      * @param verificationLevel The verification level of the server.
      * @return The current instance in order to chain call methods.
      */
-    public ServerBuilder setVerificationLevel(VerificationLevel verificationLevel) {
+    public ServerBuilder setVerificationLevel(final VerificationLevel verificationLevel) {
         delegate.setVerificationLevel(verificationLevel);
         return this;
     }
@@ -82,7 +82,7 @@ public class ServerBuilder {
      * @return The current instance in order to chain call methods.
      */
     public ServerBuilder setDefaultMessageNotificationLevel(
-            DefaultMessageNotificationLevel defaultMessageNotificationLevel) {
+            final DefaultMessageNotificationLevel defaultMessageNotificationLevel) {
         delegate.setDefaultMessageNotificationLevel(defaultMessageNotificationLevel);
         return this;
     }
@@ -93,7 +93,7 @@ public class ServerBuilder {
      * @param afkTimeout The afk timeout in seconds of the server.
      * @return The current instance in order to chain call methods.
      */
-    public ServerBuilder setAfkTimeoutInSeconds(int afkTimeout) {
+    public ServerBuilder setAfkTimeoutInSeconds(final int afkTimeout) {
         delegate.setAfkTimeoutInSeconds(afkTimeout);
         return this;
     }
@@ -105,7 +105,7 @@ public class ServerBuilder {
      * @param icon The icon of the server.
      * @return The current instance in order to chain call methods.
      */
-    public ServerBuilder setIcon(BufferedImage icon) {
+    public ServerBuilder setIcon(final BufferedImage icon) {
         delegate.setIcon(icon);
         return this;
     }
@@ -117,7 +117,7 @@ public class ServerBuilder {
      * @param fileType The type of the icon, e.g. "png" or "jpg".
      * @return The current instance in order to chain call methods.
      */
-    public ServerBuilder setIcon(BufferedImage icon, String fileType) {
+    public ServerBuilder setIcon(final BufferedImage icon, final String fileType) {
         delegate.setIcon(icon, fileType);
         return this;
     }
@@ -128,7 +128,7 @@ public class ServerBuilder {
      * @param icon The icon of the server.
      * @return The current instance in order to chain call methods.
      */
-    public ServerBuilder setIcon(File icon) {
+    public ServerBuilder setIcon(final File icon) {
         delegate.setIcon(icon);
         return this;
     }
@@ -139,7 +139,7 @@ public class ServerBuilder {
      * @param icon The icon of the server.
      * @return The current instance in order to chain call methods.
      */
-    public ServerBuilder setIcon(Icon icon) {
+    public ServerBuilder setIcon(final Icon icon) {
         delegate.setIcon(icon);
         return this;
     }
@@ -150,7 +150,7 @@ public class ServerBuilder {
      * @param icon The icon of the server.
      * @return The current instance in order to chain call methods.
      */
-    public ServerBuilder setIcon(URL icon) {
+    public ServerBuilder setIcon(final URL icon) {
         delegate.setIcon(icon);
         return this;
     }
@@ -162,7 +162,7 @@ public class ServerBuilder {
      * @param icon The icon of the server.
      * @return The current instance in order to chain call methods.
      */
-    public ServerBuilder setIcon(byte[] icon) {
+    public ServerBuilder setIcon(final byte[] icon) {
         delegate.setIcon(icon);
         return this;
     }
@@ -174,7 +174,7 @@ public class ServerBuilder {
      * @param fileType The type of the icon, e.g. "png" or "jpg".
      * @return The current instance in order to chain call methods.
      */
-    public ServerBuilder setIcon(byte[] icon, String fileType) {
+    public ServerBuilder setIcon(final byte[] icon, final String fileType) {
         delegate.setIcon(icon, fileType);
         return this;
     }
@@ -186,7 +186,7 @@ public class ServerBuilder {
      * @param icon The icon of the server.
      * @return The current instance in order to chain call methods.
      */
-    public ServerBuilder setIcon(InputStream icon) {
+    public ServerBuilder setIcon(final InputStream icon) {
         delegate.setIcon(icon);
         return this;
     }
@@ -198,7 +198,7 @@ public class ServerBuilder {
      * @param fileType The type of the icon, e.g. "png" or "jpg".
      * @return The current instance in order to chain call methods.
      */
-    public ServerBuilder setIcon(InputStream icon, String fileType) {
+    public ServerBuilder setIcon(final InputStream icon, final String fileType) {
         delegate.setIcon(icon, fileType);
         return this;
     }

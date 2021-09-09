@@ -89,7 +89,7 @@ public interface Permissions {
      * @param bitmask The bitmask of allowed permissions.
      * @return A {@code Permissions} object created from the given bitmask.
      */
-    static Permissions fromBitmask(long bitmask) {
+    static Permissions fromBitmask(final long bitmask) {
         return fromBitmask(bitmask, 0);
     }
 
@@ -104,10 +104,10 @@ public interface Permissions {
      * @param deniedBitmask  The bitmask of denied permissions.
      * @return A {@code Permissions} object created from the given bitmasks.
      */
-    static Permissions fromBitmask(long allowedBitmask, long deniedBitmask) {
-        PermissionsBuilder permissionsBuilder = new PermissionsBuilder();
+    static Permissions fromBitmask(final long allowedBitmask, final long deniedBitmask) {
+        final PermissionsBuilder permissionsBuilder = new PermissionsBuilder();
 
-        for (PermissionType permissionType : PermissionType.values()) {
+        for (final PermissionType permissionType : PermissionType.values()) {
             if (permissionType.isSet(allowedBitmask) && permissionType.isSet(deniedBitmask)) {
                 permissionsBuilder.setState(permissionType, PermissionState.UNSET);
             } else if (permissionType.isSet(allowedBitmask)) {

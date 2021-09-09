@@ -26,7 +26,7 @@ public class WebhookUpdater {
      *
      * @param webhook The webhook to update.
      */
-    public WebhookUpdater(Webhook webhook) {
+    public WebhookUpdater(final Webhook webhook) {
         delegate = DelegateFactory.createWebhookUpdaterDelegate(webhook);
     }
 
@@ -36,7 +36,7 @@ public class WebhookUpdater {
      * @param reason The reason for this update.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookUpdater setAuditLogReason(String reason) {
+    public WebhookUpdater setAuditLogReason(final String reason) {
         delegate.setAuditLogReason(reason);
         return this;
     }
@@ -47,7 +47,7 @@ public class WebhookUpdater {
      * @param name The new name of the webhook.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookUpdater setName(String name) {
+    public WebhookUpdater setName(final String name) {
         delegate.setName(name);
         return this;
     }
@@ -58,7 +58,7 @@ public class WebhookUpdater {
      * @param channel The new channel of the webhook.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookUpdater setChannel(ServerTextChannel channel) {
+    public WebhookUpdater setChannel(final ServerTextChannel channel) {
         delegate.setChannel(channel);
         return this;
     }
@@ -70,7 +70,7 @@ public class WebhookUpdater {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookUpdater setAvatar(BufferedImage avatar) {
+    public WebhookUpdater setAvatar(final BufferedImage avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -82,7 +82,7 @@ public class WebhookUpdater {
      * @param fileType The type of the avatar, e.g. "png" or "jpg".
      * @return The current instance in order to chain call methods.
      */
-    public WebhookUpdater setAvatar(BufferedImage avatar, String fileType) {
+    public WebhookUpdater setAvatar(final BufferedImage avatar, final String fileType) {
         delegate.setAvatar(avatar, fileType);
         return this;
     }
@@ -93,7 +93,7 @@ public class WebhookUpdater {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookUpdater setAvatar(File avatar) {
+    public WebhookUpdater setAvatar(final File avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -104,7 +104,7 @@ public class WebhookUpdater {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookUpdater setAvatar(Icon avatar) {
+    public WebhookUpdater setAvatar(final Icon avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -115,7 +115,7 @@ public class WebhookUpdater {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookUpdater setAvatar(URL avatar) {
+    public WebhookUpdater setAvatar(final URL avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -127,7 +127,7 @@ public class WebhookUpdater {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookUpdater setAvatar(byte[] avatar) {
+    public WebhookUpdater setAvatar(final byte[] avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -139,7 +139,7 @@ public class WebhookUpdater {
      * @param fileType The type of the avatar, e.g. "png" or "jpg".
      * @return The current instance in order to chain call methods.
      */
-    public WebhookUpdater setAvatar(byte[] avatar, String fileType) {
+    public WebhookUpdater setAvatar(final byte[] avatar, final String fileType) {
         delegate.setAvatar(avatar, fileType);
         return this;
     }
@@ -151,7 +151,7 @@ public class WebhookUpdater {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookUpdater setAvatar(InputStream avatar) {
+    public WebhookUpdater setAvatar(final InputStream avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -163,7 +163,7 @@ public class WebhookUpdater {
      * @param fileType The type of the avatar, e.g. "png" or "jpg".
      * @return The current instance in order to chain call methods.
      */
-    public WebhookUpdater setAvatar(InputStream avatar, String fileType) {
+    public WebhookUpdater setAvatar(final InputStream avatar, final String fileType) {
         delegate.setAvatar(avatar, fileType);
         return this;
     }

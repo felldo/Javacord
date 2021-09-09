@@ -33,7 +33,7 @@ public interface SlashCommandCreateEvent extends Event {
      * @param commandId The command it to match.
      * @return The interaction.
      */
-    default Optional<SlashCommandInteraction> getSlashCommandInteractionWithCommandId(long commandId) {
+    default Optional<SlashCommandInteraction> getSlashCommandInteractionWithCommandId(final long commandId) {
         return getInteraction().asSlashCommandInteractionWithCommandId(commandId);
     }
 

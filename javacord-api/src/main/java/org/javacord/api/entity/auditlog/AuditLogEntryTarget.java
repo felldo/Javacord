@@ -54,7 +54,7 @@ public interface AuditLogEntryTarget extends DiscordEntity {
      * @return The target as webhook.
      */
     default Optional<Webhook> asWebhook() {
-        for (Webhook webhook : getAuditLogEntry().getAuditLog().getInvolvedWebhooks()) {
+        for (final Webhook webhook : getAuditLogEntry().getAuditLog().getInvolvedWebhooks()) {
             if (webhook.getId() == getId()) {
                 return Optional.of(webhook);
             }

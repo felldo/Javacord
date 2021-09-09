@@ -28,7 +28,7 @@ public class RoleChangeColorEventImpl extends RoleEventImpl implements RoleChang
      * @param newColor The new color of the role.
      * @param oldColor The old color of the role.
      */
-    public RoleChangeColorEventImpl(Role role, Color newColor, Color oldColor) {
+    public RoleChangeColorEventImpl(final Role role, final Color newColor, final Color oldColor) {
         super(role);
         this.newColor = newColor;
         this.oldColor = oldColor;

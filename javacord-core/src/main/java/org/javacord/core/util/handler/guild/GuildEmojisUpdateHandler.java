@@ -34,43 +34,43 @@ public class GuildEmojisUpdateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public GuildEmojisUpdateHandler(DiscordApi api) {
+    public GuildEmojisUpdateHandler(final DiscordApi api) {
         super(api, true, "GUILD_EMOJIS_UPDATE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        long id = packet.get("guild_id").asLong();
+    public void handle(final JsonNode packet) {
+        final long id = packet.get("guild_id").asLong();
         api.getPossiblyUnreadyServerById(id).map(server -> (ServerImpl) server).ifPresent(server -> {
-            HashMap<Long, JsonNode> emojis = new HashMap<>();
-            for (JsonNode emojiJson : packet.get("emojis")) {
+            final HashMap<Long, JsonNode> emojis = new HashMap<>();
+            for (final JsonNode emojiJson : packet.get("emojis")) {
                 emojis.put(emojiJson.get("id").asLong(), emojiJson);
             }
 
             emojis.forEach((key, value) -> {
-                Optional<KnownCustomEmoji> optionalEmoji = server.getCustomEmojiById(key);
+                final Optional<KnownCustomEmoji> optionalEmoji = server.getCustomEmojiById(key);
                 if (optionalEmoji.isPresent()) {
-                    KnownCustomEmoji emoji = optionalEmoji.get();
-                    String oldName = emoji.getName();
-                    String newName = value.get("name").asText();
+                    final KnownCustomEmoji emoji = optionalEmoji.get();
+                    final String oldName = emoji.getName();
+                    final String newName = value.get("name").asText();
                     if (!Objects.deepEquals(oldName, newName)) {
-                        KnownCustomEmojiChangeNameEvent event =
+                        final KnownCustomEmojiChangeNameEvent event =
                                 new KnownCustomEmojiChangeNameEventImpl(emoji, newName, oldName);
                         ((KnownCustomEmojiImpl) emoji).setName(newName);
 
                         api.getEventDispatcher().dispatchKnownCustomEmojiChangeNameEvent(server, emoji, server, event);
                     }
 
-                    Collection<Role> oldWhitelist = emoji.getWhitelistedRoles().orElse(Collections.emptySet());
-                    JsonNode newWhitelistJson = value.get("roles");
-                    Collection<Role> newWhitelist = new ArrayList<>();
+                    final Collection<Role> oldWhitelist = emoji.getWhitelistedRoles().orElse(Collections.emptySet());
+                    final JsonNode newWhitelistJson = value.get("roles");
+                    final Collection<Role> newWhitelist = new ArrayList<>();
                     if (newWhitelistJson != null && !newWhitelistJson.isNull()) {
-                        for (JsonNode role : newWhitelistJson) {
+                        for (final JsonNode role : newWhitelistJson) {
                             server.getRoleById(role.asLong()).ifPresent(newWhitelist::add);
                         }
                     }
                     if (!newWhitelist.containsAll(oldWhitelist) || !oldWhitelist.containsAll(newWhitelist)) {
-                        KnownCustomEmojiChangeWhitelistedRolesEvent event =
+                        final KnownCustomEmojiChangeWhitelistedRolesEvent event =
                                 new KnownCustomEmojiChangeWhitelistedRolesEventImpl(emoji, newWhitelist, oldWhitelist);
                         ((KnownCustomEmojiImpl) emoji).setWhitelist(newWhitelist);
 
@@ -78,23 +78,23 @@ public class GuildEmojisUpdateHandler extends PacketHandler {
                                 server, emoji, server, event);
                     }
                 } else {
-                    KnownCustomEmoji emoji = api.getOrCreateKnownCustomEmoji(server, value);
+                    final KnownCustomEmoji emoji = api.getOrCreateKnownCustomEmoji(server, value);
                     server.addCustomEmoji(emoji);
 
-                    KnownCustomEmojiCreateEvent event = new KnownCustomEmojiCreateEventImpl(emoji);
+                    final KnownCustomEmojiCreateEvent event = new KnownCustomEmojiCreateEventImpl(emoji);
 
                     api.getEventDispatcher().dispatchKnownCustomEmojiCreateEvent(server, server, event);
                 }
             });
 
-            Set<Long> emojiIds = emojis.keySet();
+            final Set<Long> emojiIds = emojis.keySet();
             server.getCustomEmojis().stream()
                     .filter(emoji -> !emojiIds.contains(emoji.getId()))
                     .forEach(emoji -> {
                         api.removeCustomEmoji(emoji);
                         server.removeCustomEmoji(emoji);
 
-                        KnownCustomEmojiDeleteEvent event = new KnownCustomEmojiDeleteEventImpl(emoji);
+                        final KnownCustomEmojiDeleteEvent event = new KnownCustomEmojiDeleteEventImpl(emoji);
 
                         api.getEventDispatcher().dispatchKnownCustomEmojiDeleteEvent(server, emoji, server, event);
                     });

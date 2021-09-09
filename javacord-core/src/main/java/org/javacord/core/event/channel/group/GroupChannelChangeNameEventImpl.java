@@ -25,7 +25,7 @@ public class GroupChannelChangeNameEventImpl extends GroupChannelEventImpl imple
      * @param newName The new name of the channel.
      * @param oldName The old name of the channel.
      */
-    public GroupChannelChangeNameEventImpl(GroupChannel channel, String newName, String oldName) {
+    public GroupChannelChangeNameEventImpl(final GroupChannel channel, final String newName, final String oldName) {
         super(channel);
         this.newName = newName;
         this.oldName = oldName;

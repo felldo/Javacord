@@ -18,7 +18,7 @@ public class SlashCommandOptionChoiceImpl implements SlashCommandOptionChoice {
      *
      * @param data The json data of the choice.
      */
-    public SlashCommandOptionChoiceImpl(JsonNode data) {
+    public SlashCommandOptionChoiceImpl(final JsonNode data) {
         name = data.get("name").asText();
         if (data.get("value").isTextual()) {
             stringValue = data.get("value").textValue();
@@ -39,7 +39,7 @@ public class SlashCommandOptionChoiceImpl implements SlashCommandOptionChoice {
      * @param stringValue The string value of the choice or null if it is an int value.
      * @param intValue The int value of the choice or null if it is a string value.
      */
-    public SlashCommandOptionChoiceImpl(String name, String stringValue, Integer intValue) {
+    public SlashCommandOptionChoiceImpl(final String name, final String stringValue, final Integer intValue) {
         this.name = name;
         this.stringValue = stringValue;
         this.intValue = intValue;
@@ -66,7 +66,7 @@ public class SlashCommandOptionChoiceImpl implements SlashCommandOptionChoice {
      * @return The json node.
      */
     public JsonNode toJsonNode() {
-        ObjectNode node = JsonNodeFactory.instance.objectNode();
+        final ObjectNode node = JsonNodeFactory.instance.objectNode();
         node.put("name", name);
         getIntValue().ifPresent(value -> node.put("value", value));
         getStringValue().ifPresent(value -> node.put("value", value));

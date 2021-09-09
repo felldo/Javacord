@@ -69,7 +69,7 @@ public interface ServerVoiceChannel extends ServerChannel, VoiceChannel, Categor
      * @param user The user to check.
      * @return Whether the given user is connected to this channel or not.
      */
-    default boolean isConnected(User user) {
+    default boolean isConnected(final User user) {
         return isConnected(user.getId());
     }
 
@@ -91,7 +91,7 @@ public interface ServerVoiceChannel extends ServerChannel, VoiceChannel, Categor
      * @param bitrate The new bitrate of the channel.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateBitrate(int bitrate) {
+    default CompletableFuture<Void> updateBitrate(final int bitrate) {
         return createUpdater().setBitrate(bitrate).update();
     }
 
@@ -104,7 +104,7 @@ public interface ServerVoiceChannel extends ServerChannel, VoiceChannel, Categor
      * @param userLimit The new user limit of the channel.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateUserLimit(int userLimit) {
+    default CompletableFuture<Void> updateUserLimit(final int userLimit) {
         return createUpdater().setUserLimit(userLimit).update();
     }
 
@@ -129,7 +129,7 @@ public interface ServerVoiceChannel extends ServerChannel, VoiceChannel, Categor
      * @param category The new category of the channel.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateCategory(ChannelCategory category) {
+    default CompletableFuture<Void> updateCategory(final ChannelCategory category) {
         return createUpdater().setCategory(category).update();
     }
 
@@ -152,11 +152,11 @@ public interface ServerVoiceChannel extends ServerChannel, VoiceChannel, Categor
 
     @Override
     default CompletableFuture<ServerVoiceChannel> getLatestInstance() {
-        Optional<ServerVoiceChannel> currentCachedInstance = getCurrentCachedInstance();
+        final Optional<ServerVoiceChannel> currentCachedInstance = getCurrentCachedInstance();
         if (currentCachedInstance.isPresent()) {
             return CompletableFuture.completedFuture(currentCachedInstance.get());
         } else {
-            CompletableFuture<ServerVoiceChannel> result = new CompletableFuture<>();
+            final CompletableFuture<ServerVoiceChannel> result = new CompletableFuture<>();
             result.completeExceptionally(new NoSuchElementException());
             return result;
         }

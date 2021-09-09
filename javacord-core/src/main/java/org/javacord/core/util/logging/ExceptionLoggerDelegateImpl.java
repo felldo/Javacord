@@ -20,16 +20,16 @@ public class ExceptionLoggerDelegateImpl implements ExceptionLoggerDelegate {
     private static final Logger logger = LoggerUtil.getLogger(ExceptionLoggerDelegateImpl.class);
 
     @Override
-    public <T> Function<Throwable, T> get(Predicate<Throwable> logFilter,
-                                          Collection<Class<? extends Throwable>> ignoredThrowableTypes,
-                                          StackTraceElement[] stackTrace) {
+    public <T> Function<Throwable, T> get(final Predicate<Throwable> logFilter,
+                                          final Collection<Class<? extends Throwable>> ignoredThrowableTypes,
+                                          final StackTraceElement[] stackTrace) {
         return throwable -> {
-            Throwable unwrappedThrowable = ExceptionLoggerDelegate.unwrapThrowable(throwable);
+            final Throwable unwrappedThrowable = ExceptionLoggerDelegate.unwrapThrowable(throwable);
             if (ignoredThrowableTypes.contains(unwrappedThrowable.getClass())
                     || ((logFilter != null) && !logFilter.test(unwrappedThrowable))) {
                 logger.debug("Suppressed exception {}", throwable.getMessage());
             } else {
-                Throwable enrichedThrowable = new CompletionException(unwrappedThrowable.getMessage(),
+                final Throwable enrichedThrowable = new CompletionException(unwrappedThrowable.getMessage(),
                                                                       unwrappedThrowable);
                 enrichedThrowable.setStackTrace(stackTrace);
                 logger.error("Caught unhandled exception!", enrichedThrowable);

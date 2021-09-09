@@ -26,7 +26,7 @@ public class WebhookBuilder {
      *
      * @param channel The server text channel of the webhook.
      */
-    public WebhookBuilder(ServerTextChannel channel) {
+    public WebhookBuilder(final ServerTextChannel channel) {
         delegate = DelegateFactory.createWebhookBuilderDelegate(channel);
     }
 
@@ -36,7 +36,7 @@ public class WebhookBuilder {
      * @param reason The reason for this update.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookBuilder setAuditLogReason(String reason) {
+    public WebhookBuilder setAuditLogReason(final String reason) {
         delegate.setAuditLogReason(reason);
         return this;
     }
@@ -47,7 +47,7 @@ public class WebhookBuilder {
      * @param name The new name of the webhook.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookBuilder setName(String name) {
+    public WebhookBuilder setName(final String name) {
         delegate.setName(name);
         return this;
     }
@@ -59,7 +59,7 @@ public class WebhookBuilder {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookBuilder setAvatar(BufferedImage avatar) {
+    public WebhookBuilder setAvatar(final BufferedImage avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -71,7 +71,7 @@ public class WebhookBuilder {
      * @param fileType The type of the avatar, e.g. "png" or "jpg".
      * @return The current instance in order to chain call methods.
      */
-    public WebhookBuilder setAvatar(BufferedImage avatar, String fileType) {
+    public WebhookBuilder setAvatar(final BufferedImage avatar, final String fileType) {
         delegate.setAvatar(avatar, fileType);
         return this;
     }
@@ -82,7 +82,7 @@ public class WebhookBuilder {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookBuilder setAvatar(File avatar) {
+    public WebhookBuilder setAvatar(final File avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -93,7 +93,7 @@ public class WebhookBuilder {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookBuilder setAvatar(Icon avatar) {
+    public WebhookBuilder setAvatar(final Icon avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -104,7 +104,7 @@ public class WebhookBuilder {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookBuilder setAvatar(URL avatar) {
+    public WebhookBuilder setAvatar(final URL avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -116,7 +116,7 @@ public class WebhookBuilder {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookBuilder setAvatar(byte[] avatar) {
+    public WebhookBuilder setAvatar(final byte[] avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -128,7 +128,7 @@ public class WebhookBuilder {
      * @param fileType The type of the avatar, e.g. "png" or "jpg".
      * @return The current instance in order to chain call methods.
      */
-    public WebhookBuilder setAvatar(byte[] avatar, String fileType) {
+    public WebhookBuilder setAvatar(final byte[] avatar, final String fileType) {
         delegate.setAvatar(avatar, fileType);
         return this;
     }
@@ -140,7 +140,7 @@ public class WebhookBuilder {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public WebhookBuilder setAvatar(InputStream avatar) {
+    public WebhookBuilder setAvatar(final InputStream avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -152,7 +152,7 @@ public class WebhookBuilder {
      * @param fileType The type of the avatar, e.g. "png" or "jpg".
      * @return The current instance in order to chain call methods.
      */
-    public WebhookBuilder setAvatar(InputStream avatar, String fileType) {
+    public WebhookBuilder setAvatar(final InputStream avatar, final String fileType) {
         delegate.setAvatar(avatar, fileType);
         return this;
     }

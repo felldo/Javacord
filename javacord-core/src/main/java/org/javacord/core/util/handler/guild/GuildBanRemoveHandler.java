@@ -20,18 +20,18 @@ public class GuildBanRemoveHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public GuildBanRemoveHandler(DiscordApi api) {
+    public GuildBanRemoveHandler(final DiscordApi api) {
         super(api, true, "GUILD_BAN_REMOVE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
+    public void handle(final JsonNode packet) {
         api.getPossiblyUnreadyServerById(packet.get("guild_id").asLong())
                 .map(server -> (ServerImpl) server)
                 .ifPresent(server -> {
-                    User user = new UserImpl(api, packet.get("user"), (MemberImpl) null, server);
+                    final User user = new UserImpl(api, packet.get("user"), (MemberImpl) null, server);
 
-                    ServerMemberUnbanEvent event = new ServerMemberUnbanEventImpl(server, user);
+                    final ServerMemberUnbanEvent event = new ServerMemberUnbanEventImpl(server, user);
 
                     api.getEventDispatcher().dispatchServerMemberUnbanEvent(server, server, user, event);
                 });

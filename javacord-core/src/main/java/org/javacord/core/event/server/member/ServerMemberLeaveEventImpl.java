@@ -15,7 +15,7 @@ public class ServerMemberLeaveEventImpl extends ServerMemberEventImpl implements
      * @param server The server of the event.
      * @param user The user of the event.
      */
-    public ServerMemberLeaveEventImpl(Server server, User user) {
+    public ServerMemberLeaveEventImpl(final Server server, final User user) {
         super(server, user);
     }
 

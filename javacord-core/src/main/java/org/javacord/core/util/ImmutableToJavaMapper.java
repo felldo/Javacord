@@ -21,7 +21,7 @@ public class ImmutableToJavaMapper {
      * @return The unmodifiable java set.
      */
     @SuppressWarnings("unchecked")
-    public static <J extends V, V> Set<J> mapToJava(io.vavr.collection.Set<V> set) {
+    public static <J extends V, V> Set<J> mapToJava(final io.vavr.collection.Set<V> set) {
         return (Set<J>) new VavrSetView<>(set, true);
     }
 

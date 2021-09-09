@@ -19,7 +19,7 @@ public abstract class ServerChannelEventImpl extends ServerEventImpl implements 
      *
      * @param channel The channel of the event.
      */
-    public ServerChannelEventImpl(ServerChannel channel) {
+    public ServerChannelEventImpl(final ServerChannel channel) {
         super(channel.getServer());
         this.channel = channel;
     }

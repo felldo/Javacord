@@ -33,7 +33,7 @@ public interface ButtonClickEvent extends Event {
      * @param customId The custom id to match.
      * @return The interaction.
      */
-    default Optional<ButtonInteraction> getButtonInteractionWithCustomId(String customId) {
+    default Optional<ButtonInteraction> getButtonInteractionWithCustomId(final String customId) {
         return getInteraction().asMessageComponentInteractionWithCustomId(customId)
             .flatMap(MessageComponentInteraction::asButtonInteraction);
     }

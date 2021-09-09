@@ -23,7 +23,7 @@ public class BlockingReference<V> {
      *
      * @param initialValue The initial value.
      */
-    public BlockingReference(V initialValue) {
+    public BlockingReference(final V initialValue) {
         this.value = initialValue;
     }
 
@@ -68,7 +68,7 @@ public class BlockingReference<V> {
      * @return The current value or null if the specified timeout elapses.
      * @throws InterruptedException if interrupted while waiting.
      */
-    public V get(long timeout, TimeUnit unit) throws InterruptedException {
+    public V get(final long timeout, final TimeUnit unit) throws InterruptedException {
         lock.lock();
         try {
             if (value == null) {
@@ -85,7 +85,7 @@ public class BlockingReference<V> {
      *
      * @param value The value to set.
      */
-    public void set(V value) {
+    public void set(final V value) {
         lock.lock();
         try {
             this.value = value;

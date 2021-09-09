@@ -44,7 +44,7 @@ public class MessageSetImpl implements MessageSet {
      *
      * @param messages The messages to be contained in this set.
      */
-    public MessageSetImpl(NavigableSet<Message> messages) {
+    public MessageSetImpl(final NavigableSet<Message> messages) {
         this.messages = Collections.unmodifiableNavigableSet(messages);
     }
 
@@ -53,7 +53,7 @@ public class MessageSetImpl implements MessageSet {
      *
      * @param messages The messages to be contained in this set.
      */
-    public MessageSetImpl(Collection<Message> messages) {
+    public MessageSetImpl(final Collection<Message> messages) {
         this(new TreeSet<>(messages));
     }
 
@@ -62,7 +62,7 @@ public class MessageSetImpl implements MessageSet {
      *
      * @param messages The messages to be contained in this set.
      */
-    public MessageSetImpl(Message... messages) {
+    public MessageSetImpl(final Message... messages) {
         this(Arrays.asList(messages));
     }
 
@@ -74,7 +74,7 @@ public class MessageSetImpl implements MessageSet {
      * @return The messages.
      * @see #getMessagesAsStream(TextChannel)
      */
-    public static CompletableFuture<MessageSet> getMessages(TextChannel channel, int limit) {
+    public static CompletableFuture<MessageSet> getMessages(final TextChannel channel, final int limit) {
         return getMessages(channel, limit, -1, -1);
     }
 
@@ -89,13 +89,13 @@ public class MessageSetImpl implements MessageSet {
      * @return The messages.
      * @see #getMessagesAsStream(TextChannel, long, long)
      */
-    private static CompletableFuture<MessageSet> getMessages(TextChannel channel, int limit, long before, long after) {
-        CompletableFuture<MessageSet> future = new CompletableFuture<>();
+    private static CompletableFuture<MessageSet> getMessages(final TextChannel channel, final int limit, final long before, final long after) {
+        final CompletableFuture<MessageSet> future = new CompletableFuture<>();
         channel.getApi().getThreadPool().getExecutorService().submit(() -> {
             try {
                 // get the initial batch with the first <= 100 messages
-                int initialBatchSize = ((limit % 100) == 0) ? 100 : limit % 100;
-                MessageSet initialMessages = requestAsMessages(channel, initialBatchSize, before, after);
+                final int initialBatchSize = ((limit % 100) == 0) ? 100 : limit % 100;
+                final MessageSet initialMessages = requestAsMessages(channel, initialBatchSize, before, after);
 
                 // limit <= 100 => initial request got all messages
                 // initialMessages is empty => READ_MESSAGE_HISTORY permission is denied or no more messages available
@@ -106,14 +106,14 @@ public class MessageSetImpl implements MessageSet {
 
                 // calculate the amount and direction of remaining message to get
                 // this will be a multiple of 100 and at least 100
-                int remainingMessages = limit - initialBatchSize;
-                int steps = remainingMessages / 100;
+                final int remainingMessages = limit - initialBatchSize;
+                final int steps = remainingMessages / 100;
                 // "before" is set or both are not set
-                boolean older = (before != -1) || (after == -1);
-                boolean newer = after != -1;
+                final boolean older = (before != -1) || (after == -1);
+                final boolean newer = after != -1;
 
                 // get remaining messages
-                List<MessageSet> messageSets = new ArrayList<>();
+                final List<MessageSet> messageSets = new ArrayList<>();
                 MessageSet lastMessages = initialMessages;
                 messageSets.add(lastMessages);
                 for (int step = 0; step < steps; ++step) {
@@ -140,7 +140,7 @@ public class MessageSetImpl implements MessageSet {
                 future.complete(new MessageSetImpl(messageSets.stream()
                         .flatMap(Collection::stream)
                         .collect(Collectors.toList())));
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 future.completeExceptionally(t);
             }
         });
@@ -156,7 +156,7 @@ public class MessageSetImpl implements MessageSet {
      * @return The messages.
      * @see #getMessagesAsStream(TextChannel)
      */
-    public static CompletableFuture<MessageSet> getMessagesUntil(TextChannel channel, Predicate<Message> condition) {
+    public static CompletableFuture<MessageSet> getMessagesUntil(final TextChannel channel, final Predicate<Message> condition) {
         return getMessagesUntil(channel, condition, -1, -1);
     }
 
@@ -172,18 +172,18 @@ public class MessageSetImpl implements MessageSet {
      * @return The messages.
      */
     private static CompletableFuture<MessageSet> getMessagesUntil(
-            TextChannel channel, Predicate<Message> condition, long before, long after) {
-        CompletableFuture<MessageSet> future = new CompletableFuture<>();
+            final TextChannel channel, final Predicate<Message> condition, final long before, final long after) {
+        final CompletableFuture<MessageSet> future = new CompletableFuture<>();
         channel.getApi().getThreadPool().getExecutorService().submit(() -> {
             try {
-                List<Message> messages = new ArrayList<>();
-                Optional<Message> untilMessage =
+                final List<Message> messages = new ArrayList<>();
+                final Optional<Message> untilMessage =
                         getMessagesAsStream(channel, before, after).peek(messages::add).filter(condition).findFirst();
 
                 future.complete(new MessageSetImpl(untilMessage
                         .map(message -> messages)
                         .orElse(Collections.emptyList())));
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 future.completeExceptionally(t);
             }
         });
@@ -199,7 +199,7 @@ public class MessageSetImpl implements MessageSet {
      * @return The messages.
      * @see #getMessagesAsStream(TextChannel)
      */
-    public static CompletableFuture<MessageSet> getMessagesWhile(TextChannel channel, Predicate<Message> condition) {
+    public static CompletableFuture<MessageSet> getMessagesWhile(final TextChannel channel, final Predicate<Message> condition) {
         return getMessagesWhile(channel, condition, -1, -1);
     }
 
@@ -215,12 +215,12 @@ public class MessageSetImpl implements MessageSet {
      * @return The messages.
      */
     private static CompletableFuture<MessageSet> getMessagesWhile(
-            TextChannel channel, Predicate<Message> condition, long before, long after) {
-        CompletableFuture<MessageSet> future = new CompletableFuture<>();
+            final TextChannel channel, final Predicate<Message> condition, final long before, final long after) {
+        final CompletableFuture<MessageSet> future = new CompletableFuture<>();
         channel.getApi().getThreadPool().getExecutorService().submit(() -> {
             try {
-                List<Message> messages = new ArrayList<>();
-                Optional<Message> untilMessage =
+                final List<Message> messages = new ArrayList<>();
+                final Optional<Message> untilMessage =
                         getMessagesAsStream(channel, before, after)
                                 .peek(messages::add)
                                 .filter(condition.negate())
@@ -228,7 +228,7 @@ public class MessageSetImpl implements MessageSet {
                 untilMessage.ifPresent(messages::remove);
 
                 future.complete(new MessageSetImpl(messages));
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 future.completeExceptionally(t);
             }
         });
@@ -245,7 +245,7 @@ public class MessageSetImpl implements MessageSet {
      * @return The stream.
      * @see #getMessages(TextChannel, int)
      */
-    public static Stream<Message> getMessagesAsStream(TextChannel channel) {
+    public static Stream<Message> getMessagesAsStream(final TextChannel channel) {
         return getMessagesAsStream(channel, -1, -1);
     }
 
@@ -262,7 +262,7 @@ public class MessageSetImpl implements MessageSet {
      * @return The stream.
      * @see #getMessages(TextChannel, int, long, long)
      */
-    private static Stream<Message> getMessagesAsStream(TextChannel channel, long before, long after) {
+    private static Stream<Message> getMessagesAsStream(final TextChannel channel, final long before, final long after) {
         return StreamSupport.stream(Spliterators.spliteratorUnknownSize(new Iterator<Message>() {
             private final DiscordApiImpl api = ((DiscordApiImpl) channel.getApi());
             // before was set or both were not set
@@ -313,7 +313,7 @@ public class MessageSetImpl implements MessageSet {
      * @return The messages.
      * @see #getMessagesBeforeAsStream(TextChannel, long)
      */
-    public static CompletableFuture<MessageSet> getMessagesBefore(TextChannel channel, int limit, long before) {
+    public static CompletableFuture<MessageSet> getMessagesBefore(final TextChannel channel, final int limit, final long before) {
         return getMessages(channel, limit, before, -1);
     }
 
@@ -329,7 +329,7 @@ public class MessageSetImpl implements MessageSet {
      * @see #getMessagesBeforeAsStream(TextChannel, long)
      */
     public static CompletableFuture<MessageSet> getMessagesBeforeUntil(
-            TextChannel channel, Predicate<Message> condition, long before) {
+            final TextChannel channel, final Predicate<Message> condition, final long before) {
         return getMessagesUntil(channel, condition, before, -1);
     }
 
@@ -344,7 +344,7 @@ public class MessageSetImpl implements MessageSet {
      * @see #getMessagesBeforeAsStream(TextChannel, long)
      */
     public static CompletableFuture<MessageSet> getMessagesBeforeWhile(
-            TextChannel channel, Predicate<Message> condition, long before) {
+            final TextChannel channel, final Predicate<Message> condition, final long before) {
         return getMessagesWhile(channel, condition, before, -1);
     }
 
@@ -360,7 +360,7 @@ public class MessageSetImpl implements MessageSet {
      * @return The stream.
      * @see #getMessagesBefore(TextChannel, int, long)
      */
-    public static Stream<Message> getMessagesBeforeAsStream(TextChannel channel, long before) {
+    public static Stream<Message> getMessagesBeforeAsStream(final TextChannel channel, final long before) {
         return getMessagesAsStream(channel, before, -1);
     }
 
@@ -373,7 +373,7 @@ public class MessageSetImpl implements MessageSet {
      * @return The messages.
      * @see #getMessagesAfterAsStream(TextChannel, long)
      */
-    public static CompletableFuture<MessageSet> getMessagesAfter(TextChannel channel, int limit, long after) {
+    public static CompletableFuture<MessageSet> getMessagesAfter(final TextChannel channel, final int limit, final long after) {
         return getMessages(channel, limit, -1, after);
     }
 
@@ -389,7 +389,7 @@ public class MessageSetImpl implements MessageSet {
      * @see #getMessagesAfterAsStream(TextChannel, long)
      */
     public static CompletableFuture<MessageSet> getMessagesAfterUntil(
-            TextChannel channel, Predicate<Message> condition, long after) {
+            final TextChannel channel, final Predicate<Message> condition, final long after) {
         return getMessagesUntil(channel, condition, -1, after);
     }
 
@@ -404,7 +404,7 @@ public class MessageSetImpl implements MessageSet {
      * @see #getMessagesAfterAsStream(TextChannel, long)
      */
     public static CompletableFuture<MessageSet> getMessagesAfterWhile(
-            TextChannel channel, Predicate<Message> condition, long after) {
+            final TextChannel channel, final Predicate<Message> condition, final long after) {
         return getMessagesWhile(channel, condition, -1, after);
     }
 
@@ -419,7 +419,7 @@ public class MessageSetImpl implements MessageSet {
      * @return The stream.
      * @see #getMessagesAfter(TextChannel, int, long)
      */
-    public static Stream<Message> getMessagesAfterAsStream(TextChannel channel, long after) {
+    public static Stream<Message> getMessagesAfterAsStream(final TextChannel channel, final long after) {
         return getMessagesAsStream(channel, -1, after);
     }
 
@@ -437,15 +437,15 @@ public class MessageSetImpl implements MessageSet {
      * @return The messages.
      * @see #getMessagesAroundAsStream(TextChannel, long)
      */
-    public static CompletableFuture<MessageSet> getMessagesAround(TextChannel channel, int limit, long around) {
-        CompletableFuture<MessageSet> future = new CompletableFuture<>();
+    public static CompletableFuture<MessageSet> getMessagesAround(final TextChannel channel, final int limit, final long around) {
+        final CompletableFuture<MessageSet> future = new CompletableFuture<>();
         channel.getApi().getThreadPool().getExecutorService().submit(() -> {
             try {
                 // calculate the half limit.
-                int halfLimit = limit / 2;
+                final int halfLimit = limit / 2;
 
                 // get the newer half
-                MessageSet newerMessages = getMessagesAfter(channel, halfLimit, around).join();
+                final MessageSet newerMessages = getMessagesAfter(channel, halfLimit, around).join();
 
                 // get the older half + around message
                 MessageSet olderMessages = getMessagesBefore(channel, halfLimit + 1, around + 1).join();
@@ -462,14 +462,14 @@ public class MessageSetImpl implements MessageSet {
                 }
 
                 // combine the messages into one collection
-                Collection<Message> messages = Stream
+                final Collection<Message> messages = Stream
                         .of(olderMessages, newerMessages)
                         .flatMap(Collection::stream)
                         .collect(Collectors.toList());
 
                 // we are done
                 future.complete(new MessageSetImpl(messages));
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 future.completeExceptionally(t);
             }
         });
@@ -492,18 +492,18 @@ public class MessageSetImpl implements MessageSet {
      * @return The messages.
      */
     public static CompletableFuture<MessageSet> getMessagesAroundUntil(
-            TextChannel channel, Predicate<Message> condition, long around) {
-        CompletableFuture<MessageSet> future = new CompletableFuture<>();
+            final TextChannel channel, final Predicate<Message> condition, final long around) {
+        final CompletableFuture<MessageSet> future = new CompletableFuture<>();
         channel.getApi().getThreadPool().getExecutorService().submit(() -> {
             try {
-                List<Message> messages = new ArrayList<>();
-                Optional<Message> untilMessage =
+                final List<Message> messages = new ArrayList<>();
+                final Optional<Message> untilMessage =
                         getMessagesAroundAsStream(channel, around).peek(messages::add).filter(condition).findFirst();
 
                 future.complete(new MessageSetImpl(untilMessage
                                                            .map(message -> messages)
                                                            .orElse(Collections.emptyList())));
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 future.completeExceptionally(t);
             }
         });
@@ -526,12 +526,12 @@ public class MessageSetImpl implements MessageSet {
      * @return The messages.
      */
     public static CompletableFuture<MessageSet> getMessagesAroundWhile(
-            TextChannel channel, Predicate<Message> condition, long around) {
-        CompletableFuture<MessageSet> future = new CompletableFuture<>();
+            final TextChannel channel, final Predicate<Message> condition, final long around) {
+        final CompletableFuture<MessageSet> future = new CompletableFuture<>();
         channel.getApi().getThreadPool().getExecutorService().submit(() -> {
             try {
-                List<Message> messages = new ArrayList<>();
-                Optional<Message> untilMessage =
+                final List<Message> messages = new ArrayList<>();
+                final Optional<Message> untilMessage =
                         getMessagesAroundAsStream(channel, around)
                                 .peek(messages::add)
                                 .filter(condition.negate())
@@ -539,7 +539,7 @@ public class MessageSetImpl implements MessageSet {
                 untilMessage.ifPresent(messages::remove);
 
                 future.complete(new MessageSetImpl(messages));
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 future.completeExceptionally(t);
             }
         });
@@ -561,7 +561,7 @@ public class MessageSetImpl implements MessageSet {
      * @return The stream.
      * @see #getMessagesAround(TextChannel, int, long)
      */
-    public static Stream<Message> getMessagesAroundAsStream(TextChannel channel, long around) {
+    public static Stream<Message> getMessagesAroundAsStream(final TextChannel channel, final long around) {
         return StreamSupport.stream(Spliterators.spliteratorUnknownSize(new Iterator<Message>() {
             private final DiscordApiImpl api = ((DiscordApiImpl) channel.getApi());
             private final AtomicBoolean firstBatch = new AtomicBoolean(true);
@@ -626,9 +626,9 @@ public class MessageSetImpl implements MessageSet {
             @Override
             public Message next() {
                 ensureMessagesAvailable();
-                boolean nextIsOlder = this.nextIsOlder.get();
+                final boolean nextIsOlder = this.nextIsOlder.get();
                 this.nextIsOlder.set(!nextIsOlder);
-                JsonNode messageJson =
+                final JsonNode messageJson =
                         ((nextIsOlder && !olderMessageJsons.isEmpty()) || newerMessageJsons.isEmpty())
                         ? olderMessageJsons.remove(0)
                         : newerMessageJsons.remove(0);
@@ -648,13 +648,13 @@ public class MessageSetImpl implements MessageSet {
      * @return The messages.
      * @see #getMessagesBetweenAsStream(TextChannel, long, long)
      */
-    public static CompletableFuture<MessageSet> getMessagesBetween(TextChannel channel, long from, long to) {
-        CompletableFuture<MessageSet> future = new CompletableFuture<>();
+    public static CompletableFuture<MessageSet> getMessagesBetween(final TextChannel channel, final long from, final long to) {
+        final CompletableFuture<MessageSet> future = new CompletableFuture<>();
         channel.getApi().getThreadPool().getExecutorService().submit(() -> {
             try {
                 future.complete(new MessageSetImpl(getMessagesBetweenAsStream(channel, from, to)
                                                            .collect(Collectors.toList())));
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 future.completeExceptionally(t);
             }
         });
@@ -674,18 +674,18 @@ public class MessageSetImpl implements MessageSet {
      * @see #getMessagesBetweenAsStream(TextChannel, long, long)
      */
     public static CompletableFuture<MessageSet> getMessagesBetweenUntil(
-            TextChannel channel, Predicate<Message> condition, long from, long to) {
-        CompletableFuture<MessageSet> future = new CompletableFuture<>();
+            final TextChannel channel, final Predicate<Message> condition, final long from, final long to) {
+        final CompletableFuture<MessageSet> future = new CompletableFuture<>();
         channel.getApi().getThreadPool().getExecutorService().submit(() -> {
             try {
-                List<Message> messages = new ArrayList<>();
-                Optional<Message> untilMessage =
+                final List<Message> messages = new ArrayList<>();
+                final Optional<Message> untilMessage =
                         getMessagesBetweenAsStream(channel, from, to).peek(messages::add).filter(condition).findFirst();
 
                 future.complete(new MessageSetImpl(untilMessage
                                                            .map(message -> messages)
                                                            .orElse(Collections.emptyList())));
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 future.completeExceptionally(t);
             }
         });
@@ -705,12 +705,12 @@ public class MessageSetImpl implements MessageSet {
      * @see #getMessagesBetweenAsStream(TextChannel, long, long)
      */
     public static CompletableFuture<MessageSet> getMessagesBetweenWhile(
-            TextChannel channel, Predicate<Message> condition, long from, long to) {
-        CompletableFuture<MessageSet> future = new CompletableFuture<>();
+            final TextChannel channel, final Predicate<Message> condition, final long from, final long to) {
+        final CompletableFuture<MessageSet> future = new CompletableFuture<>();
         channel.getApi().getThreadPool().getExecutorService().submit(() -> {
             try {
-                List<Message> messages = new ArrayList<>();
-                Optional<Message> untilMessage =
+                final List<Message> messages = new ArrayList<>();
+                final Optional<Message> untilMessage =
                         getMessagesBetweenAsStream(channel, from, to)
                                 .peek(messages::add)
                                 .filter(condition.negate())
@@ -718,7 +718,7 @@ public class MessageSetImpl implements MessageSet {
                 untilMessage.ifPresent(messages::remove);
 
                 future.complete(new MessageSetImpl(messages));
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 future.completeExceptionally(t);
             }
         });
@@ -738,10 +738,10 @@ public class MessageSetImpl implements MessageSet {
      * @return The stream.
      * @see #getMessagesBetween(TextChannel, long, long)
      */
-    public static Stream<Message> getMessagesBetweenAsStream(TextChannel channel, long from, long to) {
-        long before = Math.max(from, to);
-        long after = Math.min(from, to);
-        Stream<Message> messages = getMessagesAsStream(channel, -1, after).filter(message -> message.getId() < before);
+    public static Stream<Message> getMessagesBetweenAsStream(final TextChannel channel, final long from, final long to) {
+        final long before = Math.max(from, to);
+        final long after = Math.min(from, to);
+        final Stream<Message> messages = getMessagesAsStream(channel, -1, after).filter(message -> message.getId() < before);
         return (from == after) ? messages : messages.sorted(Comparator.reverseOrder());
     }
 
@@ -754,8 +754,8 @@ public class MessageSetImpl implements MessageSet {
      * @param after Get messages after the message with this id.
      * @return The messages.
      */
-    private static MessageSet requestAsMessages(TextChannel channel, int limit, long before, long after) {
-        DiscordApiImpl api = (DiscordApiImpl) channel.getApi();
+    private static MessageSet requestAsMessages(final TextChannel channel, final int limit, final long before, final long after) {
+        final DiscordApiImpl api = (DiscordApiImpl) channel.getApi();
         return new MessageSetImpl(
                 requestAsJsonNodes(channel, limit, before, after).stream()
                         .map(jsonNode -> api.getOrCreateMessage(channel, jsonNode))
@@ -773,9 +773,9 @@ public class MessageSetImpl implements MessageSet {
      * @return The JSON nodes.
      */
     private static List<JsonNode> requestAsSortedJsonNodes(
-            TextChannel channel, int limit, long before, long after, boolean reversed) {
-        List<JsonNode> messageJsonNodes = requestAsJsonNodes(channel, limit, before, after);
-        Comparator<JsonNode> idComparator = Comparator.comparingLong(jsonNode -> jsonNode.get("id").asLong());
+            final TextChannel channel, final int limit, final long before, final long after, final boolean reversed) {
+        final List<JsonNode> messageJsonNodes = requestAsJsonNodes(channel, limit, before, after);
+        final Comparator<JsonNode> idComparator = Comparator.comparingLong(jsonNode -> jsonNode.get("id").asLong());
         messageJsonNodes.sort(reversed ? idComparator.reversed() : idComparator);
         return messageJsonNodes;
     }
@@ -789,8 +789,8 @@ public class MessageSetImpl implements MessageSet {
      * @param after Get messages after the message with this id.
      * @return The JSON nodes.
      */
-    private static List<JsonNode> requestAsJsonNodes(TextChannel channel, int limit, long before, long after) {
-        RestRequest<List<JsonNode>> restRequest =
+    private static List<JsonNode> requestAsJsonNodes(final TextChannel channel, final int limit, final long before, final long after) {
+        final RestRequest<List<JsonNode>> restRequest =
                 new RestRequest<List<JsonNode>>(channel.getApi(), RestMethod.GET, RestEndpoint.MESSAGE)
                 .setUrlParameters(channel.getIdAsString());
 
@@ -805,29 +805,29 @@ public class MessageSetImpl implements MessageSet {
         }
 
         return restRequest.execute(result -> {
-            List<JsonNode> messageJsonNodes = new ArrayList<>();
+            final List<JsonNode> messageJsonNodes = new ArrayList<>();
             result.getJsonBody().iterator().forEachRemaining(messageJsonNodes::add);
             return messageJsonNodes;
         }).join();
     }
 
     @Override
-    public Message lower(Message message) {
+    public Message lower(final Message message) {
         return messages.lower(message);
     }
 
     @Override
-    public Message floor(Message message) {
+    public Message floor(final Message message) {
         return messages.floor(message);
     }
 
     @Override
-    public Message ceiling(Message message) {
+    public Message ceiling(final Message message) {
         return messages.ceiling(message);
     }
 
     @Override
-    public Message higher(Message message) {
+    public Message higher(final Message message) {
         return messages.higher(message);
     }
 
@@ -852,7 +852,7 @@ public class MessageSetImpl implements MessageSet {
     }
 
     @Override
-    public boolean contains(Object o) {
+    public boolean contains(final Object o) {
         return messages.contains(o);
     }
 
@@ -867,37 +867,37 @@ public class MessageSetImpl implements MessageSet {
     }
 
     @Override
-    public <T> T[] toArray(T[] a) {
+    public <T> T[] toArray(final T[] a) {
         return messages.toArray(a);
     }
 
     @Override
-    public boolean add(Message message) {
+    public boolean add(final Message message) {
         return messages.add(message);
     }
 
     @Override
-    public boolean remove(Object o) {
+    public boolean remove(final Object o) {
         return messages.remove(o);
     }
 
     @Override
-    public boolean containsAll(Collection<?> c) {
+    public boolean containsAll(final Collection<?> c) {
         return messages.containsAll(c);
     }
 
     @Override
-    public boolean addAll(Collection<? extends Message> c) {
+    public boolean addAll(final Collection<? extends Message> c) {
         return messages.addAll(c);
     }
 
     @Override
-    public boolean retainAll(Collection<?> c) {
+    public boolean retainAll(final Collection<?> c) {
         return messages.retainAll(c);
     }
 
     @Override
-    public boolean removeAll(Collection<?> c) {
+    public boolean removeAll(final Collection<?> c) {
         return messages.removeAll(c);
     }
 
@@ -917,32 +917,32 @@ public class MessageSetImpl implements MessageSet {
     }
 
     @Override
-    public MessageSet subSet(Message fromElement, boolean fromInclusive, Message toElement, boolean toInclusive) {
+    public MessageSet subSet(final Message fromElement, final boolean fromInclusive, final Message toElement, final boolean toInclusive) {
         return new MessageSetImpl(messages.subSet(fromElement, fromInclusive, toElement, toInclusive));
     }
 
     @Override
-    public MessageSet subSet(Message fromElement, Message toElement) {
+    public MessageSet subSet(final Message fromElement, final Message toElement) {
         return new MessageSetImpl(messages.subSet(fromElement, toElement));
     }
 
     @Override
-    public MessageSet headSet(Message toElement, boolean inclusive) {
+    public MessageSet headSet(final Message toElement, final boolean inclusive) {
         return new MessageSetImpl(messages.headSet(toElement, inclusive));
     }
 
     @Override
-    public MessageSet headSet(Message toElement) {
+    public MessageSet headSet(final Message toElement) {
         return new MessageSetImpl(messages.headSet(toElement));
     }
 
     @Override
-    public MessageSet tailSet(Message fromElement, boolean inclusive) {
+    public MessageSet tailSet(final Message fromElement, final boolean inclusive) {
         return new MessageSetImpl(messages.tailSet(fromElement, inclusive));
     }
 
     @Override
-    public MessageSet tailSet(Message fromElement) {
+    public MessageSet tailSet(final Message fromElement) {
         return new MessageSetImpl(messages.tailSet(fromElement));
     }
 

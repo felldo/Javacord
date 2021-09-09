@@ -26,7 +26,7 @@ public class KnownCustomEmojiChangeNameEventImpl extends KnownCustomEmojiEventIm
      * @param newName The new name of the custom emoji.
      * @param oldName The old name of the custom emoji.
      */
-    public KnownCustomEmojiChangeNameEventImpl(KnownCustomEmoji emoji, String newName, String oldName) {
+    public KnownCustomEmojiChangeNameEventImpl(final KnownCustomEmoji emoji, final String newName, final String oldName) {
         super(emoji);
         this.newName = newName;
         this.oldName = oldName;

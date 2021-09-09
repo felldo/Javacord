@@ -13,11 +13,11 @@ public abstract class ComponentImpl implements Component {
      *
      * @param data The json data of the component.
      */
-    public ComponentImpl(JsonNode data) {
+    public ComponentImpl(final JsonNode data) {
         this.type = ComponentType.fromId(data.get("type").asInt());
     }
 
-    protected ComponentImpl(ComponentType type) {
+    protected ComponentImpl(final ComponentType type) {
         this.type = type;
     }
 

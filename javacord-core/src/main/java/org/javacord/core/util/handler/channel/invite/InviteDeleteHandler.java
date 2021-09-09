@@ -16,17 +16,17 @@ public class InviteDeleteHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public InviteDeleteHandler(DiscordApi api) {
+    public InviteDeleteHandler(final DiscordApi api) {
         super(api, true, "INVITE_DELETE");
     }
 
     @Override
-    protected void handle(JsonNode packet) {
-        String code = packet.get("code").asText();
-        Channel channel = api.getChannelById(packet.get("channel_id").asLong()).orElseThrow(AssertionError::new);
+    protected void handle(final JsonNode packet) {
+        final String code = packet.get("code").asText();
+        final Channel channel = api.getChannelById(packet.get("channel_id").asLong()).orElseThrow(AssertionError::new);
         channel.asServerChannel().ifPresent(serverChannel -> {
-            Server server = serverChannel.getServer();
-            ServerChannelInviteDeleteEvent event = new ServerChannelInviteDeleteEventImpl(code, serverChannel);
+            final Server server = serverChannel.getServer();
+            final ServerChannelInviteDeleteEvent event = new ServerChannelInviteDeleteEventImpl(code, serverChannel);
             api.getEventDispatcher().dispatchServerChannelInviteDeleteEvent(
                     (DispatchQueueSelector) server, server, event);
         });

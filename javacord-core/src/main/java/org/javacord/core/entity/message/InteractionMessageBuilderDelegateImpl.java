@@ -30,15 +30,15 @@ public class InteractionMessageBuilderDelegateImpl extends MessageBuilderBaseDel
     private EnumSet<MessageFlag> messageFlags = null;
 
     @Override
-    public void setFlags(EnumSet<MessageFlag> messageFlags) {
+    public void setFlags(final EnumSet<MessageFlag> messageFlags) {
         this.messageFlags = messageFlags;
     }
 
     @Override
-    public CompletableFuture<Void> sendInitialResponse(InteractionBase interaction) {
-        ObjectNode topBody = JsonNodeFactory.instance.objectNode();
+    public CompletableFuture<Void> sendInitialResponse(final InteractionBase interaction) {
+        final ObjectNode topBody = JsonNodeFactory.instance.objectNode();
         topBody.put("type", InteractionCallbackType.CHANNEL_MESSAGE_WITH_SOURCE.getId());
-        ObjectNode body = topBody.putObject("data");
+        final ObjectNode body = topBody.putObject("data");
         prepareInteractionWebhookBodyParts(body);
 
         return new RestRequest<Void>(interaction.getApi(),
@@ -49,7 +49,7 @@ public class InteractionMessageBuilderDelegateImpl extends MessageBuilderBaseDel
     }
 
     @Override
-    public CompletableFuture<Void> deleteInitialResponse(InteractionBase interaction) {
+    public CompletableFuture<Void> deleteInitialResponse(final InteractionBase interaction) {
         return new RestRequest<Void>(interaction.getApi(),
                 RestMethod.DELETE, RestEndpoint.ORIGINAL_INTERACTION_RESPONSE)
                 .setUrlParameters(Long.toUnsignedString(interaction.getApplicationId()), interaction.getToken())
@@ -57,8 +57,8 @@ public class InteractionMessageBuilderDelegateImpl extends MessageBuilderBaseDel
     }
 
     @Override
-    public CompletableFuture<Message> editOriginalResponse(InteractionBase interaction) {
-        RestRequest<Message> request = new RestRequest<Message>(interaction.getApi(),
+    public CompletableFuture<Message> editOriginalResponse(final InteractionBase interaction) {
+        final RestRequest<Message> request = new RestRequest<Message>(interaction.getApi(),
                 RestMethod.PATCH, RestEndpoint.ORIGINAL_INTERACTION_RESPONSE)
                 .setUrlParameters(Long.toUnsignedString(interaction.getApplicationId()), interaction.getToken());
 
@@ -66,8 +66,8 @@ public class InteractionMessageBuilderDelegateImpl extends MessageBuilderBaseDel
     }
 
     @Override
-    public CompletableFuture<Message> sendFollowupMessage(InteractionBase interaction) {
-        RestRequest<Message> request = new RestRequest<Message>(interaction.getApi(),
+    public CompletableFuture<Message> sendFollowupMessage(final InteractionBase interaction) {
+        final RestRequest<Message> request = new RestRequest<Message>(interaction.getApi(),
                 RestMethod.POST, RestEndpoint.WEBHOOK_SEND)
                 .setUrlParameters(Long.toUnsignedString(interaction.getApplicationId()), interaction.getToken());
 
@@ -75,9 +75,9 @@ public class InteractionMessageBuilderDelegateImpl extends MessageBuilderBaseDel
     }
 
     @Override
-    public CompletableFuture<Void> updateOriginalMessage(InteractionBase interaction) {
-        ObjectNode topBody = JsonNodeFactory.instance.objectNode();
-        ObjectNode data = JsonNodeFactory.instance.objectNode();
+    public CompletableFuture<Void> updateOriginalMessage(final InteractionBase interaction) {
+        final ObjectNode topBody = JsonNodeFactory.instance.objectNode();
+        final ObjectNode data = JsonNodeFactory.instance.objectNode();
         prepareCommonWebhookMessageBodyParts(data);
         prepareComponents(data, true);
         topBody.put("type", InteractionCallbackType.UPDATE_MESSAGE.getId());
@@ -91,7 +91,7 @@ public class InteractionMessageBuilderDelegateImpl extends MessageBuilderBaseDel
     }
 
     @Override
-    public CompletableFuture<Void> deleteFollowupMessage(InteractionBase interaction, String messageId) {
+    public CompletableFuture<Void> deleteFollowupMessage(final InteractionBase interaction, final String messageId) {
         return new RestRequest<Void>(interaction.getApi(), RestMethod.DELETE,
                 RestEndpoint.WEBHOOK_MESSAGE)
                 .setUrlParameters(Long.toUnsignedString(interaction.getApplicationId()),
@@ -100,8 +100,8 @@ public class InteractionMessageBuilderDelegateImpl extends MessageBuilderBaseDel
     }
 
     @Override
-    public CompletableFuture<Message> editFollowupMessage(InteractionBase interaction, String messageId) {
-        RestRequest<Message> request = new RestRequest<Message>(interaction.getApi(), RestMethod.PATCH,
+    public CompletableFuture<Message> editFollowupMessage(final InteractionBase interaction, final String messageId) {
+        final RestRequest<Message> request = new RestRequest<Message>(interaction.getApi(), RestMethod.PATCH,
                 RestEndpoint.WEBHOOK_MESSAGE)
                 .setUrlParameters(Long.toUnsignedString(interaction.getApplicationId()),
                         interaction.getToken(), messageId);
@@ -110,20 +110,20 @@ public class InteractionMessageBuilderDelegateImpl extends MessageBuilderBaseDel
     }
 
     @Override
-    public void copy(InteractionBase interaction) {
+    public void copy(final InteractionBase interaction) {
         ((InteractionImpl) interaction).asMessageComponentInteraction()
                 .map(MessageComponentInteraction::getMessage)
                 .ifPresent(this::copy);
     }
 
-    private CompletableFuture<Message> executeResponse(RestRequest<Message> request) {
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+    private CompletableFuture<Message> executeResponse(final RestRequest<Message> request) {
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         prepareInteractionWebhookBodyParts(body);
 
         return checkForAttachmentsAndExecuteRequest(request, body);
     }
 
-    private void prepareInteractionWebhookBodyParts(ObjectNode body) {
+    private void prepareInteractionWebhookBodyParts(final ObjectNode body) {
         prepareCommonWebhookMessageBodyParts(body);
         prepareComponents(body, true);
         if (null != messageFlags) {
@@ -131,16 +131,16 @@ public class InteractionMessageBuilderDelegateImpl extends MessageBuilderBaseDel
         }
     }
 
-    private CompletableFuture<Message> checkForAttachmentsAndExecuteRequest(RestRequest<Message> request,
-                                                                            ObjectNode body) {
+    private CompletableFuture<Message> checkForAttachmentsAndExecuteRequest(final RestRequest<Message> request,
+                                                                            final ObjectNode body) {
         if (!attachments.isEmpty() || embeds.stream().anyMatch(EmbedBuilder::requiresAttachments)) {
-            CompletableFuture<Message> future = new CompletableFuture<>();
+            final CompletableFuture<Message> future = new CompletableFuture<>();
             // We access files etc. so this should be async
             request.getApi().getThreadPool().getExecutorService().submit(() -> {
                 try {
-                    List<FileContainer> tempAttachments = new ArrayList<>(attachments);
+                    final List<FileContainer> tempAttachments = new ArrayList<>(attachments);
                     // Add the attachments required for the embed
-                    for (EmbedBuilder embed : embeds) {
+                    for (final EmbedBuilder embed : embeds) {
                         tempAttachments.addAll(
                                 ((EmbedBuilderDelegateImpl) embed.getDelegate()).getRequiredAttachments());
                     }
@@ -158,7 +158,7 @@ public class InteractionMessageBuilderDelegateImpl extends MessageBuilderBaseDel
                                     future.complete(message);
                                 }
                             });
-                } catch (Throwable t) {
+                } catch (final Throwable t) {
                     future.completeExceptionally(t);
                 }
             });

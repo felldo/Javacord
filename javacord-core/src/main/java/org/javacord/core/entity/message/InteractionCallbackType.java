@@ -41,7 +41,7 @@ public enum InteractionCallbackType {
      *
      * @param id The id of the interaction callback type.
      */
-    InteractionCallbackType(int id) {
+    InteractionCallbackType(final int id) {
         this.id = id;
     }
 
@@ -60,7 +60,7 @@ public enum InteractionCallbackType {
      * @param id The id of the interaction callback type.
      * @return The interaction callback type with the given id or {@link InteractionCallbackType#UNKNOWN} if unknown id.
      */
-    public static InteractionCallbackType getInteractionCallbackTypeById(int id) {
+    public static InteractionCallbackType getInteractionCallbackTypeById(final int id) {
         switch (id) {
             case 1:
                 return PONG;

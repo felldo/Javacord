@@ -20,17 +20,17 @@ public class GuildDeleteHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public GuildDeleteHandler(DiscordApi api) {
+    public GuildDeleteHandler(final DiscordApi api) {
         super(api, true, "GUILD_DELETE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        long serverId = packet.get("id").asLong();
+    public void handle(final JsonNode packet) {
+        final long serverId = packet.get("id").asLong();
         if (packet.has("unavailable") && packet.get("unavailable").asBoolean()) {
             api.addUnavailableServerToCache(serverId);
             api.getPossiblyUnreadyServerById(serverId).ifPresent(server -> {
-                ServerBecomesUnavailableEvent event = new ServerBecomesUnavailableEventImpl(server);
+                final ServerBecomesUnavailableEvent event = new ServerBecomesUnavailableEventImpl(server);
 
                 api.getEventDispatcher().dispatchServerBecomesUnavailableEvent(
                         (DispatchQueueSelector) server, server, event);
@@ -43,7 +43,7 @@ public class GuildDeleteHandler extends PacketHandler {
             return;
         }
         api.getPossiblyUnreadyServerById(serverId).ifPresent(server -> {
-            ServerLeaveEvent event = new ServerLeaveEventImpl(server);
+            final ServerLeaveEvent event = new ServerLeaveEventImpl(server);
 
             api.getEventDispatcher().dispatchServerLeaveEvent((DispatchQueueSelector) server, server, event);
         });

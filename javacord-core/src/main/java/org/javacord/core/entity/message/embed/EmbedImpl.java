@@ -50,7 +50,7 @@ public class EmbedImpl implements Embed {
      *
      * @param data The json data of the embed.
      */
-    public EmbedImpl(JsonNode data) {
+    public EmbedImpl(final JsonNode data) {
         title = data.has("title") ? data.get("title").asText() : null;
         type = data.has("type") ? data.get("type").asText() : null;
         description = data.has("description") ? data.get("description").asText() : null;
@@ -64,7 +64,7 @@ public class EmbedImpl implements Embed {
         provider = data.has("provider") ? new EmbedProviderImpl(data.get("provider")) : null;
         author = data.has("author") ? new EmbedAuthorImpl(data.get("author")) : null;
         if (data.has("fields")) {
-            for (JsonNode jsonField : data.get("fields")) {
+            for (final JsonNode jsonField : data.get("fields")) {
                 this.fields.add(new EmbedFieldImpl(jsonField));
             }
         }
@@ -92,7 +92,7 @@ public class EmbedImpl implements Embed {
         }
         try {
             return Optional.of(new URL(url));
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the url of the embed is malformed! Please contact the developer!", e);
             return Optional.empty();
         }

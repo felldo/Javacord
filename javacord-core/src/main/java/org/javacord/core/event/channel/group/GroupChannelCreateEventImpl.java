@@ -13,7 +13,7 @@ public class GroupChannelCreateEventImpl extends GroupChannelEventImpl implement
      *
      * @param channel The channel of the event.
      */
-    public GroupChannelCreateEventImpl(GroupChannel channel) {
+    public GroupChannelCreateEventImpl(final GroupChannel channel) {
         super(channel);
     }
 

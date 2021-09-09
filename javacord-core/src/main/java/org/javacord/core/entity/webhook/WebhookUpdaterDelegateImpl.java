@@ -60,75 +60,75 @@ public class WebhookUpdaterDelegateImpl implements WebhookUpdaterDelegate {
      *
      * @param webhook The webhook to update.
      */
-    public WebhookUpdaterDelegateImpl(Webhook webhook) {
+    public WebhookUpdaterDelegateImpl(final Webhook webhook) {
         this.webhook = webhook;
     }
 
     @Override
-    public void setAuditLogReason(String reason) {
+    public void setAuditLogReason(final String reason) {
         this.reason = reason;
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
-    public void setChannel(ServerTextChannel channel) {
+    public void setChannel(final ServerTextChannel channel) {
         this.channel = channel;
     }
 
     @Override
-    public void setAvatar(BufferedImage avatar) {
+    public void setAvatar(final BufferedImage avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, "png");
         updateAvatar = true;
     }
 
     @Override
-    public void setAvatar(BufferedImage avatar, String fileType) {
+    public void setAvatar(final BufferedImage avatar, final String fileType) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, fileType);
         updateAvatar = true;
     }
 
     @Override
-    public void setAvatar(File avatar) {
+    public void setAvatar(final File avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar);
         updateAvatar = true;
     }
 
     @Override
-    public void setAvatar(Icon avatar) {
+    public void setAvatar(final Icon avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar);
         updateAvatar = true;
     }
 
     @Override
-    public void setAvatar(URL avatar) {
+    public void setAvatar(final URL avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar);
         updateAvatar = true;
     }
 
     @Override
-    public void setAvatar(byte[] avatar) {
+    public void setAvatar(final byte[] avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, "png");
         updateAvatar = true;
     }
 
     @Override
-    public void setAvatar(byte[] avatar, String fileType) {
+    public void setAvatar(final byte[] avatar, final String fileType) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, fileType);
         updateAvatar = true;
     }
 
     @Override
-    public void setAvatar(InputStream avatar) {
+    public void setAvatar(final InputStream avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, "png");
         updateAvatar = true;
     }
 
     @Override
-    public void setAvatar(InputStream avatar, String fileType) {
+    public void setAvatar(final InputStream avatar, final String fileType) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, fileType);
         updateAvatar = true;
     }
@@ -139,10 +139,10 @@ public class WebhookUpdaterDelegateImpl implements WebhookUpdaterDelegate {
         updateAvatar = true;
     }
 
-    private RestRequest<Webhook> setUrlParameters(RestRequest<Webhook> request) {
+    private RestRequest<Webhook> setUrlParameters(final RestRequest<Webhook> request) {
         //see: https://discord.com/developers/docs/resources/webhook#execute-webhook-querystring-params
         if (channel == null) { //changing channel doesn't work when using token.
-            Optional<String> token = webhook.asIncomingWebhook().map(IncomingWebhook::getToken);
+            final Optional<String> token = webhook.asIncomingWebhook().map(IncomingWebhook::getToken);
             if (token.isPresent()) {
                 return request.setUrlParameters(webhook.getIdAsString(), token.get());
             }
@@ -153,7 +153,7 @@ public class WebhookUpdaterDelegateImpl implements WebhookUpdaterDelegate {
     @Override
     public CompletableFuture<Webhook> update() {
         boolean patchWebhook = false;
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         if (name != null) {
             body.put("name", name);
             patchWebhook = true;
@@ -171,7 +171,7 @@ public class WebhookUpdaterDelegateImpl implements WebhookUpdaterDelegate {
         if (patchWebhook) {
             if (avatar != null) {
                 return avatar.asByteArray(webhook.getApi()).thenAccept(bytes -> {
-                    String base64Avatar = "data:image/" + avatar.getFileType() + ";base64,"
+                    final String base64Avatar = "data:image/" + avatar.getFileType() + ";base64,"
                             + Base64.getEncoder().encodeToString(bytes);
                     body.put("avatar", base64Avatar);
                 }).thenCompose(aVoid ->

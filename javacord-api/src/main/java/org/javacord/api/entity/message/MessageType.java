@@ -48,7 +48,7 @@ public enum MessageType {
      *
      * @param type The int representing the type.
      */
-    MessageType(int type) {
+    MessageType(final int type) {
         this.type = type;
     }
 
@@ -59,7 +59,7 @@ public enum MessageType {
      * @param webhook Whether the message was sent by a webhook or not.
      * @return The message type.
      */
-    public static MessageType byType(int type, boolean webhook) {
+    public static MessageType byType(final int type, final boolean webhook) {
         switch (type) {
             case 0:
                 return webhook ? NORMAL_WEBHOOK : NORMAL;

@@ -58,22 +58,22 @@ public class ThreadPoolImpl implements ThreadPool {
     }
 
     @Override
-    public ExecutorService getSingleThreadExecutorService(String threadName) {
+    public ExecutorService getSingleThreadExecutorService(final String threadName) {
         return executorServiceSingleThreads.computeIfAbsent(threadName, key ->
                 new ThreadPoolExecutor(0, 1, KEEP_ALIVE_TIME, TIME_UNIT, new LinkedBlockingQueue<>(),
                                        new ThreadFactory("Javacord - " + threadName, false)));
     }
 
     @Override
-    public ExecutorService getSingleDaemonThreadExecutorService(String threadName) {
+    public ExecutorService getSingleDaemonThreadExecutorService(final String threadName) {
         return executorServiceSingleThreads.computeIfAbsent(threadName, key ->
                 new ThreadPoolExecutor(0, 1, KEEP_ALIVE_TIME, TIME_UNIT, new LinkedBlockingQueue<>(),
                                        new ThreadFactory("Javacord - " + threadName, true)));
     }
 
     @Override
-    public Optional<ExecutorService> removeAndShutdownSingleThreadExecutorService(String threadName) {
-        ExecutorService executorService = executorServiceSingleThreads.remove(threadName);
+    public Optional<ExecutorService> removeAndShutdownSingleThreadExecutorService(final String threadName) {
+        final ExecutorService executorService = executorServiceSingleThreads.remove(threadName);
         if (executorService != null) {
             executorService.shutdown();
         }

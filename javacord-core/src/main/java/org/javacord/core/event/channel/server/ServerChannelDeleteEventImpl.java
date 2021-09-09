@@ -13,7 +13,7 @@ public class ServerChannelDeleteEventImpl extends ServerChannelEventImpl impleme
      *
      * @param channel The channel of the event.
      */
-    public ServerChannelDeleteEventImpl(ServerChannel channel) {
+    public ServerChannelDeleteEventImpl(final ServerChannel channel) {
         super(channel);
     }
 

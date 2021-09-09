@@ -30,7 +30,7 @@ public class ServerChannelUpdater {
      *
      * @param channel The channel to update.
      */
-    public ServerChannelUpdater(ServerChannel channel) {
+    public ServerChannelUpdater(final ServerChannel channel) {
         delegate = DelegateFactory.createServerChannelUpdaterDelegate(channel);
     }
 
@@ -40,7 +40,7 @@ public class ServerChannelUpdater {
      * @param reason The reason for this update.
      * @return The current instance in order to chain call methods.
      */
-    public ServerChannelUpdater setAuditLogReason(String reason) {
+    public ServerChannelUpdater setAuditLogReason(final String reason) {
         delegate.setAuditLogReason(reason);
         return this;
     }
@@ -51,7 +51,7 @@ public class ServerChannelUpdater {
      * @param name The new name of the channel.
      * @return The current instance in order to chain call methods.
      */
-    public ServerChannelUpdater setName(String name) {
+    public ServerChannelUpdater setName(final String name) {
         delegate.setName(name);
         return this;
     }
@@ -64,7 +64,7 @@ public class ServerChannelUpdater {
      *                    {@link ServerChannel#getRawPosition()} instead of {@link ServerChannel#getPosition()}!
      * @return The current instance in order to chain call methods.
      */
-    public ServerChannelUpdater setRawPosition(int rawPosition) {
+    public ServerChannelUpdater setRawPosition(final int rawPosition) {
         delegate.setRawPosition(rawPosition);
         return this;
     }
@@ -78,7 +78,7 @@ public class ServerChannelUpdater {
      * @return The current instance in order to chain call methods.
      */
     public <T extends Permissionable & DiscordEntity> ServerChannelUpdater addPermissionOverwrite(
-            T permissionable, Permissions permissions) {
+            final T permissionable, final Permissions permissions) {
         delegate.addPermissionOverwrite(permissionable, permissions);
         return this;
     }
@@ -90,7 +90,7 @@ public class ServerChannelUpdater {
      * @param permissionable The entity which permission overwrite should be removed.
      * @return The current instance in order to chain call methods.
      */
-    public <T extends Permissionable & DiscordEntity> ServerChannelUpdater removePermissionOverwrite(T permissionable) {
+    public <T extends Permissionable & DiscordEntity> ServerChannelUpdater removePermissionOverwrite(final T permissionable) {
         delegate.removePermissionOverwrite(permissionable);
         return this;
     }

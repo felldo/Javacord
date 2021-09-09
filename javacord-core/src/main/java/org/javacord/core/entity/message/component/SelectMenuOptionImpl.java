@@ -23,17 +23,17 @@ public class SelectMenuOptionImpl implements SelectMenuOption {
      *
      * @param data The json data of the select menu option.
      */
-    public SelectMenuOptionImpl(JsonNode data) {
+    public SelectMenuOptionImpl(final JsonNode data) {
         if (data.has("emoji")) {
-            JsonNode emojiObj = data.get("emoji");
+            final JsonNode emojiObj = data.get("emoji");
             if (emojiObj.has("id")) {
-                long id = emojiObj.get("id").asLong();
-                String name = emojiObj.get("name").asText();
-                boolean isAnimated = emojiObj.has("animated");
+                final long id = emojiObj.get("id").asLong();
+                final String name = emojiObj.get("name").asText();
+                final boolean isAnimated = emojiObj.has("animated");
 
                 this.emoji = new CustomEmojiImpl(null, id, name, isAnimated);
             } else {
-                String name = emojiObj.get("name").asText();
+                final String name = emojiObj.get("name").asText();
                 this.emoji = UnicodeEmojiImpl.fromString(name);
             }
         } else {
@@ -54,7 +54,7 @@ public class SelectMenuOptionImpl implements SelectMenuOption {
      * @param description The description for the option.
      * @param emoji The emoji for the option.
      */
-    public SelectMenuOptionImpl(String label, String value, boolean isDefault, String description, Emoji emoji) {
+    public SelectMenuOptionImpl(final String label, final String value, final boolean isDefault, final String description, final Emoji emoji) {
         this.label = label;
         this.value = value;
         this.isDefault = isDefault;
@@ -93,10 +93,10 @@ public class SelectMenuOptionImpl implements SelectMenuOption {
      * @return The select menu option as a ObjectNode.
      */
     public ObjectNode toJson() {
-        ObjectNode object = JsonNodeFactory.instance.objectNode();
+        final ObjectNode object = JsonNodeFactory.instance.objectNode();
 
         if (emoji != null) {
-            ObjectNode emojiObj = JsonNodeFactory.instance.objectNode();
+            final ObjectNode emojiObj = JsonNodeFactory.instance.objectNode();
             if (emoji instanceof CustomEmojiImpl) {
                 emojiObj.put("id", ((CustomEmojiImpl) emoji).getId());
                 emojiObj.put("name", ((CustomEmojiImpl) emoji).getName());

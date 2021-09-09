@@ -22,7 +22,7 @@ public abstract class ServerUserEventImpl extends ServerEventImpl implements Use
      * @param user The user of the event.
      * @param server The server of the event.
      */
-    public ServerUserEventImpl(User user, Server server) {
+    public ServerUserEventImpl(final User user, final Server server) {
         super(server);
         this.user = user;
     }

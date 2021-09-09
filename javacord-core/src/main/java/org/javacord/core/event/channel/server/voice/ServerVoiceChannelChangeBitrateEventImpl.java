@@ -26,7 +26,7 @@ public class ServerVoiceChannelChangeBitrateEventImpl extends ServerVoiceChannel
      * @param newBitrate The new bitrate of the channel.
      * @param oldBitrate The old bitrate of the channel.
      */
-    public ServerVoiceChannelChangeBitrateEventImpl(ServerVoiceChannel channel, int newBitrate, int oldBitrate) {
+    public ServerVoiceChannelChangeBitrateEventImpl(final ServerVoiceChannel channel, final int newBitrate, final int oldBitrate) {
         super(channel);
         this.newBitrate = newBitrate;
         this.oldBitrate = oldBitrate;

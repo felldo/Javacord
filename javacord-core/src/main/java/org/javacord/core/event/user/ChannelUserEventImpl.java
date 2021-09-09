@@ -19,7 +19,7 @@ public abstract class ChannelUserEventImpl extends UserEventImpl implements Text
      * @param member The member of the event.
      * @param channel The text channel of the event.
      */
-    public ChannelUserEventImpl(User user, Member member, TextChannel channel) {
+    public ChannelUserEventImpl(final User user, final Member member, final TextChannel channel) {
         super(user);
         this.channel = channel;
     }

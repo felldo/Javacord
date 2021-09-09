@@ -16,7 +16,7 @@ public class MessageComponentCreateEventImpl extends EventImpl implements Messag
      *
      * @param interaction The created interaction.
      */
-    public MessageComponentCreateEventImpl(Interaction interaction) {
+    public MessageComponentCreateEventImpl(final Interaction interaction) {
         super(interaction.getApi());
         this.interaction = interaction;
     }

@@ -27,7 +27,7 @@ public class RoleTagsImpl implements RoleTags {
      *
      * @param data The json data of the role tags.
      */
-    public RoleTagsImpl(JsonNode data) {
+    public RoleTagsImpl(final JsonNode data) {
         this.botId = data.hasNonNull("bot_id") ? data.get("bot_id").asLong(0) : null;
         this.integrationId = data.hasNonNull("integration_id") ? data.get("integration_id").asLong(0) : null;
         this.isPremiumSubscriptionRole = data.has("premium_subscriber");

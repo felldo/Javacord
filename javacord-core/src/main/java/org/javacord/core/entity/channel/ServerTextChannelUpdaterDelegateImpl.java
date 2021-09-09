@@ -46,22 +46,22 @@ public class ServerTextChannelUpdaterDelegateImpl extends ServerChannelUpdaterDe
      *
      * @param channel The channel to update.
      */
-    public ServerTextChannelUpdaterDelegateImpl(ServerTextChannel channel) {
+    public ServerTextChannelUpdaterDelegateImpl(final ServerTextChannel channel) {
         super(channel);
     }
 
     @Override
-    public void setTopic(String topic) {
+    public void setTopic(final String topic) {
         this.topic = topic;
     }
 
     @Override
-    public void setNsfwFlag(boolean nsfw) {
+    public void setNsfwFlag(final boolean nsfw) {
         this.nsfw = nsfw;
     }
 
     @Override
-    public void setCategory(ChannelCategory category) {
+    public void setCategory(final ChannelCategory category) {
         this.category = category;
         this.modifyCategory = true;
     }
@@ -72,13 +72,13 @@ public class ServerTextChannelUpdaterDelegateImpl extends ServerChannelUpdaterDe
     }
 
     @Override
-    public void setSlowmodeDelayInSeconds(int delay) {
+    public void setSlowmodeDelayInSeconds(final int delay) {
         this.delay = delay;
         this.modifyDelay = true;
     }
 
     @Override
-    protected boolean prepareUpdateBody(ObjectNode body) {
+    protected boolean prepareUpdateBody(final ObjectNode body) {
         boolean patchChannel = super.prepareUpdateBody(body);
         if (topic != null) {
             body.put("topic", topic);

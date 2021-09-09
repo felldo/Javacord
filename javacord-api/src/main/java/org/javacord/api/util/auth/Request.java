@@ -35,7 +35,7 @@ public interface Request {
      * @param headerName The name of the header for which to return the values.
      * @return The headers of the request with the given name.
      */
-    default List<String> getHeaders(String headerName) {
+    default List<String> getHeaders(final String headerName) {
         return getHeaders().get(headerName);
     }
 

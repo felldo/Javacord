@@ -22,7 +22,7 @@ public interface SafeSpecializable<S> extends Specializable<S> {
      * @return Returns an {@code Optional} of this instance if it could be cast, otherwise an empty result.
      */
     @Override
-    default <T extends S> Optional<T> as(Class<T> type) {
+    default <T extends S> Optional<T> as(final Class<T> type) {
         if (type == null) {
             return Optional.empty();
         }

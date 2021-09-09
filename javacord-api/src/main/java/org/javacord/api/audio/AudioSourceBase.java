@@ -41,7 +41,7 @@ public abstract class AudioSourceBase implements AudioSource {
      *
      * @param api The discord api instance.
      */
-    public AudioSourceBase(DiscordApi api) {
+    public AudioSourceBase(final DiscordApi api) {
         if (api == null) {
             throw new IllegalArgumentException("api must not be null!");
         }
@@ -68,7 +68,7 @@ public abstract class AudioSourceBase implements AudioSource {
             return null;
         }
         synchronized (transformers) {
-            for (AudioTransformer transformer : transformers) {
+            for (final AudioTransformer transformer : transformers) {
                 frame = transformer.transform(this, frame);
             }
         }
@@ -81,12 +81,12 @@ public abstract class AudioSourceBase implements AudioSource {
     }
 
     @Override
-    public final void addTransformer(AudioTransformer transformer) {
+    public final void addTransformer(final AudioTransformer transformer) {
         transformers.add(transformer);
     }
 
     @Override
-    public final boolean removeTransformer(AudioTransformer transformer) {
+    public final boolean removeTransformer(final AudioTransformer transformer) {
         return transformers.remove(transformer);
     }
 
@@ -106,7 +106,7 @@ public abstract class AudioSourceBase implements AudioSource {
     }
 
     @Override
-    public void setMuted(boolean muted) {
+    public void setMuted(final boolean muted) {
         this.muted = muted;
     }
 
@@ -121,7 +121,7 @@ public abstract class AudioSourceBase implements AudioSource {
 
     @Override
     public final ListenerManager<AudioSourceFinishedListener>
-            addAudioSourceFinishedListener(AudioSourceFinishedListener listener) {
+            addAudioSourceFinishedListener(final AudioSourceFinishedListener listener) {
         return delegate.addAudioSourceFinishedListener(listener);
     }
 
@@ -132,13 +132,13 @@ public abstract class AudioSourceBase implements AudioSource {
 
     @Override
     public final <T extends AudioSourceAttachableListener & ObjectAttachableListener> Collection<ListenerManager<T>>
-            addAudioSourceAttachableListener(T listener) {
+            addAudioSourceAttachableListener(final T listener) {
         return delegate.addAudioSourceAttachableListener(listener);
     }
 
     @Override
     public final <T extends AudioSourceAttachableListener & ObjectAttachableListener> void
-            removeAudioSourceAttachableListener(T listener) {
+            removeAudioSourceAttachableListener(final T listener) {
         delegate.removeAudioSourceAttachableListener(listener);
     }
 
@@ -150,7 +150,7 @@ public abstract class AudioSourceBase implements AudioSource {
 
     @Override
     public final <T extends AudioSourceAttachableListener & ObjectAttachableListener> void
-            removeListener(Class<T> listenerClass, T listener) {
+            removeListener(final Class<T> listenerClass, final T listener) {
         delegate.removeListener(listenerClass, listener);
     }
 }

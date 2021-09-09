@@ -41,8 +41,8 @@ public class InteractionMessageBuilder implements ExtendedInteractionMessageBuil
      * @param interaction The interaction.
      * @return The CompletableFuture when your message was sent.
      */
-    public CompletableFuture<InteractionMessageBuilder> sendInitialResponse(InteractionBase interaction) {
-        CompletableFuture<InteractionMessageBuilder> future = new CompletableFuture<>();
+    public CompletableFuture<InteractionMessageBuilder> sendInitialResponse(final InteractionBase interaction) {
+        final CompletableFuture<InteractionMessageBuilder> future = new CompletableFuture<>();
         delegate.sendInitialResponse(interaction)
                 .thenRun(() -> future.complete(this))
                 .exceptionally(e -> {
@@ -63,7 +63,7 @@ public class InteractionMessageBuilder implements ExtendedInteractionMessageBuil
      * @param interaction The interaction.
      * @return The edited message.
      */
-    public CompletableFuture<Message> editOriginalResponse(InteractionBase interaction) {
+    public CompletableFuture<Message> editOriginalResponse(final InteractionBase interaction) {
         return delegate.editOriginalResponse(interaction);
     }
 
@@ -73,7 +73,7 @@ public class InteractionMessageBuilder implements ExtendedInteractionMessageBuil
      * @param interaction The interaction.
      * @return The sent message.
      */
-    public CompletableFuture<Message> sendFollowupMessage(InteractionBase interaction) {
+    public CompletableFuture<Message> sendFollowupMessage(final InteractionBase interaction) {
         return delegate.sendFollowupMessage(interaction);
     }
 
@@ -84,7 +84,7 @@ public class InteractionMessageBuilder implements ExtendedInteractionMessageBuil
      * @param messageId   The message id of the followup message which should be edited.
      * @return The edited message.
      */
-    public CompletableFuture<Message> editFollowupMessage(InteractionBase interaction, long messageId) {
+    public CompletableFuture<Message> editFollowupMessage(final InteractionBase interaction, final long messageId) {
         return editFollowupMessage(interaction, Long.toUnsignedString(messageId));
     }
 
@@ -95,7 +95,7 @@ public class InteractionMessageBuilder implements ExtendedInteractionMessageBuil
      * @param messageId   The message id of the followup message which should be edited.
      * @return The edited message.
      */
-    public CompletableFuture<Message> editFollowupMessage(InteractionBase interaction, String messageId) {
+    public CompletableFuture<Message> editFollowupMessage(final InteractionBase interaction, final String messageId) {
         return delegate.editFollowupMessage(interaction, messageId);
     }
 
@@ -105,7 +105,7 @@ public class InteractionMessageBuilder implements ExtendedInteractionMessageBuil
      * @param interaction The original interaction.
      * @return The completable future to determine if the message was updated.
      */
-    public CompletableFuture<Void> updateOriginalMessage(InteractionBase interaction) {
+    public CompletableFuture<Void> updateOriginalMessage(final InteractionBase interaction) {
         return delegate.updateOriginalMessage(interaction);
     }
 
@@ -115,7 +115,7 @@ public class InteractionMessageBuilder implements ExtendedInteractionMessageBuil
      * @param interaction The interaction.
      * @return The completable future when the message has been deleted.
      */
-    public CompletableFuture<Void> deleteInitialResponse(InteractionBase interaction) {
+    public CompletableFuture<Void> deleteInitialResponse(final InteractionBase interaction) {
         return delegate.deleteInitialResponse(interaction);
     }
 
@@ -126,30 +126,30 @@ public class InteractionMessageBuilder implements ExtendedInteractionMessageBuil
      * @param messageId   The message id of the followup message which should be deleted.
      * @return The deleted message.
      */
-    public CompletableFuture<Void> deleteFollowupMessage(InteractionBase interaction, String messageId) {
+    public CompletableFuture<Void> deleteFollowupMessage(final InteractionBase interaction, final String messageId) {
         return delegate.deleteFollowupMessage(interaction, messageId);
     }
 
     @Override
-    public InteractionMessageBuilder appendCode(String language, String code) {
+    public InteractionMessageBuilder appendCode(final String language, final String code) {
         delegate.appendCode(language, code);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder append(String message, MessageDecoration... decorations) {
+    public InteractionMessageBuilder append(final String message, final MessageDecoration... decorations) {
         delegate.append(message, decorations);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder append(Mentionable entity) {
+    public InteractionMessageBuilder append(final Mentionable entity) {
         delegate.append(entity);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder append(Object object) {
+    public InteractionMessageBuilder append(final Object object) {
         delegate.append(object);
         return this;
     }
@@ -161,31 +161,31 @@ public class InteractionMessageBuilder implements ExtendedInteractionMessageBuil
     }
 
     @Override
-    public InteractionMessageBuilder setContent(String content) {
+    public InteractionMessageBuilder setContent(final String content) {
         delegate.setContent(content);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addEmbed(EmbedBuilder embed) {
+    public InteractionMessageBuilder addEmbed(final EmbedBuilder embed) {
         delegate.addEmbed(embed);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addEmbeds(EmbedBuilder... embeds) {
+    public InteractionMessageBuilder addEmbeds(final EmbedBuilder... embeds) {
         delegate.addEmbeds(Arrays.asList(embeds));
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addEmbeds(List<EmbedBuilder> embeds) {
+    public InteractionMessageBuilder addEmbeds(final List<EmbedBuilder> embeds) {
         delegate.addEmbeds(embeds);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addComponents(HighLevelComponent... components) {
+    public InteractionMessageBuilder addComponents(final HighLevelComponent... components) {
         delegate.addComponents(components);
         return this;
     }
@@ -197,25 +197,25 @@ public class InteractionMessageBuilder implements ExtendedInteractionMessageBuil
     }
 
     @Override
-    public InteractionMessageBuilder removeComponent(int index) {
+    public InteractionMessageBuilder removeComponent(final int index) {
         delegate.removeComponent(index);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder removeComponent(HighLevelComponent component) {
+    public InteractionMessageBuilder removeComponent(final HighLevelComponent component) {
         delegate.removeComponent(component);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder removeEmbed(EmbedBuilder embed) {
+    public InteractionMessageBuilder removeEmbed(final EmbedBuilder embed) {
         delegate.removeEmbed(embed);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder removeEmbeds(EmbedBuilder... embeds) {
+    public InteractionMessageBuilder removeEmbeds(final EmbedBuilder... embeds) {
         delegate.removeEmbeds(embeds);
         return this;
     }
@@ -227,25 +227,25 @@ public class InteractionMessageBuilder implements ExtendedInteractionMessageBuil
     }
 
     @Override
-    public InteractionMessageBuilder setTts(boolean tts) {
+    public InteractionMessageBuilder setTts(final boolean tts) {
         delegate.setTts(tts);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder setAllowedMentions(AllowedMentions allowedMentions) {
+    public InteractionMessageBuilder setAllowedMentions(final AllowedMentions allowedMentions) {
         delegate.setAllowedMentions(allowedMentions);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder setFlags(MessageFlag... messageFlags) {
+    public InteractionMessageBuilder setFlags(final MessageFlag... messageFlags) {
         setFlags(EnumSet.copyOf(Arrays.asList(messageFlags)));
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder setFlags(EnumSet<MessageFlag> messageFlags) {
+    public InteractionMessageBuilder setFlags(final EnumSet<MessageFlag> messageFlags) {
         delegate.setFlags(messageFlags);
         return this;
     }
@@ -256,157 +256,157 @@ public class InteractionMessageBuilder implements ExtendedInteractionMessageBuil
     }
 
     @Override
-    public InteractionMessageBuilder copy(Message message) {
+    public InteractionMessageBuilder copy(final Message message) {
         delegate.copy(message);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder copy(InteractionBase interaction) {
+    public InteractionMessageBuilder copy(final InteractionBase interaction) {
         delegate.copy(interaction);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addFile(BufferedImage image, String fileName) {
+    public InteractionMessageBuilder addFile(final BufferedImage image, final String fileName) {
         delegate.addFile(image, fileName);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addFile(File file) {
+    public InteractionMessageBuilder addFile(final File file) {
         delegate.addFile(file);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addFile(Icon icon) {
+    public InteractionMessageBuilder addFile(final Icon icon) {
         delegate.addFile(icon);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addFile(URL url) {
+    public InteractionMessageBuilder addFile(final URL url) {
         delegate.addFile(url);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addFile(byte[] bytes, String fileName) {
+    public InteractionMessageBuilder addFile(final byte[] bytes, final String fileName) {
         delegate.addFile(bytes, fileName);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addFile(InputStream stream, String fileName) {
+    public InteractionMessageBuilder addFile(final InputStream stream, final String fileName) {
         delegate.addFile(stream, fileName);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addFileAsSpoiler(BufferedImage image, String fileName) {
+    public InteractionMessageBuilder addFileAsSpoiler(final BufferedImage image, final String fileName) {
         delegate.addFile(image, "SPOILER_" + fileName);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addFileAsSpoiler(File file) {
+    public InteractionMessageBuilder addFileAsSpoiler(final File file) {
         delegate.addFileAsSpoiler(file);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addFileAsSpoiler(Icon icon) {
+    public InteractionMessageBuilder addFileAsSpoiler(final Icon icon) {
         delegate.addFileAsSpoiler(icon);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addFileAsSpoiler(URL url) {
+    public InteractionMessageBuilder addFileAsSpoiler(final URL url) {
         delegate.addFileAsSpoiler(url);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addFileAsSpoiler(byte[] bytes, String fileName) {
+    public InteractionMessageBuilder addFileAsSpoiler(final byte[] bytes, final String fileName) {
         delegate.addFile(bytes, "SPOILER_" + fileName);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addFileAsSpoiler(InputStream stream, String fileName) {
+    public InteractionMessageBuilder addFileAsSpoiler(final InputStream stream, final String fileName) {
         delegate.addFile(stream, "SPOILER_" + fileName);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addAttachment(BufferedImage image, String fileName) {
+    public InteractionMessageBuilder addAttachment(final BufferedImage image, final String fileName) {
         delegate.addAttachment(image, fileName);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addAttachment(File file) {
+    public InteractionMessageBuilder addAttachment(final File file) {
         delegate.addAttachment(file);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addAttachment(Icon icon) {
+    public InteractionMessageBuilder addAttachment(final Icon icon) {
         delegate.addAttachment(icon);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addAttachment(URL url) {
+    public InteractionMessageBuilder addAttachment(final URL url) {
         delegate.addAttachment(url);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addAttachment(byte[] bytes, String fileName) {
+    public InteractionMessageBuilder addAttachment(final byte[] bytes, final String fileName) {
         delegate.addAttachment(bytes, fileName);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addAttachment(InputStream stream, String fileName) {
+    public InteractionMessageBuilder addAttachment(final InputStream stream, final String fileName) {
         delegate.addAttachment(stream, fileName);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addAttachmentAsSpoiler(BufferedImage image, String fileName) {
+    public InteractionMessageBuilder addAttachmentAsSpoiler(final BufferedImage image, final String fileName) {
         delegate.addAttachment(image, "SPOILER_" + fileName);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addAttachmentAsSpoiler(File file) {
+    public InteractionMessageBuilder addAttachmentAsSpoiler(final File file) {
         delegate.addAttachmentAsSpoiler(file);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addAttachmentAsSpoiler(Icon icon) {
+    public InteractionMessageBuilder addAttachmentAsSpoiler(final Icon icon) {
         delegate.addAttachmentAsSpoiler(icon);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addAttachmentAsSpoiler(URL url) {
+    public InteractionMessageBuilder addAttachmentAsSpoiler(final URL url) {
         delegate.addAttachmentAsSpoiler(url);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addAttachmentAsSpoiler(byte[] bytes, String fileName) {
+    public InteractionMessageBuilder addAttachmentAsSpoiler(final byte[] bytes, final String fileName) {
         delegate.addAttachment(bytes, "SPOILER_" + fileName);
         return this;
     }
 
     @Override
-    public InteractionMessageBuilder addAttachmentAsSpoiler(InputStream stream, String fileName) {
+    public InteractionMessageBuilder addAttachmentAsSpoiler(final InputStream stream, final String fileName) {
         delegate.addAttachment(stream, "SPOILER_" + fileName);
         return this;
     }

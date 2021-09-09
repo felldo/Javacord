@@ -43,7 +43,7 @@ public enum NsfwLevel {
      *
      * @param id The id of the NSFW level.
      */
-    NsfwLevel(int id) {
+    NsfwLevel(final int id) {
         this.id = id;
     }
 
@@ -61,7 +61,7 @@ public enum NsfwLevel {
      * @param id The id of the NSFW level.
      * @return The NSFW level with the given id.
      */
-    public static NsfwLevel fromId(int id) {
+    public static NsfwLevel fromId(final int id) {
         return Arrays.stream(values())
                 .filter(nsfwLevel -> nsfwLevel.getId() == id)
                 .findFirst().orElse(UNKNOWN);

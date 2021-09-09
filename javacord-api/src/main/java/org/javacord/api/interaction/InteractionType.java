@@ -9,7 +9,7 @@ public enum InteractionType {
 
     private final int value;
 
-    InteractionType(int value) {
+    InteractionType(final int value) {
         this.value = value;
     }
 
@@ -29,8 +29,8 @@ public enum InteractionType {
      * @return The interaction type for the given value,
      *         or {@link InteractionType#UNKNOWN} if there's none with the given value.
      */
-    public static InteractionType fromValue(int value) {
-        for (InteractionType type : values()) {
+    public static InteractionType fromValue(final int value) {
+        for (final InteractionType type : values()) {
             if (type.getValue() == value) {
                 return type;
             }

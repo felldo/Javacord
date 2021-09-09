@@ -17,7 +17,7 @@ public class ReactionRemoveAllEventImpl extends RequestableMessageEventImpl impl
      * @param messageId The id of the message.
      * @param channel The text channel in which the message was sent.
      */
-    public ReactionRemoveAllEventImpl(DiscordApi api, long messageId, TextChannel channel) {
+    public ReactionRemoveAllEventImpl(final DiscordApi api, final long messageId, final TextChannel channel) {
         super(api, messageId, channel);
     }
 

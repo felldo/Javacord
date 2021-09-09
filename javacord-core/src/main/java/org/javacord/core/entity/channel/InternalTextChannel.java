@@ -39,9 +39,9 @@ public interface InternalTextChannel extends TextChannel, InternalTextChannelAtt
     }
 
     @Override
-    default CompletableFuture<Void> bulkDelete(long... messageIds) {
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
-        ArrayNode messages = body.putArray("messages");
+    default CompletableFuture<Void> bulkDelete(final long... messageIds) {
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
+        final ArrayNode messages = body.putArray("messages");
         LongStream.of(messageIds).boxed()
                 .map(Long::toUnsignedString)
                 .forEach(messages::add);
@@ -53,7 +53,7 @@ public interface InternalTextChannel extends TextChannel, InternalTextChannelAtt
     }
 
     @Override
-    default CompletableFuture<Message> getMessageById(long id) {
+    default CompletableFuture<Message> getMessageById(final long id) {
         return getApi().getCachedMessageById(id)
                 .map(CompletableFuture::completedFuture)
                 .orElseGet(() -> new RestRequest<Message>(getApi(), RestMethod.GET, RestEndpoint.MESSAGE)
@@ -66,7 +66,7 @@ public interface InternalTextChannel extends TextChannel, InternalTextChannelAtt
         return new RestRequest<MessageSet>(getApi(), RestMethod.GET, RestEndpoint.PINS)
                 .setUrlParameters(getIdAsString())
                 .execute(result -> {
-                    Collection<Message> pins = StreamSupport.stream(result.getJsonBody().spliterator(), false)
+                    final Collection<Message> pins = StreamSupport.stream(result.getJsonBody().spliterator(), false)
                             .map(pinJson -> ((DiscordApiImpl) getApi()).getOrCreateMessage(this, pinJson))
                             .collect(Collectors.toList());
                     return new MessageSetImpl(pins);
@@ -74,17 +74,17 @@ public interface InternalTextChannel extends TextChannel, InternalTextChannelAtt
     }
 
     @Override
-    default CompletableFuture<MessageSet> getMessages(int limit) {
+    default CompletableFuture<MessageSet> getMessages(final int limit) {
         return MessageSetImpl.getMessages(this, limit);
     }
 
     @Override
-    default CompletableFuture<MessageSet> getMessagesUntil(Predicate<Message> condition) {
+    default CompletableFuture<MessageSet> getMessagesUntil(final Predicate<Message> condition) {
         return MessageSetImpl.getMessagesUntil(this, condition);
     }
 
     @Override
-    default CompletableFuture<MessageSet> getMessagesWhile(Predicate<Message> condition) {
+    default CompletableFuture<MessageSet> getMessagesWhile(final Predicate<Message> condition) {
         return MessageSetImpl.getMessagesWhile(this, condition);
     }
 
@@ -94,82 +94,82 @@ public interface InternalTextChannel extends TextChannel, InternalTextChannelAtt
     }
 
     @Override
-    default CompletableFuture<MessageSet> getMessagesBefore(int limit, long before) {
+    default CompletableFuture<MessageSet> getMessagesBefore(final int limit, final long before) {
         return MessageSetImpl.getMessagesBefore(this, limit, before);
     }
 
     @Override
-    default CompletableFuture<MessageSet> getMessagesBeforeUntil(Predicate<Message> condition, long before) {
+    default CompletableFuture<MessageSet> getMessagesBeforeUntil(final Predicate<Message> condition, final long before) {
         return MessageSetImpl.getMessagesBeforeUntil(this, condition, before);
     }
 
     @Override
-    default CompletableFuture<MessageSet> getMessagesBeforeWhile(Predicate<Message> condition, long before) {
+    default CompletableFuture<MessageSet> getMessagesBeforeWhile(final Predicate<Message> condition, final long before) {
         return MessageSetImpl.getMessagesBeforeWhile(this, condition, before);
     }
 
     @Override
-    default Stream<Message> getMessagesBeforeAsStream(long before) {
+    default Stream<Message> getMessagesBeforeAsStream(final long before) {
         return MessageSetImpl.getMessagesBeforeAsStream(this, before);
     }
 
     @Override
-    default CompletableFuture<MessageSet> getMessagesAfter(int limit, long after) {
+    default CompletableFuture<MessageSet> getMessagesAfter(final int limit, final long after) {
         return MessageSetImpl.getMessagesAfter(this, limit, after);
     }
 
     @Override
-    default CompletableFuture<MessageSet> getMessagesAfterUntil(Predicate<Message> condition, long after) {
+    default CompletableFuture<MessageSet> getMessagesAfterUntil(final Predicate<Message> condition, final long after) {
         return MessageSetImpl.getMessagesAfterUntil(this, condition, after);
     }
 
     @Override
-    default CompletableFuture<MessageSet> getMessagesAfterWhile(Predicate<Message> condition, long after) {
+    default CompletableFuture<MessageSet> getMessagesAfterWhile(final Predicate<Message> condition, final long after) {
         return MessageSetImpl.getMessagesAfterWhile(this, condition, after);
     }
 
     @Override
-    default Stream<Message> getMessagesAfterAsStream(long after) {
+    default Stream<Message> getMessagesAfterAsStream(final long after) {
         return MessageSetImpl.getMessagesAfterAsStream(this, after);
     }
 
     @Override
-    default CompletableFuture<MessageSet> getMessagesAround(int limit, long around) {
+    default CompletableFuture<MessageSet> getMessagesAround(final int limit, final long around) {
         return MessageSetImpl.getMessagesAround(this, limit, around);
     }
 
     @Override
-    default CompletableFuture<MessageSet> getMessagesAroundUntil(Predicate<Message> condition, long around) {
+    default CompletableFuture<MessageSet> getMessagesAroundUntil(final Predicate<Message> condition, final long around) {
         return MessageSetImpl.getMessagesAroundUntil(this, condition, around);
     }
 
     @Override
-    default CompletableFuture<MessageSet> getMessagesAroundWhile(Predicate<Message> condition, long around) {
+    default CompletableFuture<MessageSet> getMessagesAroundWhile(final Predicate<Message> condition, final long around) {
         return MessageSetImpl.getMessagesAroundWhile(this, condition, around);
     }
 
     @Override
-    default Stream<Message> getMessagesAroundAsStream(long around) {
+    default Stream<Message> getMessagesAroundAsStream(final long around) {
         return MessageSetImpl.getMessagesAroundAsStream(this, around);
     }
 
     @Override
-    default CompletableFuture<MessageSet> getMessagesBetween(long from, long to) {
+    default CompletableFuture<MessageSet> getMessagesBetween(final long from, final long to) {
         return MessageSetImpl.getMessagesBetween(this, from, to);
     }
 
     @Override
-    default CompletableFuture<MessageSet> getMessagesBetweenUntil(Predicate<Message> condition, long from, long to) {
+    default CompletableFuture<MessageSet> getMessagesBetweenUntil(final Predicate<Message> condition, final long from, final long to) {
         return MessageSetImpl.getMessagesBetweenUntil(this, condition, from, to);
     }
 
     @Override
-    default CompletableFuture<MessageSet> getMessagesBetweenWhile(Predicate<Message> condition, long from, long to) {
+    default CompletableFuture<MessageSet> getMessagesBetweenWhile(final Predicate<Message> condition, final long from, final long to) {
         return MessageSetImpl.getMessagesBetweenWhile(this, condition, from, to);
     }
 
     @Override
-    default Stream<Message> getMessagesBetweenAsStream(long from, long to) {
+    default Stream<Message> getMessagesBetweenAsStream(final long from, final long to) {
         return MessageSetImpl.getMessagesBetweenAsStream(this, from, to);
     }
 
@@ -178,8 +178,8 @@ public interface InternalTextChannel extends TextChannel, InternalTextChannelAtt
         return new RestRequest<List<Webhook>>(getApi(), RestMethod.GET, RestEndpoint.CHANNEL_WEBHOOK)
                 .setUrlParameters(getIdAsString())
                 .execute(result -> {
-                    List<Webhook> webhooks = new ArrayList<>();
-                    for (JsonNode webhookJson : result.getJsonBody()) {
+                    final List<Webhook> webhooks = new ArrayList<>();
+                    for (final JsonNode webhookJson : result.getJsonBody()) {
                         webhooks.add(WebhookImpl.createWebhook(getApi(), webhookJson));
                     }
                     return Collections.unmodifiableList(webhooks);

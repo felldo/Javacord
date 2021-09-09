@@ -90,7 +90,7 @@ public abstract class ServerChannelImpl implements ServerChannel, InternalServer
      * @param server The server of the channel.
      * @param data   The json data of the channel.
      */
-    public ServerChannelImpl(DiscordApiImpl api, ServerImpl server, JsonNode data) {
+    public ServerChannelImpl(final DiscordApiImpl api, final ServerImpl server, final JsonNode data) {
         this.api = api;
         this.server = server;
 
@@ -99,11 +99,11 @@ public abstract class ServerChannelImpl implements ServerChannel, InternalServer
         rawPosition = data.get("position").asInt();
 
         if (data.has("permission_overwrites")) {
-            for (JsonNode permissionOverwrite : data.get("permission_overwrites")) {
-                long id = Long.parseLong(permissionOverwrite.has("id") ? permissionOverwrite.get("id").asText() : "-1");
-                long allow = permissionOverwrite.has("allow") ? permissionOverwrite.get("allow").asLong() : 0;
-                long deny = permissionOverwrite.has("deny") ? permissionOverwrite.get("deny").asLong() : 0;
-                Permissions permissions = new PermissionsImpl(allow, deny);
+            for (final JsonNode permissionOverwrite : data.get("permission_overwrites")) {
+                final long id = Long.parseLong(permissionOverwrite.has("id") ? permissionOverwrite.get("id").asText() : "-1");
+                final long allow = permissionOverwrite.has("allow") ? permissionOverwrite.get("allow").asLong() : 0;
+                final long deny = permissionOverwrite.has("deny") ? permissionOverwrite.get("deny").asLong() : 0;
+                final Permissions permissions = new PermissionsImpl(allow, deny);
                 switch (permissionOverwrite.get("type").asInt()) {
                     case 0:
                         overwrittenRolePermissions.put(id, permissions);
@@ -126,7 +126,7 @@ public abstract class ServerChannelImpl implements ServerChannel, InternalServer
      *
      * @param name The new name of the channel.
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -135,7 +135,7 @@ public abstract class ServerChannelImpl implements ServerChannel, InternalServer
      *
      * @param position The new raw position of the channel.
      */
-    public void setRawPosition(int position) {
+    public void setRawPosition(final int position) {
         this.rawPosition = position;
     }
 
@@ -187,8 +187,8 @@ public abstract class ServerChannelImpl implements ServerChannel, InternalServer
         return new RestRequest<Collection<RichInvite>>(getApi(), RestMethod.GET, RestEndpoint.CHANNEL_INVITE)
                 .setUrlParameters(getIdAsString())
                 .execute(result -> {
-                    Collection<RichInvite> invites = new HashSet<>();
-                    for (JsonNode inviteJson : result.getJsonBody()) {
+                    final Collection<RichInvite> invites = new HashSet<>();
+                    for (final JsonNode inviteJson : result.getJsonBody()) {
                         invites.add(new InviteImpl(getApi(), inviteJson));
                     }
                     return Collections.unmodifiableCollection(invites);
@@ -196,7 +196,7 @@ public abstract class ServerChannelImpl implements ServerChannel, InternalServer
     }
 
     @Override
-    public <T extends Permissionable & DiscordEntity> Permissions getOverwrittenPermissions(T permissionable) {
+    public <T extends Permissionable & DiscordEntity> Permissions getOverwrittenPermissions(final T permissionable) {
         Map<Long, Permissions> permissionsMap = Collections.emptyMap();
         if (permissionable instanceof User) {
             permissionsMap = overwrittenUserPermissions;
@@ -217,12 +217,12 @@ public abstract class ServerChannelImpl implements ServerChannel, InternalServer
     }
 
     @Override
-    public Permissions getEffectiveOverwrittenPermissions(User user) {
-        PermissionsBuilder builder = new PermissionsBuilder(PermissionsImpl.EMPTY_PERMISSIONS);
-        Server server = getServer();
-        Role everyoneRole = server.getEveryoneRole();
-        Permissions everyoneRolePermissionOverwrites = getOverwrittenPermissions(everyoneRole);
-        for (PermissionType type : PermissionType.values()) {
+    public Permissions getEffectiveOverwrittenPermissions(final User user) {
+        final PermissionsBuilder builder = new PermissionsBuilder(PermissionsImpl.EMPTY_PERMISSIONS);
+        final Server server = getServer();
+        final Role everyoneRole = server.getEveryoneRole();
+        final Permissions everyoneRolePermissionOverwrites = getOverwrittenPermissions(everyoneRole);
+        for (final PermissionType type : PermissionType.values()) {
             if (everyoneRolePermissionOverwrites.getState(type) == PermissionState.DENIED) {
                 builder.setState(type, PermissionState.DENIED);
             }
@@ -230,27 +230,27 @@ public abstract class ServerChannelImpl implements ServerChannel, InternalServer
                 builder.setState(type, PermissionState.ALLOWED);
             }
         }
-        List<Role> rolesOfUser = new ArrayList<>(server.getRoles(user));
+        final List<Role> rolesOfUser = new ArrayList<>(server.getRoles(user));
         rolesOfUser.remove(everyoneRole);
-        List<Permissions> permissionOverwrites = rolesOfUser.stream()
+        final List<Permissions> permissionOverwrites = rolesOfUser.stream()
                 .map(this::getOverwrittenPermissions)
                 .collect(Collectors.toList());
-        for (Permissions permissions : permissionOverwrites) {
-            for (PermissionType type : PermissionType.values()) {
+        for (final Permissions permissions : permissionOverwrites) {
+            for (final PermissionType type : PermissionType.values()) {
                 if (permissions.getState(type) == PermissionState.DENIED) {
                     builder.setState(type, PermissionState.DENIED);
                 }
             }
         }
-        for (Permissions permissions : permissionOverwrites) {
-            for (PermissionType type : PermissionType.values()) {
+        for (final Permissions permissions : permissionOverwrites) {
+            for (final PermissionType type : PermissionType.values()) {
                 if (permissions.getState(type) == PermissionState.ALLOWED) {
                     builder.setState(type, PermissionState.ALLOWED);
                 }
             }
         }
-        for (PermissionType type : PermissionType.values()) {
-            Permissions permissions = overwrittenUserPermissions
+        for (final PermissionType type : PermissionType.values()) {
+            final Permissions permissions = overwrittenUserPermissions
                     .getOrDefault(user.getId(), PermissionsImpl.EMPTY_PERMISSIONS);
             if (permissions.getState(type) == PermissionState.DENIED) {
                 builder.setState(type, PermissionState.DENIED);
@@ -263,7 +263,7 @@ public abstract class ServerChannelImpl implements ServerChannel, InternalServer
     }
 
     @Override
-    public CompletableFuture<Void> delete(String reason) {
+    public CompletableFuture<Void> delete(final String reason) {
         return new RestRequest<Void>(getApi(), RestMethod.DELETE, RestEndpoint.CHANNEL)
                 .setUrlParameters(getIdAsString())
                 .setAuditLogReason(reason)
@@ -271,7 +271,7 @@ public abstract class ServerChannelImpl implements ServerChannel, InternalServer
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return (this == o)
                 || !((o == null)
                 || (getClass() != o.getClass())

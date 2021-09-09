@@ -171,7 +171,7 @@ public enum Intent {
      * @param id         The id of the intent.
      * @param privileged Whether the intent is privileged or not.
      */
-    Intent(int id, boolean privileged) {
+    Intent(final int id, final boolean privileged) {
         this.id = id;
         this.privileged = privileged;
     }
@@ -203,9 +203,9 @@ public enum Intent {
      * @param intents An array of intents.
      * @return The calculated bitmask.
      */
-    public static int calculateBitmask(Intent... intents) {
+    public static int calculateBitmask(final Intent... intents) {
         int intentCount = 0;
-        for (Intent intentValue : intents) {
+        for (final Intent intentValue : intents) {
             intentCount += (1 << intentValue.getId());
         }
         return intentCount;

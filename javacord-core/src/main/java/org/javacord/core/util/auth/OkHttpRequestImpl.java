@@ -25,7 +25,7 @@ public class OkHttpRequestImpl implements Request {
      *
      * @param request The real request from OkHttp.
      */
-    public OkHttpRequestImpl(okhttp3.Request request) {
+    public OkHttpRequestImpl(final okhttp3.Request request) {
         this.request = request;
     }
 
@@ -40,24 +40,24 @@ public class OkHttpRequestImpl implements Request {
     }
 
     @Override
-    public List<String> getHeaders(String headerName) {
+    public List<String> getHeaders(final String headerName) {
         return request.headers(headerName);
     }
 
     @Override
     public Optional<String> getBody() throws IOException {
-        RequestBody requestBody = request.body();
+        final RequestBody requestBody = request.body();
         if (requestBody == null) {
             return Optional.empty();
         }
 
-        Buffer buffer = new Buffer();
+        final Buffer buffer = new Buffer();
         requestBody.writeTo(buffer);
         return Optional.of(buffer.readUtf8());
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         try {
             if (this == o) {
                 return true;
@@ -65,11 +65,11 @@ public class OkHttpRequestImpl implements Request {
             if ((o == null) || (getClass() != o.getClass())) {
                 return false;
             }
-            OkHttpRequestImpl that = (OkHttpRequestImpl) o;
+            final OkHttpRequestImpl that = (OkHttpRequestImpl) o;
             return Objects.equals(getMethod(), that.getMethod())
                     && Objects.equals(getHeaders(), that.getHeaders())
                     && Objects.equals(getBody(), that.getBody());
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -78,7 +78,7 @@ public class OkHttpRequestImpl implements Request {
     public int hashCode() {
         try {
             return Objects.hash(getMethod(), getHeaders(), getBody());
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -88,7 +88,7 @@ public class OkHttpRequestImpl implements Request {
         String body;
         try {
             body = getBody().toString();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             body = "<unknown>";
         }
         return String.format("Request (method: %s, headers: %s, body: %s)", getMethod(), getHeaders(), body);

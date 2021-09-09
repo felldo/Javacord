@@ -25,77 +25,77 @@ public class AllowedMentionsBuilderDelegateImpl implements AllowedMentionsBuilde
 
 
     @Override
-    public void setMentionEveryoneAndHere(boolean value) {
+    public void setMentionEveryoneAndHere(final boolean value) {
         this.mentionEveryoneAndHere = value;
     }
 
     @Override
-    public void setMentionRoles(boolean value) {
+    public void setMentionRoles(final boolean value) {
         this.mentionAllRoles = value;
     }
 
     @Override
-    public void setMentionUsers(boolean value) {
+    public void setMentionUsers(final boolean value) {
         this.mentionAllUsers = value;
     }
 
     @Override
-    public void addUser(long userId) {
+    public void addUser(final long userId) {
         allowedUserMentions.add(userId);
     }
 
     @Override
-    public void addUser(String userId) {
+    public void addUser(final String userId) {
         addUser(Long.parseLong(userId));
     }
 
     @Override
-    public void addUsers(Collection<Long> userIds) {
+    public void addUsers(final Collection<Long> userIds) {
         allowedUserMentions.addAll(userIds);
     }
 
     @Override
-    public void addRole(long roleId) {
+    public void addRole(final long roleId) {
         allowedRoleMentions.add(roleId);
     }
 
     @Override
-    public void addRole(String roleId) {
+    public void addRole(final String roleId) {
         addRole(Long.parseLong(roleId));
     }
 
     @Override
-    public void addRoles(Collection<Long> roleIds) {
+    public void addRoles(final Collection<Long> roleIds) {
         allowedRoleMentions.addAll(roleIds);
     }
 
     @Override
-    public void removeUser(long userId) {
+    public void removeUser(final long userId) {
         allowedUserMentions.remove(userId);
     }
 
     @Override
-    public void removeUser(String userId) {
+    public void removeUser(final String userId) {
         removeUser(Long.parseLong(userId));
     }
 
     @Override
-    public void removeRole(long roleId) {
+    public void removeRole(final long roleId) {
         allowedRoleMentions.remove(roleId);
     }
 
     @Override
-    public void removeRole(String roleId) {
+    public void removeRole(final String roleId) {
         removeRole(Long.parseLong(roleId));
     }
 
     @Override
-    public void removeUsers(Collection<Long> userIds) {
+    public void removeUsers(final Collection<Long> userIds) {
         allowedUserMentions.removeAll(userIds);
     }
 
     @Override
-    public void removeRoles(Collection<Long> roleIds) {
+    public void removeRoles(final Collection<Long> roleIds) {
         allowedRoleMentions.removeAll(roleIds);
     }
 

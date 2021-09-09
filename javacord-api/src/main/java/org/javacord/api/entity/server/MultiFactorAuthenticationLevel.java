@@ -19,7 +19,7 @@ public enum MultiFactorAuthenticationLevel {
      *
      * @param id The id of the multi factor authentication level.
      */
-    MultiFactorAuthenticationLevel(int id) {
+    MultiFactorAuthenticationLevel(final int id) {
         this.id = id;
     }
 
@@ -38,8 +38,8 @@ public enum MultiFactorAuthenticationLevel {
      * @param id The id of the multi factor authentication level.
      * @return The multi factor authentication level with the given id.
      */
-    public static MultiFactorAuthenticationLevel fromId(int id) {
-        for (MultiFactorAuthenticationLevel multiFactorAuthenticationLevel : values()) {
+    public static MultiFactorAuthenticationLevel fromId(final int id) {
+        for (final MultiFactorAuthenticationLevel multiFactorAuthenticationLevel : values()) {
             if (multiFactorAuthenticationLevel.getId() == id) {
                 return multiFactorAuthenticationLevel;
             }

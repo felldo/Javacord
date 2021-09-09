@@ -39,36 +39,36 @@ public class InteractionCreateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public InteractionCreateHandler(DiscordApi api) {
+    public InteractionCreateHandler(final DiscordApi api) {
         super(api, true, "INTERACTION_CREATE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
+    public void handle(final JsonNode packet) {
         TextChannel channel = null;
         if (packet.hasNonNull("channel_id")) {
-            long channelId = packet.get("channel_id").asLong();
+            final long channelId = packet.get("channel_id").asLong();
 
             // Check if this interaction comes from a guild or a DM
             if (packet.hasNonNull("guild_id")) {
                 channel = api.getTextChannelById(channelId).orElse(null);
             } else {
-                UserImpl user = new UserImpl(api, packet.get("user"), (MemberImpl) null, null);
+                final UserImpl user = new UserImpl(api, packet.get("user"), (MemberImpl) null, null);
                 channel = PrivateChannelImpl.getOrCreatePrivateChannel(api, channelId, user.getId(), user);
             }
         }
 
-        int typeId = packet.get("type").asInt();
+        final int typeId = packet.get("type").asInt();
         final InteractionType interactionType = InteractionType.fromValue(typeId);
         ComponentType componentType = null;
 
-        InteractionImpl interaction;
+        final InteractionImpl interaction;
         switch (interactionType) {
             case SLASH_COMMAND:
                 interaction = new SlashCommandInteractionImpl(api, channel, packet);
                 break;
             case MESSAGE_COMPONENT:
-                int componentTypeId = packet.get("data").get("component_type").asInt();
+                final int componentTypeId = packet.get("data").get("component_type").asInt();
                 componentType = ComponentType.fromId(componentTypeId);
                 switch (componentType) {
                     case BUTTON:
@@ -92,9 +92,9 @@ public class InteractionCreateHandler extends PacketHandler {
                         + "Please contact the developer!", typeId);
                 return;
         }
-        InteractionCreateEvent event = new InteractionCreateEventImpl(interaction);
+        final InteractionCreateEvent event = new InteractionCreateEventImpl(interaction);
 
-        ServerImpl server = (ServerImpl) interaction.getServer().orElse(null);
+        final ServerImpl server = (ServerImpl) interaction.getServer().orElse(null);
 
         api.getEventDispatcher().dispatchInteractionCreateEvent(
                 server == null ? api : server,
@@ -106,7 +106,7 @@ public class InteractionCreateHandler extends PacketHandler {
 
         switch (interactionType) {
             case SLASH_COMMAND:
-                SlashCommandCreateEvent slashCommandCreateEvent =
+                final SlashCommandCreateEvent slashCommandCreateEvent =
                         new SlashCommandCreateEventImpl(interaction);
                 api.getEventDispatcher().dispatchSlashCommandCreateEvent(
                         server == null ? api : server,
@@ -117,9 +117,9 @@ public class InteractionCreateHandler extends PacketHandler {
                 );
                 break;
             case MESSAGE_COMPONENT:
-                MessageComponentCreateEvent messageComponentCreateEvent =
+                final MessageComponentCreateEvent messageComponentCreateEvent =
                         new MessageComponentCreateEventImpl(interaction);
-                long messageId = messageComponentCreateEvent.getMessageComponentInteraction().getMessage().getId();
+                final long messageId = messageComponentCreateEvent.getMessageComponentInteraction().getMessage().getId();
                 api.getEventDispatcher().dispatchMessageComponentCreateEvent(
                         server == null ? api : server,
                         messageId,
@@ -129,7 +129,7 @@ public class InteractionCreateHandler extends PacketHandler {
                         messageComponentCreateEvent);
                 switch (componentType) {
                     case BUTTON:
-                        ButtonClickEvent buttonClickEvent = new ButtonClickEventImpl(interaction);
+                        final ButtonClickEvent buttonClickEvent = new ButtonClickEventImpl(interaction);
                         api.getEventDispatcher().dispatchButtonClickEvent(
                                 server == null ? api : server,
                                 messageId,
@@ -139,7 +139,7 @@ public class InteractionCreateHandler extends PacketHandler {
                                 buttonClickEvent);
                         break;
                     case SELECT_MENU:
-                        SelectMenuChooseEvent selectMenuChooseEvent = new SelectMenuChooseEventImpl(interaction);
+                        final SelectMenuChooseEvent selectMenuChooseEvent = new SelectMenuChooseEventImpl(interaction);
                         api.getEventDispatcher().dispatchSelectMenuChooseEvent(
                                 server == null ? api : server,
                                 messageId,

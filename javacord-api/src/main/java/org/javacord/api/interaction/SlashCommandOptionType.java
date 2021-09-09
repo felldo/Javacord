@@ -16,7 +16,7 @@ public enum SlashCommandOptionType {
 
     private final int value;
 
-    SlashCommandOptionType(int value) {
+    SlashCommandOptionType(final int value) {
         this.value = value;
     }
 
@@ -36,8 +36,8 @@ public enum SlashCommandOptionType {
      * @return The slash command option type for the given value,
      *         or {@link SlashCommandOptionType#UNKNOWN} if there's none with the given value.
      */
-    public static SlashCommandOptionType fromValue(int value) {
-        for (SlashCommandOptionType type : values()) {
+    public static SlashCommandOptionType fromValue(final int value) {
+        for (final SlashCommandOptionType type : values()) {
             if (type.getValue() == value) {
                 return type;
             }

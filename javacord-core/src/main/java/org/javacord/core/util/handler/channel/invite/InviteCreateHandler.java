@@ -16,17 +16,17 @@ public class InviteCreateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public InviteCreateHandler(DiscordApi api) {
+    public InviteCreateHandler(final DiscordApi api) {
         super(api, true, "INVITE_CREATE");
     }
 
     @Override
-    protected void handle(JsonNode packet) {
-        InviteImpl invite = new InviteImpl(api, packet);
+    protected void handle(final JsonNode packet) {
+        final InviteImpl invite = new InviteImpl(api, packet);
         invite.getServer().ifPresent(server -> {
             //An error here means a missing channel for the invite, which should have already thrown an error
-            ServerChannel channel = invite.getChannel().orElseThrow(AssertionError::new);
-            ServerChannelInviteCreateEvent event = new ServerChannelInviteCreateEventImpl(invite, channel);
+            final ServerChannel channel = invite.getChannel().orElseThrow(AssertionError::new);
+            final ServerChannelInviteCreateEvent event = new ServerChannelInviteCreateEventImpl(invite, channel);
             api.getEventDispatcher().dispatchServerChannelInviteCreateEvent(
                     (DispatchQueueSelector) server, server, event);
         });

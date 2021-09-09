@@ -32,18 +32,18 @@ public class MessageReactionRemoveAllHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public MessageReactionRemoveAllHandler(DiscordApi api) {
+    public MessageReactionRemoveAllHandler(final DiscordApi api) {
         super(api, true, "MESSAGE_REACTION_REMOVE_ALL");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        long messageId = packet.get("message_id").asLong();
-        Optional<Message> message = api.getCachedMessageById(messageId);
+    public void handle(final JsonNode packet) {
+        final long messageId = packet.get("message_id").asLong();
+        final Optional<Message> message = api.getCachedMessageById(messageId);
 
         message.ifPresent(msg -> ((MessageImpl) msg).removeAllReactionsFromCache());
 
-        long channelId = packet.get("channel_id").asLong();
+        final long channelId = packet.get("channel_id").asLong();
         TextChannel channel = api.getTextChannelById(channelId).orElse(null);
         if (channel == null) {
             if (packet.hasNonNull("guild_id")) {
@@ -56,9 +56,9 @@ public class MessageReactionRemoveAllHandler extends PacketHandler {
                     .dispatchPrivateChannelCreateEvent(api, new PrivateChannelImpl(api, channelId, null, null));
         }
 
-        ReactionRemoveAllEvent event = new ReactionRemoveAllEventImpl(api, messageId, channel);
+        final ReactionRemoveAllEvent event = new ReactionRemoveAllEventImpl(api, messageId, channel);
 
-        Optional<Server> optionalServer = channel.asServerChannel().map(ServerChannel::getServer);
+        final Optional<Server> optionalServer = channel.asServerChannel().map(ServerChannel::getServer);
         api.getEventDispatcher().dispatchReactionRemoveAllEvent(
                 optionalServer.map(DispatchQueueSelector.class::cast).orElse(api),
                 messageId,

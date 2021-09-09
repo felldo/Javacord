@@ -42,7 +42,7 @@ public interface Emoji extends Mentionable, Specializable<Emoji> {
      * @param otherEmoji The emoji to compare with.
      * @return Whether the emoji is equal to the given emoji.
      */
-    default boolean equalsEmoji(Emoji otherEmoji) {
+    default boolean equalsEmoji(final Emoji otherEmoji) {
         if (otherEmoji.isUnicodeEmoji()) {
             return equalsEmoji(otherEmoji.asUnicodeEmoji().orElse(""));
         }
@@ -51,8 +51,8 @@ public interface Emoji extends Mentionable, Specializable<Emoji> {
             return false;
         }
         // Both are custom emojis, so we have to compare the id
-        long thisId = asCustomEmoji().map(CustomEmoji::getId).orElseThrow(AssertionError::new);
-        long otherId = otherEmoji.asCustomEmoji().map(CustomEmoji::getId).orElseThrow(AssertionError::new);
+        final long thisId = asCustomEmoji().map(CustomEmoji::getId).orElseThrow(AssertionError::new);
+        final long otherId = otherEmoji.asCustomEmoji().map(CustomEmoji::getId).orElseThrow(AssertionError::new);
         return thisId == otherId;
     }
 
@@ -63,7 +63,7 @@ public interface Emoji extends Mentionable, Specializable<Emoji> {
      * @param otherEmoji The unicode emoji to compare with.
      * @return Whether the emoji is equal to the given unicode emoji.
      */
-    default boolean equalsEmoji(String otherEmoji) {
+    default boolean equalsEmoji(final String otherEmoji) {
         return asUnicodeEmoji()
                 .map(emoji -> emoji.equals(otherEmoji))
                 .orElse(false);

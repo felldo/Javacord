@@ -20,7 +20,7 @@ public class SlashCommandUpdater {
      *
      * @param commandId The slash command id which should be updated.
      */
-    public SlashCommandUpdater(long commandId) {
+    public SlashCommandUpdater(final long commandId) {
         delegate = DelegateFactory.createSlashCommandUpdaterDelegate(commandId);
     }
 
@@ -30,7 +30,7 @@ public class SlashCommandUpdater {
      * @param name The name to set.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandUpdater setName(String name) {
+    public SlashCommandUpdater setName(final String name) {
         delegate.setName(name);
         return this;
     }
@@ -41,7 +41,7 @@ public class SlashCommandUpdater {
      * @param description The description to set.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandUpdater setDescription(String description) {
+    public SlashCommandUpdater setDescription(final String description) {
         delegate.setDescription(description);
         return this;
     }
@@ -53,7 +53,7 @@ public class SlashCommandUpdater {
      * @return The current instance in order to chain call methods.
      */
     public SlashCommandUpdater setSlashCommandOptions(
-            List<SlashCommandOption> slashCommandOptions) {
+            final List<SlashCommandOption> slashCommandOptions) {
         delegate.setOptions(slashCommandOptions);
         return this;
     }
@@ -67,7 +67,7 @@ public class SlashCommandUpdater {
      * @param defaultPermission The default permission to set.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandUpdater setDefaultPermission(boolean defaultPermission) {
+    public SlashCommandUpdater setDefaultPermission(final boolean defaultPermission) {
         delegate.setDefaultPermission(defaultPermission);
         return this;
     }
@@ -80,7 +80,7 @@ public class SlashCommandUpdater {
      * @param api The DiscordApi instance.
      * @return The updated slash command.
      */
-    public CompletableFuture<SlashCommand> updateGlobal(DiscordApi api) {
+    public CompletableFuture<SlashCommand> updateGlobal(final DiscordApi api) {
         return delegate.updateGlobal(api);
     }
 
@@ -92,7 +92,7 @@ public class SlashCommandUpdater {
      * @param server The server where the command should be updated.
      * @return The updated slash command.
      */
-    public CompletableFuture<SlashCommand> updateForServer(Server server) {
+    public CompletableFuture<SlashCommand> updateForServer(final Server server) {
         return delegate.updateForServer(server);
     }
 }

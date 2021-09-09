@@ -36,18 +36,18 @@ public class MessageReactionAddHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public MessageReactionAddHandler(DiscordApi api) {
+    public MessageReactionAddHandler(final DiscordApi api) {
         super(api, true, "MESSAGE_REACTION_ADD");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        long channelId = packet.get("channel_id").asLong();
-        long messageId = packet.get("message_id").asLong();
-        long userId = packet.get("user_id").asLong();
-        String serverId = packet.hasNonNull("guild_id") ? packet.get("guild_id").asText() : null;
+    public void handle(final JsonNode packet) {
+        final long channelId = packet.get("channel_id").asLong();
+        final long messageId = packet.get("message_id").asLong();
+        final long userId = packet.get("user_id").asLong();
+        final String serverId = packet.hasNonNull("guild_id") ? packet.get("guild_id").asText() : null;
 
-        TextChannel channel;
+        final TextChannel channel;
         if (serverId == null) { // if private channel:
             channel = PrivateChannelImpl.getOrCreatePrivateChannel(api, channelId, userId, null);
         } else {
@@ -59,16 +59,16 @@ public class MessageReactionAddHandler extends PacketHandler {
             return;
         }
 
-        Optional<Server> server = api.getServerById(serverId);
+        final Optional<Server> server = api.getServerById(serverId);
 
         Member member = null;
         if (packet.hasNonNull("member") && server.isPresent()) {
             member = new MemberImpl(api, (ServerImpl) server.get(), packet.get("member"), null);
         }
-        Optional<Message> message = api.getCachedMessageById(messageId);
+        final Optional<Message> message = api.getCachedMessageById(messageId);
 
-        Emoji emoji;
-        JsonNode emojiJson = packet.get("emoji");
+        final Emoji emoji;
+        final JsonNode emojiJson = packet.get("emoji");
         if (!emojiJson.has("id") || emojiJson.get("id").isNull()) {
             emoji = UnicodeEmojiImpl.fromString(emojiJson.get("name").asText());
         } else {
@@ -77,7 +77,7 @@ public class MessageReactionAddHandler extends PacketHandler {
 
         message.ifPresent(msg -> ((MessageImpl) msg).addReaction(emoji, userId == api.getYourself().getId()));
 
-        ReactionAddEvent event = new ReactionAddEventImpl(api, messageId, channel, emoji, userId, member);
+        final ReactionAddEvent event = new ReactionAddEventImpl(api, messageId, channel, emoji, userId, member);
 
         api.getEventDispatcher().dispatchReactionAddEvent(
                 server.map(DispatchQueueSelector.class::cast).orElse(api),

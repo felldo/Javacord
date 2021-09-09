@@ -36,7 +36,7 @@ public abstract class SingleReactionEventImpl extends RequestableMessageEventImp
      * @param emoji The emoji.
      * @param userId The id of the "owner" of the reaction.
      */
-    public SingleReactionEventImpl(DiscordApi api, long messageId, TextChannel channel, Emoji emoji, long userId) {
+    public SingleReactionEventImpl(final DiscordApi api, final long messageId, final TextChannel channel, final Emoji emoji, final long userId) {
         super(api, messageId, channel);
         this.emoji = emoji;
         this.userId = userId;

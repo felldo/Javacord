@@ -23,7 +23,7 @@ public class AuditLogChangeImpl<T> implements AuditLogChange<T> {
      * @param oldValue The old value.
      * @param newValue The new value.
      */
-    public AuditLogChangeImpl(AuditLogChangeType type, T oldValue, T newValue) {
+    public AuditLogChangeImpl(final AuditLogChangeType type, final T oldValue, final T newValue) {
         this.type = type;
         this.oldValue = oldValue;
         this.newValue = newValue;

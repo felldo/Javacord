@@ -21,11 +21,11 @@ public interface VoiceChannel extends Channel, VoiceChannelAttachableListenerMan
      * @param user The user to check.
      * @return Whether the given user can connect or not.
      */
-    default boolean canConnect(User user) {
+    default boolean canConnect(final User user) {
         if (!canSee(user)) {
             return false;
         }
-        Optional<ServerVoiceChannel> severVoiceChannel = asServerVoiceChannel();
+        final Optional<ServerVoiceChannel> severVoiceChannel = asServerVoiceChannel();
         return !severVoiceChannel.isPresent()
                || severVoiceChannel.get().hasAnyPermission(user,
                                                           PermissionType.ADMINISTRATOR,
@@ -50,11 +50,11 @@ public interface VoiceChannel extends Channel, VoiceChannelAttachableListenerMan
      * @param user The user to check.
      * @return Whether the given user can mute other users or not.
      */
-    default boolean canMuteUsers(User user) {
+    default boolean canMuteUsers(final User user) {
         if (!canConnect(user) || getType() == ChannelType.PRIVATE_CHANNEL || getType() == ChannelType.GROUP_CHANNEL) {
             return false;
         }
-        Optional<ServerVoiceChannel> serverVoiceChannel = asServerVoiceChannel();
+        final Optional<ServerVoiceChannel> serverVoiceChannel = asServerVoiceChannel();
         return !serverVoiceChannel.isPresent()
                || serverVoiceChannel.get().hasAnyPermission(user,
                                                             PermissionType.ADMINISTRATOR,
@@ -78,11 +78,11 @@ public interface VoiceChannel extends Channel, VoiceChannelAttachableListenerMan
 
     @Override
     default CompletableFuture<? extends VoiceChannel> getLatestInstance() {
-        Optional<? extends VoiceChannel> currentCachedInstance = getCurrentCachedInstance();
+        final Optional<? extends VoiceChannel> currentCachedInstance = getCurrentCachedInstance();
         if (currentCachedInstance.isPresent()) {
             return CompletableFuture.completedFuture(currentCachedInstance.get());
         } else {
-            CompletableFuture<? extends VoiceChannel> result = new CompletableFuture<>();
+            final CompletableFuture<? extends VoiceChannel> result = new CompletableFuture<>();
             result.completeExceptionally(new NoSuchElementException());
             return result;
         }

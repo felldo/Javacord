@@ -24,7 +24,7 @@ public enum WebSocketCloseReason {
      *
      * @param closeCode The web socket close code.
      */
-    WebSocketCloseReason(WebSocketCloseCode closeCode) {
+    WebSocketCloseReason(final WebSocketCloseCode closeCode) {
         this(closeCode, null);
     }
 
@@ -34,7 +34,7 @@ public enum WebSocketCloseReason {
      * @param closeCode The web socket close code.
      * @param closeReason The close reason.
      */
-    WebSocketCloseReason(WebSocketCloseCode closeCode, String closeReason) {
+    WebSocketCloseReason(final WebSocketCloseCode closeCode, final String closeReason) {
         this.closeCode = closeCode;
         this.closeReason = closeReason;
     }

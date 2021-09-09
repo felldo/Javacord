@@ -26,16 +26,16 @@ public interface Nameable extends Formattable {
     String getName();
 
     @Override
-    default void formatTo(Formatter formatter, int flags, int width, int precision) {
-        boolean alternate = (flags & FormattableFlags.ALTERNATE) != 0;
-        String representation = alternate ? this.toString() : this.getName();
-        boolean uppercase = (flags & FormattableFlags.UPPERCASE) != 0;
-        boolean leftAlign = (flags & FormattableFlags.LEFT_JUSTIFY) != 0;
-        boolean doPad = representation.length() < width;
+    default void formatTo(final Formatter formatter, final int flags, final int width, final int precision) {
+        final boolean alternate = (flags & FormattableFlags.ALTERNATE) != 0;
+        final String representation = alternate ? this.toString() : this.getName();
+        final boolean uppercase = (flags & FormattableFlags.UPPERCASE) != 0;
+        final boolean leftAlign = (flags & FormattableFlags.LEFT_JUSTIFY) != 0;
+        final boolean doPad = representation.length() < width;
         String padString = null;
 
         if (doPad) {
-            char[] spaces = new char[width - representation.length()];
+            final char[] spaces = new char[width - representation.length()];
             Arrays.fill(spaces, ' ');
             padString = new String(spaces);
         }
@@ -50,7 +50,7 @@ public interface Nameable extends Formattable {
             if (doPad && leftAlign) {
                 formatter.out().append(padString);
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             ExceptionLogger.getConsumer().accept(e);
         }
     }

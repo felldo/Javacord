@@ -4,6 +4,6 @@ public enum AllowedMentionType {
 
     USERS,
     ROLES,
-    EVERYONE;
+    EVERYONE
 
 }

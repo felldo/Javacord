@@ -14,7 +14,7 @@ public class VoiceStateUpdateEventImpl extends ServerVoiceChannelEventImpl imple
      * @param channel   The channel this voice server update is for.
      * @param sessionId The session id for this user.
      */
-    public VoiceStateUpdateEventImpl(ServerVoiceChannel channel, String sessionId) {
+    public VoiceStateUpdateEventImpl(final ServerVoiceChannel channel, final String sessionId) {
         super(channel);
         this.sessionId = sessionId;
     }

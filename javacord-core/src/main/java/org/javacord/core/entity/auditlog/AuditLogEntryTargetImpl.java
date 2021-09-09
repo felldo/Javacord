@@ -28,7 +28,7 @@ public class AuditLogEntryTargetImpl implements AuditLogEntryTarget {
      * @param id The id of the target.
      * @param auditLogEntry audit log entry this target belongs to.
      */
-    public AuditLogEntryTargetImpl(long id, AuditLogEntry auditLogEntry) {
+    public AuditLogEntryTargetImpl(final long id, final AuditLogEntry auditLogEntry) {
         this.id = id;
         this.auditLogEntry = auditLogEntry;
     }
@@ -49,7 +49,7 @@ public class AuditLogEntryTargetImpl implements AuditLogEntryTarget {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return (this == o)
                || !((o == null)
                     || (getClass() != o.getClass())

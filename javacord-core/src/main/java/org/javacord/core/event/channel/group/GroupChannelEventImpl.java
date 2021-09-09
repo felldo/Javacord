@@ -19,7 +19,7 @@ public abstract class GroupChannelEventImpl extends EventImpl implements GroupCh
      *
      * @param channel The channel of the event.
      */
-    public GroupChannelEventImpl(GroupChannel channel) {
+    public GroupChannelEventImpl(final GroupChannel channel) {
         super(channel.getApi());
         this.channel = channel;
     }

@@ -73,27 +73,27 @@ public enum RestEndpoint {
      */
     private final int hardcodedRatelimit;
 
-    RestEndpoint(String endpointUrl) {
+    RestEndpoint(final String endpointUrl) {
         this(endpointUrl, -1, false, -1);
     }
 
-    RestEndpoint(String endpointUrl, boolean global) {
+    RestEndpoint(final String endpointUrl, final boolean global) {
         this(endpointUrl, -1, global, -1);
     }
 
-    RestEndpoint(String endpointUrl, int majorParameterPosition) {
+    RestEndpoint(final String endpointUrl, final int majorParameterPosition) {
         this(endpointUrl, majorParameterPosition, false, -1);
     }
 
-    RestEndpoint(String endpointUrl, int majorParameterPosition, int hardcodedRatelimit) {
+    RestEndpoint(final String endpointUrl, final int majorParameterPosition, final int hardcodedRatelimit) {
         this(endpointUrl, majorParameterPosition, false, hardcodedRatelimit);
     }
 
-    RestEndpoint(String endpointUrl, int majorParameterPosition, boolean global) {
+    RestEndpoint(final String endpointUrl, final int majorParameterPosition, final boolean global) {
         this(endpointUrl, majorParameterPosition, false, -1);
     }
 
-    RestEndpoint(String endpointUrl, int majorParameterPosition, boolean global, int hardcodedRatelimit) {
+    RestEndpoint(final String endpointUrl, final int majorParameterPosition, final boolean global, final int hardcodedRatelimit) {
         this.endpointUrl = endpointUrl;
         this.majorParameterPosition = majorParameterPosition;
         this.global = global;
@@ -137,7 +137,7 @@ public enum RestEndpoint {
      *
      * @param global If the endpoint is global.
      */
-    public void setGlobal(boolean global) {
+    public void setGlobal(final boolean global) {
         this.global = global;
     }
 
@@ -160,11 +160,11 @@ public enum RestEndpoint {
      * @param parameters The parameters of the url. E.g. for channel ids.
      * @return The full url of the endpoint.
      */
-    public String getFullUrl(String... parameters) {
+    public String getFullUrl(final String... parameters) {
         StringBuilder url = new StringBuilder(
                 "https://" + Javacord.DISCORD_DOMAIN + "/api/v" + Javacord.DISCORD_API_VERSION + getEndpointUrl());
         url = new StringBuilder(String.format(url.toString(), (Object[]) parameters));
-        int parameterAmount = getEndpointUrl().split("%s").length - (getEndpointUrl().endsWith("%s") ? 0 : 1);
+        final int parameterAmount = getEndpointUrl().split("%s").length - (getEndpointUrl().endsWith("%s") ? 0 : 1);
         if (parameters.length > parameterAmount) {
             for (int i = parameterAmount; i < parameters.length; i++) {
                 url.append("/").append(parameters[i]);
@@ -180,7 +180,7 @@ public enum RestEndpoint {
      * @param parameters The parameters of the url. E.g. for channel ids.
      * @return The full http url of the endpoint.
      */
-    public HttpUrl getOkHttpUrl(String... parameters) {
+    public HttpUrl getOkHttpUrl(final String... parameters) {
         return HttpUrl.parse(getFullUrl(parameters));
     }
 

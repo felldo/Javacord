@@ -40,7 +40,7 @@ public class Cache<T> {
      * @param elements The elements in the cache.
      * @param indexes The indexes.
      */
-    private Cache(Set<T> elements, Map<String, Index<Object, T>> indexes) {
+    private Cache(final Set<T> elements, final Map<String, Index<Object, T>> indexes) {
         this.elements = elements;
         this.indexes = indexes;
     }
@@ -73,15 +73,15 @@ public class Cache<T> {
      * @return The new cache with the added index.
      * @throws IllegalStateException If the cache already has an index with the given name.
      */
-    public Cache<T> addIndex(String indexName, Function<T, Object> mappingFunction) {
+    public Cache<T> addIndex(final String indexName, final Function<T, Object> mappingFunction) {
         if (indexes.containsKey(indexName)) {
             throw new IllegalStateException("The cache already has an index with name " + indexName);
         }
         Index<Object, T> index = new Index<>(mappingFunction);
-        for (T element : elements) {
+        for (final T element : elements) {
             index = index.addElement(element);
         }
-        Map<String, Index<Object, T>> newIndexes = indexes.put(indexName, index);
+        final Map<String, Index<Object, T>> newIndexes = indexes.put(indexName, index);
         return new Cache<>(elements, newIndexes);
     }
 
@@ -95,9 +95,9 @@ public class Cache<T> {
      * @param element The element to add.
      * @return The new cache after adding the element.
      */
-    public Cache<T> addElement(T element) {
-        Set<T> newElements = elements.add(element);
-        Map<String, Index<Object, T>> newIndexes = indexes.mapValues(index -> index.addElement(element));
+    public Cache<T> addElement(final T element) {
+        final Set<T> newElements = elements.add(element);
+        final Map<String, Index<Object, T>> newIndexes = indexes.mapValues(index -> index.addElement(element));
         return new Cache<>(newElements, newIndexes);
     }
 
@@ -110,9 +110,9 @@ public class Cache<T> {
      * @param element The element to remove.
      * @return The new cache after removing the element.
      */
-    public Cache<T> removeElement(T element) {
-        Set<T> newElements = elements.remove(element);
-        Map<String, Index<Object, T>> newIndexes = indexes.mapValues(index -> index.removeElement(element));
+    public Cache<T> removeElement(final T element) {
+        final Set<T> newElements = elements.remove(element);
+        final Map<String, Index<Object, T>> newIndexes = indexes.mapValues(index -> index.removeElement(element));
         return new Cache<>(newElements, newIndexes);
     }
 
@@ -129,7 +129,7 @@ public class Cache<T> {
      * @param element The element of which the values did change.
      * @return The new cache after updating the element.
      */
-    public Cache<T> updateIndexesOfElement(T element) {
+    public Cache<T> updateIndexesOfElement(final T element) {
         if (!elements.contains(element)) {
             return this;
         }
@@ -157,8 +157,8 @@ public class Cache<T> {
      * @return An element with the given key.
      * @throws IllegalArgumentException If the cache has no index with the given name.
      */
-    public Optional<T> findAnyByIndex(String indexName, Object key) {
-        Index<Object, T> index = indexes.get(indexName).getOrElseThrow(
+    public Optional<T> findAnyByIndex(final String indexName, final Object key) {
+        final Index<Object, T> index = indexes.get(indexName).getOrElseThrow(
                 () -> new IllegalArgumentException("No index with given name (" + indexName + ") found"));
         return index.findAny(key);
     }
@@ -173,8 +173,8 @@ public class Cache<T> {
      * @return A set with all the elements that have the given key.
      * @throws IllegalArgumentException If the cache has no index with the given name.
      */
-    public Set<T> findByIndex(String indexName, Object key) {
-        Index<Object, T> index = indexes.get(indexName).getOrElseThrow(
+    public Set<T> findByIndex(final String indexName, final Object key) {
+        final Index<Object, T> index = indexes.get(indexName).getOrElseThrow(
                 () -> new IllegalArgumentException("No index with given name (" + indexName + ") found"));
         return index.find(key);
     }

@@ -21,8 +21,8 @@ public class CannotMessageUserException extends MissingPermissionsException {
      * @param request The information about the request.
      * @param response The information about the response.
      */
-    public CannotMessageUserException(Exception origin, String message, RestRequestInformation request,
-                                      RestRequestResponseInformation response) {
+    public CannotMessageUserException(final Exception origin, final String message, final RestRequestInformation request,
+                                      final RestRequestResponseInformation response) {
         super(origin, message, request, response);
     }
 

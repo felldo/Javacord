@@ -19,7 +19,7 @@ public class RoleChangeMentionableEventImpl extends RoleEventImpl implements Rol
      * @param role The role of the event.
      * @param oldMentionable The old mentionable flag of the role.
      */
-    public RoleChangeMentionableEventImpl(Role role, boolean oldMentionable) {
+    public RoleChangeMentionableEventImpl(final Role role, final boolean oldMentionable) {
         super(role);
         this.oldMentionable = oldMentionable;
     }

@@ -59,12 +59,12 @@ public class KnownCustomEmojiImpl extends CustomEmojiImpl
      * @param server The server of the emoji.
      * @param data The json data of the emoji.
      */
-    public KnownCustomEmojiImpl(DiscordApiImpl api, Server server, JsonNode data) {
+    public KnownCustomEmojiImpl(final DiscordApiImpl api, final Server server, final JsonNode data) {
         super(api, data);
         this.server = server;
         if (data.hasNonNull("roles")) {
             whitelist = new HashSet<>();
-            for (JsonNode roleIdJson : data.get("roles")) {
+            for (final JsonNode roleIdJson : data.get("roles")) {
                 server.getRoleById(roleIdJson.asLong()).ifPresent(whitelist::add);
             }
         }
@@ -78,7 +78,7 @@ public class KnownCustomEmojiImpl extends CustomEmojiImpl
      *
      * @param name The name to set.
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -87,7 +87,7 @@ public class KnownCustomEmojiImpl extends CustomEmojiImpl
      *
      * @param whitelist The whitelist to set.
      */
-    public void setWhitelist(Collection<Role> whitelist) {
+    public void setWhitelist(final Collection<Role> whitelist) {
         this.whitelist = whitelist;
     }
 
@@ -97,7 +97,7 @@ public class KnownCustomEmojiImpl extends CustomEmojiImpl
     }
 
     @Override
-    public CompletableFuture<Void> delete(String reason) {
+    public CompletableFuture<Void> delete(final String reason) {
         return new RestRequest<Void>(getApi(), RestMethod.DELETE, RestEndpoint.CUSTOM_EMOJI)
                 .setUrlParameters(getServer().getIdAsString(), getIdAsString())
                 .setAuditLogReason(reason)
@@ -127,7 +127,7 @@ public class KnownCustomEmojiImpl extends CustomEmojiImpl
             return new RestRequest<Optional<User>>(getApi(), RestMethod.GET, RestEndpoint.CUSTOM_EMOJI)
                     .setUrlParameters(server.getIdAsString(), this.getIdAsString())
                     .execute(result -> {
-                        JsonNode userJson = result.getJsonBody().get("user");
+                        final JsonNode userJson = result.getJsonBody().get("user");
                         if (userJson.isMissingNode()) {
                             return Optional.empty();
                         } else {

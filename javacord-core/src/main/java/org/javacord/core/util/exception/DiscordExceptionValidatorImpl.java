@@ -13,14 +13,14 @@ import java.util.Optional;
 public class DiscordExceptionValidatorImpl implements DiscordExceptionValidator {
 
     @Override
-    public void validateException(DiscordException exception) throws AssertionError {
-        Optional<RestRequestHttpResponseCode> expectedResponseCodeOptional =
+    public void validateException(final DiscordException exception) throws AssertionError {
+        final Optional<RestRequestHttpResponseCode> expectedResponseCodeOptional =
                 RestRequestHttpResponseCode.fromDiscordExceptionClass(exception.getClass());
-        Optional<RestRequestResponseInformation> restRequestResponseInformationOptional = exception.getResponse();
+        final Optional<RestRequestResponseInformation> restRequestResponseInformationOptional = exception.getResponse();
 
         if (expectedResponseCodeOptional.isPresent()) {
             // if this class or a superclass of it is the expected exception class for an HTTP response code
-            RestRequestHttpResponseCode expectedResponseCode = expectedResponseCodeOptional.get();
+            final RestRequestHttpResponseCode expectedResponseCode = expectedResponseCodeOptional.get();
             if (restRequestResponseInformationOptional.isPresent()) {
                 // if there is an actual result but the response code does not match
                 if (restRequestResponseInformationOptional.get().getCode() != expectedResponseCode.getCode()) {
@@ -46,9 +46,9 @@ public class DiscordExceptionValidatorImpl implements DiscordExceptionValidator 
             }
         } else {
             // if this class or a superclass of it is not the expected exception class for an HTTP response code
-            Optional<Integer> responseCodeOptional = restRequestResponseInformationOptional
+            final Optional<Integer> responseCodeOptional = restRequestResponseInformationOptional
                     .map(RestRequestResponseInformation::getCode);
-            Optional<? extends Class<? extends DiscordException>> discordExceptionClassOptional =
+            final Optional<? extends Class<? extends DiscordException>> discordExceptionClassOptional =
                     responseCodeOptional
                             .flatMap(RestRequestHttpResponseCode::fromCode)
                             .flatMap(RestRequestHttpResponseCode::getDiscordExceptionClass);

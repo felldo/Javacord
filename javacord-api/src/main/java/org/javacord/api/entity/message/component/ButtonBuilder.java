@@ -14,7 +14,7 @@ public class ButtonBuilder implements LowLevelComponentBuilder {
      * @param button The button to copy.
      * @return The builder instance to chain methods.
      */
-    public ButtonBuilder copy(Button button) {
+    public ButtonBuilder copy(final Button button) {
         delegate.copy(button);
         return this;
     }
@@ -45,7 +45,7 @@ public class ButtonBuilder implements LowLevelComponentBuilder {
      * @param style A new button style.
      * @return The builder instance to chain methods.
      */
-    public ButtonBuilder setStyle(ButtonStyle style) {
+    public ButtonBuilder setStyle(final ButtonStyle style) {
         delegate.setStyle(style);
         return this;
     }
@@ -56,8 +56,8 @@ public class ButtonBuilder implements LowLevelComponentBuilder {
      * @param styleName The style of the button based on Discord's default names.
      * @return The current instance in order to chain call methods.
      */
-    public ButtonBuilder setStyle(String styleName) {
-        ButtonStyle parsed = ButtonStyle.fromName(styleName);
+    public ButtonBuilder setStyle(final String styleName) {
+        final ButtonStyle parsed = ButtonStyle.fromName(styleName);
         delegate.setStyle(parsed);
         return this;
     }
@@ -68,8 +68,8 @@ public class ButtonBuilder implements LowLevelComponentBuilder {
      * @param styleValue The style of the button based on Discord's style values.
      * @return The current instance in order to chain call methods.
      */
-    public ButtonBuilder setStyle(int styleValue) {
-        ButtonStyle parsed = ButtonStyle.fromId(styleValue);
+    public ButtonBuilder setStyle(final int styleValue) {
+        final ButtonStyle parsed = ButtonStyle.fromId(styleValue);
         delegate.setStyle(parsed);
         return this;
     }
@@ -80,7 +80,7 @@ public class ButtonBuilder implements LowLevelComponentBuilder {
      * @param label The button's label.
      * @return The current instance in order to chain call methods.
      */
-    public ButtonBuilder setLabel(String label) {
+    public ButtonBuilder setLabel(final String label) {
         delegate.setLabel(label);
         return this;
     }
@@ -91,7 +91,7 @@ public class ButtonBuilder implements LowLevelComponentBuilder {
      * @param customId The button's identifier.
      * @return The current instance in order to chain call methods.
      */
-    public ButtonBuilder setCustomId(String customId) {
+    public ButtonBuilder setCustomId(final String customId) {
         delegate.setCustomId(customId);
         return this;
     }
@@ -102,7 +102,7 @@ public class ButtonBuilder implements LowLevelComponentBuilder {
      * @param url The button's clickable URL.
      * @return The current instance in order to chain call methods.
      */
-    public ButtonBuilder setUrl(String url) {
+    public ButtonBuilder setUrl(final String url) {
         delegate.setUrl(url);
         return this;
     }
@@ -113,7 +113,7 @@ public class ButtonBuilder implements LowLevelComponentBuilder {
      * @param isDisabled Whether the button is disabled or not.
      * @return The current instance in order to chain call methods.
      */
-    public ButtonBuilder setDisabled(Boolean isDisabled) {
+    public ButtonBuilder setDisabled(final Boolean isDisabled) {
         delegate.setDisabled(isDisabled);
         return this;
     }
@@ -124,7 +124,7 @@ public class ButtonBuilder implements LowLevelComponentBuilder {
      * @param unicode The emoji unicode character.
      * @return The current instance in order to chain call methods.
      */
-    public ButtonBuilder setEmoji(String unicode) {
+    public ButtonBuilder setEmoji(final String unicode) {
         delegate.setEmoji(unicode);
         return this;
     }
@@ -135,7 +135,7 @@ public class ButtonBuilder implements LowLevelComponentBuilder {
      * @param emoji The emoji.
      * @return The current instance in order to chain call methods.
      */
-    public ButtonBuilder setEmoji(Emoji emoji) {
+    public ButtonBuilder setEmoji(final Emoji emoji) {
         delegate.setEmoji(emoji);
         return this;
     }
@@ -146,7 +146,7 @@ public class ButtonBuilder implements LowLevelComponentBuilder {
      * @param emoji The custom emoji.
      * @return The current instance in order to chain call methods.
      */
-    public ButtonBuilder setEmoji(CustomEmoji emoji) {
+    public ButtonBuilder setEmoji(final CustomEmoji emoji) {
         delegate.setEmoji(emoji);
         return this;
     }
@@ -157,8 +157,8 @@ public class ButtonBuilder implements LowLevelComponentBuilder {
      * @param styleName A color name from Discord's selection.
      * @return The current instance in order to chain call methods.
      */
-    public ButtonBuilder setStyleIgnoreCase(String styleName) {
-        ButtonStyle parsed = ButtonStyle.fromName(styleName.toLowerCase());
+    public ButtonBuilder setStyleIgnoreCase(final String styleName) {
+        final ButtonStyle parsed = ButtonStyle.fromName(styleName.toLowerCase());
         delegate.setStyle(parsed);
         return this;
     }

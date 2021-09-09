@@ -25,7 +25,7 @@ public class UserChangeDiscriminatorEventImpl extends UserEventImpl implements U
      * @param newDiscriminator The new discriminator of the user.
      * @param oldDiscriminator The old discriminator of the user.
      */
-    public UserChangeDiscriminatorEventImpl(User user, String newDiscriminator, String oldDiscriminator) {
+    public UserChangeDiscriminatorEventImpl(final User user, final String newDiscriminator, final String oldDiscriminator) {
         super(user);
         this.newDiscriminator = newDiscriminator;
         this.oldDiscriminator = oldDiscriminator;

@@ -18,32 +18,32 @@ public class SlashCommandOptionBuilderDelegateImpl implements SlashCommandOption
     private List<SlashCommandOption> options = new ArrayList<>();
 
     @Override
-    public void setType(SlashCommandOptionType type) {
+    public void setType(final SlashCommandOptionType type) {
         this.type = type;
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name.toLowerCase();
     }
 
     @Override
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
     @Override
-    public void setRequired(boolean required) {
+    public void setRequired(final boolean required) {
         this.required = required;
     }
 
     @Override
-    public void addChoice(SlashCommandOptionChoice choice) {
+    public void addChoice(final SlashCommandOptionChoice choice) {
         choices.add(choice);
     }
 
     @Override
-    public void setChoices(List<SlashCommandOptionChoice> choices) {
+    public void setChoices(final List<SlashCommandOptionChoice> choices) {
         if (choices == null) {
             this.choices.clear();
         } else {
@@ -52,12 +52,12 @@ public class SlashCommandOptionBuilderDelegateImpl implements SlashCommandOption
     }
 
     @Override
-    public void addOption(SlashCommandOption option) {
+    public void addOption(final SlashCommandOption option) {
         options.add(option);
     }
 
     @Override
-    public void setOptions(List<SlashCommandOption> options) {
+    public void setOptions(final List<SlashCommandOption> options) {
         if (options == null) {
             this.options.clear();
         } else {

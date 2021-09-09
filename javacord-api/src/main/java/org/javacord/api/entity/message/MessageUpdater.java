@@ -13,7 +13,7 @@ public class MessageUpdater extends MessageBuilderBase<MessageUpdater> {
      *
      * @param m The message to update.
      */
-    public MessageUpdater(Message m) {
+    public MessageUpdater(final Message m) {
         super(MessageUpdater.class);
         this.message = m;
     }

@@ -19,7 +19,7 @@ public abstract class PrivateChannelEventImpl implements PrivateChannelEvent {
      *
      * @param channel The channel of the event.
      */
-    public PrivateChannelEventImpl(PrivateChannel channel) {
+    public PrivateChannelEventImpl(final PrivateChannel channel) {
         this.channel = channel;
     }
 

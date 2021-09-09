@@ -39,7 +39,7 @@ public class ServerChangeIconEventImpl extends ServerEventImpl implements Server
      * @param newIconHash The new icon hash of the server.
      * @param oldIconHash The old icon hash of the server.
      */
-    public ServerChangeIconEventImpl(Server server, String newIconHash, String oldIconHash) {
+    public ServerChangeIconEventImpl(final Server server, final String newIconHash, final String oldIconHash) {
         super(server);
         this.newIconHash = newIconHash;
         this.oldIconHash = oldIconHash;
@@ -61,7 +61,7 @@ public class ServerChangeIconEventImpl extends ServerEventImpl implements Server
      * @param iconHash The hash of the icon.
      * @return The icon with the given hash.
      */
-    private Optional<Icon> getIcon(String iconHash) {
+    private Optional<Icon> getIcon(final String iconHash) {
         if (iconHash == null) {
             return Optional.empty();
         }
@@ -69,7 +69,7 @@ public class ServerChangeIconEventImpl extends ServerEventImpl implements Server
             return Optional.of(new IconImpl(getApi(), new URL(
                     "https://" + Javacord.DISCORD_CDN_DOMAIN + "/icons/" + getServer().getIdAsString()
                             + "/" + iconHash + ".png")));
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the url of the icon is malformed! Please contact the developer!", e);
             return Optional.empty();
         }

@@ -13,7 +13,7 @@ public class PrivateChannelCreateEventImpl extends PrivateChannelEventImpl imple
      *
      * @param channel The channel of the event.
      */
-    public PrivateChannelCreateEventImpl(PrivateChannel channel) {
+    public PrivateChannelCreateEventImpl(final PrivateChannel channel) {
         super(channel);
     }
 

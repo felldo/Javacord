@@ -24,18 +24,18 @@ public class ServerVoiceChannelBuilder extends ServerChannelBuilder {
      *
      * @param server The server of the server text channel.
      */
-    public ServerVoiceChannelBuilder(Server server) {
+    public ServerVoiceChannelBuilder(final Server server) {
         delegate = DelegateFactory.createServerVoiceChannelBuilderDelegate(server);
     }
 
     @Override
-    public ServerVoiceChannelBuilder setAuditLogReason(String reason) {
+    public ServerVoiceChannelBuilder setAuditLogReason(final String reason) {
         delegate.setAuditLogReason(reason);
         return this;
     }
 
     @Override
-    public ServerVoiceChannelBuilder setName(String name) {
+    public ServerVoiceChannelBuilder setName(final String name) {
         delegate.setName(name);
         return this;
     }
@@ -47,7 +47,7 @@ public class ServerVoiceChannelBuilder extends ServerChannelBuilder {
      * @param category The category of the channel.
      * @return The current instance in order to chain call methods.
      */
-    public ServerVoiceChannelBuilder setCategory(ChannelCategory category) {
+    public ServerVoiceChannelBuilder setCategory(final ChannelCategory category) {
         delegate.setCategory(category);
         return this;
     }
@@ -58,7 +58,7 @@ public class ServerVoiceChannelBuilder extends ServerChannelBuilder {
      * @param bitrate The bitrate of the channel.
      * @return The current instance in order to chain call methods.
      */
-    public ServerVoiceChannelBuilder setBitrate(int bitrate) {
+    public ServerVoiceChannelBuilder setBitrate(final int bitrate) {
         delegate.setBitrate(bitrate);
         return this;
     }
@@ -69,21 +69,21 @@ public class ServerVoiceChannelBuilder extends ServerChannelBuilder {
      * @param userlimit The user limit of the channel.
      * @return The current instance in order to chain call methods.
      */
-    public ServerVoiceChannelBuilder setUserlimit(int userlimit) {
+    public ServerVoiceChannelBuilder setUserlimit(final int userlimit) {
         delegate.setUserlimit(userlimit);
         return this;
     }
 
     @Override
     public <T extends Permissionable & DiscordEntity> ServerVoiceChannelBuilder addPermissionOverwrite(
-            T permissionable, Permissions permissions) {
+            final T permissionable, final Permissions permissions) {
         delegate.addPermissionOverwrite(permissionable, permissions);
         return this;
     }
 
     @Override
     public <T extends Permissionable & DiscordEntity> ServerVoiceChannelBuilder removePermissionOverwrite(
-            T permissionable) {
+            final T permissionable) {
         delegate.removePermissionOverwrite(permissionable);
         return this;
     }

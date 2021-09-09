@@ -40,7 +40,7 @@ public interface IncomingWebhook extends Webhook, Messageable {
     default URL getUrl() {
         try {
             return new URL(String.format("https://discord.com/api/webhooks/%s/%s", getIdAsString(), getToken()));
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             // This should never ever happen
             return null;
         }
@@ -69,7 +69,7 @@ public interface IncomingWebhook extends Webhook, Messageable {
      * @param embeds The embeds which should be displayed.
      * @return The sent message.
      */
-    default CompletableFuture<Message> sendMessage(EmbedBuilder... embeds) {
+    default CompletableFuture<Message> sendMessage(final EmbedBuilder... embeds) {
         return new WebhookMessageBuilder()
                 .addEmbeds(embeds)
                 .send(this);
@@ -82,7 +82,7 @@ public interface IncomingWebhook extends Webhook, Messageable {
      * @param embeds The embeds which should be displayed.
      * @return The sent message.
      */
-    default CompletableFuture<Message> sendMessage(String content, EmbedBuilder... embeds) {
+    default CompletableFuture<Message> sendMessage(final String content, final EmbedBuilder... embeds) {
         return new WebhookMessageBuilder()
                 .append(content == null ? "" : content)
                 .addEmbeds(embeds)
@@ -98,8 +98,8 @@ public interface IncomingWebhook extends Webhook, Messageable {
      * @param embed The embed which should be displayed.
      * @return The sent message.
      */
-    default CompletableFuture<Message> sendMessage(String content, EmbedBuilder embed,
-                                                   String displayName, URL avatarUrl) {
+    default CompletableFuture<Message> sendMessage(final String content, final EmbedBuilder embed,
+                                                   final String displayName, final URL avatarUrl) {
         return new WebhookMessageBuilder()
                 .append(content == null ? "" : content)
                 .addEmbed(embed)
@@ -117,8 +117,8 @@ public interface IncomingWebhook extends Webhook, Messageable {
      * @param embed The embed which should be displayed.
      * @return The sent message.
      */
-    default CompletableFuture<Message> sendMessage(String content, EmbedBuilder embed,
-                                                   String displayName, Icon avatar) {
+    default CompletableFuture<Message> sendMessage(final String content, final EmbedBuilder embed,
+                                                   final String displayName, final Icon avatar) {
         return new WebhookMessageBuilder()
                 .append(content == null ? "" : content)
                 .addEmbed(embed)
@@ -135,7 +135,7 @@ public interface IncomingWebhook extends Webhook, Messageable {
      * @param avatarUrl The avatar which should be used by the webhook.
      * @return The sent message.
      */
-    default CompletableFuture<Message> sendMessage(String content, String displayName, URL avatarUrl) {
+    default CompletableFuture<Message> sendMessage(final String content, final String displayName, final URL avatarUrl) {
         return new WebhookMessageBuilder()
                 .append(content == null ? "" : content)
                 .setDisplayName(displayName)
@@ -151,7 +151,7 @@ public interface IncomingWebhook extends Webhook, Messageable {
      * @param avatar The avatar which should be used by the webhook.
      * @return The sent message.
      */
-    default CompletableFuture<Message> sendMessage(String content, String displayName, Icon avatar) {
+    default CompletableFuture<Message> sendMessage(final String content, final String displayName, final Icon avatar) {
         return new WebhookMessageBuilder()
                 .append(content == null ? "" : content)
                 .setDisplayName(displayName)
@@ -167,7 +167,7 @@ public interface IncomingWebhook extends Webhook, Messageable {
      * @param avatarUrl The avatar which should be used by the webhook.
      * @return The sent message.
      */
-    default CompletableFuture<Message> sendMessage(EmbedBuilder embed, String displayName, URL avatarUrl) {
+    default CompletableFuture<Message> sendMessage(final EmbedBuilder embed, final String displayName, final URL avatarUrl) {
         return new WebhookMessageBuilder()
                 .addEmbed(embed)
                 .setDisplayName(displayName)
@@ -183,7 +183,7 @@ public interface IncomingWebhook extends Webhook, Messageable {
      * @param avatar The avatar which should be used by the webhook.
      * @return The sent message.
      */
-    default CompletableFuture<Message> sendMessage(EmbedBuilder embed, String displayName, Icon avatar) {
+    default CompletableFuture<Message> sendMessage(final EmbedBuilder embed, final String displayName, final Icon avatar) {
         return new WebhookMessageBuilder()
                 .addEmbed(embed)
                 .setDisplayName(displayName)

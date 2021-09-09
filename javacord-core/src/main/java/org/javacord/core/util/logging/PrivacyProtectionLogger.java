@@ -25,7 +25,7 @@ public class PrivacyProtectionLogger extends AbstractLogger {
      *
      * @param delegate The delegate logger that gets the cleaned messages.
      */
-    PrivacyProtectionLogger(Logger delegate) {
+    PrivacyProtectionLogger(final Logger delegate) {
         this.delegate = delegate;
     }
 
@@ -35,15 +35,15 @@ public class PrivacyProtectionLogger extends AbstractLogger {
      *
      * @param privateData The private data.
      */
-    public static void addPrivateData(String privateData) {
+    public static void addPrivateData(final String privateData) {
         if (privateData != null && !privateData.trim().isEmpty()) {
             privateDataSet.add(privateData);
         }
     }
 
     @Override
-    public void logMessage(String fqcn, Level level, Marker marker, Message message, Throwable t) {
-        String formattedMessage = message.getFormattedMessage();
+    public void logMessage(final String fqcn, final Level level, final Marker marker, final Message message, final Throwable t) {
+        final String formattedMessage = message.getFormattedMessage();
         if (privateDataSet.stream().anyMatch(formattedMessage::contains)) {
             delegate.log(level, marker, privateDataSet.stream().reduce(
                     formattedMessage, (s, privateData) -> s.replace(privateData, PRIVATE_DATA_REPLACEMENT)), t);
@@ -53,88 +53,88 @@ public class PrivacyProtectionLogger extends AbstractLogger {
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, Message message, Throwable t) {
+    public boolean isEnabled(final Level level, final Marker marker, final Message message, final Throwable t) {
         return delegate.isEnabled(level, marker);
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, CharSequence message, Throwable t) {
+    public boolean isEnabled(final Level level, final Marker marker, final CharSequence message, final Throwable t) {
         return delegate.isEnabled(level, marker);
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, Object message, Throwable t) {
+    public boolean isEnabled(final Level level, final Marker marker, final Object message, final Throwable t) {
         return delegate.isEnabled(level, marker);
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, String message, Throwable t) {
+    public boolean isEnabled(final Level level, final Marker marker, final String message, final Throwable t) {
         return delegate.isEnabled(level, marker);
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, String message) {
+    public boolean isEnabled(final Level level, final Marker marker, final String message) {
         return delegate.isEnabled(level, marker);
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, String message, Object... params) {
+    public boolean isEnabled(final Level level, final Marker marker, final String message, final Object... params) {
         return delegate.isEnabled(level, marker);
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, String message, Object p0) {
+    public boolean isEnabled(final Level level, final Marker marker, final String message, final Object p0) {
         return delegate.isEnabled(level, marker);
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, String message, Object p0, Object p1) {
+    public boolean isEnabled(final Level level, final Marker marker, final String message, final Object p0, final Object p1) {
         return delegate.isEnabled(level, marker);
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, String message, Object p0, Object p1, Object p2) {
+    public boolean isEnabled(final Level level, final Marker marker, final String message, final Object p0, final Object p1, final Object p2) {
         return delegate.isEnabled(level, marker);
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3) {
+    public boolean isEnabled(final Level level, final Marker marker, final String message, final Object p0, final Object p1, final Object p2, final Object p3) {
         return delegate.isEnabled(level, marker);
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3,
-                             Object p4) {
+    public boolean isEnabled(final Level level, final Marker marker, final String message, final Object p0, final Object p1, final Object p2, final Object p3,
+                             final Object p4) {
         return delegate.isEnabled(level, marker);
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3,
-                             Object p4, Object p5) {
+    public boolean isEnabled(final Level level, final Marker marker, final String message, final Object p0, final Object p1, final Object p2, final Object p3,
+                             final Object p4, final Object p5) {
         return delegate.isEnabled(level, marker);
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3,
-                             Object p4, Object p5, Object p6) {
+    public boolean isEnabled(final Level level, final Marker marker, final String message, final Object p0, final Object p1, final Object p2, final Object p3,
+                             final Object p4, final Object p5, final Object p6) {
         return delegate.isEnabled(level, marker);
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3,
-                             Object p4, Object p5, Object p6, Object p7) {
+    public boolean isEnabled(final Level level, final Marker marker, final String message, final Object p0, final Object p1, final Object p2, final Object p3,
+                             final Object p4, final Object p5, final Object p6, final Object p7) {
         return delegate.isEnabled(level, marker);
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3,
-                             Object p4, Object p5, Object p6, Object p7, Object p8) {
+    public boolean isEnabled(final Level level, final Marker marker, final String message, final Object p0, final Object p1, final Object p2, final Object p3,
+                             final Object p4, final Object p5, final Object p6, final Object p7, final Object p8) {
         return delegate.isEnabled(level, marker);
     }
 
     @Override
-    public boolean isEnabled(Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3,
-                             Object p4, Object p5, Object p6, Object p7, Object p8, Object p9) {
+    public boolean isEnabled(final Level level, final Marker marker, final String message, final Object p0, final Object p1, final Object p2, final Object p3,
+                             final Object p4, final Object p5, final Object p6, final Object p7, final Object p8, final Object p9) {
         return delegate.isEnabled(level, marker);
     }
 

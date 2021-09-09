@@ -13,7 +13,7 @@ public class ServerLeaveEventImpl extends ServerEventImpl implements ServerLeave
      *
      * @param server The server of the event.
      */
-    public ServerLeaveEventImpl(Server server) {
+    public ServerLeaveEventImpl(final Server server) {
         super(server);
     }
 

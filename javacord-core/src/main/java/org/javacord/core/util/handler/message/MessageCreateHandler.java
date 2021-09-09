@@ -36,36 +36,36 @@ public class MessageCreateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public MessageCreateHandler(DiscordApi api) {
+    public MessageCreateHandler(final DiscordApi api) {
         super(api, true, "MESSAGE_CREATE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        long channelId = packet.get("channel_id").asLong();
+    public void handle(final JsonNode packet) {
+        final long channelId = packet.get("channel_id").asLong();
 
         // if the message isn't from a server (or ephemeral)
         // See https://github.com/discord/discord-api-docs/issues/2248
         if (!packet.hasNonNull("guild_id")) {
             // Check for EPHEMERAL messages as they do NOT include a guild_id when the EPHEMERAL flag is set.
             if (packet.hasNonNull("flags") && (packet.get("flags").asInt() & MessageFlag.EPHEMERAL.getId()) > 0) {
-                Optional<ServerTextChannel> serverTextChannel = api.getServerTextChannelById(channelId);
+                final Optional<ServerTextChannel> serverTextChannel = api.getServerTextChannelById(channelId);
                 if (serverTextChannel.isPresent()) {
                     handle(serverTextChannel.get(), packet);
                     return;
                 }
             }
 
-            UserImpl author = new UserImpl(api, packet.get("author"), (MemberImpl) null, null);
+            final UserImpl author = new UserImpl(api, packet.get("author"), (MemberImpl) null, null);
 
-            PrivateChannelImpl privateChannel = PrivateChannelImpl
+            final PrivateChannelImpl privateChannel = PrivateChannelImpl
                     .getOrCreatePrivateChannel(api, channelId, author.getId(), author);
 
             handle(privateChannel, packet);
             return;
         }
 
-        Optional<TextChannel> optionalChannel = api.getTextChannelById(channelId);
+        final Optional<TextChannel> optionalChannel = api.getTextChannelById(channelId);
         if (optionalChannel.isPresent()) {
             handle(optionalChannel.get(), packet);
         } else {
@@ -73,12 +73,12 @@ public class MessageCreateHandler extends PacketHandler {
         }
     }
 
-    private void handle(TextChannel channel, JsonNode packet) {
-        Message message = api.getOrCreateMessage(channel, packet);
-        MessageCreateEvent event = new MessageCreateEventImpl(message);
+    private void handle(final TextChannel channel, final JsonNode packet) {
+        final Message message = api.getOrCreateMessage(channel, packet);
+        final MessageCreateEvent event = new MessageCreateEventImpl(message);
 
-        Optional<Server> optionalServer = channel.asServerChannel().map(ServerChannel::getServer);
-        MessageAuthor author = message.getAuthor();
+        final Optional<Server> optionalServer = channel.asServerChannel().map(ServerChannel::getServer);
+        final MessageAuthor author = message.getAuthor();
         api.getEventDispatcher().dispatchMessageCreateEvent(
                 optionalServer.map(DispatchQueueSelector.class::cast).orElse(api),
                 optionalServer.orElse(null),

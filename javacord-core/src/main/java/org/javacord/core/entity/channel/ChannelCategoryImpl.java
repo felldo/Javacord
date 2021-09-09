@@ -33,7 +33,7 @@ public class ChannelCategoryImpl extends ServerChannelImpl
      * @param server The server of the channel.
      * @param data The json data of the channel.
      */
-    public ChannelCategoryImpl(DiscordApiImpl api, ServerImpl server, JsonNode data) {
+    public ChannelCategoryImpl(final DiscordApiImpl api, final ServerImpl server, final JsonNode data) {
         super(api, server, data);
         nsfw = data.has("nsfw") && data.get("nsfw").asBoolean();
     }
@@ -43,7 +43,7 @@ public class ChannelCategoryImpl extends ServerChannelImpl
      *
      * @param nsfw The nsfw flag.
      */
-    public void setNsfwFlag(boolean nsfw) {
+    public void setNsfwFlag(final boolean nsfw) {
         this.nsfw = nsfw;
     }
 
@@ -67,7 +67,7 @@ public class ChannelCategoryImpl extends ServerChannelImpl
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return (this == o)
                || !((o == null)
                     || (getClass() != o.getClass())

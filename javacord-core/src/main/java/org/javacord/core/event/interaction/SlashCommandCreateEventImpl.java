@@ -16,7 +16,7 @@ public class SlashCommandCreateEventImpl extends EventImpl implements SlashComma
      *
      * @param interaction The created interaction.
      */
-    public SlashCommandCreateEventImpl(Interaction interaction) {
+    public SlashCommandCreateEventImpl(final Interaction interaction) {
         super(interaction.getApi());
         this.interaction = interaction;
     }

@@ -50,7 +50,7 @@ public class ChannelCache {
 
     private final Cache<Channel> cache;
 
-    private ChannelCache(Cache<Channel> cache) {
+    private ChannelCache(final Cache<Channel> cache) {
         this.cache = cache;
     }
 
@@ -69,7 +69,7 @@ public class ChannelCache {
      * @param channel The channel to add.
      * @return The new channel cache.
      */
-    public ChannelCache addChannel(Channel channel) {
+    public ChannelCache addChannel(final Channel channel) {
         return new ChannelCache(cache.addElement(channel));
     }
 
@@ -79,7 +79,7 @@ public class ChannelCache {
      * @param channel The channel to remove.
      * @return The new channel cache.
      */
-    public ChannelCache removeChannel(Channel channel) {
+    public ChannelCache removeChannel(final Channel channel) {
         return new ChannelCache(cache.removeElement(channel));
     }
 
@@ -102,9 +102,9 @@ public class ChannelCache {
      *            {@link TextChannel}.
      * @return A set with all channels that are of one of the given types.
      */
-    public <T extends Channel> Set<T> getChannelsWithTypes(ChannelType... types) {
+    public <T extends Channel> Set<T> getChannelsWithTypes(final ChannelType... types) {
         io.vavr.collection.HashSet<Channel> channels = io.vavr.collection.HashSet.empty();
-        for (ChannelType type : types) {
+        for (final ChannelType type : types) {
             channels = channels.addAll(cache.findByIndex(TYPE_INDEX_NAME, type));
         }
         return ImmutableToJavaMapper.mapToJava(channels);
@@ -116,7 +116,7 @@ public class ChannelCache {
      * @param serverId The id of the server.
      * @return A set with all channels in the server.
      */
-    public Set<ServerChannel> getChannelsOfServer(long serverId) {
+    public Set<ServerChannel> getChannelsOfServer(final long serverId) {
         return ImmutableToJavaMapper.mapToJava(cache.findByIndex(SERVER_ID_INDEX_NAME, serverId));
     }
 
@@ -131,7 +131,7 @@ public class ChannelCache {
      *            {@link ServerVoiceChannel} or {@link VoiceChannel}.
      * @return A set with all channels with the given type of the server with the given id.
      */
-    public <T extends Channel> Set<T> getChannelsOfServerAndType(long serverId, ChannelType type) {
+    public <T extends Channel> Set<T> getChannelsOfServerAndType(final long serverId, final ChannelType type) {
         return ImmutableToJavaMapper.mapToJava(
                 cache.findByIndex(SERVER_ID_AND_TYPE_INDEX_NAME, Tuple.of(serverId, type)));
     }
@@ -144,7 +144,7 @@ public class ChannelCache {
      * @param id The id of the channel.
      * @return The channel with the given id.
      */
-    public Optional<Channel> getChannelById(long id) {
+    public Optional<Channel> getChannelById(final long id) {
         return cache.findAnyByIndex(ID_INDEX_NAME, id);
     }
 
@@ -154,7 +154,7 @@ public class ChannelCache {
      * @param userId The id of the user.
      * @return The private channel.
      */
-    public Optional<PrivateChannel> getPrivateChannelByUserId(long userId) {
+    public Optional<PrivateChannel> getPrivateChannelByUserId(final long userId) {
         return cache.findAnyByIndex(PRIVATE_CHANNEL_USER_ID_INDEX_NAME, userId)
                 .flatMap(Channel::asPrivateChannel);
     }

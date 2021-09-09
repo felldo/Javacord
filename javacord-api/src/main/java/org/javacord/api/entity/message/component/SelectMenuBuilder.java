@@ -24,7 +24,7 @@ public class SelectMenuBuilder implements LowLevelComponentBuilder {
      * @param placeholder The placeholder.
      * @return The builder.
      */
-    public SelectMenuBuilder setPlaceholder(String placeholder) {
+    public SelectMenuBuilder setPlaceholder(final String placeholder) {
         delegate.setPlaceholder(placeholder);
         return this;
     }
@@ -35,7 +35,7 @@ public class SelectMenuBuilder implements LowLevelComponentBuilder {
      * @param minimumValues The minimum values.
      * @return The builder.
      */
-    public SelectMenuBuilder setMinimumValues(int minimumValues) {
+    public SelectMenuBuilder setMinimumValues(final int minimumValues) {
         delegate.setMinimumValues(minimumValues);
         return this;
     }
@@ -46,7 +46,7 @@ public class SelectMenuBuilder implements LowLevelComponentBuilder {
      * @param maximumValues The maximum values.
      * @return The builder.
      */
-    public SelectMenuBuilder setMaximumValues(int maximumValues) {
+    public SelectMenuBuilder setMaximumValues(final int maximumValues) {
         delegate.setMaximumValues(maximumValues);
         return this;
     }
@@ -57,7 +57,7 @@ public class SelectMenuBuilder implements LowLevelComponentBuilder {
      * @param customId The custom ID.
      * @return The builder.
      */
-    public SelectMenuBuilder setCustomId(String customId) {
+    public SelectMenuBuilder setCustomId(final String customId) {
         delegate.setCustomId(customId);
         return this;
     }
@@ -68,7 +68,7 @@ public class SelectMenuBuilder implements LowLevelComponentBuilder {
      * @param selectMenuOption The option.
      * @return The builder.
      */
-    public SelectMenuBuilder addOption(SelectMenuOption selectMenuOption) {
+    public SelectMenuBuilder addOption(final SelectMenuOption selectMenuOption) {
         delegate.addOption(selectMenuOption);
         return this;
     }
@@ -79,7 +79,7 @@ public class SelectMenuBuilder implements LowLevelComponentBuilder {
      * @param selectMenuOption The option.
      * @return The builder.
      */
-    public SelectMenuBuilder removeOption(SelectMenuOption selectMenuOption) {
+    public SelectMenuBuilder removeOption(final SelectMenuOption selectMenuOption) {
         delegate.removeOption(selectMenuOption);
         return this;
     }
@@ -90,7 +90,7 @@ public class SelectMenuBuilder implements LowLevelComponentBuilder {
      * @param selectMenuOptions The options.
      * @return The builder.
      */
-    public SelectMenuBuilder addOptions(List<SelectMenuOption> selectMenuOptions) {
+    public SelectMenuBuilder addOptions(final List<SelectMenuOption> selectMenuOptions) {
         selectMenuOptions.forEach(delegate::addOption);
         return this;
     }
@@ -111,7 +111,7 @@ public class SelectMenuBuilder implements LowLevelComponentBuilder {
      * @param isDisabled Is disabled.
      * @return The builder.
      */
-    public SelectMenuBuilder setDisabled(boolean isDisabled) {
+    public SelectMenuBuilder setDisabled(final boolean isDisabled) {
         delegate.setDisabled(isDisabled);
         return this;
     }
@@ -122,7 +122,7 @@ public class SelectMenuBuilder implements LowLevelComponentBuilder {
      * @param selectMenu The select menu to copy.
      * @return The select menu builder.
      */
-    public SelectMenuBuilder copy(SelectMenu selectMenu) {
+    public SelectMenuBuilder copy(final SelectMenu selectMenu) {
         delegate.copy(selectMenu);
         return this;
     }

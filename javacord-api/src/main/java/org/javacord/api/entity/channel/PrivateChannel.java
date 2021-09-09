@@ -43,11 +43,11 @@ public interface PrivateChannel extends TextChannel, VoiceChannel, PrivateChanne
 
     @Override
     default CompletableFuture<PrivateChannel> getLatestInstance() {
-        Optional<PrivateChannel> currentCachedInstance = getCurrentCachedInstance();
+        final Optional<PrivateChannel> currentCachedInstance = getCurrentCachedInstance();
         if (currentCachedInstance.isPresent()) {
             return CompletableFuture.completedFuture(currentCachedInstance.get());
         } else {
-            CompletableFuture<PrivateChannel> result = new CompletableFuture<>();
+            final CompletableFuture<PrivateChannel> result = new CompletableFuture<>();
             result.completeExceptionally(new NoSuchElementException());
             return result;
         }

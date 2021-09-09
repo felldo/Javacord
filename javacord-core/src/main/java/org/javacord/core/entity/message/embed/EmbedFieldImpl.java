@@ -17,7 +17,7 @@ public class EmbedFieldImpl implements EmbedField {
      *
      * @param data The json data of the field.
      */
-    public EmbedFieldImpl(JsonNode data) {
+    public EmbedFieldImpl(final JsonNode data) {
         name = data.has("name") ? data.get("name").asText() : null;
         value = data.has("value") ? data.get("value").asText() : null;
         inline = data.has("inline") && data.get("inline").asBoolean();
@@ -30,7 +30,7 @@ public class EmbedFieldImpl implements EmbedField {
      * @param value The value of the field.
      * @param inline Whether this field should display inline.
      */
-    public EmbedFieldImpl(String name, String value, boolean inline) {
+    public EmbedFieldImpl(final String name, final String value, final boolean inline) {
         this.name = name;
         this.value = value;
         this.inline = inline;
@@ -42,7 +42,7 @@ public class EmbedFieldImpl implements EmbedField {
      *
      * @param name The name of the field.
      */
-    void setName(String name) {
+    void setName(final String name) {
         this.name = name;
     }
 
@@ -51,7 +51,7 @@ public class EmbedFieldImpl implements EmbedField {
      *
      * @param value The value of the field.
      */
-    void setValue(String value) {
+    void setValue(final String value) {
         this.value = value;
     }
 
@@ -60,7 +60,7 @@ public class EmbedFieldImpl implements EmbedField {
      *
      * @param inline Whether this field should display inline.
      */
-    void setInline(boolean inline) {
+    void setInline(final boolean inline) {
         this.inline = inline;
     }
 

@@ -214,7 +214,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user is self-muted.
      */
-    default boolean isSelfMuted(User user) {
+    default boolean isSelfMuted(final User user) {
         return isSelfMuted(user.getId());
     }
 
@@ -241,7 +241,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user is self-deafened.
      */
-    default boolean isSelfDeafened(User user) {
+    default boolean isSelfDeafened(final User user) {
         return isSelfDeafened(user.getId());
     }
 
@@ -268,7 +268,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user is muted.
      */
-    default boolean isMuted(User user) {
+    default boolean isMuted(final User user) {
         return isMuted(user.getId());
     }
 
@@ -295,7 +295,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user is deafened.
      */
-    default boolean isDeafened(User user) {
+    default boolean isDeafened(final User user) {
         return isDeafened(user.getId());
     }
 
@@ -306,7 +306,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user.
      * @return The display name of the user on this server.
      */
-    default String getDisplayName(User user) {
+    default String getDisplayName(final User user) {
         return user.getDisplayName(this);
     }
 
@@ -442,7 +442,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param days The amount of days the member has to be inactive.
      * @return The amount of member who got kicked.
      */
-    default CompletableFuture<Integer> pruneMembers(int days) {
+    default CompletableFuture<Integer> pruneMembers(final int days) {
         return pruneMembers(days, null);
     }
 
@@ -490,10 +490,10 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param id The id of the member.
      * @return The member with the given id.
      */
-    default Optional<User> getMemberById(String id) {
+    default Optional<User> getMemberById(final String id) {
         try {
             return getMemberById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -505,8 +505,8 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param discriminatedName The discriminated name of the member.
      * @return The member with the given discriminated name.
      */
-    default Optional<User> getMemberByDiscriminatedName(String discriminatedName) {
-        String[] nameAndDiscriminator = discriminatedName.split("#", 2);
+    default Optional<User> getMemberByDiscriminatedName(final String discriminatedName) {
+        final String[] nameAndDiscriminator = discriminatedName.split("#", 2);
         return (nameAndDiscriminator.length > 1)
                 ? getMemberByNameAndDiscriminator(nameAndDiscriminator[0], nameAndDiscriminator[1])
                 : Optional.empty();
@@ -519,8 +519,8 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param discriminatedName The discriminated name of the member.
      * @return The member with the given discriminated name.
      */
-    default Optional<User> getMemberByDiscriminatedNameIgnoreCase(String discriminatedName) {
-        String[] nameAndDiscriminator = discriminatedName.split("#", 2);
+    default Optional<User> getMemberByDiscriminatedNameIgnoreCase(final String discriminatedName) {
+        final String[] nameAndDiscriminator = discriminatedName.split("#", 2);
         return (nameAndDiscriminator.length > 1)
                 ? getMemberByNameAndDiscriminatorIgnoreCase(nameAndDiscriminator[0], nameAndDiscriminator[1])
                 : Optional.empty();
@@ -534,7 +534,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param discriminator The discriminator of the member.
      * @return The member with the given name and discriminator.
      */
-    default Optional<User> getMemberByNameAndDiscriminator(String name, String discriminator) {
+    default Optional<User> getMemberByNameAndDiscriminator(final String name, final String discriminator) {
         return getMembersByName(name).stream()
                 .filter(user -> user.getDiscriminator().equals(discriminator))
                 .findAny();
@@ -548,7 +548,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param discriminator The discriminator of the member.
      * @return The member with the given name and discriminator.
      */
-    default Optional<User> getMemberByNameAndDiscriminatorIgnoreCase(String name, String discriminator) {
+    default Optional<User> getMemberByNameAndDiscriminatorIgnoreCase(final String name, final String discriminator) {
         return getMembersByNameIgnoreCase(name).stream()
                 .filter(user -> user.getDiscriminator().equalsIgnoreCase(discriminator))
                 .findAny();
@@ -561,7 +561,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param name The name of the members.
      * @return A collection with all members with the given name.
      */
-    default Collection<User> getMembersByName(String name) {
+    default Collection<User> getMembersByName(final String name) {
         return Collections.unmodifiableList(
                 getMembers().stream()
                         .filter(user -> user.getName().equals(name))
@@ -575,7 +575,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param name The name of the members.
      * @return A collection with all members with the given name.
      */
-    default Collection<User> getMembersByNameIgnoreCase(String name) {
+    default Collection<User> getMembersByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getMembers().stream()
                         .filter(user -> user.getName().equalsIgnoreCase(name))
@@ -589,7 +589,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param nickname The nickname of the members.
      * @return A collection with all members with the given nickname on this server.
      */
-    default Collection<User> getMembersByNickname(String nickname) {
+    default Collection<User> getMembersByNickname(final String nickname) {
         return Collections.unmodifiableList(
                 getMembers().stream()
                         .filter(user -> user.getNickname(this).map(nickname::equals).orElse(false))
@@ -603,7 +603,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param nickname The nickname of the members.
      * @return A collection with all members with the given nickname on this server.
      */
-    default Collection<User> getMembersByNicknameIgnoreCase(String nickname) {
+    default Collection<User> getMembersByNicknameIgnoreCase(final String nickname) {
         return Collections.unmodifiableList(
                 getMembers().stream()
                         .filter(user -> user.getNickname(this).map(nickname::equalsIgnoreCase).orElse(false))
@@ -617,7 +617,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param displayName The display name of the members.
      * @return A collection with all members with the given display name on this server.
      */
-    default Collection<User> getMembersByDisplayName(String displayName) {
+    default Collection<User> getMembersByDisplayName(final String displayName) {
         return Collections.unmodifiableList(
                 getMembers().stream()
                         .filter(user -> user.getDisplayName(this).equals(displayName))
@@ -631,7 +631,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param displayName The display name of the members.
      * @return A collection with all members with the given display name on this server.
      */
-    default Collection<User> getMembersByDisplayNameIgnoreCase(String displayName) {
+    default Collection<User> getMembersByDisplayNameIgnoreCase(final String displayName) {
         return Collections.unmodifiableList(
                 getMembers().stream()
                         .filter(user -> user.getDisplayName(this).equalsIgnoreCase(displayName))
@@ -675,10 +675,10 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param id The id of the role.
      * @return The role with the given id.
      */
-    default Optional<Role> getRoleById(String id) {
+    default Optional<Role> getRoleById(final String id) {
         try {
             return getRoleById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -699,7 +699,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param name The name of the roles.
      * @return A sorted list (by position) with all roles with the given name.
      */
-    default List<Role> getRolesByName(String name) {
+    default List<Role> getRolesByName(final String name) {
         return Collections.unmodifiableList(
                 getRoles().stream()
                         .filter(role -> role.getName().equals(name))
@@ -713,7 +713,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param name The name of the roles.
      * @return A sorted list (by position) with all roles with the given name.
      */
-    default List<Role> getRolesByNameIgnoreCase(String name) {
+    default List<Role> getRolesByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getRoles().stream()
                         .filter(role -> role.getName().equalsIgnoreCase(name))
@@ -726,7 +726,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user.
      * @return The color.
      */
-    default Optional<Color> getRoleColor(User user) {
+    default Optional<Color> getRoleColor(final User user) {
         return user.getRoles(this).stream()
                 .filter(role -> role.getColor().isPresent())
                 .max(Comparator.comparingInt(Role::getRawPosition))
@@ -739,8 +739,8 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user.
      * @return The permissions of the user.
      */
-    default Permissions getPermissions(User user) {
-        PermissionsBuilder builder = new PermissionsBuilder();
+    default Permissions getPermissions(final User user) {
+        final PermissionsBuilder builder = new PermissionsBuilder();
         getAllowedPermissions(user).forEach(type -> builder.setState(type, PermissionState.ALLOWED));
         return builder.build();
     }
@@ -754,8 +754,8 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user.
      * @return The allowed permissions of the given user.
      */
-    default Collection<PermissionType> getAllowedPermissions(User user) {
-        Collection<PermissionType> allowed = new HashSet<>();
+    default Collection<PermissionType> getAllowedPermissions(final User user) {
+        final Collection<PermissionType> allowed = new HashSet<>();
         if (isOwner(user)) {
             allowed.addAll(Arrays.asList(PermissionType.values()));
         } else {
@@ -770,11 +770,11 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user.
      * @return The unset permissions of the given user.
      */
-    default Collection<PermissionType> getUnsetPermissions(User user) {
+    default Collection<PermissionType> getUnsetPermissions(final User user) {
         if (isOwner(user)) {
             return Collections.emptySet();
         }
-        Collection<PermissionType> unset = new HashSet<>();
+        final Collection<PermissionType> unset = new HashSet<>();
         getRoles(user).forEach(role -> unset.addAll(role.getUnsetPermissions()));
         return Collections.unmodifiableCollection(unset);
     }
@@ -787,7 +787,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @return Whether the user has all given permissions or not.
      * @see #getAllowedPermissions(User)
      */
-    default boolean hasPermissions(User user, PermissionType... type) {
+    default boolean hasPermissions(final User user, final PermissionType... type) {
         return getAllowedPermissions(user).containsAll(Arrays.asList(type));
     }
 
@@ -799,9 +799,9 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @return Whether the user has any of the given permissions or not.
      * @see #getAllowedPermissions(User)
      */
-    default boolean hasAnyPermission(User user, PermissionType... type) {
+    default boolean hasAnyPermission(final User user, final PermissionType... type) {
         return getAllowedPermissions(user).stream()
-                .anyMatch(allowedPermissionType -> Arrays.stream(type).anyMatch(allowedPermissionType::equals));
+                .anyMatch(allowedPermissionType -> Arrays.asList(type).contains(allowedPermissionType));
     }
 
     /**
@@ -831,7 +831,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param name The new name of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateName(String name) {
+    default CompletableFuture<Void> updateName(final String name) {
         return createUpdater().setName(name).update();
     }
 
@@ -844,7 +844,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param region The new region of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateRegion(Region region) {
+    default CompletableFuture<Void> updateRegion(final Region region) {
         return createUpdater().setRegion(region).update();
     }
 
@@ -858,7 +858,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @return A future to check if the update was successful.
      */
     default CompletableFuture<Void> updateExplicitContentFilterLevel(
-            ExplicitContentFilterLevel explicitContentFilterLevel) {
+            final ExplicitContentFilterLevel explicitContentFilterLevel) {
         return createUpdater().setExplicitContentFilterLevel(explicitContentFilterLevel).update();
     }
 
@@ -871,7 +871,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param verificationLevel The new verification level of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateVerificationLevel(VerificationLevel verificationLevel) {
+    default CompletableFuture<Void> updateVerificationLevel(final VerificationLevel verificationLevel) {
         return createUpdater().setVerificationLevel(verificationLevel).update();
     }
 
@@ -885,7 +885,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @return A future to check if the update was successful.
      */
     default CompletableFuture<Void> updateDefaultMessageNotificationLevel(
-            DefaultMessageNotificationLevel defaultMessageNotificationLevel) {
+            final DefaultMessageNotificationLevel defaultMessageNotificationLevel) {
         return createUpdater().setDefaultMessageNotificationLevel(defaultMessageNotificationLevel).update();
     }
 
@@ -898,7 +898,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param afkChannel The new afk channel of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateAfkChannel(ServerVoiceChannel afkChannel) {
+    default CompletableFuture<Void> updateAfkChannel(final ServerVoiceChannel afkChannel) {
         return createUpdater().setAfkChannel(afkChannel).update();
     }
 
@@ -923,7 +923,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param afkTimeout The new afk timeout of the server in seconds.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateAfkTimeoutInSeconds(int afkTimeout) {
+    default CompletableFuture<Void> updateAfkTimeoutInSeconds(final int afkTimeout) {
         return createUpdater().setAfkTimeoutInSeconds(afkTimeout).update();
     }
 
@@ -937,7 +937,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param icon The new icon of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateIcon(BufferedImage icon) {
+    default CompletableFuture<Void> updateIcon(final BufferedImage icon) {
         return createUpdater().setIcon(icon).update();
     }
 
@@ -951,7 +951,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param fileType The type of the icon, e.g. "png" or "jpg".
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateIcon(BufferedImage icon, String fileType) {
+    default CompletableFuture<Void> updateIcon(final BufferedImage icon, final String fileType) {
         return createUpdater().setIcon(icon, fileType).update();
     }
 
@@ -964,7 +964,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param icon The new icon of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateIcon(File icon) {
+    default CompletableFuture<Void> updateIcon(final File icon) {
         return createUpdater().setIcon(icon).update();
     }
 
@@ -977,7 +977,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param icon The new icon of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateIcon(Icon icon) {
+    default CompletableFuture<Void> updateIcon(final Icon icon) {
         return createUpdater().setIcon(icon).update();
     }
 
@@ -990,7 +990,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param icon The new icon of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateIcon(URL icon) {
+    default CompletableFuture<Void> updateIcon(final URL icon) {
         return createUpdater().setIcon(icon).update();
     }
 
@@ -1004,7 +1004,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param icon The new icon of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateIcon(byte[] icon) {
+    default CompletableFuture<Void> updateIcon(final byte[] icon) {
         return createUpdater().setIcon(icon).update();
     }
 
@@ -1018,7 +1018,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param fileType The type of the icon, e.g. "png" or "jpg".
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateIcon(byte[] icon, String fileType) {
+    default CompletableFuture<Void> updateIcon(final byte[] icon, final String fileType) {
         return createUpdater().setIcon(icon, fileType).update();
     }
 
@@ -1032,7 +1032,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param icon The new icon of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateIcon(InputStream icon) {
+    default CompletableFuture<Void> updateIcon(final InputStream icon) {
         return createUpdater().setIcon(icon).update();
     }
 
@@ -1046,7 +1046,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param fileType The type of the icon, e.g. "png" or "jpg".
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateIcon(InputStream icon, String fileType) {
+    default CompletableFuture<Void> updateIcon(final InputStream icon, final String fileType) {
         return createUpdater().setIcon(icon, fileType).update();
     }
 
@@ -1072,7 +1072,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param owner The new owner of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateOwner(User owner) {
+    default CompletableFuture<Void> updateOwner(final User owner) {
         return createUpdater().setOwner(owner).update();
     }
 
@@ -1086,7 +1086,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param splash The new splash of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateSplash(BufferedImage splash) {
+    default CompletableFuture<Void> updateSplash(final BufferedImage splash) {
         return createUpdater().setSplash(splash).update();
     }
 
@@ -1100,7 +1100,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param fileType The type of the splash, e.g. "png" or "jpg".
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateSplash(BufferedImage splash, String fileType) {
+    default CompletableFuture<Void> updateSplash(final BufferedImage splash, final String fileType) {
         return createUpdater().setSplash(splash, fileType).update();
     }
 
@@ -1113,7 +1113,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param splash The new splash of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateSplash(File splash) {
+    default CompletableFuture<Void> updateSplash(final File splash) {
         return createUpdater().setSplash(splash).update();
     }
 
@@ -1126,7 +1126,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param splash The new splash of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateSplash(Icon splash) {
+    default CompletableFuture<Void> updateSplash(final Icon splash) {
         return createUpdater().setSplash(splash).update();
     }
 
@@ -1139,7 +1139,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param splash The new splash of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateSplash(URL splash) {
+    default CompletableFuture<Void> updateSplash(final URL splash) {
         return createUpdater().setSplash(splash).update();
     }
 
@@ -1153,7 +1153,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param splash The new splash of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateSplash(byte[] splash) {
+    default CompletableFuture<Void> updateSplash(final byte[] splash) {
         return createUpdater().setSplash(splash).update();
     }
 
@@ -1167,7 +1167,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param fileType The type of the splash, e.g. "png" or "jpg".
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateSplash(byte[] splash, String fileType) {
+    default CompletableFuture<Void> updateSplash(final byte[] splash, final String fileType) {
         return createUpdater().setSplash(splash, fileType).update();
     }
 
@@ -1181,7 +1181,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param splash The new splash of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateSplash(InputStream splash) {
+    default CompletableFuture<Void> updateSplash(final InputStream splash) {
         return createUpdater().setSplash(splash).update();
     }
 
@@ -1195,7 +1195,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param fileType The type of the splash, e.g. "png" or "jpg".
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateSplash(InputStream splash, String fileType) {
+    default CompletableFuture<Void> updateSplash(final InputStream splash, final String fileType) {
         return createUpdater().setSplash(splash, fileType).update();
     }
 
@@ -1221,7 +1221,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param banner The new banner of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateBanner(BufferedImage banner) {
+    default CompletableFuture<Void> updateBanner(final BufferedImage banner) {
         return createUpdater().setBanner(banner).update();
     }
 
@@ -1235,7 +1235,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param fileType The type of the banner, e.g. "png" or "jpg".
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateBanner(BufferedImage banner, String fileType) {
+    default CompletableFuture<Void> updateBanner(final BufferedImage banner, final String fileType) {
         return createUpdater().setBanner(banner, fileType).update();
     }
 
@@ -1248,7 +1248,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param banner The new banner of the server. Requires {@link ServerFeature#BANNER}.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateBanner(File banner) {
+    default CompletableFuture<Void> updateBanner(final File banner) {
         return createUpdater().setBanner(banner).update();
     }
 
@@ -1261,7 +1261,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param banner The new banner of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateBanner(Icon banner) {
+    default CompletableFuture<Void> updateBanner(final Icon banner) {
         return createUpdater().setBanner(banner).update();
     }
 
@@ -1274,7 +1274,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param banner The new banner of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateBanner(URL banner) {
+    default CompletableFuture<Void> updateBanner(final URL banner) {
         return createUpdater().setBanner(banner).update();
     }
 
@@ -1288,7 +1288,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param banner The new banner of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateBanner(byte[] banner) {
+    default CompletableFuture<Void> updateBanner(final byte[] banner) {
         return createUpdater().setBanner(banner).update();
     }
 
@@ -1302,7 +1302,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param fileType The type of the banner, e.g. "png" or "jpg".
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateBanner(byte[] banner, String fileType) {
+    default CompletableFuture<Void> updateBanner(final byte[] banner, final String fileType) {
         return createUpdater().setBanner(banner, fileType).update();
     }
 
@@ -1316,7 +1316,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param banner The new banner of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateBanner(InputStream banner) {
+    default CompletableFuture<Void> updateBanner(final InputStream banner) {
         return createUpdater().setBanner(banner).update();
     }
 
@@ -1330,7 +1330,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param fileType The type of the banner, e.g. "png" or "jpg".
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateBanner(InputStream banner, String fileType) {
+    default CompletableFuture<Void> updateBanner(final InputStream banner, final String fileType) {
         return createUpdater().setBanner(banner, fileType).update();
     }
 
@@ -1355,7 +1355,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param rulesChannel The new rules channel of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> setRulesChannel(ServerTextChannel rulesChannel) {
+    default CompletableFuture<Void> setRulesChannel(final ServerTextChannel rulesChannel) {
         return createUpdater().setRulesChannel(rulesChannel).update();
     }
 
@@ -1381,7 +1381,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param moderatorsOnlyChannel The new moderators-only of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> setModeratorsOnlyChannel(ServerTextChannel moderatorsOnlyChannel) {
+    default CompletableFuture<Void> setModeratorsOnlyChannel(final ServerTextChannel moderatorsOnlyChannel) {
         return createUpdater().setModeratorsOnlyChannel(moderatorsOnlyChannel).update();
     }
 
@@ -1406,7 +1406,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param locale The new locale of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updatePreferredLocale(Locale locale) {
+    default CompletableFuture<Void> updatePreferredLocale(final Locale locale) {
         return createUpdater().setPreferredLocale(locale).update();
     }
 
@@ -1419,7 +1419,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param systemChannel The new system channel of the server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> setSystemChannel(ServerTextChannel systemChannel) {
+    default CompletableFuture<Void> setSystemChannel(final ServerTextChannel systemChannel) {
         return createUpdater().setSystemChannel(systemChannel).update();
     }
 
@@ -1445,7 +1445,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param nickname The new nickname of the user.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateNickname(User user, String nickname) {
+    default CompletableFuture<Void> updateNickname(final User user, final String nickname) {
         return createUpdater().setNickname(user, nickname).update();
     }
 
@@ -1460,7 +1460,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param reason The audit log reason for this update.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateNickname(User user, String nickname, String reason) {
+    default CompletableFuture<Void> updateNickname(final User user, final String nickname, final String reason) {
         return createUpdater().setNickname(user, nickname).setAuditLogReason(reason).update();
     }
 
@@ -1473,7 +1473,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> resetNickname(User user) {
+    default CompletableFuture<Void> resetNickname(final User user) {
         return createUpdater().setNickname(user, null).update();
     }
 
@@ -1487,7 +1487,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param reason The audit log reason for this update.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> resetNickname(User user, String reason) {
+    default CompletableFuture<Void> resetNickname(final User user, final String reason) {
         return createUpdater().setNickname(user, null).setAuditLogReason(reason).update();
     }
 
@@ -1515,7 +1515,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param role The role which should be added to the server member.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> addRoleToUser(User user, Role role) {
+    default CompletableFuture<Void> addRoleToUser(final User user, final Role role) {
         return addRoleToUser(user, role, null);
     }
 
@@ -1542,7 +1542,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param role The role which should be removed from the server member.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> removeRoleFromUser(User user, Role role) {
+    default CompletableFuture<Void> removeRoleFromUser(final User user, final Role role) {
         return removeRoleFromUser(user, role, null);
     }
 
@@ -1570,7 +1570,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param roles The collection of roles to replace the user's roles.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateRoles(User user, Collection<Role> roles) {
+    default CompletableFuture<Void> updateRoles(final User user, final Collection<Role> roles) {
         return createUpdater()
                 .removeAllRolesFromUser(user)
                 .addRolesToUser(user, roles)
@@ -1589,7 +1589,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param reason The audit log reason for this update.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateRoles(User user, Collection<Role> roles, String reason) {
+    default CompletableFuture<Void> updateRoles(final User user, final Collection<Role> roles, final String reason) {
         return createUpdater()
                 .removeAllRolesFromUser(user)
                 .addRolesToUser(user, roles)
@@ -1603,7 +1603,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param roles An ordered list with the new role positions.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> reorderRoles(List<Role> roles) {
+    default CompletableFuture<Void> reorderRoles(final List<Role> roles) {
         return reorderRoles(roles, null);
     }
 
@@ -1622,7 +1622,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param channel The channel to move the user to.
      * @return A future to check if the move was successful.
      */
-    default CompletableFuture<Void> moveYourself(ServerVoiceChannel channel) {
+    default CompletableFuture<Void> moveYourself(final ServerVoiceChannel channel) {
         return moveUser(getApi().getYourself(), channel);
     }
 
@@ -1633,7 +1633,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param channel The channel to move the user to.
      * @return A future to check if the move was successful.
      */
-    default CompletableFuture<Void> moveUser(User user, ServerVoiceChannel channel) {
+    default CompletableFuture<Void> moveUser(final User user, final ServerVoiceChannel channel) {
         return createUpdater().setVoiceChannel(user, channel).update();
     }
 
@@ -1643,7 +1643,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to kick.
      * @return A future to check if the kick was successful.
      */
-    default CompletableFuture<Void> kickUserFromVoiceChannel(User user) {
+    default CompletableFuture<Void> kickUserFromVoiceChannel(final User user) {
         return createUpdater().setVoiceChannel(user, null).update();
     }
 
@@ -1695,7 +1695,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to mute.
      * @return A future to check if the mute was successful.
      */
-    default CompletableFuture<Void> muteUser(User user) {
+    default CompletableFuture<Void> muteUser(final User user) {
         return createUpdater().setMuted(user, true).update();
     }
 
@@ -1706,7 +1706,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param reason The audit log reason for this action.
      * @return A future to check if the mute was successful.
      */
-    default CompletableFuture<Void> muteUser(User user, String reason) {
+    default CompletableFuture<Void> muteUser(final User user, final String reason) {
         return createUpdater().setMuted(user, true).setAuditLogReason(reason).update();
     }
 
@@ -1716,7 +1716,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to unmute.
      * @return A future to check if the unmute was successful.
      */
-    default CompletableFuture<Void> unmuteUser(User user) {
+    default CompletableFuture<Void> unmuteUser(final User user) {
         return createUpdater().setMuted(user, false).update();
     }
 
@@ -1727,7 +1727,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param reason The audit log reason for this action.
      * @return A future to check if the unmute was successful.
      */
-    default CompletableFuture<Void> unmuteUser(User user, String reason) {
+    default CompletableFuture<Void> unmuteUser(final User user, final String reason) {
         return createUpdater().setMuted(user, false).setAuditLogReason(reason).update();
     }
 
@@ -1779,7 +1779,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to deafen.
      * @return A future to check if the deafen was successful.
      */
-    default CompletableFuture<Void> deafenUser(User user) {
+    default CompletableFuture<Void> deafenUser(final User user) {
         return createUpdater().setDeafened(user, true).update();
     }
 
@@ -1790,7 +1790,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param reason The audit log reason for this action.
      * @return A future to check if the deafen was successful.
      */
-    default CompletableFuture<Void> deafenUser(User user, String reason) {
+    default CompletableFuture<Void> deafenUser(final User user, final String reason) {
         return createUpdater().setDeafened(user, true).setAuditLogReason(reason).update();
     }
 
@@ -1800,7 +1800,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to request as a member.
      * @return A future to get a server member if it exists in the server.
      */
-    default CompletableFuture<User> requestMember(User user) {
+    default CompletableFuture<User> requestMember(final User user) {
         return requestMember(user.getId());
     }
 
@@ -1818,7 +1818,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to undeafen.
      * @return A future to check if the undeafen was successful.
      */
-    default CompletableFuture<Void> undeafenUser(User user) {
+    default CompletableFuture<Void> undeafenUser(final User user) {
         return createUpdater().setDeafened(user, false).update();
     }
 
@@ -1829,7 +1829,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param reason The audit log reason for this action.
      * @return A future to check if the undeafen was successful.
      */
-    default CompletableFuture<Void> undeafenUser(User user, String reason) {
+    default CompletableFuture<Void> undeafenUser(final User user, final String reason) {
         return createUpdater().setDeafened(user, false).setAuditLogReason(reason).update();
     }
 
@@ -1839,7 +1839,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to kick.
      * @return A future to check if the kick was successful.
      */
-    default CompletableFuture<Void> kickUser(User user) {
+    default CompletableFuture<Void> kickUser(final User user) {
         return kickUser(user, null);
     }
 
@@ -1858,7 +1858,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to ban.
      * @return A future to check if the ban was successful.
      */
-    default CompletableFuture<Void> banUser(User user) {
+    default CompletableFuture<Void> banUser(final User user) {
         return banUser(user.getId(), 0, null);
     }
 
@@ -1869,7 +1869,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param deleteMessageDays The number of days to delete messages for (0-7).
      * @return A future to check if the ban was successful.
      */
-    default CompletableFuture<Void> banUser(User user, int deleteMessageDays) {
+    default CompletableFuture<Void> banUser(final User user, final int deleteMessageDays) {
         return banUser(user.getId(), deleteMessageDays, null);
     }
 
@@ -1881,7 +1881,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param reason The reason for the ban.
      * @return A future to check if the ban was successful.
      */
-    default CompletableFuture<Void> banUser(User user, int deleteMessageDays, String reason) {
+    default CompletableFuture<Void> banUser(final User user, final int deleteMessageDays, final String reason) {
         return banUser(user.getId(), deleteMessageDays, reason);
     }
 
@@ -1891,7 +1891,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param userId The id of the user to ban.
      * @return A future to check if the ban was successful.
      */
-    default CompletableFuture<Void> banUser(String userId) {
+    default CompletableFuture<Void> banUser(final String userId) {
         return banUser(userId, 0, null);
     }
 
@@ -1901,7 +1901,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param userId The id of the user to ban.
      * @return A future to check if the ban was successful.
      */
-    default CompletableFuture<Void> banUser(long userId) {
+    default CompletableFuture<Void> banUser(final long userId) {
         return banUser(Long.toUnsignedString(userId));
     }
 
@@ -1912,7 +1912,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param deleteMessageDays The number of days to delete messages for (0-7).
      * @return A future to check if the ban was successful.
      */
-    default CompletableFuture<Void> banUser(String userId, int deleteMessageDays) {
+    default CompletableFuture<Void> banUser(final String userId, final int deleteMessageDays) {
         return banUser(userId, deleteMessageDays, null);
     }
 
@@ -1923,7 +1923,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param deleteMessageDays The number of days to delete messages for (0-7).
      * @return A future to check if the ban was successful.
      */
-    default CompletableFuture<Void> banUser(long userId, int deleteMessageDays) {
+    default CompletableFuture<Void> banUser(final long userId, final int deleteMessageDays) {
         return banUser(Long.toUnsignedString(userId), deleteMessageDays);
     }
 
@@ -1945,7 +1945,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param reason The reason for the ban.
      * @return A future to check if the ban was successful.
      */
-    default CompletableFuture<Void> banUser(long userId, int deleteMessageDays, String reason) {
+    default CompletableFuture<Void> banUser(final long userId, final int deleteMessageDays, final String reason) {
         return banUser(Long.toUnsignedString(userId), deleteMessageDays, reason);
     }
 
@@ -1955,7 +1955,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to ban.
      * @return A future to check if the unban was successful.
      */
-    default CompletableFuture<Void> unbanUser(User user) {
+    default CompletableFuture<Void> unbanUser(final User user) {
         return unbanUser(user.getId(), null);
     }
 
@@ -1965,7 +1965,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param userId The id of the user to unban.
      * @return A future to check if the unban was successful.
      */
-    default CompletableFuture<Void> unbanUser(long userId) {
+    default CompletableFuture<Void> unbanUser(final long userId) {
         return unbanUser(userId, null);
     }
 
@@ -1975,7 +1975,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param userId The id of the user to unban.
      * @return A future to check if the unban was successful.
      */
-    default CompletableFuture<Void> unbanUser(String userId) {
+    default CompletableFuture<Void> unbanUser(final String userId) {
         return unbanUser(userId, null);
     }
 
@@ -1986,7 +1986,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param reason The audit log reason for this action.
      * @return A future to check if the unban was successful.
      */
-    default CompletableFuture<Void> unbanUser(User user, String reason) {
+    default CompletableFuture<Void> unbanUser(final User user, final String reason) {
         return unbanUser(user.getId(), reason);
     }
 
@@ -2006,11 +2006,11 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param reason The audit log reason for this action.
      * @return A future to check if the unban was successful.
      */
-    default CompletableFuture<Void> unbanUser(String userId, String reason) {
+    default CompletableFuture<Void> unbanUser(final String userId, final String reason) {
         try {
             return unbanUser(Long.parseLong(userId), reason);
-        } catch (NumberFormatException e) {
-            CompletableFuture<Void> future = new CompletableFuture<>();
+        } catch (final NumberFormatException e) {
+            final CompletableFuture<Void> future = new CompletableFuture<>();
             future.completeExceptionally(e);
             return future;
         }
@@ -2092,7 +2092,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param permission The permission to check.
      * @return Whether the user has the permission or not.
      */
-    default boolean hasPermission(User user, PermissionType permission) {
+    default boolean hasPermission(final User user, final PermissionType permission) {
         return getAllowedPermissions(user).contains(permission);
     }
 
@@ -2109,7 +2109,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param id The id of the emoji.
      * @return The emoji with the given id.
      */
-    default Optional<KnownCustomEmoji> getCustomEmojiById(long id) {
+    default Optional<KnownCustomEmoji> getCustomEmojiById(final long id) {
         return getCustomEmojis().stream().filter(emoji -> emoji.getId() == id).findAny();
     }
 
@@ -2119,10 +2119,10 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param id The id of the emoji.
      * @return The emoji with the given id.
      */
-    default Optional<KnownCustomEmoji> getCustomEmojiById(String id) {
+    default Optional<KnownCustomEmoji> getCustomEmojiById(final String id) {
         try {
             return getCustomEmojiById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -2134,7 +2134,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param name The name of the custom emojis.
      * @return A collection of all custom emojis with the given name in this server.
      */
-    default Collection<KnownCustomEmoji> getCustomEmojisByName(String name) {
+    default Collection<KnownCustomEmoji> getCustomEmojisByName(final String name) {
         return Collections.unmodifiableList(
                 getCustomEmojis().stream()
                         .filter(emoji -> emoji.getName().equals(name))
@@ -2148,7 +2148,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param name The name of the custom emojis.
      * @return A collection of all custom emojis with the given name in this server.
      */
-    default Collection<KnownCustomEmoji> getCustomEmojisByNameIgnoreCase(String name) {
+    default Collection<KnownCustomEmoji> getCustomEmojisByNameIgnoreCase(final String name) {
         return Collections.unmodifiableCollection(
                 getCustomEmojis().stream()
                         .filter(emoji -> emoji.getName().equalsIgnoreCase(name))
@@ -2248,10 +2248,10 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param id The id of the channel.
      * @return The channel with the given id.
      */
-    default Optional<ServerChannel> getChannelById(String id) {
+    default Optional<ServerChannel> getChannelById(final String id) {
         try {
             return getChannelById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -2263,7 +2263,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param name The name of the channels.
      * @return A sorted list (by position) with all channels with the given name.
      */
-    default List<ServerChannel> getChannelsByName(String name) {
+    default List<ServerChannel> getChannelsByName(final String name) {
         return Collections.unmodifiableList(
                 getChannels().stream()
                         .filter(channel -> channel.getName().equals(name))
@@ -2277,7 +2277,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param name The name of the channels.
      * @return A sorted list (by position) with all channels with the given name.
      */
-    default List<ServerChannel> getChannelsByNameIgnoreCase(String name) {
+    default List<ServerChannel> getChannelsByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getChannels().stream()
                         .filter(channel -> channel.getName().equalsIgnoreCase(name))
@@ -2290,7 +2290,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param id The id of the channel category.
      * @return The channel category with the given id.
      */
-    default Optional<ChannelCategory> getChannelCategoryById(long id) {
+    default Optional<ChannelCategory> getChannelCategoryById(final long id) {
         return getChannelById(id)
                 .filter(channel -> channel instanceof ChannelCategory)
                 .map(channel -> (ChannelCategory) channel);
@@ -2302,10 +2302,10 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param id The id of the channel category.
      * @return The channel category with the given id.
      */
-    default Optional<ChannelCategory> getChannelCategoryById(String id) {
+    default Optional<ChannelCategory> getChannelCategoryById(final String id) {
         try {
             return getChannelCategoryById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -2317,7 +2317,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param name The name of the channel categories.
      * @return A sorted list (by position) with all channel categories with the given name.
      */
-    default List<ChannelCategory> getChannelCategoriesByName(String name) {
+    default List<ChannelCategory> getChannelCategoriesByName(final String name) {
         return Collections.unmodifiableList(
                 getChannelCategories().stream()
                         .filter(channel -> channel.getName().equals(name))
@@ -2331,7 +2331,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param name The name of the channel categories.
      * @return A sorted list (by position) with all channel categories with the given name.
      */
-    default List<ChannelCategory> getChannelCategoriesByNameIgnoreCase(String name) {
+    default List<ChannelCategory> getChannelCategoriesByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getChannelCategories().stream()
                         .filter(channel -> channel.getName().equalsIgnoreCase(name))
@@ -2344,7 +2344,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param id The id of the text channel.
      * @return The text channel with the given id.
      */
-    default Optional<ServerTextChannel> getTextChannelById(long id) {
+    default Optional<ServerTextChannel> getTextChannelById(final long id) {
         return getChannelById(id)
                 .filter(channel -> channel instanceof ServerTextChannel)
                 .map(channel -> (ServerTextChannel) channel);
@@ -2356,10 +2356,10 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param id The id of the text channel.
      * @return The text channel with the given id.
      */
-    default Optional<ServerTextChannel> getTextChannelById(String id) {
+    default Optional<ServerTextChannel> getTextChannelById(final String id) {
         try {
             return getTextChannelById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -2371,7 +2371,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param name The name of the text channels.
      * @return A sorted list (by position) with all text channels with the given name.
      */
-    default List<ServerTextChannel> getTextChannelsByName(String name) {
+    default List<ServerTextChannel> getTextChannelsByName(final String name) {
         return Collections.unmodifiableList(
                 getTextChannels().stream()
                         .filter(channel -> channel.getName().equals(name))
@@ -2385,7 +2385,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param name The name of the text channels.
      * @return A sorted list (by position) with all text channels with the given name.
      */
-    default List<ServerTextChannel> getTextChannelsByNameIgnoreCase(String name) {
+    default List<ServerTextChannel> getTextChannelsByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getTextChannels().stream()
                         .filter(channel -> channel.getName().equalsIgnoreCase(name))
@@ -2398,7 +2398,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param id The id of the voice channel.
      * @return The voice channel with the given id.
      */
-    default Optional<ServerVoiceChannel> getVoiceChannelById(long id) {
+    default Optional<ServerVoiceChannel> getVoiceChannelById(final long id) {
         return getChannelById(id)
                 .filter(channel -> channel instanceof ServerVoiceChannel)
                 .map(channel -> (ServerVoiceChannel) channel);
@@ -2410,10 +2410,10 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param id The id of the voice channel.
      * @return The voice channel with the given id.
      */
-    default Optional<ServerVoiceChannel> getVoiceChannelById(String id) {
+    default Optional<ServerVoiceChannel> getVoiceChannelById(final String id) {
         try {
             return getVoiceChannelById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -2424,7 +2424,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param id The id of the stage voice channel.
      * @return The stage voice channel with the given id.
      */
-    default Optional<ServerStageVoiceChannel> getStageVoiceChannelById(long id) {
+    default Optional<ServerStageVoiceChannel> getStageVoiceChannelById(final long id) {
         return getChannelById(id)
                 .filter(channel -> channel instanceof ServerStageVoiceChannel)
                 .map(channel -> (ServerStageVoiceChannel) channel);
@@ -2436,10 +2436,10 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param id The id of the voice channel.
      * @return The voice channel with the given id.
      */
-    default Optional<ServerStageVoiceChannel> getStageVoiceChannelById(String id) {
+    default Optional<ServerStageVoiceChannel> getStageVoiceChannelById(final String id) {
         try {
             return getStageVoiceChannelById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -2451,7 +2451,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param name The name of the voice channels.
      * @return A sorted list (by position) with all voice channels with the given name.
      */
-    default List<ServerVoiceChannel> getVoiceChannelsByName(String name) {
+    default List<ServerVoiceChannel> getVoiceChannelsByName(final String name) {
         return Collections.unmodifiableList(
                 getVoiceChannels().stream()
                         .filter(channel -> channel.getName().equals(name))
@@ -2465,7 +2465,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param name The name of the voice channels.
      * @return A sorted list (by position) with all voice channels with the given name.
      */
-    default List<ServerVoiceChannel> getVoiceChannelsByNameIgnoreCase(String name) {
+    default List<ServerVoiceChannel> getVoiceChannelsByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getVoiceChannels().stream()
                         .filter(channel -> channel.getName().equalsIgnoreCase(name))
@@ -2478,7 +2478,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param userId The id of the user to check.
      * @return The voice channel the user is connected to.
      */
-    default Optional<ServerVoiceChannel> getConnectedVoiceChannel(long userId) {
+    default Optional<ServerVoiceChannel> getConnectedVoiceChannel(final long userId) {
         return getVoiceChannels().stream()
                 .filter(serverVoiceChannel -> serverVoiceChannel.isConnected(userId))
                 .findAny();
@@ -2490,7 +2490,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return The voice channel the user is connected to.
      */
-    default Optional<ServerVoiceChannel> getConnectedVoiceChannel(User user) {
+    default Optional<ServerVoiceChannel> getConnectedVoiceChannel(final User user) {
         return getConnectedVoiceChannel(user.getId());
     }
 
@@ -2501,7 +2501,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return The visible channels of this server.
      */
-    default List<ServerChannel> getVisibleChannels(User user) {
+    default List<ServerChannel> getVisibleChannels(final User user) {
         return Collections.unmodifiableList(getChannels().stream()
                 .filter(channel -> channel.canSee(user))
                 .collect(Collectors.toList()));
@@ -2514,8 +2514,8 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user.
      * @return The highest role of the given user.
      */
-    default Optional<Role> getHighestRole(User user) {
-        List<Role> roles = getRoles(user);
+    default Optional<Role> getHighestRole(final User user) {
+        final List<Role> roles = getRoles(user);
         if (roles.isEmpty()) {
             return Optional.empty();
         }
@@ -2528,7 +2528,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user is the owner of the server or not.
      */
-    default boolean isOwner(User user) {
+    default boolean isOwner(final User user) {
         return getOwnerId() == user.getId();
     }
 
@@ -2538,7 +2538,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user is an administrator of the server or not.
      */
-    default boolean isAdmin(User user) {
+    default boolean isAdmin(final User user) {
         return hasPermission(user, PermissionType.ADMINISTRATOR);
     }
 
@@ -2548,7 +2548,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user can create channels or not.
      */
-    default boolean canCreateChannels(User user) {
+    default boolean canCreateChannels(final User user) {
         return hasAnyPermission(user,
                 PermissionType.ADMINISTRATOR,
                 PermissionType.MANAGE_CHANNELS);
@@ -2569,7 +2569,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user can view the audit log or not.
      */
-    default boolean canViewAuditLog(User user) {
+    default boolean canViewAuditLog(final User user) {
         return hasAnyPermission(user,
                 PermissionType.ADMINISTRATOR,
                 PermissionType.VIEW_AUDIT_LOG);
@@ -2590,7 +2590,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user can change its own nickname or not.
      */
-    default boolean canChangeOwnNickname(User user) {
+    default boolean canChangeOwnNickname(final User user) {
         return hasAnyPermission(user,
                 PermissionType.ADMINISTRATOR,
                 PermissionType.CHANGE_NICKNAME,
@@ -2612,7 +2612,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user can manage nicknames or not.
      */
-    default boolean canManageNicknames(User user) {
+    default boolean canManageNicknames(final User user) {
         return hasAnyPermission(user,
                 PermissionType.ADMINISTRATOR,
                 PermissionType.MANAGE_NICKNAMES);
@@ -2633,7 +2633,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user can mute members or not.
      */
-    default boolean canMuteMembers(User user) {
+    default boolean canMuteMembers(final User user) {
         return hasAnyPermission(user,
                 PermissionType.ADMINISTRATOR,
                 PermissionType.MUTE_MEMBERS);
@@ -2654,7 +2654,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user can deafen members or not.
      */
-    default boolean canDeafenMembers(User user) {
+    default boolean canDeafenMembers(final User user) {
         return hasAnyPermission(user,
                 PermissionType.ADMINISTRATOR,
                 PermissionType.DEAFEN_MEMBERS);
@@ -2675,7 +2675,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user can move members or not.
      */
-    default boolean canMoveMembers(User user) {
+    default boolean canMoveMembers(final User user) {
         return hasAnyPermission(user,
                 PermissionType.ADMINISTRATOR,
                 PermissionType.MOVE_MEMBERS);
@@ -2696,7 +2696,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user can manage emojis or not.
      */
-    default boolean canManageEmojis(User user) {
+    default boolean canManageEmojis(final User user) {
         return hasAnyPermission(user,
                 PermissionType.ADMINISTRATOR,
                 PermissionType.MANAGE_EMOJIS);
@@ -2717,7 +2717,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user can use slash commands or not.
      */
-    default boolean canUseSlashCommands(User user) {
+    default boolean canUseSlashCommands(final User user) {
         return hasAnyPermission(user,
                 PermissionType.ADMINISTRATOR,
                 PermissionType.USE_SLASH_COMMANDS);
@@ -2738,7 +2738,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user can manage roles or not.
      */
-    default boolean canManageRoles(User user) {
+    default boolean canManageRoles(final User user) {
         return hasAnyPermission(user,
                 PermissionType.ADMINISTRATOR,
                 PermissionType.MANAGE_ROLES);
@@ -2760,7 +2760,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param target The user whose roles are to be managed.
      * @return Whether the user can manage the target's roles.
      */
-    default boolean canManageRolesOf(User user, User target) {
+    default boolean canManageRolesOf(final User user, final User target) {
         return canManageRole(user, getHighestRole(target).orElseGet(this::getEveryoneRole));
     }
 
@@ -2771,7 +2771,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param target The role that is to be managed.
      * @return Whether the user can manage the role.
      */
-    default boolean canManageRole(User user, Role target) {
+    default boolean canManageRole(final User user, final Role target) {
         return target.getServer() == this
                 && (isOwner(user)
                 || (canManageRoles(user)
@@ -2784,7 +2784,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user can manage the server or not.
      */
-    default boolean canManage(User user) {
+    default boolean canManage(final User user) {
         return hasAnyPermission(user,
                 PermissionType.ADMINISTRATOR,
                 PermissionType.MANAGE_SERVER);
@@ -2805,7 +2805,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user can kick users or not.
      */
-    default boolean canKickUsers(User user) {
+    default boolean canKickUsers(final User user) {
         return hasAnyPermission(user,
                 PermissionType.ADMINISTRATOR,
                 PermissionType.KICK_MEMBERS);
@@ -2829,7 +2829,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param userToKick The user which should be kicked.
      * @return Whether the given user can kick the other user or not.
      */
-    default boolean canKickUser(User user, User userToKick) {
+    default boolean canKickUser(final User user, final User userToKick) {
         // owner can always kick, regardless of role for example
         if (isOwner(user)) {
             return true;
@@ -2840,10 +2840,10 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
         }
         // only returns empty optional if user is not member of server
         // but then canKickUsers should already have kicked in
-        Role ownRole = getHighestRole(user).orElseThrow(AssertionError::new);
-        Optional<Role> otherRole = getHighestRole(userToKick);
+        final Role ownRole = getHighestRole(user).orElseThrow(AssertionError::new);
+        final Optional<Role> otherRole = getHighestRole(userToKick);
         // otherRole empty => userToKick is not on the server => kick is allowed as Discord allows it
-        boolean userToKickOnServer = otherRole.isPresent();
+        final boolean userToKickOnServer = otherRole.isPresent();
         return !userToKickOnServer || (ownRole.compareTo(otherRole.get()) > 0);
     }
 
@@ -2854,7 +2854,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param userToKick The user which should be kicked.
      * @return Whether the user of the connected account can kick the user or not.
      */
-    default boolean canYouKickUser(User userToKick) {
+    default boolean canYouKickUser(final User userToKick) {
         return canKickUser(getApi().getYourself(), userToKick);
     }
 
@@ -2864,7 +2864,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param user The user to check.
      * @return Whether the given user can ban users or not.
      */
-    default boolean canBanUsers(User user) {
+    default boolean canBanUsers(final User user) {
         return hasAnyPermission(user,
                 PermissionType.ADMINISTRATOR,
                 PermissionType.BAN_MEMBERS);
@@ -2887,7 +2887,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param userToBan The user which should be banned.
      * @return Whether the given user can ban the other user or not.
      */
-    default boolean canBanUser(User user, User userToBan) {
+    default boolean canBanUser(final User user, final User userToBan) {
         // owner can always ban, regardless of role for example
         if (isOwner(user)) {
             return true;
@@ -2898,10 +2898,10 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
         }
         // only returns empty optional if user is not member of server
         // but then canBanUsers should already have kicked in
-        Role ownRole = getHighestRole(user).orElseThrow(AssertionError::new);
-        Optional<Role> otherRole = getHighestRole(userToBan);
+        final Role ownRole = getHighestRole(user).orElseThrow(AssertionError::new);
+        final Optional<Role> otherRole = getHighestRole(userToBan);
         // otherRole empty => userToBan is not on the server => ban is allowed
-        boolean userToBanOnServer = otherRole.isPresent();
+        final boolean userToBanOnServer = otherRole.isPresent();
         return !userToBanOnServer || (ownRole.compareTo(otherRole.get()) > 0);
     }
 
@@ -2912,7 +2912,7 @@ public interface Server extends DiscordEntity, Nameable, UpdatableFromCache<Serv
      * @param userToBan The user which should be banned.
      * @return Whether the user of the connected account can ban the user or not.
      */
-    default boolean canYouBanUser(User userToBan) {
+    default boolean canYouBanUser(final User userToBan) {
         return canBanUser(getApi().getYourself(), userToBan);
     }
 

@@ -74,7 +74,7 @@ public class FileContainer {
      * @param file The file as a buffered image.
      * @param type The type ("png", "txt", ...) or name ("image.png", "readme.txt", ...) of the file.
      */
-    public FileContainer(BufferedImage file, String type) {
+    public FileContainer(final BufferedImage file, final String type) {
         fileAsBufferedImage = file;
         fileAsFile = null;
         fileAsIcon = null;
@@ -89,7 +89,7 @@ public class FileContainer {
      *
      * @param file The file as a file.
      */
-    public FileContainer(File file) {
+    public FileContainer(final File file) {
         this(file, false);
     }
 
@@ -99,7 +99,7 @@ public class FileContainer {
      * @param file The file as a file.
      * @param isSpoiler Whether the file is to be marked as spoiler.
      */
-    public FileContainer(File file, boolean isSpoiler) {
+    public FileContainer(final File file, final boolean isSpoiler) {
         fileAsBufferedImage = null;
         fileAsFile = file;
         fileAsIcon = null;
@@ -114,7 +114,7 @@ public class FileContainer {
      *
      * @param file The file as an icon.
      */
-    public FileContainer(Icon file) {
+    public FileContainer(final Icon file) {
         this(file, false);
     }
 
@@ -124,7 +124,7 @@ public class FileContainer {
      * @param file The file as an icon.
      * @param isSpoiler Whether the icon is marked as a spoiler.
      */
-    public FileContainer(Icon file, boolean isSpoiler) {
+    public FileContainer(final Icon file, final boolean isSpoiler) {
         fileAsBufferedImage = null;
         fileAsFile = null;
         fileAsIcon = file;
@@ -139,7 +139,7 @@ public class FileContainer {
      *
      * @param file The file as an url.
      */
-    public FileContainer(URL file) {
+    public FileContainer(final URL file) {
         this(file, false);
     }
 
@@ -149,7 +149,7 @@ public class FileContainer {
      * @param file The file as an url.
      * @param isSpoiler Whether the file is to be marked as spoiler.
      */
-    public FileContainer(URL file, boolean isSpoiler) {
+    public FileContainer(final URL file, final boolean isSpoiler) {
         fileAsBufferedImage = null;
         fileAsFile = null;
         fileAsIcon = null;
@@ -165,7 +165,7 @@ public class FileContainer {
      * @param file The file as a byte array.
      * @param type The type ("png", "txt", ...) or name ("image.png", "readme.txt", ...) of the file.
      */
-    public FileContainer(byte[] file, String type) {
+    public FileContainer(final byte[] file, final String type) {
         fileAsBufferedImage = null;
         fileAsFile = null;
         fileAsIcon = null;
@@ -181,7 +181,7 @@ public class FileContainer {
      * @param file The file as an input stream.
      * @param type The type ("png", "txt", ...) or name ("image.png", "readme.txt", ...) of the file.
      */
-    public FileContainer(InputStream file, String type) {
+    public FileContainer(final InputStream file, final String type) {
         fileAsBufferedImage = null;
         fileAsFile = null;
         fileAsIcon = null;
@@ -196,7 +196,7 @@ public class FileContainer {
      *
      * @param type The type or name of the file.
      */
-    public void setFileTypeOrName(String type) {
+    public void setFileTypeOrName(final String type) {
         fileTypeOrName = type;
         if ((fileAsBufferedImage != null) && !ImageIO.getImageWritersByFormatName(getFileType()).hasNext()) {
             throw new IllegalArgumentException(String.format("No image writer found for format \"%s\"", getFileType()));
@@ -231,8 +231,8 @@ public class FileContainer {
      * @param api The discord api instance.
      * @return The byte array stream for the file.
      */
-    public CompletableFuture<byte[]> asByteArray(DiscordApi api) {
-        CompletableFuture<byte[]> future = new CompletableFuture<>();
+    public CompletableFuture<byte[]> asByteArray(final DiscordApi api) {
+        final CompletableFuture<byte[]> future = new CompletableFuture<>();
         try {
             if (fileAsByteArray != null) {
                 future.complete(fileAsByteArray);
@@ -245,23 +245,23 @@ public class FileContainer {
                     || fileAsInputStream != null) {
                 api.getThreadPool().getExecutorService().submit(() -> {
                     try (
-                            InputStream in = new BufferedInputStream(asInputStream(api));
-                            ByteArrayOutputStream out = new ByteArrayOutputStream()
+                            final InputStream in = new BufferedInputStream(asInputStream(api));
+                            final ByteArrayOutputStream out = new ByteArrayOutputStream()
                     ) {
-                        byte[] buf = new byte[1024];
+                        final byte[] buf = new byte[1024];
                         int n;
                         while (-1 != (n = in.read(buf))) {
                             out.write(buf, 0, n);
                         }
                         future.complete(out.toByteArray());
-                    } catch (Throwable t) {
+                    } catch (final Throwable t) {
                         future.completeExceptionally(t);
                     }
                 });
                 return future;
             }
             future.completeExceptionally(new IllegalStateException("No file variant is set"));
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             future.completeExceptionally(t);
         }
         return future;
@@ -274,15 +274,15 @@ public class FileContainer {
      * @return The input stream for the file.
      * @throws IOException If an IO error occurs.
      */
-    public InputStream asInputStream(DiscordApi api) throws IOException {
+    public InputStream asInputStream(final DiscordApi api) throws IOException {
         if (fileAsBufferedImage != null) {
-            PipedOutputStream pos = new PipedOutputStream();
-            PipedInputStream pis = new PipedInputStream(pos);
+            final PipedOutputStream pos = new PipedOutputStream();
+            final PipedInputStream pis = new PipedInputStream(pos);
             api.getThreadPool().getExecutorService().submit(() -> {
                 try {
                     ImageIO.write(fileAsBufferedImage, getFileType(), pos);
                     pos.close();
-                } catch (Throwable t) {
+                } catch (final Throwable t) {
                     logger.error("Failed to process buffered image file!", t);
                 }
             });
@@ -292,8 +292,8 @@ public class FileContainer {
             return new FileInputStream(fileAsFile);
         }
         if (fileAsIcon != null || fileAsUrl != null) {
-            URL url = fileAsUrl == null ? fileAsIcon.getUrl() : fileAsUrl;
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            final URL url = fileAsUrl == null ? fileAsIcon.getUrl() : fileAsUrl;
+            final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
             conn.setRequestProperty("User-Agent", Javacord.USER_AGENT);
@@ -314,13 +314,13 @@ public class FileContainer {
      * @param api The discord api instance.
      * @return The file as BufferedImage.
      */
-    public CompletableFuture<BufferedImage> asBufferedImage(DiscordApi api) {
+    public CompletableFuture<BufferedImage> asBufferedImage(final DiscordApi api) {
         return asByteArray(api)
                 .thenApply(ByteArrayInputStream::new)
                 .thenApply(stream -> {
                     try {
                         return ImageIO.read(stream);
-                    } catch (IOException e) {
+                    } catch (final IOException e) {
                         throw new CompletionException(e);
                     }
                 });

@@ -33,7 +33,7 @@ public interface SelectMenuChooseEvent {
      * @param customId The custom id to match.
      * @return The interaction.
      */
-    default Optional<SelectMenuInteraction> getSelectMenuInteractionWithCustomId(String customId) {
+    default Optional<SelectMenuInteraction> getSelectMenuInteractionWithCustomId(final String customId) {
         return getInteraction().asMessageComponentInteractionWithCustomId(customId)
                 .flatMap(MessageComponentInteraction::asSelectMenuInteraction);
     }

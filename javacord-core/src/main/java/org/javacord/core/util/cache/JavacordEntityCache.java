@@ -24,7 +24,7 @@ public class JavacordEntityCache {
     }
 
     private JavacordEntityCache(
-            ChannelCache channelCache, MemberCache memberCache, UserPresenceCache userPresenceCache) {
+            final ChannelCache channelCache, final MemberCache memberCache, final UserPresenceCache userPresenceCache) {
         this.channelCache = channelCache;
         this.memberCache = memberCache;
         this.userPresenceCache = userPresenceCache;
@@ -45,7 +45,7 @@ public class JavacordEntityCache {
      * @param mapper A function that takes the old channel cache and returns the new one.
      * @return The new Javacord entity cache.
      */
-    public JavacordEntityCache updateChannelCache(UnaryOperator<ChannelCache> mapper) {
+    public JavacordEntityCache updateChannelCache(final UnaryOperator<ChannelCache> mapper) {
         return setChannelCache(mapper.apply(channelCache));
     }
 
@@ -55,7 +55,7 @@ public class JavacordEntityCache {
      * @param channelCache The channel cache to set.
      * @return The new Javacord entity cache.
      */
-    public JavacordEntityCache setChannelCache(ChannelCache channelCache) {
+    public JavacordEntityCache setChannelCache(final ChannelCache channelCache) {
         return new JavacordEntityCache(channelCache, memberCache, userPresenceCache);
     }
 
@@ -74,7 +74,7 @@ public class JavacordEntityCache {
      * @param mapper A function that takes the old member cache and returns the new one.
      * @return The new Javacord entity cache.
      */
-    public JavacordEntityCache updateMemberCache(UnaryOperator<MemberCache> mapper) {
+    public JavacordEntityCache updateMemberCache(final UnaryOperator<MemberCache> mapper) {
         return setMemberCache(mapper.apply(memberCache));
     }
 
@@ -84,7 +84,7 @@ public class JavacordEntityCache {
      * @param memberCache The member cache to set.
      * @return The new Javacord entity cache.
      */
-    public JavacordEntityCache setMemberCache(MemberCache memberCache) {
+    public JavacordEntityCache setMemberCache(final MemberCache memberCache) {
         return new JavacordEntityCache(channelCache, memberCache, userPresenceCache);
     }
 
@@ -103,7 +103,7 @@ public class JavacordEntityCache {
      * @param mapper A function that takes the old user presence cache and returns the new one.
      * @return The new Javacord entity cache.
      */
-    public JavacordEntityCache updateUserPresenceCache(UnaryOperator<UserPresenceCache> mapper) {
+    public JavacordEntityCache updateUserPresenceCache(final UnaryOperator<UserPresenceCache> mapper) {
         return setUserPresenceCache(mapper.apply(userPresenceCache));
     }
 
@@ -113,7 +113,7 @@ public class JavacordEntityCache {
      * @param userPresenceCache The user presence cache to set.
      * @return The new Javacord entity cache.
      */
-    public JavacordEntityCache setUserPresenceCache(UserPresenceCache userPresenceCache) {
+    public JavacordEntityCache setUserPresenceCache(final UserPresenceCache userPresenceCache) {
         return new JavacordEntityCache(channelCache, memberCache, userPresenceCache);
     }
 }

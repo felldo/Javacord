@@ -23,7 +23,7 @@ public enum AccountType {
      *
      * @param tokenPrefix The prefix, which is added in front of the normal token.
      */
-    AccountType(String tokenPrefix) {
+    AccountType(final String tokenPrefix) {
         this.tokenPrefix = tokenPrefix;
     }
 

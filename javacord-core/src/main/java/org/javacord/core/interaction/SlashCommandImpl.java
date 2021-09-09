@@ -31,7 +31,7 @@ public class SlashCommandImpl implements SlashCommand {
      * @param api The api instance.
      * @param data The json data of the slash command.
      */
-    public SlashCommandImpl(DiscordApiImpl api, JsonNode data) {
+    public SlashCommandImpl(final DiscordApiImpl api, final JsonNode data) {
         this.api = api;
         id = data.get("id").asLong();
         applicationId = data.get("application_id").asLong();
@@ -39,7 +39,7 @@ public class SlashCommandImpl implements SlashCommand {
         description = data.get("description").asText();
         options = new ArrayList<>();
         if (data.has("options")) {
-            for (JsonNode optionJson : data.get("options")) {
+            for (final JsonNode optionJson : data.get("options")) {
                 options.add(new SlashCommandOptionImpl(optionJson));
             }
         }
@@ -89,7 +89,7 @@ public class SlashCommandImpl implements SlashCommand {
     }
 
     @Override
-    public CompletableFuture<Void> deleteForServer(Server server) {
+    public CompletableFuture<Void> deleteForServer(final Server server) {
         return new RestRequest<Void>(getApi(), RestMethod.DELETE, RestEndpoint.SERVER_SLASH_COMMANDS)
             .setUrlParameters(String.valueOf(getApplicationId()), server.getIdAsString(), getIdAsString())
             .execute(result -> null);

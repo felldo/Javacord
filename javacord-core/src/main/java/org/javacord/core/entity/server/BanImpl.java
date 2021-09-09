@@ -36,7 +36,7 @@ public class BanImpl implements Ban {
      * @param server The server of the ban.
      * @param data The json data of the ban.
      */
-    public BanImpl(Server server, JsonNode data) {
+    public BanImpl(final Server server, final JsonNode data) {
         this.server = server;
         user = new UserImpl((DiscordApiImpl) server.getApi(), data.get("user"), (MemberImpl) null, (ServerImpl) server);
         reason = data.has("reason") ? data.get("reason").asText() : null;

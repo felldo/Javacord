@@ -33,37 +33,37 @@ public class WebhookMessageBuilderDelegateImpl extends MessageBuilderBaseDelegat
     private String displayName = null;
 
     @Override
-    public void setDisplayName(String displayName) {
+    public void setDisplayName(final String displayName) {
         this.displayName = displayName;
     }
 
     @Override
-    public void setDisplayAvatar(URL avatarUrl) {
+    public void setDisplayAvatar(final URL avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
 
     @Override
-    public void setDisplayAvatar(Icon avatar) {
+    public void setDisplayAvatar(final Icon avatar) {
         this.avatarUrl = avatar.getUrl();
     }
 
     @Override
-    public CompletableFuture<Message> send(IncomingWebhook webhook) {
+    public CompletableFuture<Message> send(final IncomingWebhook webhook) {
         return send(webhook.getIdAsString(), webhook.getToken(), displayName, avatarUrl, true, webhook.getApi());
     }
 
     @Override
-    public CompletableFuture<Message> send(DiscordApi api, String webhookId, String webhookToken) {
+    public CompletableFuture<Message> send(final DiscordApi api, final String webhookId, final String webhookToken) {
         return send(webhookId, webhookToken, displayName, avatarUrl, true, api);
     }
 
     @Override
-    public CompletableFuture<Void> sendSilently(IncomingWebhook webhook) {
+    public CompletableFuture<Void> sendSilently(final IncomingWebhook webhook) {
         return sendSilently(webhook.getApi(), webhook.getIdAsString(), webhook.getToken());
     }
 
     @Override
-    public CompletableFuture<Void> sendSilently(DiscordApi api, String webhookId, String webhookToken) {
+    public CompletableFuture<Void> sendSilently(final DiscordApi api, final String webhookId, final String webhookToken) {
         return send(webhookId, webhookToken, displayName, avatarUrl, false, api).thenApply(m -> null);
     }
 }

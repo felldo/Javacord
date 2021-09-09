@@ -34,18 +34,18 @@ public class MessageReactionRemoveHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public MessageReactionRemoveHandler(DiscordApi api) {
+    public MessageReactionRemoveHandler(final DiscordApi api) {
         super(api, true, "MESSAGE_REACTION_REMOVE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        long messageId = packet.get("message_id").asLong();
-        long userId = packet.get("user_id").asLong();
-        Optional<Message> message = api.getCachedMessageById(messageId);
+    public void handle(final JsonNode packet) {
+        final long messageId = packet.get("message_id").asLong();
+        final long userId = packet.get("user_id").asLong();
+        final Optional<Message> message = api.getCachedMessageById(messageId);
 
-        long channelId = packet.get("channel_id").asLong();
-        TextChannel channel;
+        final long channelId = packet.get("channel_id").asLong();
+        final TextChannel channel;
         if (packet.hasNonNull("guild_id")) {
             channel = api.getTextChannelById(channelId).orElse(null);
         } else { // if private channel:
@@ -57,8 +57,8 @@ public class MessageReactionRemoveHandler extends PacketHandler {
             return;
         }
 
-        Emoji emoji;
-        JsonNode emojiJson = packet.get("emoji");
+        final Emoji emoji;
+        final JsonNode emojiJson = packet.get("emoji");
         if (!emojiJson.has("id") || emojiJson.get("id").isNull()) {
             emoji = UnicodeEmojiImpl.fromString(emojiJson.get("name").asText());
         } else {
@@ -67,9 +67,9 @@ public class MessageReactionRemoveHandler extends PacketHandler {
 
         message.ifPresent(msg -> ((MessageImpl) msg).removeReaction(emoji, userId == api.getYourself().getId()));
 
-        ReactionRemoveEvent event = new ReactionRemoveEventImpl(api, messageId, channel, emoji, userId);
+        final ReactionRemoveEvent event = new ReactionRemoveEventImpl(api, messageId, channel, emoji, userId);
 
-        Optional<Server> optionalServer = channel.asServerChannel().map(ServerChannel::getServer);
+        final Optional<Server> optionalServer = channel.asServerChannel().map(ServerChannel::getServer);
         api.getEventDispatcher().dispatchReactionRemoveEvent(
                 optionalServer.map(DispatchQueueSelector.class::cast).orElse(api),
                 messageId,

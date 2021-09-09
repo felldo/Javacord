@@ -48,7 +48,7 @@ public interface SelectMenuOption {
      * @param value The value for the option.
      * @return The created select menu option.
      */
-    static SelectMenuOption create(String label, String value) {
+    static SelectMenuOption create(final String label, final String value) {
         return new SelectMenuOptionBuilder()
                 .setLabel(label)
                 .setValue(value)
@@ -63,7 +63,7 @@ public interface SelectMenuOption {
      * @param isDefault If the option is the default option.
      * @return The created select menu option.
      */
-    static SelectMenuOption create(String label, String value, boolean isDefault) {
+    static SelectMenuOption create(final String label, final String value, final boolean isDefault) {
         return new SelectMenuOptionBuilder()
                 .setLabel(label)
                 .setValue(value)
@@ -79,7 +79,7 @@ public interface SelectMenuOption {
      * @param description The description for the option.
      * @return The created select menu option.
      */
-    static SelectMenuOption create(String label, String value, String description) {
+    static SelectMenuOption create(final String label, final String value, final String description) {
         return new SelectMenuOptionBuilder()
                 .setLabel(label)
                 .setValue(value)
@@ -96,7 +96,7 @@ public interface SelectMenuOption {
      * @param isDefault If the option is the default option.
      * @return The created select menu option.
      */
-    static SelectMenuOption create(String label, String value, String description, boolean isDefault) {
+    static SelectMenuOption create(final String label, final String value, final String description, final boolean isDefault) {
         return new SelectMenuOptionBuilder()
                 .setLabel(label)
                 .setValue(value)
@@ -114,7 +114,7 @@ public interface SelectMenuOption {
      * @param emoji The emoji for the option.
      * @return The created select menu option.
      */
-    static SelectMenuOption create(String label, String value, String description, Emoji emoji) {
+    static SelectMenuOption create(final String label, final String value, final String description, final Emoji emoji) {
         return new SelectMenuOptionBuilder()
                 .setLabel(label)
                 .setValue(value)
@@ -133,7 +133,7 @@ public interface SelectMenuOption {
      * @param isDefault If the option is the default option.
      * @return The created select menu option.
      */
-    static SelectMenuOption create(String label, String value, String description, Emoji emoji, boolean isDefault) {
+    static SelectMenuOption create(final String label, final String value, final String description, final Emoji emoji, final boolean isDefault) {
         return new SelectMenuOptionBuilder()
                 .setLabel(label)
                 .setValue(value)

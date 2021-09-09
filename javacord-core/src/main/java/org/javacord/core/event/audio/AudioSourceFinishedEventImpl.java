@@ -15,7 +15,7 @@ public class AudioSourceFinishedEventImpl extends AudioSourceEventImpl implement
      * @param source The audio source of the event.
      * @param connection The audio connection of the event.
      */
-    public AudioSourceFinishedEventImpl(AudioSource source, AudioConnection connection) {
+    public AudioSourceFinishedEventImpl(final AudioSource source, final AudioConnection connection) {
         super(source, connection);
     }
 }

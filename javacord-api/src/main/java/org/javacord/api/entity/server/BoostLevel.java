@@ -39,7 +39,7 @@ public enum BoostLevel {
      *
      * @param id The id of the boost level.
      */
-    BoostLevel(int id) {
+    BoostLevel(final int id) {
         this.id = id;
     }
 
@@ -58,8 +58,8 @@ public enum BoostLevel {
      * @param id The id of the boost level.
      * @return The boost level with the given id.
      */
-    public static BoostLevel fromId(int id) {
-        for (BoostLevel boostLevel : values()) {
+    public static BoostLevel fromId(final int id) {
+        for (final BoostLevel boostLevel : values()) {
             if (boostLevel.getId() == id) {
                 return boostLevel;
             }

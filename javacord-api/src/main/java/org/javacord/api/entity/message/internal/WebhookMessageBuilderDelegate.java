@@ -43,7 +43,7 @@ public interface WebhookMessageBuilderDelegate extends MessageBuilderBaseDelegat
      *
      * @param author The author to take display name and display avatar of.
      */
-    default void setDisplayAuthor(MessageAuthor author) {
+    default void setDisplayAuthor(final MessageAuthor author) {
         setDisplayAvatar(author.getAvatar());
         setDisplayName(author.getDisplayName());
     }
@@ -53,7 +53,7 @@ public interface WebhookMessageBuilderDelegate extends MessageBuilderBaseDelegat
      *
      * @param author The author to take display name and display avatar of.
      */
-    default void setDisplayAuthor(User author) {
+    default void setDisplayAuthor(final User author) {
         setDisplayAvatar(author.getAvatar());
         setDisplayName(author.getName());
     }

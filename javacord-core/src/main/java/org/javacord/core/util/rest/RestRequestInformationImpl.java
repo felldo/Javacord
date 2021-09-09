@@ -28,8 +28,8 @@ public class RestRequestInformationImpl implements RestRequestInformation {
      * @param headers The headers of the rest request.
      * @param body The body of the rest request.
      */
-    public RestRequestInformationImpl(DiscordApi api, URL url, Map<String, String> queryParameter,
-                                      Map<String, String> headers, String body) {
+    public RestRequestInformationImpl(final DiscordApi api, final URL url, final Map<String, String> queryParameter,
+                                      final Map<String, String> headers, final String body) {
         this.api = api;
         this.url = url;
         this.queryParameters = queryParameter;

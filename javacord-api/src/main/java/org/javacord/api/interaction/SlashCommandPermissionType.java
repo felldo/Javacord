@@ -8,7 +8,7 @@ public enum SlashCommandPermissionType {
 
     private final int value;
 
-    SlashCommandPermissionType(int value) {
+    SlashCommandPermissionType(final int value) {
         this.value = value;
     }
 
@@ -28,8 +28,8 @@ public enum SlashCommandPermissionType {
      * @return The slash command permission type for the given value,
      *     or {@link SlashCommandPermissionType#UNKNOWN} if there's none with the given value.
      */
-    public static SlashCommandPermissionType fromValue(int value) {
-        for (SlashCommandPermissionType type : values()) {
+    public static SlashCommandPermissionType fromValue(final int value) {
+        for (final SlashCommandPermissionType type : values()) {
             if (type.getValue() == value) {
                 return type;
             }

@@ -23,7 +23,7 @@ public class ServerTextChannelUpdater extends ServerChannelUpdater {
      *
      * @param channel The channel to update.
      */
-    public ServerTextChannelUpdater(ServerTextChannel channel) {
+    public ServerTextChannelUpdater(final ServerTextChannel channel) {
         delegate = DelegateFactory.createServerTextChannelUpdaterDelegate(channel);
     }
 
@@ -33,7 +33,7 @@ public class ServerTextChannelUpdater extends ServerChannelUpdater {
      * @param topic The new topic of the channel.
      * @return The current instance in order to chain call methods.
      */
-    public ServerTextChannelUpdater setTopic(String topic) {
+    public ServerTextChannelUpdater setTopic(final String topic) {
         delegate.setTopic(topic);
         return this;
     }
@@ -44,7 +44,7 @@ public class ServerTextChannelUpdater extends ServerChannelUpdater {
      * @param nsfw The new nsfw flag of the channel.
      * @return The current instance in order to chain call methods.
      */
-    public ServerTextChannelUpdater setNsfwFlag(boolean nsfw) {
+    public ServerTextChannelUpdater setNsfwFlag(final boolean nsfw) {
         delegate.setNsfwFlag(nsfw);
         return this;
     }
@@ -55,7 +55,7 @@ public class ServerTextChannelUpdater extends ServerChannelUpdater {
      * @param category The new category of the channel.
      * @return The current instance in order to chain call methods.
      */
-    public ServerTextChannelUpdater setCategory(ChannelCategory category) {
+    public ServerTextChannelUpdater setCategory(final ChannelCategory category) {
         delegate.setCategory(category);
         return this;
     }
@@ -76,7 +76,7 @@ public class ServerTextChannelUpdater extends ServerChannelUpdater {
      * @param delay The delay in seconds.
      * @return The current instance in order to chain call methods.
      */
-    public ServerTextChannelUpdater setSlowmodeDelayInSeconds(int delay) {
+    public ServerTextChannelUpdater setSlowmodeDelayInSeconds(final int delay) {
         delegate.setSlowmodeDelayInSeconds(delay);
         return this;
     }
@@ -91,33 +91,33 @@ public class ServerTextChannelUpdater extends ServerChannelUpdater {
     }
 
     @Override
-    public ServerTextChannelUpdater setAuditLogReason(String reason) {
+    public ServerTextChannelUpdater setAuditLogReason(final String reason) {
         delegate.setAuditLogReason(reason);
         return this;
     }
 
     @Override
-    public ServerTextChannelUpdater setName(String name) {
+    public ServerTextChannelUpdater setName(final String name) {
         delegate.setName(name);
         return this;
     }
 
     @Override
-    public ServerTextChannelUpdater setRawPosition(int rawPosition) {
+    public ServerTextChannelUpdater setRawPosition(final int rawPosition) {
         delegate.setRawPosition(rawPosition);
         return this;
     }
 
     @Override
     public <T extends Permissionable & DiscordEntity> ServerTextChannelUpdater addPermissionOverwrite(
-            T permissionable, Permissions permissions) {
+            final T permissionable, final Permissions permissions) {
         delegate.addPermissionOverwrite(permissionable, permissions);
         return this;
     }
 
     @Override
     public <T extends Permissionable & DiscordEntity> ServerTextChannelUpdater removePermissionOverwrite(
-            T permissionable) {
+            final T permissionable) {
         delegate.removePermissionOverwrite(permissionable);
         return this;
     }

@@ -27,8 +27,8 @@ public class AllowedMentionsImpl implements AllowedMentions {
      * @param allowedRoleMentions    Mentions added role ids.
      * @param allowedUserMentions    Mentions added user ids.
      */
-    public AllowedMentionsImpl(boolean mentionAllRoles, boolean mentionAllUsers, boolean mentionEveryoneAndHere,
-                               ArrayList<Long> allowedRoleMentions, ArrayList<Long> allowedUserMentions) {
+    public AllowedMentionsImpl(final boolean mentionAllRoles, final boolean mentionAllUsers, final boolean mentionEveryoneAndHere,
+                               final ArrayList<Long> allowedRoleMentions, final ArrayList<Long> allowedUserMentions) {
         this.allowedRoleMentions = allowedRoleMentions;
         this.allowedUserMentions = allowedUserMentions;
         if (mentionAllRoles) {
@@ -63,7 +63,7 @@ public class AllowedMentionsImpl implements AllowedMentions {
      * @return The embed as a ObjectNode.
      */
     public ObjectNode toJsonNode() {
-        ObjectNode object = JsonNodeFactory.instance.objectNode();
+        final ObjectNode object = JsonNodeFactory.instance.objectNode();
         return toJsonNode(object);
     }
 
@@ -73,13 +73,13 @@ public class AllowedMentionsImpl implements AllowedMentions {
      * @param object The object, the data should be added to.
      * @return The provided object with the data of the embed.
      */
-    public ObjectNode toJsonNode(ObjectNode object) {
-        ArrayNode parse = object.putArray("parse");
+    public ObjectNode toJsonNode(final ObjectNode object) {
+        final ArrayNode parse = object.putArray("parse");
 
         if (allowedMentionTypes.contains(AllowedMentionType.ROLES)) {
             parse.add("roles");
         } else {
-            ArrayNode roles = object.putArray("roles");
+            final ArrayNode roles = object.putArray("roles");
             allowedRoleMentions
                     .forEach(id -> roles.add(id.toString()));
         }
@@ -87,7 +87,7 @@ public class AllowedMentionsImpl implements AllowedMentions {
         if (allowedMentionTypes.contains(AllowedMentionType.USERS)) {
             parse.add("users");
         } else {
-            ArrayNode users = object.putArray("users");
+            final ArrayNode users = object.putArray("users");
             allowedUserMentions
                     .forEach(id -> users.add(id.toString()));
         }

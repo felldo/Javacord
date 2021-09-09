@@ -31,21 +31,21 @@ public class ChannelPinsUpdateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public ChannelPinsUpdateHandler(DiscordApi api) {
+    public ChannelPinsUpdateHandler(final DiscordApi api) {
         super(api, true, "CHANNEL_PINS_UPDATE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        long channelId = packet.get("channel_id").asLong();
-        Optional<TextChannel> optionalChannel = api.getTextChannelById(channelId);
+    public void handle(final JsonNode packet) {
+        final long channelId = packet.get("channel_id").asLong();
+        final Optional<TextChannel> optionalChannel = api.getTextChannelById(channelId);
         if (optionalChannel.isPresent()) {
-            TextChannel channel = optionalChannel.get();
-            Instant lastPinTimestamp = packet.hasNonNull("last_pin_timestamp")
+            final TextChannel channel = optionalChannel.get();
+            final Instant lastPinTimestamp = packet.hasNonNull("last_pin_timestamp")
                     ? OffsetDateTime.parse(packet.get("last_pin_timestamp").asText()).toInstant() : null;
-            ChannelPinsUpdateEvent event = new ChannelPinsUpdateEventImpl(channel, lastPinTimestamp);
+            final ChannelPinsUpdateEvent event = new ChannelPinsUpdateEventImpl(channel, lastPinTimestamp);
 
-            Optional<Server> optionalServer = channel.asServerChannel().map(ServerChannel::getServer);
+            final Optional<Server> optionalServer = channel.asServerChannel().map(ServerChannel::getServer);
             api.getEventDispatcher().dispatchChannelPinsUpdateEvent(
                     optionalServer.map(DispatchQueueSelector.class::cast).orElse(api),
                     optionalServer.orElse(null),

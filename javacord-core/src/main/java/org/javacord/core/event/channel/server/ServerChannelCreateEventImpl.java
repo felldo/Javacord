@@ -13,7 +13,7 @@ public class ServerChannelCreateEventImpl extends ServerChannelEventImpl impleme
      *
      * @param channel The channel of the event.
      */
-    public ServerChannelCreateEventImpl(ServerChannel channel) {
+    public ServerChannelCreateEventImpl(final ServerChannel channel) {
         super(channel);
     }
 

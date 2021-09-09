@@ -24,7 +24,7 @@ public class UserStartTypingEventImpl extends EventImpl implements UserStartTypi
      * @param userId The id of the user of the event.
      * @param member The member of the event.
      */
-    public UserStartTypingEventImpl(TextChannel channel, long userId, Member member) {
+    public UserStartTypingEventImpl(final TextChannel channel, final long userId, final Member member) {
         super(channel.getApi());
         this.channel = channel;
         this.userId = userId;

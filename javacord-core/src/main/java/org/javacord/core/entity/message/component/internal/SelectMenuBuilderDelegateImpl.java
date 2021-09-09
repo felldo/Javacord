@@ -31,8 +31,8 @@ public class SelectMenuBuilderDelegateImpl implements SelectMenuBuilderDelegate 
     }
 
     @Override
-    public void copy(SelectMenu selectMenu) {
-        Optional<String> placeholder = selectMenu.getPlaceholder();
+    public void copy(final SelectMenu selectMenu) {
+        final Optional<String> placeholder = selectMenu.getPlaceholder();
         this.customId = selectMenu.getCustomId();
         this.minimumValues = selectMenu.getMinimumValues();
         this.maximumValues = selectMenu.getMaximumValues();
@@ -43,37 +43,37 @@ public class SelectMenuBuilderDelegateImpl implements SelectMenuBuilderDelegate 
     }
 
     @Override
-    public void addOption(SelectMenuOption selectMenuOption) {
+    public void addOption(final SelectMenuOption selectMenuOption) {
         options.add(selectMenuOption);
     }
 
     @Override
-    public void removeOption(SelectMenuOption selectMenuOption) {
+    public void removeOption(final SelectMenuOption selectMenuOption) {
         options.remove(selectMenuOption);
     }
 
     @Override
-    public void setPlaceholder(String placeholder) {
+    public void setPlaceholder(final String placeholder) {
         this.placeholder = placeholder;
     }
 
     @Override
-    public void setCustomId(String customId) {
+    public void setCustomId(final String customId) {
         this.customId = customId;
     }
 
     @Override
-    public void setMinimumValues(int minimumValues) {
+    public void setMinimumValues(final int minimumValues) {
         this.minimumValues = minimumValues;
     }
 
     @Override
-    public void setMaximumValues(int maximumValues) {
+    public void setMaximumValues(final int maximumValues) {
         this.maximumValues = maximumValues;
     }
 
     @Override
-    public void setDisabled(boolean isDisabled) {
+    public void setDisabled(final boolean isDisabled) {
         this.isDisabled = isDisabled;
     }
 

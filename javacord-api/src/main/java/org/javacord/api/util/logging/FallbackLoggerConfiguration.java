@@ -30,7 +30,7 @@ public class FallbackLoggerConfiguration {
      *
      * @param debug Whether debug logging should be enabled or not.
      */
-    public static void setDebug(boolean debug) {
+    public static void setDebug(final boolean debug) {
         FallbackLoggerConfiguration.debug.set(debug);
         if (!debug) {
             trace.set(false);
@@ -52,7 +52,7 @@ public class FallbackLoggerConfiguration {
      *
      * @param trace Whether trace logging should be enabled or not.
      */
-    public static void setTrace(boolean trace) {
+    public static void setTrace(final boolean trace) {
         FallbackLoggerConfiguration.trace.set(trace);
         if (trace) {
             debug.set(true);

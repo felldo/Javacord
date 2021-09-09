@@ -50,17 +50,17 @@ public class InviteBuilderDelegateImpl implements InviteBuilderDelegate {
      *
      * @param channel The channel for the invite.
      */
-    public InviteBuilderDelegateImpl(ServerChannel channel) {
+    public InviteBuilderDelegateImpl(final ServerChannel channel) {
         this.channel = channel;
     }
 
     @Override
-    public void setAuditLogReason(String reason) {
+    public void setAuditLogReason(final String reason) {
         this.reason = reason;
     }
 
     @Override
-    public void setMaxAgeInSeconds(int maxAge) {
+    public void setMaxAgeInSeconds(final int maxAge) {
         this.maxAge = maxAge;
     }
 
@@ -70,17 +70,17 @@ public class InviteBuilderDelegateImpl implements InviteBuilderDelegate {
     }
 
     @Override
-    public void setMaxUses(int maxUses) {
+    public void setMaxUses(final int maxUses) {
         this.maxUses = maxUses;
     }
 
     @Override
-    public void setTemporary(boolean temporary) {
+    public void setTemporary(final boolean temporary) {
         this.temporary = temporary;
     }
 
     @Override
-    public void setUnique(boolean unique) {
+    public void setUnique(final boolean unique) {
         this.unique = unique;
     }
 

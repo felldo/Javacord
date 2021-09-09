@@ -19,7 +19,7 @@ public class SlashCommandOptionChoiceBuilder {
      * @param name The name.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandOptionChoiceBuilder setName(String name) {
+    public SlashCommandOptionChoiceBuilder setName(final String name) {
         delegate.setName(name);
         return this;
     }
@@ -30,7 +30,7 @@ public class SlashCommandOptionChoiceBuilder {
      * @param value The value.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandOptionChoiceBuilder setValue(String value) {
+    public SlashCommandOptionChoiceBuilder setValue(final String value) {
         delegate.setValue(value);
         return this;
     }
@@ -41,7 +41,7 @@ public class SlashCommandOptionChoiceBuilder {
      * @param value The value.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandOptionChoiceBuilder setValue(int value) {
+    public SlashCommandOptionChoiceBuilder setValue(final int value) {
         delegate.setValue(value);
         return this;
     }

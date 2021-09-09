@@ -28,7 +28,7 @@ public class ChannelPinsUpdateEventImpl extends EventImpl implements ChannelPins
      * @param channel The channel of the event.
      * @param lastPinTimestamp The time at which the most recent pinned message was pinned.
      */
-    public ChannelPinsUpdateEventImpl(TextChannel channel, Instant lastPinTimestamp) {
+    public ChannelPinsUpdateEventImpl(final TextChannel channel, final Instant lastPinTimestamp) {
         super(channel.getApi());
         this.channel = channel;
         this.lastPinTimestamp = lastPinTimestamp;

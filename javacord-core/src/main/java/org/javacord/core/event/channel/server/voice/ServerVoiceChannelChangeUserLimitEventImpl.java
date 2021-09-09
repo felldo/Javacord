@@ -28,7 +28,7 @@ public class ServerVoiceChannelChangeUserLimitEventImpl extends ServerVoiceChann
      * @param newUserLimit The new user limit of the channel.
      * @param oldUserLimit The old user limit of the channel.
      */
-    public ServerVoiceChannelChangeUserLimitEventImpl(ServerVoiceChannel channel, int newUserLimit, int oldUserLimit) {
+    public ServerVoiceChannelChangeUserLimitEventImpl(final ServerVoiceChannel channel, final int newUserLimit, final int oldUserLimit) {
         super(channel);
         this.newUserLimit = newUserLimit;
         this.oldUserLimit = oldUserLimit;

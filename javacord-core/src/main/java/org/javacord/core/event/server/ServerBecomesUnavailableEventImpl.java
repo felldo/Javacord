@@ -13,7 +13,7 @@ public class ServerBecomesUnavailableEventImpl extends ServerEventImpl implement
      *
      * @param server The server of the event.
      */
-    public ServerBecomesUnavailableEventImpl(Server server) {
+    public ServerBecomesUnavailableEventImpl(final Server server) {
         super(server);
     }
 

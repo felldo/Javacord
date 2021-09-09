@@ -28,8 +28,8 @@ public class ServerChangeMultiFactorAuthenticationLevelEventImpl extends ServerE
      * @param oldMultiFactorAuthenticationLevel The old multi factor authentication level of the server.
      */
     public ServerChangeMultiFactorAuthenticationLevelEventImpl(
-            Server server, MultiFactorAuthenticationLevel newMultiFactorAuthenticationLevel,
-            MultiFactorAuthenticationLevel oldMultiFactorAuthenticationLevel) {
+            final Server server, final MultiFactorAuthenticationLevel newMultiFactorAuthenticationLevel,
+            final MultiFactorAuthenticationLevel oldMultiFactorAuthenticationLevel) {
         super(server);
         this.newMultiFactorAuthenticationLevel = newMultiFactorAuthenticationLevel;
         this.oldMultiFactorAuthenticationLevel = oldMultiFactorAuthenticationLevel;

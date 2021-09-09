@@ -120,7 +120,7 @@ public interface UserChangeStatusEvent extends OptionalUserEvent {
      * @param client The client.
      * @return Weather the status changed on the given client or not.
      */
-    default boolean hasStatusChangeOnClient(DiscordClient client) {
+    default boolean hasStatusChangeOnClient(final DiscordClient client) {
         return getOldStatusOnClient(client) != getNewStatusOnClient(client);
     }
 

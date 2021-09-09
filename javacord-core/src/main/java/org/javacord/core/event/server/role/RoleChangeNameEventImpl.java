@@ -25,7 +25,7 @@ public class RoleChangeNameEventImpl extends RoleEventImpl implements RoleChange
      * @param newName The new name of the role.
      * @param oldName The old name of the role.
      */
-    public RoleChangeNameEventImpl(Role role, String newName, String oldName) {
+    public RoleChangeNameEventImpl(final Role role, final String newName, final String oldName) {
         super(role);
         this.newName = newName;
         this.oldName = oldName;

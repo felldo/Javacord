@@ -13,7 +13,7 @@ public class KnownCustomEmojiDeleteEventImpl extends KnownCustomEmojiEventImpl i
      *
      * @param emoji The deleted emoji.
      */
-    public KnownCustomEmojiDeleteEventImpl(KnownCustomEmoji emoji) {
+    public KnownCustomEmojiDeleteEventImpl(final KnownCustomEmoji emoji) {
         super(emoji);
     }
 

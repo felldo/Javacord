@@ -32,13 +32,13 @@ public class ButtonBuilderDelegateImpl implements ButtonBuilderDelegate {
     }
 
     @Override
-    public void copy(Button button) {
-        Optional<String> customId = button.getCustomId();
-        Optional<String> url = button.getUrl();
-        Optional<String> label = button.getLabel();
-        Optional<Emoji> emoji = button.getEmoji();
-        Optional<Boolean> isDisabled = button.isDisabled();
-        ButtonStyle style = button.getStyle();
+    public void copy(final Button button) {
+        final Optional<String> customId = button.getCustomId();
+        final Optional<String> url = button.getUrl();
+        final Optional<String> label = button.getLabel();
+        final Optional<Emoji> emoji = button.getEmoji();
+        final Optional<Boolean> isDisabled = button.isDisabled();
+        final ButtonStyle style = button.getStyle();
 
         this.setStyle(style);
         customId.ifPresent(this::setCustomId);
@@ -49,27 +49,27 @@ public class ButtonBuilderDelegateImpl implements ButtonBuilderDelegate {
     }
 
     @Override
-    public void setStyle(ButtonStyle style) {
+    public void setStyle(final ButtonStyle style) {
         this.style = style;
     }
 
     @Override
-    public void setLabel(String label) {
+    public void setLabel(final String label) {
         this.label = label;
     }
 
     @Override
-    public void setCustomId(String customId) {
+    public void setCustomId(final String customId) {
         this.customId = customId;
     }
 
     @Override
-    public void setUrl(String url) {
+    public void setUrl(final String url) {
         this.url = url;
     }
 
     @Override
-    public void setDisabled(Boolean isDisabled) {
+    public void setDisabled(final Boolean isDisabled) {
         this.disabled = isDisabled;
     }
 
@@ -79,17 +79,17 @@ public class ButtonBuilderDelegateImpl implements ButtonBuilderDelegate {
     }
 
     @Override
-    public void setEmoji(Emoji emoji) {
+    public void setEmoji(final Emoji emoji) {
         this.emoji = emoji;
     }
 
     @Override
-    public void setEmoji(CustomEmoji emoji) {
+    public void setEmoji(final CustomEmoji emoji) {
         this.emoji = emoji;
     }
 
     @Override
-    public void setEmoji(String unicode) {
+    public void setEmoji(final String unicode) {
         this.emoji = UnicodeEmojiImpl.fromString(unicode);
     }
 

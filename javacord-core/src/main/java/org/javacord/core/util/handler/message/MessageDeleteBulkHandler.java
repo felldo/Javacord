@@ -30,26 +30,26 @@ public class MessageDeleteBulkHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public MessageDeleteBulkHandler(DiscordApi api) {
+    public MessageDeleteBulkHandler(final DiscordApi api) {
         super(api, true, "MESSAGE_DELETE_BULK");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        long channelId = Long.parseLong(packet.get("channel_id").asText());
+    public void handle(final JsonNode packet) {
+        final long channelId = Long.parseLong(packet.get("channel_id").asText());
 
-        Optional<TextChannel> optionalChannel = api.getTextChannelById(channelId);
+        final Optional<TextChannel> optionalChannel = api.getTextChannelById(channelId);
         if (optionalChannel.isPresent()) {
-            TextChannel channel = optionalChannel.get();
-            for (JsonNode messageIdJson : packet.get("ids")) {
-                long messageId = messageIdJson.asLong();
-                MessageDeleteEvent event = new MessageDeleteEventImpl(api, messageId, channel);
+            final TextChannel channel = optionalChannel.get();
+            for (final JsonNode messageIdJson : packet.get("ids")) {
+                final long messageId = messageIdJson.asLong();
+                final MessageDeleteEvent event = new MessageDeleteEventImpl(api, messageId, channel);
 
                 api.getCachedMessageById(messageId)
                         .ifPresent(((MessageCacheImpl) channel.getMessageCache())::removeMessage);
                 api.removeMessageFromCache(messageId);
 
-                Optional<Server> optionalServer = channel.asServerChannel().map(ServerChannel::getServer);
+                final Optional<Server> optionalServer = channel.asServerChannel().map(ServerChannel::getServer);
                 api.getEventDispatcher().dispatchMessageDeleteEvent(
                         optionalServer.map(DispatchQueueSelector.class::cast).orElse(api),
                         messageId,

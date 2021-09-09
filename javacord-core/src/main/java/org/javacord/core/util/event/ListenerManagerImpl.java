@@ -57,7 +57,7 @@ public class ListenerManagerImpl<T> implements ListenerManager<T> {
      * @param listener The listener to manage.
      * @param listenerClass The class of the listener to manage.
      */
-    public ListenerManagerImpl(DiscordApi api, T listener, Class<T> listenerClass) {
+    public ListenerManagerImpl(final DiscordApi api, final T listener, final Class<T> listenerClass) {
         this(api, listener, listenerClass, null, -1);
     }
 
@@ -71,7 +71,7 @@ public class ListenerManagerImpl<T> implements ListenerManager<T> {
      * @param objectId The id of the object, the listener was added to.
      */
     public ListenerManagerImpl(
-            DiscordApi api, T listener, Class<T> listenerClass, Class<?> assignedObjectClass, long objectId) {
+            final DiscordApi api, final T listener, final Class<T> listenerClass, final Class<?> assignedObjectClass, final long objectId) {
         this.api = (DiscordApiImpl) api;
         this.listener = listener;
         this.listenerClass = listenerClass;
@@ -129,13 +129,13 @@ public class ListenerManagerImpl<T> implements ListenerManager<T> {
     }
 
     @Override
-    public ListenerManagerImpl<T> removeAfter(long delay, TimeUnit timeUnit) {
+    public ListenerManagerImpl<T> removeAfter(final long delay, final TimeUnit timeUnit) {
         api.getThreadPool().getScheduler().schedule((Runnable) this::remove, delay, timeUnit);
         return this;
     }
 
     @Override
-    public void addRemoveHandler(Runnable removeHandler) {
+    public void addRemoveHandler(final Runnable removeHandler) {
         removeHandlers.add(removeHandler);
     }
 

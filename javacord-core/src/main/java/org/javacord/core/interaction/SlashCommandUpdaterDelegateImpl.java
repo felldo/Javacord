@@ -52,31 +52,31 @@ public class SlashCommandUpdaterDelegateImpl implements SlashCommandUpdaterDeleg
      *
      * @param commandId The discord api instance.
      */
-    public SlashCommandUpdaterDelegateImpl(long commandId) {
+    public SlashCommandUpdaterDelegateImpl(final long commandId) {
         this.commandId = commandId;
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
     @Override
-    public void setOptions(List<SlashCommandOption> slashCommandOptions) {
+    public void setOptions(final List<SlashCommandOption> slashCommandOptions) {
         this.slashCommandOptions = slashCommandOptions;
     }
 
     @Override
-    public void setDefaultPermission(boolean defaultPermission) {
+    public void setDefaultPermission(final boolean defaultPermission) {
         this.defaultPermission = defaultPermission;
     }
 
-    private void prepareBody(ObjectNode body) {
+    private void prepareBody(final ObjectNode body) {
         if (name != null && !name.isEmpty()) {
             body.put("name", name);
         }
@@ -86,8 +86,8 @@ public class SlashCommandUpdaterDelegateImpl implements SlashCommandUpdaterDeleg
         }
 
         if (!slashCommandOptions.isEmpty()) {
-            ArrayNode array = body.putArray("options");
-            for (SlashCommandOption slashCommandOption : slashCommandOptions) {
+            final ArrayNode array = body.putArray("options");
+            for (final SlashCommandOption slashCommandOption : slashCommandOptions) {
                 array.add(((SlashCommandOptionImpl) slashCommandOption).toJsonNode());
             }
         }
@@ -96,8 +96,8 @@ public class SlashCommandUpdaterDelegateImpl implements SlashCommandUpdaterDeleg
     }
 
     @Override
-    public CompletableFuture<SlashCommand> updateGlobal(DiscordApi api) {
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+    public CompletableFuture<SlashCommand> updateGlobal(final DiscordApi api) {
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         prepareBody(body);
 
         return new RestRequest<SlashCommand>(api, RestMethod.PATCH, RestEndpoint.SLASH_COMMANDS)
@@ -107,8 +107,8 @@ public class SlashCommandUpdaterDelegateImpl implements SlashCommandUpdaterDeleg
     }
 
     @Override
-    public CompletableFuture<SlashCommand> updateForServer(Server server) {
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+    public CompletableFuture<SlashCommand> updateForServer(final Server server) {
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         prepareBody(body);
 
         return new RestRequest<SlashCommand>(server.getApi(), RestMethod.PATCH,

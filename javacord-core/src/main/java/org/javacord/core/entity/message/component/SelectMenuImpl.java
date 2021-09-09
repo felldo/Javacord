@@ -26,12 +26,12 @@ public class SelectMenuImpl extends ComponentImpl implements SelectMenu {
      *
      * @param data The json data of the select menu.
      */
-    public SelectMenuImpl(JsonNode data) {
+    public SelectMenuImpl(final JsonNode data) {
         super(ComponentType.SELECT_MENU);
         options = new ArrayList<>();
 
         this.customId = data.get("custom_id").asText();
-        for (JsonNode optionData : data.get("options")) {
+        for (final JsonNode optionData : data.get("options")) {
             options.add(new SelectMenuOptionImpl(optionData));
         }
         this.placeholder = data.has("placeholder") ? data.get("placeholder").asText() : null;
@@ -50,8 +50,8 @@ public class SelectMenuImpl extends ComponentImpl implements SelectMenu {
      * @param maximumValues The select menu's maximum values.
      * @param isDisabled If the select menu should be disabled.
      */
-    public SelectMenuImpl(List<SelectMenuOption> selectMenuOptions, String placeholder,
-                          String customId, int minimumValues, int maximumValues, boolean isDisabled) {
+    public SelectMenuImpl(final List<SelectMenuOption> selectMenuOptions, final String placeholder,
+                          final String customId, final int minimumValues, final int maximumValues, final boolean isDisabled) {
         super(ComponentType.SELECT_MENU);
         this.options = selectMenuOptions;
         this.placeholder = placeholder;
@@ -93,7 +93,7 @@ public class SelectMenuImpl extends ComponentImpl implements SelectMenu {
 
     @Override
     public ObjectNode toJsonNode() {
-        ObjectNode object = JsonNodeFactory.instance.objectNode();
+        final ObjectNode object = JsonNodeFactory.instance.objectNode();
         return toJsonNode(object);
     }
 
@@ -103,13 +103,13 @@ public class SelectMenuImpl extends ComponentImpl implements SelectMenu {
      * @param object The object, the data should be added to.
      * @return The select menu as a ObjectNode.
      */
-    public ObjectNode toJsonNode(ObjectNode object) {
+    public ObjectNode toJsonNode(final ObjectNode object) {
         object.put("type", ComponentType.SELECT_MENU.value());
         object.put("custom_id", this.customId);
 
-        ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
+        final ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
-        for (SelectMenuOption option: options) {
+        for (final SelectMenuOption option: options) {
             arrayNode.add(((SelectMenuOptionImpl) option).toJson());
         }
 

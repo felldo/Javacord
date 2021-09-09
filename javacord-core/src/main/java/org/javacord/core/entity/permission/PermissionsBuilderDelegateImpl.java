@@ -30,19 +30,19 @@ public class PermissionsBuilderDelegateImpl implements PermissionsBuilderDelegat
      *
      * @param permissions The permissions which should be copied.
      */
-    public PermissionsBuilderDelegateImpl(Permissions permissions) {
+    public PermissionsBuilderDelegateImpl(final Permissions permissions) {
         allowed = permissions.getAllowedBitmask();
         denied = permissions.getDeniedBitmask();
     }
 
     @Override
-    public void setState(PermissionType type, PermissionState state) {
+    public void setState(final PermissionType type, final PermissionState state) {
         allowed = type.set(allowed, state == PermissionState.ALLOWED);
         denied = type.set(denied, state == PermissionState.DENIED);
     }
 
     @Override
-    public PermissionState getState(PermissionType type) {
+    public PermissionState getState(final PermissionType type) {
         if (type.isSet(allowed)) {
             return PermissionState.ALLOWED;
         }

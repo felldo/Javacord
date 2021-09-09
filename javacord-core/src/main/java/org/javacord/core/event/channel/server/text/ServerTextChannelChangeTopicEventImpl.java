@@ -26,7 +26,7 @@ public class ServerTextChannelChangeTopicEventImpl extends ServerTextChannelEven
      * @param newTopic The new topic of the channel.
      * @param oldTopic The old topic of the channel.
      */
-    public ServerTextChannelChangeTopicEventImpl(ServerTextChannel channel, String newTopic, String oldTopic) {
+    public ServerTextChannelChangeTopicEventImpl(final ServerTextChannel channel, final String newTopic, final String oldTopic) {
         super(channel);
         this.newTopic = newTopic;
         this.oldTopic = oldTopic;

@@ -13,7 +13,7 @@ public class SelectMenuOptionBuilder {
      * @param label The label.
      * @return The builder.
      */
-    public SelectMenuOptionBuilder setLabel(String label) {
+    public SelectMenuOptionBuilder setLabel(final String label) {
         delegate.setLabel(label);
         return this;
     }
@@ -24,7 +24,7 @@ public class SelectMenuOptionBuilder {
      * @param value The value.
      * @return The builder.
      */
-    public SelectMenuOptionBuilder setValue(String value) {
+    public SelectMenuOptionBuilder setValue(final String value) {
         delegate.setValue(value);
         return this;
     }
@@ -35,7 +35,7 @@ public class SelectMenuOptionBuilder {
      * @param description The description.
      * @return The builder.
      */
-    public SelectMenuOptionBuilder setDescription(String description) {
+    public SelectMenuOptionBuilder setDescription(final String description) {
         delegate.setDescription(description);
         return this;
     }
@@ -46,7 +46,7 @@ public class SelectMenuOptionBuilder {
      * @param emoji The emoji.
      * @return The builder.
      */
-    public SelectMenuOptionBuilder setEmoji(Emoji emoji) {
+    public SelectMenuOptionBuilder setEmoji(final Emoji emoji) {
         delegate.setEmoji(emoji);
         return this;
     }
@@ -57,7 +57,7 @@ public class SelectMenuOptionBuilder {
      * @param isDefault If it is default.
      * @return The builder.
      */
-    public SelectMenuOptionBuilder setDefault(boolean isDefault) {
+    public SelectMenuOptionBuilder setDefault(final boolean isDefault) {
         delegate.setDefault(isDefault);
         return this;
     }

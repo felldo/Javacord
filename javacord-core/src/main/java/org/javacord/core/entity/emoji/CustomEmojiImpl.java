@@ -51,13 +51,13 @@ public class CustomEmojiImpl implements CustomEmoji {
      * @param api The discord api instance.
      * @param data The json data of the emoji.
      */
-    public CustomEmojiImpl(DiscordApiImpl api, JsonNode data) {
+    public CustomEmojiImpl(final DiscordApiImpl api, final JsonNode data) {
         this.api = api;
         id = data.get("id").asLong();
-        JsonNode nameNode = data.get("name");
+        final JsonNode nameNode = data.get("name");
         name = nameNode == null ? "" : nameNode.asText();
         // Animated field may be missing, default to false
-        JsonNode animatedNode = data.get("animated");
+        final JsonNode animatedNode = data.get("animated");
         animated = animatedNode != null && animatedNode.asBoolean();
     }
 
@@ -69,7 +69,7 @@ public class CustomEmojiImpl implements CustomEmoji {
      * @param name The name of the emoji.
      * @param animated Whether the emoji is animated or not.
      */
-    public CustomEmojiImpl(DiscordApiImpl api, long id, String name, boolean animated) {
+    public CustomEmojiImpl(final DiscordApiImpl api, final long id, final String name, final boolean animated) {
         this.api = api;
         this.id = id;
         this.name = name;
@@ -93,11 +93,11 @@ public class CustomEmojiImpl implements CustomEmoji {
 
     @Override
     public Icon getImage() {
-        String urlString = "https://" + Javacord.DISCORD_CDN_DOMAIN
+        final String urlString = "https://" + Javacord.DISCORD_CDN_DOMAIN
                 + "/emojis/" + getIdAsString() + (isAnimated() ? ".gif" : ".png");
         try {
             return new IconImpl(getApi(), new URL(urlString));
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the url of the avatar is malformed! Please contact the developer!", e);
             return null;
         }
@@ -109,7 +109,7 @@ public class CustomEmojiImpl implements CustomEmoji {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return (this == o)
                || !((o == null)
                     || (getClass() != o.getClass())

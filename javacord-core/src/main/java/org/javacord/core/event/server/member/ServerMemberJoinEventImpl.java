@@ -15,7 +15,7 @@ public class ServerMemberJoinEventImpl extends ServerMemberEventImpl implements 
      * @param server The server of the event.
      * @param user The user of the event.
      */
-    public ServerMemberJoinEventImpl(Server server, User user) {
+    public ServerMemberJoinEventImpl(final Server server, final User user) {
         super(server, user);
     }
 

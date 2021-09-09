@@ -13,7 +13,7 @@ public class RoleDeleteEventImpl extends RoleEventImpl implements RoleDeleteEven
      *
      * @param role The role of the event.
      */
-    public RoleDeleteEventImpl(Role role) {
+    public RoleDeleteEventImpl(final Role role) {
         super(role);
     }
 

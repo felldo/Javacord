@@ -22,7 +22,7 @@ public class ClassHelper {
      * @param clazz The class to get the interfaces for.
      * @return The interfaces of the given class.
      */
-    public static List<Class<?>> getInterfaces(Class<?> clazz) {
+    public static List<Class<?>> getInterfaces(final Class<?> clazz) {
         return getInterfacesAsStream(clazz).collect(Collectors.toList());
     }
 
@@ -34,7 +34,7 @@ public class ClassHelper {
      * @param clazz The class to get the interfaces for.
      * @return The stream of interfaces of the given class.
      */
-    public static Stream<Class<?>> getInterfacesAsStream(Class<?> clazz) {
+    public static Stream<Class<?>> getInterfacesAsStream(final Class<?> clazz) {
         return getSuperclassesAsStream(clazz, true)
                 .flatMap(superClass -> Stream.concat(
                         superClass.isInterface() ? Stream.of(superClass) : Stream.empty(),
@@ -50,7 +50,7 @@ public class ClassHelper {
      * @param clazz The class to get the superclasses for.
      * @return The superclasses of the given class.
      */
-    public static List<Class<?>> getSuperclasses(Class<?> clazz) {
+    public static List<Class<?>> getSuperclasses(final Class<?> clazz) {
         return getSuperclassesAsStream(clazz).collect(Collectors.toList());
     }
 
@@ -62,7 +62,7 @@ public class ClassHelper {
      * @param clazz The class to get the superclasses for.
      * @return The stream of superclasses of the given class.
      */
-    public static Stream<Class<?>> getSuperclassesAsStream(Class<?> clazz) {
+    public static Stream<Class<?>> getSuperclassesAsStream(final Class<?> clazz) {
         return getSuperclassesAsStream(clazz, false);
     }
 
@@ -75,7 +75,7 @@ public class ClassHelper {
      * @param includeArgument Whether to include the given class in the result.
      * @return The stream of superclasses of the given class.
      */
-    private static Stream<Class<?>> getSuperclassesAsStream(Class<?> clazz, boolean includeArgument) {
+    private static Stream<Class<?>> getSuperclassesAsStream(final Class<?> clazz, final boolean includeArgument) {
         return Stream.concat(includeArgument ? Stream.of(clazz) : Stream.empty(),
                              Optional.ofNullable(clazz.getSuperclass())
                                      .map(Stream::of)

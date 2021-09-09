@@ -52,7 +52,7 @@ public class AudioUdpSocket {
      * @throws SocketException If the socket could not be opened,
      *                         or the socket could not bind to the specified local port.
      */
-    public AudioUdpSocket(AudioConnectionImpl connection, InetSocketAddress address, int ssrc) throws SocketException {
+    public AudioUdpSocket(final AudioConnectionImpl connection, final InetSocketAddress address, final int ssrc) throws SocketException {
         this.connection = connection;
         this.address = address;
         this.ssrc = ssrc;
@@ -66,7 +66,7 @@ public class AudioUdpSocket {
      *
      * @param secretKey The secret key.
      */
-    public void setSecretKey(byte[] secretKey) {
+    public void setSecretKey(final byte[] secretKey) {
         this.secretKey = secretKey;
     }
 
@@ -87,9 +87,9 @@ public class AudioUdpSocket {
         buffer = new byte[70];
         socket.receive(new DatagramPacket(buffer, buffer.length));
         // gets the ip of the packet
-        String ip = new String(Arrays.copyOfRange(buffer, 3, buffer.length - 2)).trim();
+        final String ip = new String(Arrays.copyOfRange(buffer, 3, buffer.length - 2)).trim();
         // gets the port (last two bytes) which is a little endian unsigned short
-        int port = ByteBuffer.wrap(new byte[]{buffer[69], buffer[68]}).getShort() & 0xffff;
+        final int port = ByteBuffer.wrap(new byte[]{buffer[69], buffer[68]}).getShort() & 0xffff;
 
         return new InetSocketAddress(ip, port);
     }
@@ -103,7 +103,7 @@ public class AudioUdpSocket {
         }
         shouldSend = true;
 
-        DiscordApiImpl api = (DiscordApiImpl) connection.getChannel().getApi();
+        final DiscordApiImpl api = (DiscordApiImpl) connection.getChannel().getApi();
         api.getThreadPool().getSingleThreadExecutorService(threadName).submit(() -> {
             try {
                 long nextFrameTimestamp = System.nanoTime();
@@ -112,7 +112,7 @@ public class AudioUdpSocket {
                 long framesOfSilenceToPlay = 5;
                 while (shouldSend) {
                     // Get the current audio source. If none is available, it will block the thread
-                    AudioSource source = connection.getCurrentAudioSourceBlocking();
+                    final AudioSource source = connection.getCurrentAudioSourceBlocking();
                     if (source == null) {
                         logger.error("Got null audio source without being interrupted ({})", connection);
                         return;
@@ -175,11 +175,11 @@ public class AudioUdpSocket {
                         if (packet != null) {
                             socket.send(packet.asUdpPacket(address));
                         }
-                    } catch (IOException e) {
+                    } catch (final IOException e) {
                         logger.error("Failed to send audio packet for {}", connection);
                     }
                 }
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 if (shouldSend) {
                     logger.debug("Got interrupted unexpectedly while waiting for next audio source packet");
                 }

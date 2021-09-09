@@ -20,20 +20,20 @@ public class GuildMemberRemoveHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public GuildMemberRemoveHandler(DiscordApi api) {
+    public GuildMemberRemoveHandler(final DiscordApi api) {
         super(api, true, "GUILD_MEMBER_REMOVE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
+    public void handle(final JsonNode packet) {
         api.getPossiblyUnreadyServerById(packet.get("guild_id").asLong())
                 .map(server -> (ServerImpl) server)
                 .ifPresent(server -> {
-                    User user = new UserImpl(api, packet.get("user"), (MemberImpl) null, server);
+                    final User user = new UserImpl(api, packet.get("user"), (MemberImpl) null, server);
                     server.removeMember(user.getId());
                     server.decrementMemberCount();
 
-                    ServerMemberLeaveEvent event = new ServerMemberLeaveEventImpl(server, user);
+                    final ServerMemberLeaveEvent event = new ServerMemberLeaveEventImpl(server, user);
 
                     api.getEventDispatcher().dispatchServerMemberLeaveEvent(server, server, user, event);
                     

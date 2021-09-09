@@ -58,28 +58,28 @@ public class ServerChannelUpdaterDelegateImpl implements ServerChannelUpdaterDel
      *
      * @param channel The channel to update.
      */
-    public ServerChannelUpdaterDelegateImpl(ServerChannel channel) {
+    public ServerChannelUpdaterDelegateImpl(final ServerChannel channel) {
         this.channel = channel;
     }
 
     @Override
-    public void setAuditLogReason(String reason) {
+    public void setAuditLogReason(final String reason) {
         this.reason = reason;
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
-    public void setRawPosition(int rawPosition) {
+    public void setRawPosition(final int rawPosition) {
         this.position = rawPosition;
     }
 
     @Override
-    public <T extends Permissionable & DiscordEntity> void addPermissionOverwrite(T permissionable,
-                                                                                  Permissions permissions) {
+    public <T extends Permissionable & DiscordEntity> void addPermissionOverwrite(final T permissionable,
+                                                                                  final Permissions permissions) {
         populatePermissionOverwrites();
         if (permissionable instanceof Role) {
             overwrittenRolePermissions.put(permissionable.getId(), permissions);
@@ -89,7 +89,7 @@ public class ServerChannelUpdaterDelegateImpl implements ServerChannelUpdaterDel
     }
 
     @Override
-    public <T extends Permissionable & DiscordEntity> void removePermissionOverwrite(T permissionable) {
+    public <T extends Permissionable & DiscordEntity> void removePermissionOverwrite(final T permissionable) {
         populatePermissionOverwrites();
         if (permissionable instanceof Role) {
             overwrittenRolePermissions.remove(permissionable.getId());
@@ -100,7 +100,7 @@ public class ServerChannelUpdaterDelegateImpl implements ServerChannelUpdaterDel
 
     @Override
     public CompletableFuture<Void> update() {
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         if (prepareUpdateBody(body)) {
             return new RestRequest<Void>(channel.getApi(), RestMethod.PATCH, RestEndpoint.CHANNEL)
                     .setUrlParameters(channel.getIdAsString())
@@ -112,7 +112,7 @@ public class ServerChannelUpdaterDelegateImpl implements ServerChannelUpdaterDel
         }
     }
 
-    protected boolean prepareUpdateBody(ObjectNode body) {
+    protected boolean prepareUpdateBody(final ObjectNode body) {
         boolean patchChannel = false;
         if (name != null) {
             body.put("name", name);
@@ -128,7 +128,7 @@ public class ServerChannelUpdaterDelegateImpl implements ServerChannelUpdaterDel
             patchChannel = true;
         }
         if (overwrittenUserPermissions != null) {
-            for (Map.Entry<Long, Permissions> entry : overwrittenUserPermissions.entrySet()) {
+            for (final Map.Entry<Long, Permissions> entry : overwrittenUserPermissions.entrySet()) {
                 permissionOverwrites.addObject()
                         .put("id", Long.toUnsignedString(entry.getKey()))
                         .put("type", 1)
@@ -137,7 +137,7 @@ public class ServerChannelUpdaterDelegateImpl implements ServerChannelUpdaterDel
             }
         }
         if (overwrittenRolePermissions != null) {
-            for (Map.Entry<Long, Permissions> entry : overwrittenRolePermissions.entrySet()) {
+            for (final Map.Entry<Long, Permissions> entry : overwrittenRolePermissions.entrySet()) {
                 permissionOverwrites.addObject()
                         .put("id", Long.toUnsignedString(entry.getKey()))
                         .put("type", 0)

@@ -13,7 +13,7 @@ public class RoleCreateEventImpl extends RoleEventImpl implements RoleCreateEven
      *
      * @param role The role of the event.
      */
-    public RoleCreateEventImpl(Role role) {
+    public RoleCreateEventImpl(final Role role) {
         super(role);
     }
 

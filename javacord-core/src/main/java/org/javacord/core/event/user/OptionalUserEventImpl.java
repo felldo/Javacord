@@ -20,7 +20,7 @@ public abstract class OptionalUserEventImpl extends EventImpl implements Optiona
      * @param api The discord api instance.
      * @param userId The id of the user of the event.
      */
-    public OptionalUserEventImpl(DiscordApi api, long userId) {
+    public OptionalUserEventImpl(final DiscordApi api, final long userId) {
         super(api);
         this.userId = userId;
     }

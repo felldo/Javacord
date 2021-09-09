@@ -26,7 +26,7 @@ public class RoleChangePermissionsEventImpl extends RoleEventImpl implements Rol
      * @param oldPermissions The old permissions of the role.
      * @param newPermissions The new permissions of the role.
      */
-    public RoleChangePermissionsEventImpl(Role role, Permissions newPermissions, Permissions oldPermissions) {
+    public RoleChangePermissionsEventImpl(final Role role, final Permissions newPermissions, final Permissions oldPermissions) {
         super(role);
         this.newPermissions = newPermissions;
         this.oldPermissions = oldPermissions;

@@ -71,89 +71,89 @@ public class ServerBuilderDelegateImpl implements ServerBuilderDelegate {
      *
      * @param api The discord api instance.
      */
-    public ServerBuilderDelegateImpl(DiscordApiImpl api) {
+    public ServerBuilderDelegateImpl(final DiscordApiImpl api) {
         this.api = api;
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
-    public void setRegion(Region region) {
+    public void setRegion(final Region region) {
         this.region = region;
     }
 
     @Override
-    public void setExplicitContentFilterLevel(ExplicitContentFilterLevel explicitContentFilterLevel) {
+    public void setExplicitContentFilterLevel(final ExplicitContentFilterLevel explicitContentFilterLevel) {
         this.explicitContentFilterLevel = explicitContentFilterLevel;
     }
 
     @Override
-    public void setVerificationLevel(VerificationLevel verificationLevel) {
+    public void setVerificationLevel(final VerificationLevel verificationLevel) {
         this.verificationLevel = verificationLevel;
     }
 
     @Override
-    public void setDefaultMessageNotificationLevel(DefaultMessageNotificationLevel defaultMessageNotificationLevel) {
+    public void setDefaultMessageNotificationLevel(final DefaultMessageNotificationLevel defaultMessageNotificationLevel) {
         this.defaultMessageNotificationLevel = defaultMessageNotificationLevel;
     }
 
     @Override
-    public void setAfkTimeoutInSeconds(int afkTimeout) {
+    public void setAfkTimeoutInSeconds(final int afkTimeout) {
         this.afkTimeout = afkTimeout;
     }
 
     @Override
-    public void setIcon(BufferedImage icon) {
+    public void setIcon(final BufferedImage icon) {
         this.icon = (icon == null) ? null : new FileContainer(icon, "png");
     }
 
     @Override
-    public void setIcon(BufferedImage icon, String fileType) {
+    public void setIcon(final BufferedImage icon, final String fileType) {
         this.icon = (icon == null) ? null : new FileContainer(icon, fileType);
     }
 
     @Override
-    public void setIcon(File icon) {
+    public void setIcon(final File icon) {
         this.icon = (icon == null) ? null : new FileContainer(icon);
     }
 
     @Override
-    public void setIcon(Icon icon) {
+    public void setIcon(final Icon icon) {
         this.icon = (icon == null) ? null : new FileContainer(icon);
     }
 
     @Override
-    public void setIcon(URL icon) {
+    public void setIcon(final URL icon) {
         this.icon = (icon == null) ? null : new FileContainer(icon);
     }
 
     @Override
-    public void setIcon(byte[] icon) {
+    public void setIcon(final byte[] icon) {
         this.icon = (icon == null) ? null : new FileContainer(icon, "png");
     }
 
     @Override
-    public void setIcon(byte[] icon, String fileType) {
+    public void setIcon(final byte[] icon, final String fileType) {
         this.icon = (icon == null) ? null : new FileContainer(icon, fileType);
     }
 
     @Override
-    public void setIcon(InputStream icon) {
+    public void setIcon(final InputStream icon) {
         this.icon = (icon == null) ? null : new FileContainer(icon, "png");
     }
 
     @Override
-    public void setIcon(InputStream icon, String fileType) {
+    public void setIcon(final InputStream icon, final String fileType) {
         this.icon = (icon == null) ? null : new FileContainer(icon, fileType);
     }
 
     @Override
     public CompletableFuture<Long> create() {
         // Server settings
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         if (name != null) {
             body.put("name", name);
         }
@@ -174,7 +174,7 @@ public class ServerBuilderDelegateImpl implements ServerBuilderDelegate {
         }
         if (icon != null) {
             return icon.asByteArray(api).thenAccept(bytes -> {
-                String base64Icon = "data:image/" + icon.getFileType() + ";base64,"
+                final String base64Icon = "data:image/" + icon.getFileType() + ";base64,"
                         + Base64.getEncoder().encodeToString(bytes);
                 body.put("icon", base64Icon);
             }).thenCompose(aVoid -> new RestRequest<Long>(api, RestMethod.POST, RestEndpoint.SERVER)

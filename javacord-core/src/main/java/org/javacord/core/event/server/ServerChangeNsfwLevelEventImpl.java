@@ -25,7 +25,7 @@ public class ServerChangeNsfwLevelEventImpl extends ServerEventImpl implements S
      * @param newNsfwLevel The new NSFW level of the server.
      * @param oldNsfwLevel The old NSFW level of the server.
      */
-    public ServerChangeNsfwLevelEventImpl(ServerImpl server, NsfwLevel newNsfwLevel, NsfwLevel oldNsfwLevel) {
+    public ServerChangeNsfwLevelEventImpl(final ServerImpl server, final NsfwLevel newNsfwLevel, final NsfwLevel oldNsfwLevel) {
         super(server);
         this.oldNsfwLevel = oldNsfwLevel;
         this.newNsfwLevel = newNsfwLevel;

@@ -17,14 +17,14 @@ public enum SpeakingFlag {
      */
     PRIORITY_SPEAKER(4);
 
-    private int flag;
+    private final int flag;
 
     /**
      * Creates a new SpeakingFlag.
      *
      * @param flag The integer value of the flag.
      */
-    SpeakingFlag(int flag) {
+    SpeakingFlag(final int flag) {
         this.flag = flag;
     }
 

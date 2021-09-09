@@ -53,9 +53,9 @@ public class ServerChannelChangePositionEventImpl extends ServerChannelEventImpl
      * @param newCategory The new category of the channel.
      * @param oldCategory The old category of the channel.
      */
-    public ServerChannelChangePositionEventImpl(ServerChannel channel, int newPosition, int oldPosition,
-                                                int newRawPosition, int oldRawPosition,
-                                                ChannelCategory newCategory, ChannelCategory oldCategory) {
+    public ServerChannelChangePositionEventImpl(final ServerChannel channel, final int newPosition, final int oldPosition,
+                                                final int newRawPosition, final int oldRawPosition,
+                                                final ChannelCategory newCategory, final ChannelCategory oldCategory) {
         super(channel);
         this.newPosition = newPosition;
         this.oldPosition = oldPosition;

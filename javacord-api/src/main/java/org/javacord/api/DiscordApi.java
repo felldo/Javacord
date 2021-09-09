@@ -283,7 +283,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @return An invite link for this bot.
      * @throws IllegalStateException If the current account is not {@link AccountType#BOT}.
      */
-    default String createBotInvite(Permissions permissions) {
+    default String createBotInvite(final Permissions permissions) {
         return new BotInviteBuilder(getClientId()).setPermissions(permissions).build();
     }
 
@@ -528,7 +528,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param token The token of the incoming webhook.
      * @return The incoming webhook with the given id.
      */
-    default CompletableFuture<IncomingWebhook> getIncomingWebhookByIdAndToken(long id, String token) {
+    default CompletableFuture<IncomingWebhook> getIncomingWebhookByIdAndToken(final long id, final String token) {
         return getIncomingWebhookByIdAndToken(Long.toUnsignedString(id), token);
     }
 
@@ -539,8 +539,8 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @return The incoming webhook with the given url.
      * @throws IllegalArgumentException If the link isn't valid.
      */
-    default CompletableFuture<IncomingWebhook> getIncomingWebhookByUrl(String url) throws IllegalArgumentException {
-        Matcher matcher = DiscordRegexPattern.WEBHOOK_URL.matcher(url);
+    default CompletableFuture<IncomingWebhook> getIncomingWebhookByUrl(final String url) throws IllegalArgumentException {
+        final Matcher matcher = DiscordRegexPattern.WEBHOOK_URL.matcher(url);
 
         if (!matcher.matches()) {
             throw new IllegalArgumentException("The webhook url has an invalid format");
@@ -599,7 +599,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param username The new username.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateUsername(String username) {
+    default CompletableFuture<Void> updateUsername(final String username) {
         return createAccountUpdater().setUsername(username).update();
     }
 
@@ -613,7 +613,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param avatar The new avatar.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateAvatar(BufferedImage avatar) {
+    default CompletableFuture<Void> updateAvatar(final BufferedImage avatar) {
         return createAccountUpdater().setAvatar(avatar).update();
     }
 
@@ -627,7 +627,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param fileType The type of the avatar, e.g. "png" or "jpg".
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateAvatar(BufferedImage avatar, String fileType) {
+    default CompletableFuture<Void> updateAvatar(final BufferedImage avatar, final String fileType) {
         return createAccountUpdater().setAvatar(avatar, fileType).update();
     }
 
@@ -640,7 +640,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param avatar The new avatar.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateAvatar(File avatar) {
+    default CompletableFuture<Void> updateAvatar(final File avatar) {
         return createAccountUpdater().setAvatar(avatar).update();
     }
 
@@ -653,7 +653,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param avatar The new avatar.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateAvatar(Icon avatar) {
+    default CompletableFuture<Void> updateAvatar(final Icon avatar) {
         return createAccountUpdater().setAvatar(avatar).update();
     }
 
@@ -666,7 +666,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param avatar The new avatar.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateAvatar(URL avatar) {
+    default CompletableFuture<Void> updateAvatar(final URL avatar) {
         return createAccountUpdater().setAvatar(avatar).update();
     }
 
@@ -680,7 +680,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param avatar The new avatar.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateAvatar(byte[] avatar) {
+    default CompletableFuture<Void> updateAvatar(final byte[] avatar) {
         return createAccountUpdater().setAvatar(avatar).update();
     }
 
@@ -694,7 +694,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param fileType The type of the avatar, e.g. "png" or "jpg".
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateAvatar(byte[] avatar, String fileType) {
+    default CompletableFuture<Void> updateAvatar(final byte[] avatar, final String fileType) {
         return createAccountUpdater().setAvatar(avatar, fileType).update();
     }
 
@@ -708,7 +708,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param avatar The new avatar.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateAvatar(InputStream avatar) {
+    default CompletableFuture<Void> updateAvatar(final InputStream avatar) {
         return createAccountUpdater().setAvatar(avatar).update();
     }
 
@@ -722,7 +722,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param fileType The type of the avatar, e.g. "png" or "jpg".
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateAvatar(InputStream avatar, String fileType) {
+    default CompletableFuture<Void> updateAvatar(final InputStream avatar, final String fileType) {
         return createAccountUpdater().setAvatar(avatar, fileType).update();
     }
 
@@ -739,7 +739,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @return Whether all users of available servers are in the cache.
      */
     default boolean hasAllUsersInCache() {
-        return !getServers().stream().anyMatch(Server::hasAllMembersInCache);
+        return getServers().stream().noneMatch(Server::hasAllMembersInCache);
     }
 
     /**
@@ -763,10 +763,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the user.
      * @return The user with the given id.
      */
-    default Optional<User> getCachedUserById(String id) {
+    default Optional<User> getCachedUserById(final String id) {
         try {
             return getCachedUserById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -785,10 +785,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the user.
      * @return The user with the given id.
      */
-    default CompletableFuture<User> getUserById(String id) {
+    default CompletableFuture<User> getUserById(final String id) {
         try {
             return getUserById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return getUserById(-1);
         }
     }
@@ -813,35 +813,35 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      *
      * @return The readable content of the string.
      */
-    default String makeMentionsReadable(String content, Server server) {
-        Matcher userMention = DiscordRegexPattern.USER_MENTION.matcher(content);
+    default String makeMentionsReadable(String content, final Server server) {
+        final Matcher userMention = DiscordRegexPattern.USER_MENTION.matcher(content);
         while (userMention.find()) {
-            String userId = userMention.group("id");
-            Optional<User> userOptional = getCachedUserById(userId);
+            final String userId = userMention.group("id");
+            final Optional<User> userOptional = getCachedUserById(userId);
             if (userOptional.isPresent()) {
-                User user = userOptional.get();
-                String userName = server == null ? user.getName() : server.getDisplayName(user);
+                final User user = userOptional.get();
+                final String userName = server == null ? user.getName() : server.getDisplayName(user);
                 content = userMention.replaceFirst(Matcher.quoteReplacement("@" + userName));
                 userMention.reset(content);
             }
         }
-        Matcher roleMention = DiscordRegexPattern.ROLE_MENTION.matcher(content);
+        final Matcher roleMention = DiscordRegexPattern.ROLE_MENTION.matcher(content);
         while (roleMention.find()) {
-            String roleName = getRoleById(roleMention.group("id")).map(Role::getName).orElse("deleted-role");
+            final String roleName = getRoleById(roleMention.group("id")).map(Role::getName).orElse("deleted-role");
             content = roleMention.replaceFirst(Matcher.quoteReplacement("@" + roleName));
             roleMention.reset(content);
         }
-        Matcher channelMention = DiscordRegexPattern.CHANNEL_MENTION.matcher(content);
+        final Matcher channelMention = DiscordRegexPattern.CHANNEL_MENTION.matcher(content);
         while (channelMention.find()) {
-            String channelId = channelMention.group("id");
-            String channelName = getServerChannelById(channelId).map(ServerChannel::getName).orElse("deleted-channel");
+            final String channelId = channelMention.group("id");
+            final String channelName = getServerChannelById(channelId).map(ServerChannel::getName).orElse("deleted-channel");
             content = channelMention.replaceFirst("#" + channelName);
             channelMention.reset(content);
         }
-        Matcher customEmoji = DiscordRegexPattern.CUSTOM_EMOJI.matcher(content);
+        final Matcher customEmoji = DiscordRegexPattern.CUSTOM_EMOJI.matcher(content);
         while (customEmoji.find()) {
-            String emojiId = customEmoji.group("id");
-            String name = getCustomEmojiById(emojiId)
+            final String emojiId = customEmoji.group("id");
+            final String name = getCustomEmojiById(emojiId)
                     .map(CustomEmoji::getName)
                     .orElseGet(() -> customEmoji.group("name"));
             content = customEmoji.replaceFirst(":" + name + ":");
@@ -869,7 +869,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      *
      * @return The readable content of the string.
      */
-    default String makeMentionsReadable(String content) {
+    default String makeMentionsReadable(final String content) {
         return makeMentionsReadable(content, null);
     }
 
@@ -880,8 +880,8 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param discriminatedName The discriminated name of the user.
      * @return The user with the given discriminated name.
      */
-    default Optional<User> getCachedUserByDiscriminatedName(String discriminatedName) {
-        String[] nameAndDiscriminator = discriminatedName.split("#", 2);
+    default Optional<User> getCachedUserByDiscriminatedName(final String discriminatedName) {
+        final String[] nameAndDiscriminator = discriminatedName.split("#", 2);
         return getCachedUserByNameAndDiscriminator(nameAndDiscriminator[0], nameAndDiscriminator[1]);
     }
 
@@ -892,8 +892,8 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param discriminatedName The discriminated name of the user.
      * @return The user with the given discriminated name.
      */
-    default Optional<User> getCachedUserByDiscriminatedNameIgnoreCase(String discriminatedName) {
-        String[] nameAndDiscriminator = discriminatedName.split("#", 2);
+    default Optional<User> getCachedUserByDiscriminatedNameIgnoreCase(final String discriminatedName) {
+        final String[] nameAndDiscriminator = discriminatedName.split("#", 2);
         return getCachedUserByNameAndDiscriminatorIgnoreCase(nameAndDiscriminator[0], nameAndDiscriminator[1]);
     }
 
@@ -905,7 +905,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param discriminator The discriminator of the user.
      * @return The user with the given name and discriminator.
      */
-    default Optional<User> getCachedUserByNameAndDiscriminator(String name, String discriminator) {
+    default Optional<User> getCachedUserByNameAndDiscriminator(final String name, final String discriminator) {
         return getCachedUsersByName(name).stream()
                 .filter(user -> user.getDiscriminator().equals(discriminator))
                 .findAny();
@@ -919,7 +919,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param discriminator The discriminator of the user.
      * @return The user with the given name and discriminator.
      */
-    default Optional<User> getCachedUserByNameAndDiscriminatorIgnoreCase(String name, String discriminator) {
+    default Optional<User> getCachedUserByNameAndDiscriminatorIgnoreCase(final String name, final String discriminator) {
         return getCachedUsersByNameIgnoreCase(name).stream()
                 .filter(user -> user.getDiscriminator().equalsIgnoreCase(discriminator))
                 .findAny();
@@ -932,7 +932,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the users.
      * @return A collection with all users with the given name.
      */
-    default Collection<User> getCachedUsersByName(String name) {
+    default Collection<User> getCachedUsersByName(final String name) {
         return Collections.unmodifiableList(
                 getCachedUsers().stream()
                         .filter(user -> user.getName().equals(name))
@@ -946,7 +946,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the users.
      * @return A collection with all users with the given name.
      */
-    default Collection<User> getCachedUsersByNameIgnoreCase(String name) {
+    default Collection<User> getCachedUsersByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getCachedUsers().stream()
                         .filter(user -> user.getName().equalsIgnoreCase(name))
@@ -961,7 +961,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param server The server where to lookup the nickname.
      * @return A collection with all users with the given nickname on the given server.
      */
-    default Collection<User> getCachedUsersByNickname(String nickname, Server server) {
+    default Collection<User> getCachedUsersByNickname(final String nickname, final Server server) {
         return Collections.unmodifiableList(
                 getCachedUsers().stream()
                         .filter(user -> user.getNickname(server).map(nickname::equals).orElse(false))
@@ -976,7 +976,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param server The server where to lookup the nickname.
      * @return A collection with all users with the given nickname on the given server.
      */
-    default Collection<User> getCachedUsersByNicknameIgnoreCase(String nickname, Server server) {
+    default Collection<User> getCachedUsersByNicknameIgnoreCase(final String nickname, final Server server) {
         return Collections.unmodifiableList(
                 getCachedUsers().stream()
                         .filter(user -> user.getNickname(server).map(nickname::equalsIgnoreCase).orElse(false))
@@ -991,7 +991,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param server The server where to lookup the display name.
      * @return A collection with all users with the given display name on the given server.
      */
-    default Collection<User> getCachedUsersByDisplayName(String displayName, Server server) {
+    default Collection<User> getCachedUsersByDisplayName(final String displayName, final Server server) {
         return Collections.unmodifiableList(
                 getCachedUsers().stream()
                         .filter(user -> user.getDisplayName(server).equals(displayName))
@@ -1006,7 +1006,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param server The server where to lookup the display name.
      * @return A collection with all users with the given display name on the given server.
      */
-    default Collection<User> getCachedUsersByDisplayNameIgnoreCase(String displayName, Server server) {
+    default Collection<User> getCachedUsersByDisplayNameIgnoreCase(final String displayName, final Server server) {
         return Collections.unmodifiableList(
                 getCachedUsers().stream()
                         .filter(user -> user.getDisplayName(server).equalsIgnoreCase(displayName))
@@ -1034,10 +1034,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the message.
      * @return The cached message.
      */
-    default Optional<Message> getCachedMessageById(String id) {
+    default Optional<Message> getCachedMessageById(final String id) {
         try {
             return getCachedMessageById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -1050,7 +1050,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @return The message with the given id.
      * @see TextChannel#getMessageById(long)
      */
-    default CompletableFuture<Message> getMessageById(long id, TextChannel channel) {
+    default CompletableFuture<Message> getMessageById(final long id, final TextChannel channel) {
         return channel.getMessageById(id);
     }
 
@@ -1062,7 +1062,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @return The message with the given id.
      * @see TextChannel#getMessageById(String)
      */
-    default CompletableFuture<Message> getMessageById(String id, TextChannel channel) {
+    default CompletableFuture<Message> getMessageById(final String id, final TextChannel channel) {
         return channel.getMessageById(id);
     }
 
@@ -1073,8 +1073,8 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @return The message with the given link.
      * @throws IllegalArgumentException If the link isn't valid.
      */
-    default Optional<CompletableFuture<Message>> getMessageByLink(String link) throws IllegalArgumentException {
-        Matcher matcher = DiscordRegexPattern.MESSAGE_LINK.matcher(link);
+    default Optional<CompletableFuture<Message>> getMessageByLink(final String link) throws IllegalArgumentException {
+        final Matcher matcher = DiscordRegexPattern.MESSAGE_LINK.matcher(link);
 
         if (!matcher.matches()) {
             throw new IllegalArgumentException("The message link has an invalid format");
@@ -1091,8 +1091,8 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @return The cached message with the given link.
      * @throws IllegalArgumentException If the link isn't valid.
      */
-    default Optional<Message> getCachedMessageByLink(String link) throws IllegalArgumentException {
-        Matcher matcher = DiscordRegexPattern.MESSAGE_LINK.matcher(link);
+    default Optional<Message> getCachedMessageByLink(final String link) throws IllegalArgumentException {
+        final Matcher matcher = DiscordRegexPattern.MESSAGE_LINK.matcher(link);
 
         if (!matcher.matches()) {
             throw new IllegalArgumentException("The message link has an invalid format");
@@ -1115,7 +1115,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the server.
      * @return The server with the given id.
      */
-    default Optional<Server> getServerById(long id) {
+    default Optional<Server> getServerById(final long id) {
         return getServers().stream()
                 .filter(server -> server.getId() == id)
                 .findAny();
@@ -1127,10 +1127,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the server.
      * @return The server with the given id.
      */
-    default Optional<Server> getServerById(String id) {
+    default Optional<Server> getServerById(final String id) {
         try {
             return getServerById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -1142,7 +1142,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the servers.
      * @return A collection with all servers with the given name.
      */
-    default Collection<Server> getServersByName(String name) {
+    default Collection<Server> getServersByName(final String name) {
         return Collections.unmodifiableList(
                 getServers().stream()
                         .filter(server -> server.getName().equals(name))
@@ -1156,7 +1156,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the servers.
      * @return A collection with all servers with the given name.
      */
-    default Collection<Server> getServersByNameIgnoreCase(String name) {
+    default Collection<Server> getServersByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getServers().stream()
                         .filter(server -> server.getName().equalsIgnoreCase(name))
@@ -1176,7 +1176,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the emoji.
      * @return The emoji with the given id.
      */
-    default Optional<KnownCustomEmoji> getCustomEmojiById(long id) {
+    default Optional<KnownCustomEmoji> getCustomEmojiById(final long id) {
         return getCustomEmojis().stream().filter(emoji -> emoji.getId() == id).findAny();
     }
 
@@ -1186,10 +1186,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the emoji.
      * @return The emoji with the given id.
      */
-    default Optional<KnownCustomEmoji> getCustomEmojiById(String id) {
+    default Optional<KnownCustomEmoji> getCustomEmojiById(final String id) {
         try {
             return getCustomEmojiById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -1201,7 +1201,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the custom emojis.
      * @return A collection with all custom emojis with the given name in this server.
      */
-    default Collection<KnownCustomEmoji> getCustomEmojisByName(String name) {
+    default Collection<KnownCustomEmoji> getCustomEmojisByName(final String name) {
         return Collections.unmodifiableList(
                 getCustomEmojis().stream()
                         .filter(emoji -> emoji.getName().equals(name))
@@ -1215,7 +1215,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the custom emojis.
      * @return A collection with all custom emojis with the given name in this server.
      */
-    default Collection<KnownCustomEmoji> getCustomEmojisByNameIgnoreCase(String name) {
+    default Collection<KnownCustomEmoji> getCustomEmojisByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getCustomEmojis().stream()
                         .filter(emoji -> emoji.getName().equalsIgnoreCase(name))
@@ -1242,7 +1242,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @return A collection with all roles the bot knows.
      */
     default Collection<Role> getRoles() {
-        Collection<Role> roles = new HashSet<>();
+        final Collection<Role> roles = new HashSet<>();
         getServers().stream().map(Server::getRoles).forEach(roles::addAll);
         return Collections.unmodifiableCollection(roles);
     }
@@ -1253,7 +1253,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the role.
      * @return The role with the given id.
      */
-    default Optional<Role> getRoleById(long id) {
+    default Optional<Role> getRoleById(final long id) {
         return getServers().stream()
                 .map(server -> server.getRoleById(id))
                 .filter(Optional::isPresent)
@@ -1267,10 +1267,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the role.
      * @return The role with the given id.
      */
-    default Optional<Role> getRoleById(String id) {
+    default Optional<Role> getRoleById(final String id) {
         try {
             return getRoleById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -1282,7 +1282,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the roles.
      * @return A collection with all roles with the given name.
      */
-    default Collection<Role> getRolesByName(String name) {
+    default Collection<Role> getRolesByName(final String name) {
         return Collections.unmodifiableList(
                 getRoles().stream()
                         .filter(role -> role.getName().equals(name))
@@ -1296,7 +1296,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the roles.
      * @return A collection with all roles with the given name.
      */
-    default Collection<Role> getRolesByNameIgnoreCase(String name) {
+    default Collection<Role> getRolesByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getRoles().stream()
                         .filter(role -> role.getName().equalsIgnoreCase(name))
@@ -1387,10 +1387,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the channel.
      * @return The channel with the given id.
      */
-    default Optional<Channel> getChannelById(String id) {
+    default Optional<Channel> getChannelById(final String id) {
         try {
             return getChannelById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -1402,8 +1402,8 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the channels. Can be <code>null</code> to search for group channels without name.
      * @return A collection with all channels with the given name.
      */
-    default Collection<Channel> getChannelsByName(String name) {
-        Collection<Channel> channels = new HashSet<>();
+    default Collection<Channel> getChannelsByName(final String name) {
+        final Collection<Channel> channels = new HashSet<>();
         channels.addAll(getServerChannelsByName(name));
         channels.addAll(getGroupChannelsByName(name));
         return Collections.unmodifiableCollection(channels);
@@ -1416,8 +1416,8 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the channels. Can be <code>null</code> to search for group channels without name.
      * @return A collection with all channels with the given name.
      */
-    default Collection<Channel> getChannelsByNameIgnoreCase(String name) {
-        Collection<Channel> channels = new HashSet<>();
+    default Collection<Channel> getChannelsByNameIgnoreCase(final String name) {
+        final Collection<Channel> channels = new HashSet<>();
         channels.addAll(getServerChannelsByNameIgnoreCase(name));
         channels.addAll(getGroupChannelsByNameIgnoreCase(name));
         return Collections.unmodifiableCollection(channels);
@@ -1429,7 +1429,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the text channel.
      * @return The text channel with the given id.
      */
-    default Optional<TextChannel> getTextChannelById(long id) {
+    default Optional<TextChannel> getTextChannelById(final long id) {
         return getChannelById(id).flatMap(Channel::asTextChannel);
     }
 
@@ -1439,10 +1439,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the text channel.
      * @return The text channel with the given id.
      */
-    default Optional<TextChannel> getTextChannelById(String id) {
+    default Optional<TextChannel> getTextChannelById(final String id) {
         try {
             return getTextChannelById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -1454,8 +1454,8 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the text channels. Can be <code>null</code> to search for group channels without name.
      * @return A collection with all text channels with the given name.
      */
-    default Collection<TextChannel> getTextChannelsByName(String name) {
-        Collection<TextChannel> channels = new HashSet<>();
+    default Collection<TextChannel> getTextChannelsByName(final String name) {
+        final Collection<TextChannel> channels = new HashSet<>();
         channels.addAll(getServerTextChannelsByName(name));
         channels.addAll(getGroupChannelsByName(name));
         return Collections.unmodifiableCollection(channels);
@@ -1468,8 +1468,8 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the text channels. Can be <code>null</code> to search for group channels without name.
      * @return A collection with all text channels with the given name.
      */
-    default Collection<TextChannel> getTextChannelsByNameIgnoreCase(String name) {
-        Collection<TextChannel> channels = new HashSet<>();
+    default Collection<TextChannel> getTextChannelsByNameIgnoreCase(final String name) {
+        final Collection<TextChannel> channels = new HashSet<>();
         channels.addAll(getServerTextChannelsByNameIgnoreCase(name));
         channels.addAll(getGroupChannelsByNameIgnoreCase(name));
         return Collections.unmodifiableCollection(channels);
@@ -1481,7 +1481,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the voice channel.
      * @return The voice channel with the given id.
      */
-    default Optional<VoiceChannel> getVoiceChannelById(long id) {
+    default Optional<VoiceChannel> getVoiceChannelById(final long id) {
         return getChannelById(id).flatMap(Channel::asVoiceChannel);
     }
 
@@ -1491,10 +1491,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the voice channel.
      * @return The voice channel with the given id.
      */
-    default Optional<VoiceChannel> getVoiceChannelById(String id) {
+    default Optional<VoiceChannel> getVoiceChannelById(final String id) {
         try {
             return getVoiceChannelById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -1506,8 +1506,8 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the voice channels. Can be <code>null</code> to search for group channels without name.
      * @return A collection with all voice channels with the given name.
      */
-    default Collection<VoiceChannel> getVoiceChannelsByName(String name) {
-        Collection<VoiceChannel> channels = new HashSet<>();
+    default Collection<VoiceChannel> getVoiceChannelsByName(final String name) {
+        final Collection<VoiceChannel> channels = new HashSet<>();
         channels.addAll(getServerVoiceChannelsByName(name));
         channels.addAll(getGroupChannelsByName(name));
         return Collections.unmodifiableCollection(channels);
@@ -1520,8 +1520,8 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the voice channels. Can be <code>null</code> to search for group channels without name.
      * @return A collection with all voice channels with the given name.
      */
-    default Collection<VoiceChannel> getVoiceChannelsByNameIgnoreCase(String name) {
-        Collection<VoiceChannel> channels = new HashSet<>();
+    default Collection<VoiceChannel> getVoiceChannelsByNameIgnoreCase(final String name) {
+        final Collection<VoiceChannel> channels = new HashSet<>();
         channels.addAll(getServerVoiceChannelsByNameIgnoreCase(name));
         channels.addAll(getGroupChannelsByNameIgnoreCase(name));
         return Collections.unmodifiableCollection(channels);
@@ -1533,7 +1533,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the server channel.
      * @return The server channel with the given id.
      */
-    default Optional<ServerChannel> getServerChannelById(long id) {
+    default Optional<ServerChannel> getServerChannelById(final long id) {
         return getChannelById(id).flatMap(Channel::asServerChannel);
     }
 
@@ -1543,10 +1543,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the server channel.
      * @return The server channel with the given id.
      */
-    default Optional<ServerChannel> getServerChannelById(String id) {
+    default Optional<ServerChannel> getServerChannelById(final String id) {
         try {
             return getServerChannelById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -1558,7 +1558,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the server channels.
      * @return A collection with all server channels with the given name.
      */
-    default Collection<ServerChannel> getServerChannelsByName(String name) {
+    default Collection<ServerChannel> getServerChannelsByName(final String name) {
         return Collections.unmodifiableList(
                 getServerChannels().stream()
                         .filter(channel -> channel.getName().equals(name))
@@ -1572,7 +1572,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the server channels.
      * @return A collection with all server channels with the given name.
      */
-    default Collection<ServerChannel> getServerChannelsByNameIgnoreCase(String name) {
+    default Collection<ServerChannel> getServerChannelsByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getServerChannels().stream()
                         .filter(channel -> channel.getName().equalsIgnoreCase(name))
@@ -1585,7 +1585,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the channel category.
      * @return The channel category with the given id.
      */
-    default Optional<ChannelCategory> getChannelCategoryById(long id) {
+    default Optional<ChannelCategory> getChannelCategoryById(final long id) {
         return getChannelById(id).flatMap(Channel::asChannelCategory);
     }
 
@@ -1595,10 +1595,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the channel category.
      * @return The channel category with the given id.
      */
-    default Optional<ChannelCategory> getChannelCategoryById(String id) {
+    default Optional<ChannelCategory> getChannelCategoryById(final String id) {
         try {
             return getChannelCategoryById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -1610,7 +1610,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the channel categories.
      * @return A collection with all channel categories with the given name.
      */
-    default Collection<ChannelCategory> getChannelCategoriesByName(String name) {
+    default Collection<ChannelCategory> getChannelCategoriesByName(final String name) {
         return Collections.unmodifiableList(
                 getChannelCategories().stream()
                         .filter(channel -> channel.getName().equals(name))
@@ -1624,7 +1624,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the channel categories.
      * @return A collection with all channel categories with the given name.
      */
-    default Collection<ChannelCategory> getChannelCategoriesByNameIgnoreCase(String name) {
+    default Collection<ChannelCategory> getChannelCategoriesByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getChannelCategories().stream()
                         .filter(channel -> channel.getName().equalsIgnoreCase(name))
@@ -1637,7 +1637,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the server text channel.
      * @return The server text channel with the given id.
      */
-    default Optional<ServerTextChannel> getServerTextChannelById(long id) {
+    default Optional<ServerTextChannel> getServerTextChannelById(final long id) {
         return getChannelById(id).flatMap(Channel::asServerTextChannel);
     }
 
@@ -1647,10 +1647,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the server text channel.
      * @return The server text channel with the given id.
      */
-    default Optional<ServerTextChannel> getServerTextChannelById(String id) {
+    default Optional<ServerTextChannel> getServerTextChannelById(final String id) {
         try {
             return getServerTextChannelById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -1662,7 +1662,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the server text channels.
      * @return A collection with all server text channels with the given name.
      */
-    default Collection<ServerTextChannel> getServerTextChannelsByName(String name) {
+    default Collection<ServerTextChannel> getServerTextChannelsByName(final String name) {
         return Collections.unmodifiableList(
                 getServerTextChannels().stream()
                         .filter(channel -> channel.getName().equals(name))
@@ -1676,7 +1676,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the server text channels.
      * @return A collection with all server text channels with the given name.
      */
-    default Collection<ServerTextChannel> getServerTextChannelsByNameIgnoreCase(String name) {
+    default Collection<ServerTextChannel> getServerTextChannelsByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getServerTextChannels().stream()
                         .filter(channel -> channel.getName().equalsIgnoreCase(name))
@@ -1689,7 +1689,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the server voice channel.
      * @return The server voice channel with the given id.
      */
-    default Optional<ServerVoiceChannel> getServerVoiceChannelById(long id) {
+    default Optional<ServerVoiceChannel> getServerVoiceChannelById(final long id) {
         return getChannelById(id).flatMap(Channel::asServerVoiceChannel);
     }
 
@@ -1699,10 +1699,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the server voice channel.
      * @return The server voice channel with the given id.
      */
-    default Optional<ServerVoiceChannel> getServerVoiceChannelById(String id) {
+    default Optional<ServerVoiceChannel> getServerVoiceChannelById(final String id) {
         try {
             return getServerVoiceChannelById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -1714,7 +1714,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the server voice channels.
      * @return A collection with all server voice channels with the given name.
      */
-    default Collection<ServerVoiceChannel> getServerVoiceChannelsByName(String name) {
+    default Collection<ServerVoiceChannel> getServerVoiceChannelsByName(final String name) {
         return Collections.unmodifiableList(
                 getServerVoiceChannels().stream()
                         .filter(channel -> channel.getName().equals(name))
@@ -1728,7 +1728,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the server voice channels.
      * @return A collection with all server voice channels with the given name.
      */
-    default Collection<ServerVoiceChannel> getServerVoiceChannelsByNameIgnoreCase(String name) {
+    default Collection<ServerVoiceChannel> getServerVoiceChannelsByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getServerVoiceChannels().stream()
                         .filter(channel -> channel.getName().equalsIgnoreCase(name))
@@ -1741,7 +1741,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the server stage voice channel.
      * @return The server stage voice channel with the given id.
      */
-    default Optional<ServerStageVoiceChannel> getServerStageVoiceChannelById(long id) {
+    default Optional<ServerStageVoiceChannel> getServerStageVoiceChannelById(final long id) {
         return getChannelById(id).flatMap(Channel::asServerStageVoiceChannel);
     }
 
@@ -1751,10 +1751,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the server stage voice channel.
      * @return The server stage voice channel with the given id.
      */
-    default Optional<ServerStageVoiceChannel> getServerStageVoiceChannelById(String id) {
+    default Optional<ServerStageVoiceChannel> getServerStageVoiceChannelById(final String id) {
         try {
             return getServerStageVoiceChannelById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -1766,7 +1766,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the server stage voice channels.
      * @return A collection with all server stage voice channels with the given name.
      */
-    default Collection<ServerStageVoiceChannel> getServerStageVoiceChannelsByName(String name) {
+    default Collection<ServerStageVoiceChannel> getServerStageVoiceChannelsByName(final String name) {
         return Collections.unmodifiableList(
                 getServerStageVoiceChannels().stream()
                         .filter(channel -> channel.getName().equals(name))
@@ -1780,7 +1780,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the server stage voice channels.
      * @return A collection with all server stage voice channels with the given name.
      */
-    default Collection<ServerStageVoiceChannel> getServerStageVoiceChannelsByNameIgnoreCase(String name) {
+    default Collection<ServerStageVoiceChannel> getServerStageVoiceChannelsByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getServerStageVoiceChannels().stream()
                         .filter(channel -> channel.getName().equalsIgnoreCase(name))
@@ -1793,7 +1793,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the private channel.
      * @return The private channel with the given id.
      */
-    default Optional<PrivateChannel> getPrivateChannelById(long id) {
+    default Optional<PrivateChannel> getPrivateChannelById(final long id) {
         return getChannelById(id).flatMap(Channel::asPrivateChannel);
     }
 
@@ -1803,10 +1803,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the private channel.
      * @return The private channel with the given id.
      */
-    default Optional<PrivateChannel> getPrivateChannelById(String id) {
+    default Optional<PrivateChannel> getPrivateChannelById(final String id) {
         try {
             return getPrivateChannelById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -1817,7 +1817,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the group channel.
      * @return The group channel with the given id.
      */
-    default Optional<GroupChannel> getGroupChannelById(long id) {
+    default Optional<GroupChannel> getGroupChannelById(final long id) {
         return getChannelById(id).flatMap(Channel::asGroupChannel);
     }
 
@@ -1827,10 +1827,10 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param id The id of the group channel.
      * @return The group channel with the given id.
      */
-    default Optional<GroupChannel> getGroupChannelById(String id) {
+    default Optional<GroupChannel> getGroupChannelById(final String id) {
         try {
             return getGroupChannelById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return Optional.empty();
         }
     }
@@ -1842,7 +1842,7 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the group channels. Can be <code>null</code> to search for group channels without name.
      * @return A collection with all group channels with the given name.
      */
-    default Collection<GroupChannel> getGroupChannelsByName(String name) {
+    default Collection<GroupChannel> getGroupChannelsByName(final String name) {
         return Collections.unmodifiableList(
                 getGroupChannels().stream()
                         .filter(channel -> Objects.deepEquals(channel.getName().orElse(null), name))
@@ -1856,11 +1856,11 @@ public interface DiscordApi extends GloballyAttachableListenerManager {
      * @param name The name of the group channels. Can be <code>null</code> to search for group channels without name.
      * @return A collection with all group channels with the given name.
      */
-    default Collection<GroupChannel> getGroupChannelsByNameIgnoreCase(String name) {
+    default Collection<GroupChannel> getGroupChannelsByNameIgnoreCase(final String name) {
         return Collections.unmodifiableList(
                 getGroupChannels().stream()
                         .filter(channel -> {
-                            String channelName = channel.getName().orElse(null);
+                            final String channelName = channel.getName().orElse(null);
                             if (name == null || channelName == null) {
                                 return Objects.deepEquals(channelName, name);
                             }

@@ -120,19 +120,19 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
 
 
     @Override
-    public void addComponents(HighLevelComponent... highLevelComponents) {
+    public void addComponents(final HighLevelComponent... highLevelComponents) {
         this.components.addAll(Arrays.asList(highLevelComponents));
         componentsChanged = true;
     }
 
     @Override
-    public void addActionRow(LowLevelComponent... lowLevelComponents) {
+    public void addActionRow(final LowLevelComponent... lowLevelComponents) {
         this.addComponents(ActionRow.of(lowLevelComponents));
         componentsChanged = true;
     }
 
     @Override
-    public void appendCode(String language, String code) {
+    public void appendCode(final String language, final String code) {
         strBuilder
                 .append("\n")
                 .append(MessageDecoration.CODE_LONG.getPrefix())
@@ -144,8 +144,8 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public void append(String message, MessageDecoration... decorations) {
-        for (MessageDecoration decoration : decorations) {
+    public void append(final String message, final MessageDecoration... decorations) {
+        for (final MessageDecoration decoration : decorations) {
             strBuilder.append(decoration.getPrefix());
         }
         strBuilder.append(message);
@@ -156,13 +156,13 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public void append(Mentionable entity) {
+    public void append(final Mentionable entity) {
         strBuilder.append(entity.getMentionTag());
         contentChanged = true;
     }
 
     @Override
-    public void append(Object object) {
+    public void append(final Object object) {
         strBuilder.append(object);
         contentChanged = true;
     }
@@ -174,14 +174,14 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public void setContent(String content) {
+    public void setContent(final String content) {
         strBuilder.setLength(0);
         strBuilder.append(content);
         contentChanged = true;
     }
 
     @Override
-    public void addEmbed(EmbedBuilder embed) {
+    public void addEmbed(final EmbedBuilder embed) {
         if (embed != null) {
             embeds.add(embed);
             embedsChanged = true;
@@ -194,19 +194,19 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
      * @param message The message to copy.
      */
     @Override
-    public void copy(Message message) {
+    public void copy(final Message message) {
         this.getStringBuilder().append(message.getContent());
 
         message.getEmbeds().forEach(embed -> addEmbed(embed.toBuilder()));
 
-        for (MessageAttachment attachment : message.getAttachments()) {
+        for (final MessageAttachment attachment : message.getAttachments()) {
             // Since spoiler status is encoded in the file name, it is copied automatically.
             this.addAttachment(attachment.getUrl());
         }
 
-        for (HighLevelComponent component : message.getComponents()) {
+        for (final HighLevelComponent component : message.getComponents()) {
             if (component.getType() == ComponentType.ACTION_ROW) {
-                ActionRowBuilder builder = new ActionRowBuilder();
+                final ActionRowBuilder builder = new ActionRowBuilder();
                 builder.copy((ActionRow) component);
                 this.addComponents(builder.build());
             }
@@ -225,31 +225,31 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public void addEmbeds(List<EmbedBuilder> embeds) {
+    public void addEmbeds(final List<EmbedBuilder> embeds) {
         this.embeds.addAll(embeds);
         embedsChanged = true;
     }
 
     @Override
-    public void removeEmbed(EmbedBuilder embed) {
+    public void removeEmbed(final EmbedBuilder embed) {
         this.embeds.remove(embed);
         embedsChanged = true;
     }
 
     @Override
-    public void removeEmbeds(EmbedBuilder... embeds) {
+    public void removeEmbeds(final EmbedBuilder... embeds) {
         this.embeds.removeAll(Arrays.asList(embeds));
         embedsChanged = true;
     }
 
     @Override
-    public void removeComponent(int index) {
+    public void removeComponent(final int index) {
         components.remove(index);
         componentsChanged = true;
     }
 
     @Override
-    public void removeComponent(HighLevelComponent component) {
+    public void removeComponent(final HighLevelComponent component) {
         components.remove(component);
         componentsChanged = true;
     }
@@ -261,57 +261,57 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public void setTts(boolean tts) {
+    public void setTts(final boolean tts) {
         this.tts = tts;
     }
 
     @Override
-    public void addFile(BufferedImage image, String fileName) {
+    public void addFile(final BufferedImage image, final String fileName) {
         addAttachment(image, fileName);
     }
 
     @Override
-    public void addFile(File file) {
+    public void addFile(final File file) {
         addAttachment(file);
     }
 
     @Override
-    public void addFile(Icon icon) {
+    public void addFile(final Icon icon) {
         addAttachment(icon);
     }
 
     @Override
-    public void addFile(URL url) {
+    public void addFile(final URL url) {
         addAttachment(url);
     }
 
     @Override
-    public void addFile(byte[] bytes, String fileName) {
+    public void addFile(final byte[] bytes, final String fileName) {
         addAttachment(bytes, fileName);
     }
 
     @Override
-    public void addFile(InputStream stream, String fileName) {
+    public void addFile(final InputStream stream, final String fileName) {
         addAttachment(stream, fileName);
     }
 
     @Override
-    public void addFileAsSpoiler(File file) {
+    public void addFileAsSpoiler(final File file) {
         addAttachmentAsSpoiler(file);
     }
 
     @Override
-    public void addFileAsSpoiler(Icon icon) {
+    public void addFileAsSpoiler(final Icon icon) {
         addAttachmentAsSpoiler(icon);
     }
 
     @Override
-    public void addFileAsSpoiler(URL url) {
+    public void addFileAsSpoiler(final URL url) {
         addAttachmentAsSpoiler(url);
     }
 
     @Override
-    public void addAttachment(BufferedImage image, String fileName) {
+    public void addAttachment(final BufferedImage image, final String fileName) {
         if (image == null || fileName == null) {
             throw new IllegalArgumentException("image and fileName cannot be null!");
         }
@@ -320,7 +320,7 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public void addAttachment(File file) {
+    public void addAttachment(final File file) {
         if (file == null) {
             throw new IllegalArgumentException("file cannot be null!");
         }
@@ -329,7 +329,7 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public void addAttachment(Icon icon) {
+    public void addAttachment(final Icon icon) {
         if (icon == null) {
             throw new IllegalArgumentException("icon cannot be null!");
         }
@@ -338,7 +338,7 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public void addAttachment(URL url) {
+    public void addAttachment(final URL url) {
         if (url == null) {
             throw new IllegalArgumentException("url cannot be null!");
         }
@@ -347,7 +347,7 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public void addAttachment(byte[] bytes, String fileName) {
+    public void addAttachment(final byte[] bytes, final String fileName) {
         if (bytes == null || fileName == null) {
             throw new IllegalArgumentException("bytes and fileName cannot be null!");
         }
@@ -356,7 +356,7 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public void addAttachment(InputStream stream, String fileName) {
+    public void addAttachment(final InputStream stream, final String fileName) {
         if (stream == null || fileName == null) {
             throw new IllegalArgumentException("stream and fileName cannot be null!");
         }
@@ -365,7 +365,7 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public void addAttachmentAsSpoiler(File file) {
+    public void addAttachmentAsSpoiler(final File file) {
         if (file == null) {
             throw new IllegalArgumentException("file cannot be null!");
         }
@@ -374,7 +374,7 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public void addAttachmentAsSpoiler(Icon icon) {
+    public void addAttachmentAsSpoiler(final Icon icon) {
         if (icon == null) {
             throw new IllegalArgumentException("icon cannot be null!");
         }
@@ -383,7 +383,7 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public void addAttachmentAsSpoiler(URL url) {
+    public void addAttachmentAsSpoiler(final URL url) {
         if (url == null) {
             throw new IllegalArgumentException("url cannot be null!");
         }
@@ -392,7 +392,7 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public void setAllowedMentions(AllowedMentions allowedMentions) {
+    public void setAllowedMentions(final AllowedMentions allowedMentions) {
         if (allowedMentions == null) {
             throw new IllegalArgumentException("mention cannot be null!");
         }
@@ -400,12 +400,12 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public void replyTo(long messageId) {
+    public void replyTo(final long messageId) {
         replyingTo = messageId;
     }
 
     @Override
-    public void setNonce(String nonce) {
+    public void setNonce(final String nonce) {
         this.nonce = nonce;
     }
 
@@ -419,12 +419,12 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     ////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public CompletableFuture<Message> send(User user) {
+    public CompletableFuture<Message> send(final User user) {
         return send((Messageable) user);
     }
 
     @Override
-    public CompletableFuture<Message> send(Messageable messageable) {
+    public CompletableFuture<Message> send(final Messageable messageable) {
         if (messageable == null) {
             throw new IllegalStateException("Cannot send message without knowing the receiver");
         }
@@ -441,8 +441,8 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public CompletableFuture<Message> send(TextChannel channel) {
-        ObjectNode body = JsonNodeFactory.instance.objectNode()
+    public CompletableFuture<Message> send(final TextChannel channel) {
+        final ObjectNode body = JsonNodeFactory.instance.objectNode()
                 .put("content", toString() == null ? "" : toString())
                 .put("tts", tts);
         body.putArray("mentions");
@@ -461,13 +461,13 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
             body.putObject("message_reference").put("message_id", replyingTo);
         }
 
-        RestRequest<Message> request = new RestRequest<Message>(channel.getApi(), RestMethod.POST, RestEndpoint.MESSAGE)
+        final RestRequest<Message> request = new RestRequest<Message>(channel.getApi(), RestMethod.POST, RestEndpoint.MESSAGE)
                 .setUrlParameters(channel.getIdAsString());
         return checkForAttachmentsAndExecuteRequest(channel, body, request, false);
     }
 
     @Override
-    public CompletableFuture<Message> send(IncomingWebhook webhook) {
+    public CompletableFuture<Message> send(final IncomingWebhook webhook) {
         return send(webhook.getIdAsString(), webhook.getToken(),
                 null, null, true, webhook.getApi());
     }
@@ -483,9 +483,9 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
      * @param api The api instance needed to send and return the message
      * @return The sent message
      */
-    protected CompletableFuture<Message> send(String webhookId, String webhookToken, String displayName, URL avatarUrl,
-                                              boolean wait, DiscordApi api) {
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+    protected CompletableFuture<Message> send(final String webhookId, final String webhookToken, final String displayName, final URL avatarUrl,
+                                              final boolean wait, final DiscordApi api) {
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         prepareCommonWebhookMessageBodyParts(body);
 
         if (displayName != null) {
@@ -501,18 +501,18 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
             body.put("content", strBuilder.toString());
         }
 
-        RestRequest<Message> request =
+        final RestRequest<Message> request =
                 new RestRequest<Message>(api, RestMethod.POST, RestEndpoint.WEBHOOK_SEND)
                         .addQueryParameter("wait", Boolean.toString(wait))
                         .setUrlParameters(webhookId, webhookToken);
-        CompletableFuture<Message> future = new CompletableFuture<>();
+        final CompletableFuture<Message> future = new CompletableFuture<>();
         if (!attachments.isEmpty() || embeds.stream().anyMatch(EmbedBuilder::requiresAttachments)) {
             // We access files etc. so this should be async
             api.getThreadPool().getExecutorService().submit(() -> {
                 try {
-                    List<FileContainer> tempAttachments = new ArrayList<>(attachments);
+                    final List<FileContainer> tempAttachments = new ArrayList<>(attachments);
                     // Add the attachments required for the embeds
-                    for (EmbedBuilder embed : embeds) {
+                    for (final EmbedBuilder embed : embeds) {
                         tempAttachments.addAll(
                                 ((EmbedBuilderDelegateImpl) embed.getDelegate()).getRequiredAttachments());
                     }
@@ -520,7 +520,7 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
                     addMultipartBodyToRequest(request, body, tempAttachments, api);
 
                     executeWebhookRest(request, wait, future, api);
-                } catch (Throwable t) {
+                } catch (final Throwable t) {
                     future.completeExceptionally(t);
                 }
             });
@@ -532,7 +532,7 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public CompletableFuture<Message> sendWithWebhook(DiscordApi api, String webhookId, String webhookToken) {
+    public CompletableFuture<Message> sendWithWebhook(final DiscordApi api, final String webhookId, final String webhookToken) {
         return send(webhookId, webhookToken, null, null, true, api);
     }
 
@@ -544,13 +544,13 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
      * @param future The future to complete
      * @param api The api instance needed to create the message
      */
-    private static void executeWebhookRest(RestRequest<Message> request, boolean wait,
-                                           CompletableFuture<Message> future, DiscordApi api) {
-        CompletableFuture<Message> tmpFuture;
+    private static void executeWebhookRest(final RestRequest<Message> request, final boolean wait,
+                                           final CompletableFuture<Message> future, final DiscordApi api) {
+        final CompletableFuture<Message> tmpFuture;
         if (wait) {
             tmpFuture = request.execute(result -> {
-                JsonNode body = result.getJsonBody();
-                TextChannel channel = api.getTextChannelById(body.get("channel_id").asText()).orElseThrow(() ->
+                final JsonNode body = result.getJsonBody();
+                final TextChannel channel = api.getTextChannelById(body.get("channel_id").asText()).orElseThrow(() ->
                         new IllegalStateException("Cannot return a message when the channel isn't cached!")
                 );
                 return ((DiscordApiImpl) api).getOrCreateMessage(channel, body);
@@ -568,8 +568,8 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     }
 
     @Override
-    public CompletableFuture<Message> edit(Message message, boolean updateAll) {
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+    public CompletableFuture<Message> edit(final Message message, final boolean updateAll) {
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
 
         if (updateAll || contentChanged) {
             body.put("content", strBuilder.toString());
@@ -581,7 +581,7 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
 
         prepareComponents(body, updateAll || componentsChanged);
 
-        RestRequest<Message> request = new RestRequest<Message>(message.getApi(),
+        final RestRequest<Message> request = new RestRequest<Message>(message.getApi(),
                 RestMethod.PATCH, RestEndpoint.MESSAGE)
                 .setUrlParameters(Long.toUnsignedString(message.getChannel().getId()),
                         Long.toUnsignedString(message.getId()));
@@ -597,10 +597,10 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
     // Internal MessageBuilder utility methods
     ////////////////////////////////////////////////////////////////////////////////
 
-    private CompletableFuture<Message> checkForAttachmentsAndExecuteRequest(TextChannel channel,
-                                                                            ObjectNode body,
-                                                                            RestRequest<Message> request,
-                                                                            boolean clearAttachmentsIfAppropriate) {
+    private CompletableFuture<Message> checkForAttachmentsAndExecuteRequest(final TextChannel channel,
+                                                                            final ObjectNode body,
+                                                                            final RestRequest<Message> request,
+                                                                            final boolean clearAttachmentsIfAppropriate) {
         if (attachments.isEmpty() && embeds.stream().noneMatch(EmbedBuilder::requiresAttachments)) {
             if (clearAttachmentsIfAppropriate) {
                 body.set("attachments", JsonNodeFactory.instance.objectNode().arrayNode());
@@ -608,13 +608,13 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
             return executeRequestWithoutAttachments(channel, body, request);
         }
 
-        CompletableFuture<Message> future = new CompletableFuture<>();
+        final CompletableFuture<Message> future = new CompletableFuture<>();
         // We access files etc. so this should be async
         channel.getApi().getThreadPool().getExecutorService().submit(() -> {
             try {
-                List<FileContainer> tempAttachments = new ArrayList<>(attachments);
+                final List<FileContainer> tempAttachments = new ArrayList<>(attachments);
                 // Add the attachments required for the embeds
-                for (EmbedBuilder embed : embeds) {
+                for (final EmbedBuilder embed : embeds) {
                     tempAttachments.addAll(
                             ((EmbedBuilderDelegateImpl) embed.getDelegate()).getRequiredAttachments());
                 }
@@ -630,22 +630,22 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
                                 future.complete(newMessage);
                             }
                         });
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 future.completeExceptionally(t);
             }
         });
         return future;
     }
 
-    private CompletableFuture<Message> executeRequestWithoutAttachments(TextChannel channel,
-                                                                        ObjectNode body,
-                                                                        RestRequest<Message> request) {
+    private CompletableFuture<Message> executeRequestWithoutAttachments(final TextChannel channel,
+                                                                        final ObjectNode body,
+                                                                        final RestRequest<Message> request) {
         request.setBody(body);
         return request.execute(result -> new MessageImpl((DiscordApiImpl) channel.getApi(), channel,
                 result.getJsonBody()));
     }
 
-    private void prepareAllowedMentions(ObjectNode body) {
+    private void prepareAllowedMentions(final ObjectNode body) {
         if (allowedMentions != null) {
             ((AllowedMentionsImpl) allowedMentions).toJsonNode(body.putObject("allowed_mentions"));
         }
@@ -659,15 +659,15 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
      * @param attachments The List of FileContainers to add as attachments
      * @param api The api instance needed to add the attachments
      */
-    protected void addMultipartBodyToRequest(RestRequest<?> request, ObjectNode body,
-                                             List<FileContainer> attachments, DiscordApi api) {
-        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder()
+    protected void addMultipartBodyToRequest(final RestRequest<?> request, final ObjectNode body,
+                                             final List<FileContainer> attachments, final DiscordApi api) {
+        final MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("payload_json", body.toString());
 
         Collections.reverse(attachments);
         for (int i = 0; i < attachments.size(); i++) {
-            byte[] bytes = attachments.get(i).asByteArray(api).join();
+            final byte[] bytes = attachments.get(i).asByteArray(api).join();
 
             String mediaType = URLConnection
                     .guessContentTypeFromName(attachments.get(i).getFileTypeOrName());
@@ -681,7 +681,7 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
         request.setMultipartBody(multipartBodyBuilder.build());
     }
 
-    protected void prepareCommonWebhookMessageBodyParts(ObjectNode body) {
+    protected void prepareCommonWebhookMessageBodyParts(final ObjectNode body) {
         body.put("tts", this.tts);
         if (strBuilder.length() != 0) {
             body.put("content", strBuilder.toString());
@@ -690,10 +690,10 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
         prepareEmbeds(body, false);
     }
 
-    private void prepareEmbeds(ObjectNode body, boolean evenIfEmpty) {
+    private void prepareEmbeds(final ObjectNode body, final boolean evenIfEmpty) {
         if (!embeds.isEmpty() || evenIfEmpty) {
-            ArrayNode embedsNode = JsonNodeFactory.instance.objectNode().arrayNode();
-            for (EmbedBuilder embed : embeds) {
+            final ArrayNode embedsNode = JsonNodeFactory.instance.objectNode().arrayNode();
+            for (final EmbedBuilder embed : embeds) {
                 embedsNode.add(((EmbedBuilderDelegateImpl) embed.getDelegate()).toJsonNode());
             }
             body.set("embeds", embedsNode);
@@ -705,13 +705,13 @@ public class MessageBuilderBaseDelegateImpl implements MessageBuilderBaseDelegat
         return strBuilder.toString();
     }
 
-    protected void prepareComponents(ObjectNode body) {
+    protected void prepareComponents(final ObjectNode body) {
         prepareComponents(body, false);
     }
 
-    protected void prepareComponents(ObjectNode body, boolean evenIfEmpty) {
+    protected void prepareComponents(final ObjectNode body, final boolean evenIfEmpty) {
         if (evenIfEmpty || !components.isEmpty()) {
-            ArrayNode componentsNode = JsonNodeFactory.instance.objectNode().arrayNode();
+            final ArrayNode componentsNode = JsonNodeFactory.instance.objectNode().arrayNode();
             components.forEach(
                     highLevelComponent -> componentsNode.add(((ComponentImpl) highLevelComponent).toJsonNode()));
             body.set("components", componentsNode);

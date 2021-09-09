@@ -28,7 +28,7 @@ public class EmbedFooterImpl implements EmbedFooter {
      *
      * @param data The json data of the footer.
      */
-    public EmbedFooterImpl(JsonNode data) {
+    public EmbedFooterImpl(final JsonNode data) {
         text = data.has("text") ? data.get("text").asText() : null;
         iconUrl = data.has("icon_url") && !data.get("icon_url").isNull() ? data.get("icon_url").asText() : null;
         proxyIconUrl = data.has("proxy_icon_url") && !data.get("proxy_icon_url").isNull()
@@ -47,7 +47,7 @@ public class EmbedFooterImpl implements EmbedFooter {
         }
         try {
             return Optional.of(new URL(iconUrl));
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the icon url of the embed footer is malformed! Please contact the developer!", e);
             return Optional.empty();
         }
@@ -60,7 +60,7 @@ public class EmbedFooterImpl implements EmbedFooter {
         }
         try {
             return Optional.of(new URL(proxyIconUrl));
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the embed footer's proxy icon url is malformed! Please contact the developer!", e);
             return Optional.empty();
         }

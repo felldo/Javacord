@@ -15,12 +15,12 @@ public class GuildMembersChunkHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public GuildMembersChunkHandler(DiscordApi api) {
+    public GuildMembersChunkHandler(final DiscordApi api) {
         super(api, true, "GUILD_MEMBERS_CHUNK");
     }
 
     @Override
-    public void handle(JsonNode packet) {
+    public void handle(final JsonNode packet) {
         api.getPossiblyUnreadyServerById(packet.get("guild_id").asLong())
             .map(server -> (ServerImpl) server)
             .ifPresent(server -> server.addMembers(packet.get("members")));

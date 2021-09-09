@@ -20,7 +20,7 @@ public class ActivityPartyImpl implements ActivityParty {
      *
      * @param data The json data of the activity party.
      */
-    public ActivityPartyImpl(JsonNode data) {
+    public ActivityPartyImpl(final JsonNode data) {
         this.id = data.has("id") ? data.get("id").asText(null) : null;
         if (data.has("size")) {
             // The size is an array with two integers
@@ -48,11 +48,11 @@ public class ActivityPartyImpl implements ActivityParty {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (!(obj instanceof ActivityPartyImpl)) {
             return false;
         }
-        ActivityPartyImpl otherParty = (ActivityPartyImpl) obj;
+        final ActivityPartyImpl otherParty = (ActivityPartyImpl) obj;
         return Objects.deepEquals(id, otherParty.id)
                 && Objects.deepEquals(currentSize, otherParty.currentSize)
                 && Objects.deepEquals(maximumSize, otherParty.maximumSize);
@@ -61,9 +61,9 @@ public class ActivityPartyImpl implements ActivityParty {
     @Override
     public int hashCode() {
         int hash = 42;
-        int idHash = id == null ? 0 : id.hashCode();
-        int currentSize = this.currentSize == null ? 0 : this.currentSize;
-        int maximumSize = this.maximumSize == null ? 0 : this.maximumSize;
+        final int idHash = id == null ? 0 : id.hashCode();
+        final int currentSize = this.currentSize == null ? 0 : this.currentSize;
+        final int maximumSize = this.maximumSize == null ? 0 : this.maximumSize;
 
         hash = hash * 11 + idHash;
         hash = hash * 13 + currentSize;

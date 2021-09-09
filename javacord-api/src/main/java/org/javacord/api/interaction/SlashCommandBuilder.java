@@ -27,7 +27,7 @@ public class SlashCommandBuilder {
      * @param name The name.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandBuilder setName(String name) {
+    public SlashCommandBuilder setName(final String name) {
         delegate.setName(name);
         return this;
     }
@@ -38,7 +38,7 @@ public class SlashCommandBuilder {
      * @param description The name.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandBuilder setDescription(String description) {
+    public SlashCommandBuilder setDescription(final String description) {
         delegate.setDescription(description);
         return this;
     }
@@ -49,7 +49,7 @@ public class SlashCommandBuilder {
      * @param option The option.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandBuilder addOption(SlashCommandOption option) {
+    public SlashCommandBuilder addOption(final SlashCommandOption option) {
         delegate.addOption(option);
         return this;
     }
@@ -60,7 +60,7 @@ public class SlashCommandBuilder {
      * @param options The options.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandBuilder setOptions(List<SlashCommandOption> options) {
+    public SlashCommandBuilder setOptions(final List<SlashCommandOption> options) {
         delegate.setOptions(options);
         return this;
     }
@@ -72,7 +72,7 @@ public class SlashCommandBuilder {
      * @param defaultPermission The default permission.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandBuilder setDefaultPermission(Boolean defaultPermission) {
+    public SlashCommandBuilder setDefaultPermission(final Boolean defaultPermission) {
         delegate.setDefaultPermission(defaultPermission);
         return this;
     }
@@ -85,7 +85,7 @@ public class SlashCommandBuilder {
      * @param api The discord api instance.
      * @return The built slash command.
      */
-    public CompletableFuture<SlashCommand> createGlobal(DiscordApi api) {
+    public CompletableFuture<SlashCommand> createGlobal(final DiscordApi api) {
         return delegate.createGlobal(api);
     }
 
@@ -97,7 +97,7 @@ public class SlashCommandBuilder {
      * @param server The server.
      * @return The built slash command.
      */
-    public CompletableFuture<SlashCommand> createForServer(Server server) {
+    public CompletableFuture<SlashCommand> createForServer(final Server server) {
         return delegate.createForServer(server);
     }
 

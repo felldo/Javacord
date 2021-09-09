@@ -15,7 +15,7 @@ public class ServerSlashCommandPermissionsBuilder {
      * @param commandId The command ID which should be updated.
      * @param permissions The permissions for the command which should be updated.
      */
-    public ServerSlashCommandPermissionsBuilder(long commandId, List<SlashCommandPermissions> permissions) {
+    public ServerSlashCommandPermissionsBuilder(final long commandId, final List<SlashCommandPermissions> permissions) {
         this.commandId = commandId;
         this.permissions = new ArrayList<>(permissions);
     }

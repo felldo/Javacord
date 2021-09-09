@@ -25,7 +25,7 @@ public class ServerChangeBoostCountEventImpl extends ServerEventImpl implements 
      * @param newBoostCount The new boost count of the server.
      * @param oldBoostCount The old boost count of the server.
      */
-    public ServerChangeBoostCountEventImpl(ServerImpl server, int newBoostCount, int oldBoostCount) {
+    public ServerChangeBoostCountEventImpl(final ServerImpl server, final int newBoostCount, final int oldBoostCount) {
         super(server);
         this.oldBoostCount = oldBoostCount;
         this.newBoostCount = newBoostCount;

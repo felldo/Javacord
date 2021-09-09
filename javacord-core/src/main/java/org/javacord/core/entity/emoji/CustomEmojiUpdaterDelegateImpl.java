@@ -50,22 +50,22 @@ public class CustomEmojiUpdaterDelegateImpl implements CustomEmojiUpdaterDelegat
      *
      * @param emoji The custom emoji to update.
      */
-    public CustomEmojiUpdaterDelegateImpl(KnownCustomEmoji emoji) {
+    public CustomEmojiUpdaterDelegateImpl(final KnownCustomEmoji emoji) {
         this.emoji = emoji;
     }
 
     @Override
-    public void setAuditLogReason(String reason) {
+    public void setAuditLogReason(final String reason) {
         this.reason = reason;
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
-    public void addRoleToWhitelist(Role role) {
+    public void addRoleToWhitelist(final Role role) {
         if (whitelist == null) {
             whitelist = emoji.getWhitelistedRoles().map(HashSet::new).orElseGet(HashSet::new);
         }
@@ -74,7 +74,7 @@ public class CustomEmojiUpdaterDelegateImpl implements CustomEmojiUpdaterDelegat
     }
 
     @Override
-    public void removeRoleFromWhitelist(Role role) {
+    public void removeRoleFromWhitelist(final Role role) {
         if (whitelist == null) {
             whitelist = emoji.getWhitelistedRoles().map(HashSet::new).orElseGet(HashSet::new);
         }
@@ -89,13 +89,13 @@ public class CustomEmojiUpdaterDelegateImpl implements CustomEmojiUpdaterDelegat
     }
 
     @Override
-    public void setWhitelist(Collection<Role> roles) {
+    public void setWhitelist(final Collection<Role> roles) {
         updateWhitelist = true;
         whitelist = roles == null ? null : new HashSet<>(roles);
     }
 
     @Override
-    public void setWhitelist(Role... roles) {
+    public void setWhitelist(final Role... roles) {
         setWhitelist(roles == null ? null : Arrays.asList(roles));
     }
 
@@ -103,7 +103,7 @@ public class CustomEmojiUpdaterDelegateImpl implements CustomEmojiUpdaterDelegat
     public CompletableFuture<Void> update() {
         // Server settings
         boolean patchEmoji = false;
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         if (name != null) {
             body.put("name", name);
             patchEmoji = true;
@@ -112,7 +112,7 @@ public class CustomEmojiUpdaterDelegateImpl implements CustomEmojiUpdaterDelegat
             if (whitelist == null) {
                 body.putNull("roles");
             } else {
-                ArrayNode jsonRoles = body.putArray("roles");
+                final ArrayNode jsonRoles = body.putArray("roles");
                 whitelist.stream().map(Role::getIdAsString).forEach(jsonRoles::add);
             }
             patchEmoji = true;

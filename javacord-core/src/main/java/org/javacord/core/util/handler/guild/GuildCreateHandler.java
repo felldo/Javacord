@@ -19,26 +19,26 @@ public class GuildCreateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public GuildCreateHandler(DiscordApi api) {
+    public GuildCreateHandler(final DiscordApi api) {
         super(api, true, "GUILD_CREATE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
+    public void handle(final JsonNode packet) {
         if (packet.has("unavailable") && packet.get("unavailable").asBoolean()) {
             return;
         }
-        long id = packet.get("id").asLong();
+        final long id = packet.get("id").asLong();
         if (api.getUnavailableServers().contains(id)) {
-            ServerImpl server = new ServerImpl(api, packet);
-            ServerBecomesAvailableEvent event = new ServerBecomesAvailableEventImpl(server);
+            final ServerImpl server = new ServerImpl(api, packet);
+            final ServerBecomesAvailableEvent event = new ServerBecomesAvailableEventImpl(server);
 
             api.getEventDispatcher().dispatchServerBecomesAvailableEvent(server, event);
             return;
         }
 
-        ServerImpl server = new ServerImpl(api, packet);
-        ServerJoinEvent event = new ServerJoinEventImpl(server);
+        final ServerImpl server = new ServerImpl(api, packet);
+        final ServerJoinEvent event = new ServerJoinEventImpl(server);
 
         api.getEventDispatcher().dispatchServerJoinEvent(server, event);
     }

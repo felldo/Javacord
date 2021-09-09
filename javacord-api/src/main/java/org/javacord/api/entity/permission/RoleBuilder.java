@@ -22,7 +22,7 @@ public class RoleBuilder {
      *
      * @param server The server for which the role should be created.
      */
-    public RoleBuilder(Server server) {
+    public RoleBuilder(final Server server) {
         delegate = DelegateFactory.createRoleBuilderDelegate(server);
     }
 
@@ -32,7 +32,7 @@ public class RoleBuilder {
      * @param reason The reason for this update.
      * @return The current instance in order to chain call methods.
      */
-    public RoleBuilder setAuditLogReason(String reason) {
+    public RoleBuilder setAuditLogReason(final String reason) {
         delegate.setAuditLogReason(reason);
         return this;
     }
@@ -44,7 +44,7 @@ public class RoleBuilder {
      * @param name The name of the role.
      * @return The current instance in order to chain call methods.
      */
-    public RoleBuilder setName(String name) {
+    public RoleBuilder setName(final String name) {
         delegate.setName(name);
         return this;
     }
@@ -56,7 +56,7 @@ public class RoleBuilder {
      * @param permissions The permissions to set.
      * @return The current instance in order to chain call methods.
      */
-    public RoleBuilder setPermissions(Permissions permissions) {
+    public RoleBuilder setPermissions(final Permissions permissions) {
         delegate.setPermissions(permissions);
         return this;
     }
@@ -67,7 +67,7 @@ public class RoleBuilder {
      * @param color The color of the role.
      * @return The current instance in order to chain call methods.
      */
-    public RoleBuilder setColor(Color color) {
+    public RoleBuilder setColor(final Color color) {
         delegate.setColor(color);
         return this;
     }
@@ -79,7 +79,7 @@ public class RoleBuilder {
      * @param mentionable Whether the role should be mentionable or not.
      * @return The current instance in order to chain call methods.
      */
-    public RoleBuilder setMentionable(boolean mentionable) {
+    public RoleBuilder setMentionable(final boolean mentionable) {
         delegate.setMentionable(mentionable);
         return this;
     }
@@ -90,7 +90,7 @@ public class RoleBuilder {
      * @param displaySeparately Whether the role should be pinned in the user listing or not.
      * @return The current instance in order to chain call methods.
      */
-    public RoleBuilder setDisplaySeparately(boolean displaySeparately) {
+    public RoleBuilder setDisplaySeparately(final boolean displaySeparately) {
         delegate.setDisplaySeparately(displaySeparately);
         return this;
     }

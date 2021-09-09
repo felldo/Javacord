@@ -14,12 +14,12 @@ public class ResumedHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public ResumedHandler(DiscordApi api) {
+    public ResumedHandler(final DiscordApi api) {
         super(api, false, "RESUMED");
     }
 
     @Override
-    public void handle(JsonNode packet) {
+    public void handle(final JsonNode packet) {
         // NOP
     }
 

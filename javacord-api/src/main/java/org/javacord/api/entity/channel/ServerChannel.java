@@ -90,7 +90,7 @@ public interface ServerChannel extends Channel, Nameable, ServerChannelAttachabl
      * @param name The new name of the channel.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateName(String name) {
+    default CompletableFuture<Void> updateName(final String name) {
         return createUpdater().setName(name).update();
     }
 
@@ -105,7 +105,7 @@ public interface ServerChannel extends Channel, Nameable, ServerChannelAttachabl
      *     {@link ServerChannel#getRawPosition()} instead of {@link ServerChannel#getPosition()}!
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateRawPosition(int rawPosition) {
+    default CompletableFuture<Void> updateRawPosition(final int rawPosition) {
         return createUpdater().setRawPosition(rawPosition).update();
     }
 
@@ -124,7 +124,7 @@ public interface ServerChannel extends Channel, Nameable, ServerChannelAttachabl
      * @return The overwritten permissions.
      */
     default Map<Long, Permissions> getOverwrittenPermissions() {
-        Map<Long, Permissions> result = new HashMap<>();
+        final Map<Long, Permissions> result = new HashMap<>();
         result.putAll(getOverwrittenRolePermissions());
         result.putAll(getOverwrittenUserPermissions());
         return Collections.unmodifiableMap(result);
@@ -166,12 +166,12 @@ public interface ServerChannel extends Channel, Nameable, ServerChannelAttachabl
      * @param user The user.
      * @return The effective permissions of the user in this channel.
      */
-    default Permissions getEffectivePermissions(User user) {
+    default Permissions getEffectivePermissions(final User user) {
         if (getServer().isOwner(user)) {
             return getServer().getPermissions(user);
         }
-        PermissionsBuilder builder = new PermissionsBuilder(getServer().getPermissions(user));
-        Permissions effectiveOverwrittenPermissions = getEffectiveOverwrittenPermissions(user);
+        final PermissionsBuilder builder = new PermissionsBuilder(getServer().getPermissions(user));
+        final Permissions effectiveOverwrittenPermissions = getEffectiveOverwrittenPermissions(user);
         Arrays.stream(PermissionType.values())
                 .filter(type -> effectiveOverwrittenPermissions.getState(type) != PermissionState.UNSET)
                 .forEachOrdered(type -> builder.setState(type, effectiveOverwrittenPermissions.getState(type)));
@@ -191,7 +191,7 @@ public interface ServerChannel extends Channel, Nameable, ServerChannelAttachabl
      * @param user The user.
      * @return The effective allowed permissions of a user in this channel.
      */
-    default Collection<PermissionType> getEffectiveAllowedPermissions(User user) {
+    default Collection<PermissionType> getEffectiveAllowedPermissions(final User user) {
         return getEffectivePermissions(user).getAllowedPermission();
     }
 
@@ -205,7 +205,7 @@ public interface ServerChannel extends Channel, Nameable, ServerChannelAttachabl
      * @param user The user.
      * @return The effective denied permissions of a user in this channel.
      */
-    default Collection<PermissionType> getEffectiveDeniedPermissions(User user) {
+    default Collection<PermissionType> getEffectiveDeniedPermissions(final User user) {
         return getEffectivePermissions(user).getDeniedPermissions();
     }
 
@@ -217,7 +217,7 @@ public interface ServerChannel extends Channel, Nameable, ServerChannelAttachabl
      * @return Whether the user has all given permissions or not.
      * @see #getEffectiveAllowedPermissions(User)
      */
-    default boolean hasPermissions(User user, PermissionType... type) {
+    default boolean hasPermissions(final User user, final PermissionType... type) {
         return getEffectiveAllowedPermissions(user).containsAll(Arrays.asList(type));
     }
 
@@ -229,9 +229,9 @@ public interface ServerChannel extends Channel, Nameable, ServerChannelAttachabl
      * @return Whether the user has any of the given permissions or not.
      * @see #getEffectiveAllowedPermissions(User)
      */
-    default boolean hasAnyPermission(User user, PermissionType... type) {
+    default boolean hasAnyPermission(final User user, final PermissionType... type) {
         return getEffectiveAllowedPermissions(user).stream().anyMatch(
-                allowedPermissionType -> Arrays.stream(type).anyMatch(allowedPermissionType::equals)
+                allowedPermissionType -> Arrays.asList(type).contains(allowedPermissionType)
         );
     }
 
@@ -245,7 +245,7 @@ public interface ServerChannel extends Channel, Nameable, ServerChannelAttachabl
      * @param permission The permission to check.
      * @return Whether the user has the permission or not.
      */
-    default boolean hasPermission(User user, PermissionType permission) {
+    default boolean hasPermission(final User user, final PermissionType permission) {
         return getEffectiveAllowedPermissions(user).contains(permission);
     }
 
@@ -272,7 +272,7 @@ public interface ServerChannel extends Channel, Nameable, ServerChannelAttachabl
      * @param user The user to check.
      * @return Whether the given user can create an instant invite or not.
      */
-    default boolean canCreateInstantInvite(User user) {
+    default boolean canCreateInstantInvite(final User user) {
         // The user must be able to see the channel
         if (!canSee(user)) {
             return false;
@@ -303,11 +303,11 @@ public interface ServerChannel extends Channel, Nameable, ServerChannelAttachabl
 
     @Override
     default CompletableFuture<? extends ServerChannel> getLatestInstance() {
-        Optional<? extends ServerChannel> currentCachedInstance = getCurrentCachedInstance();
+        final Optional<? extends ServerChannel> currentCachedInstance = getCurrentCachedInstance();
         if (currentCachedInstance.isPresent()) {
             return CompletableFuture.completedFuture(currentCachedInstance.get());
         } else {
-            CompletableFuture<? extends ServerChannel> result = new CompletableFuture<>();
+            final CompletableFuture<? extends ServerChannel> result = new CompletableFuture<>();
             result.completeExceptionally(new NoSuchElementException());
             return result;
         }
@@ -321,7 +321,7 @@ public interface ServerChannel extends Channel, Nameable, ServerChannelAttachabl
      * @throws IllegalArgumentException If the channels are on different servers.
      */
     @Override
-    default int compareTo(ServerChannel channel) {
+    default int compareTo(final ServerChannel channel) {
         if (!getServer().equals(channel.getServer())) {
             throw new IllegalArgumentException("Only channels from the same server can be compared for order");
         }

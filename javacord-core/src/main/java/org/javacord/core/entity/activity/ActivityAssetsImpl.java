@@ -30,7 +30,7 @@ public class ActivityAssetsImpl implements ActivityAssets {
      * @param activity The associated activity.
      * @param data The json data of the assets party.
      */
-    public ActivityAssetsImpl(ActivityImpl activity, JsonNode data) {
+    public ActivityAssetsImpl(final ActivityImpl activity, final JsonNode data) {
         this.activity = activity;
 
         this.largeImage = data.has("large_image") ? data.get("large_image").asText(null) : null;
@@ -47,7 +47,7 @@ public class ActivityAssetsImpl implements ActivityAssets {
                 .map(url -> {
                     try {
                         return new URL(url);
-                    } catch (MalformedURLException e) {
+                    } catch (final MalformedURLException e) {
                         throw new CompletionException(e);
                     }
                 })
@@ -67,7 +67,7 @@ public class ActivityAssetsImpl implements ActivityAssets {
                 .map(url -> {
                     try {
                         return new URL(url);
-                    } catch (MalformedURLException e) {
+                    } catch (final MalformedURLException e) {
                         throw new CompletionException(e);
                     }
                 })
@@ -80,11 +80,11 @@ public class ActivityAssetsImpl implements ActivityAssets {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (!(obj instanceof ActivityAssetsImpl)) {
             return false;
         }
-        ActivityAssetsImpl otherAssets = (ActivityAssetsImpl) obj;
+        final ActivityAssetsImpl otherAssets = (ActivityAssetsImpl) obj;
         return Objects.deepEquals(largeImage, otherAssets.largeImage)
                 && Objects.deepEquals(largeText, otherAssets.largeText)
                 && Objects.deepEquals(smallImage, otherAssets.smallImage)
@@ -94,10 +94,10 @@ public class ActivityAssetsImpl implements ActivityAssets {
     @Override
     public int hashCode() {
         int hash = 42;
-        int largeImageHash = largeImage == null ? 0 : largeImage.hashCode();
-        int largeTextHash = largeText == null ? 0 : largeText.hashCode();
-        int smallImageHash = smallImage == null ? 0 : smallImage.hashCode();
-        int smallTextHash = smallText == null ? 0 : smallText.hashCode();
+        final int largeImageHash = largeImage == null ? 0 : largeImage.hashCode();
+        final int largeTextHash = largeText == null ? 0 : largeText.hashCode();
+        final int smallImageHash = smallImage == null ? 0 : smallImage.hashCode();
+        final int smallTextHash = smallText == null ? 0 : smallText.hashCode();
 
         hash = hash * 11 + largeImageHash;
         hash = hash * 13 + largeTextHash;

@@ -25,7 +25,7 @@ public class ServerChangeAfkTimeoutEventImpl extends ServerEventImpl implements 
      * @param newAfkTimeout The new afk timeout of the server.
      * @param oldAfkTimeout The old afk timeout of the server.
      */
-    public ServerChangeAfkTimeoutEventImpl(Server server, int newAfkTimeout, int oldAfkTimeout) {
+    public ServerChangeAfkTimeoutEventImpl(final Server server, final int newAfkTimeout, final int oldAfkTimeout) {
         super(server);
         this.newAfkTimeout = newAfkTimeout;
         this.oldAfkTimeout = oldAfkTimeout;

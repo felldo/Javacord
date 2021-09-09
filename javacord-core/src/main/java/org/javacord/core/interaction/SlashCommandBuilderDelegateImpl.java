@@ -25,22 +25,22 @@ public class SlashCommandBuilderDelegateImpl implements SlashCommandBuilderDeleg
     private Boolean defaultPermission;
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
     @Override
-    public void addOption(SlashCommandOption option) {
+    public void addOption(final SlashCommandOption option) {
         options.add(option);
     }
 
     @Override
-    public void setOptions(List<SlashCommandOption> options) {
+    public void setOptions(final List<SlashCommandOption> options) {
         if (options == null) {
             this.options.clear();
         } else {
@@ -49,12 +49,12 @@ public class SlashCommandBuilderDelegateImpl implements SlashCommandBuilderDeleg
     }
 
     @Override
-    public void setDefaultPermission(Boolean defaultPermission) {
+    public void setDefaultPermission(final Boolean defaultPermission) {
         this.defaultPermission = defaultPermission;
     }
 
     @Override
-    public CompletableFuture<SlashCommand> createGlobal(DiscordApi api) {
+    public CompletableFuture<SlashCommand> createGlobal(final DiscordApi api) {
         return new RestRequest<SlashCommand>(api, RestMethod.POST, RestEndpoint.SLASH_COMMANDS)
                 .setUrlParameters(String.valueOf(api.getClientId()))
                 .setBody(getJsonBodyForSlashCommand())
@@ -62,7 +62,7 @@ public class SlashCommandBuilderDelegateImpl implements SlashCommandBuilderDeleg
     }
 
     @Override
-    public CompletableFuture<SlashCommand> createForServer(Server server) {
+    public CompletableFuture<SlashCommand> createForServer(final Server server) {
         return new RestRequest<SlashCommand>(
                 server.getApi(), RestMethod.POST, RestEndpoint.SERVER_SLASH_COMMANDS)
                 .setUrlParameters(String.valueOf(server.getApi().getClientId()), server.getIdAsString())
@@ -76,12 +76,12 @@ public class SlashCommandBuilderDelegateImpl implements SlashCommandBuilderDeleg
      * @return The JSON of this slash command.
      */
     public ObjectNode getJsonBodyForSlashCommand() {
-        ObjectNode jsonBody = JsonNodeFactory.instance.objectNode()
+        final ObjectNode jsonBody = JsonNodeFactory.instance.objectNode()
                 .put("name", name)
                 .put("description", description);
 
         if (!options.isEmpty()) {
-            ArrayNode jsonOptions = jsonBody.putArray("options");
+            final ArrayNode jsonOptions = jsonBody.putArray("options");
             options.stream()
                     .map(SlashCommandOptionImpl.class::cast)
                     .map(SlashCommandOptionImpl::toJsonNode)

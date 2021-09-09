@@ -25,7 +25,7 @@ public class UserChangeNameEventImpl extends UserEventImpl implements UserChange
      * @param newName The new name of the user.
      * @param oldName The old name of the user.
      */
-    public UserChangeNameEventImpl(User user, String newName, String oldName) {
+    public UserChangeNameEventImpl(final User user, final String newName, final String oldName) {
         super(user);
         this.newName = newName;
         this.oldName = oldName;

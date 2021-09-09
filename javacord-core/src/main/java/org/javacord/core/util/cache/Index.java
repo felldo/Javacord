@@ -39,7 +39,7 @@ public class Index<K, E> {
      *
      * @param keyMapper A function to map elements to their key.
      */
-    public Index(Function<E, K> keyMapper) {
+    public Index(final Function<E, K> keyMapper) {
         this(keyMapper, HashMap.empty(), HashMap.empty());
     }
 
@@ -50,7 +50,7 @@ public class Index<K, E> {
      * @param elementsByKey The elements by their key.
      * @param keyByElement The key by the element.
      */
-    private Index(Function<E, K> keyMapper, Map<K, Set<E>> elementsByKey, Map<E, K> keyByElement) {
+    private Index(final Function<E, K> keyMapper, final Map<K, Set<E>> elementsByKey, final Map<E, K> keyByElement) {
         this.keyMapper = keyMapper;
         this.elementsByKey = elementsByKey;
         this.keyByElement = keyByElement;
@@ -76,20 +76,20 @@ public class Index<K, E> {
      * @param element The element to add.
      * @return The new index with the added element.
      */
-    public Index<K, E> addElement(E element) {
-        K key = keyMapper.apply(element);
+    public Index<K, E> addElement(final E element) {
+        final K key = keyMapper.apply(element);
         if (key == null) {
             return this;
         }
-        Set<E> elements = find(key);
+        final Set<E> elements = find(key);
         if (elements.contains(element)) {
             return this;
         }
         if (keyByElement.containsKey(element)) {
             throw new IllegalStateException("The given element is already in the index with a different key");
         }
-        Map<K, Set<E>> newElementsByKey = elementsByKey.put(key, elements.add(element));
-        Map<E, K> newKeyByElement = keyByElement.put(element, key);
+        final Map<K, Set<E>> newElementsByKey = elementsByKey.put(key, elements.add(element));
+        final Map<E, K> newKeyByElement = keyByElement.put(element, key);
         return new Index<>(keyMapper, newElementsByKey, newKeyByElement);
     }
 
@@ -101,17 +101,17 @@ public class Index<K, E> {
      * @param element The element to remove.
      * @return The new index with the element removed.
      */
-    public Index<K, E> removeElement(E element) {
-        K key = keyByElement.getOrElse(element, null);
+    public Index<K, E> removeElement(final E element) {
+        final K key = keyByElement.getOrElse(element, null);
         if (key == null) {
             return this;
         }
-        Set<E> elements = find(key);
+        final Set<E> elements = find(key);
         if (!elements.contains(element)) {
             return this;
         }
-        Map<K, Set<E>> newElementsByKey = elementsByKey.put(key, elements.remove(element));
-        Map<E, K> newKeyByElement = keyByElement.remove(element);
+        final Map<K, Set<E>> newElementsByKey = elementsByKey.put(key, elements.remove(element));
+        final Map<E, K> newKeyByElement = keyByElement.remove(element);
         return new Index<>(keyMapper, newElementsByKey, newKeyByElement);
     }
 
@@ -123,7 +123,7 @@ public class Index<K, E> {
      * @param key The key of the elements.
      * @return The elements with the given key.
      */
-    public Set<E> find(K key) {
+    public Set<E> find(final K key) {
         return elementsByKey.getOrElse(key, HashSet.empty());
     }
 
@@ -135,7 +135,7 @@ public class Index<K, E> {
      * @param key The key of the element.
      * @return An element with the given key.
      */
-    public Optional<E> findAny(K key) {
+    public Optional<E> findAny(final K key) {
         return find(key).headOption().toJavaOptional();
     }
 }

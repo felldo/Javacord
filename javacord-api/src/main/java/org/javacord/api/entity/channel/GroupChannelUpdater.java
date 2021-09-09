@@ -20,7 +20,7 @@ public class GroupChannelUpdater {
      *
      * @param channel The channel to update.
      */
-    public GroupChannelUpdater(GroupChannel channel) {
+    public GroupChannelUpdater(final GroupChannel channel) {
         delegate = DelegateFactory.createGroupChannelUpdaterDelegate(channel);
     }
 
@@ -30,7 +30,7 @@ public class GroupChannelUpdater {
      * @param name The new name of the channel.
      * @return The current instance in order to chain call methods.
      */
-    public GroupChannelUpdater setName(String name) {
+    public GroupChannelUpdater setName(final String name) {
         delegate.setName(name);
         return this;
     }

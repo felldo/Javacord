@@ -48,62 +48,62 @@ public class WebhookBuilderDelegateImpl implements WebhookBuilderDelegate {
      *
      * @param channel The channel for the webhook.
      */
-    public WebhookBuilderDelegateImpl(ServerTextChannel channel) {
+    public WebhookBuilderDelegateImpl(final ServerTextChannel channel) {
         this.channel = channel;
     }
 
     @Override
-    public void setAuditLogReason(String reason) {
+    public void setAuditLogReason(final String reason) {
         this.reason = reason;
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
-    public void setAvatar(BufferedImage avatar) {
+    public void setAvatar(final BufferedImage avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, "png");
     }
 
     @Override
-    public void setAvatar(BufferedImage avatar, String fileType) {
+    public void setAvatar(final BufferedImage avatar, final String fileType) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, fileType);
     }
 
     @Override
-    public void setAvatar(File avatar) {
+    public void setAvatar(final File avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar);
     }
 
     @Override
-    public void setAvatar(Icon avatar) {
+    public void setAvatar(final Icon avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar);
     }
 
     @Override
-    public void setAvatar(URL avatar) {
+    public void setAvatar(final URL avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar);
     }
 
     @Override
-    public void setAvatar(byte[] avatar) {
+    public void setAvatar(final byte[] avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, "png");
     }
 
     @Override
-    public void setAvatar(byte[] avatar, String fileType) {
+    public void setAvatar(final byte[] avatar, final String fileType) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, fileType);
     }
 
     @Override
-    public void setAvatar(InputStream avatar) {
+    public void setAvatar(final InputStream avatar) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, "png");
     }
 
     @Override
-    public void setAvatar(InputStream avatar, String fileType) {
+    public void setAvatar(final InputStream avatar, final String fileType) {
         this.avatar = (avatar == null) ? null : new FileContainer(avatar, fileType);
     }
 
@@ -112,11 +112,11 @@ public class WebhookBuilderDelegateImpl implements WebhookBuilderDelegate {
         if (name == null) {
             throw new IllegalStateException("Name is no optional parameter!");
         }
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         body.put("name", name);
         if (avatar != null) {
             return avatar.asByteArray(channel.getApi()).thenAccept(bytes -> {
-                String base64Avatar = "data:image/" + avatar.getFileType() + ";base64,"
+                final String base64Avatar = "data:image/" + avatar.getFileType() + ";base64,"
                         + Base64.getEncoder().encodeToString(bytes);
                 body.put("avatar", base64Avatar);
             }).thenCompose(aVoid ->

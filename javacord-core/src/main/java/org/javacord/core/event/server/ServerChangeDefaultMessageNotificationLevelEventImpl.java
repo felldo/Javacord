@@ -28,8 +28,8 @@ public class ServerChangeDefaultMessageNotificationLevelEventImpl extends Server
      * @param oldDefaultMessageNotificationLevel The old default message notification level of the server.
      */
     public ServerChangeDefaultMessageNotificationLevelEventImpl(
-            Server server, DefaultMessageNotificationLevel newDefaultMessageNotificationLevel,
-            DefaultMessageNotificationLevel oldDefaultMessageNotificationLevel) {
+            final Server server, final DefaultMessageNotificationLevel newDefaultMessageNotificationLevel,
+            final DefaultMessageNotificationLevel oldDefaultMessageNotificationLevel) {
         super(server);
         this.newDefaultMessageNotificationLevel = newDefaultMessageNotificationLevel;
         this.oldDefaultMessageNotificationLevel = oldDefaultMessageNotificationLevel;

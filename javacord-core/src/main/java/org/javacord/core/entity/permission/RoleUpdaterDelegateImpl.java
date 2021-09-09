@@ -57,44 +57,44 @@ public class RoleUpdaterDelegateImpl implements RoleUpdaterDelegate {
      *
      * @param role The role to update.
      */
-    public RoleUpdaterDelegateImpl(Role role) {
+    public RoleUpdaterDelegateImpl(final Role role) {
         this.role = role;
     }
 
     @Override
-    public void setAuditLogReason(String reason) {
+    public void setAuditLogReason(final String reason) {
         this.reason = reason;
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
-    public void setPermissions(Permissions permissions) {
+    public void setPermissions(final Permissions permissions) {
         this.permissions = permissions;
     }
 
     @Override
-    public void setColor(Color color) {
+    public void setColor(final Color color) {
         this.color = color;
     }
 
     @Override
-    public void setDisplaySeparatelyFlag(boolean displaySeparately) {
+    public void setDisplaySeparatelyFlag(final boolean displaySeparately) {
         this.displaySeparately = displaySeparately;
     }
 
     @Override
-    public void setMentionableFlag(boolean mentionable) {
+    public void setMentionableFlag(final boolean mentionable) {
         this.mentionable = mentionable;
     }
 
     @Override
     public CompletableFuture<Void> update() {
         boolean patchRole = false;
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         if (name != null) {
             body.put("name", name);
             patchRole = true;

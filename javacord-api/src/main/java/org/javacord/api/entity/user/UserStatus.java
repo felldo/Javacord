@@ -38,7 +38,7 @@ public enum UserStatus {
      *
      * @param statusString The string which is used by Discord to identify the status.
      */
-    UserStatus(String statusString) {
+    UserStatus(final String statusString) {
         this.statusString = statusString;
     }
 
@@ -58,8 +58,8 @@ public enum UserStatus {
      *
      * @return The status or {@link UserStatus#OFFLINE} if unknown string.
      */
-    public static UserStatus fromString(String str) {
-        for (UserStatus status : values()) {
+    public static UserStatus fromString(final String str) {
+        for (final UserStatus status : values()) {
             if (status.statusString.equals(str)) {
                 return status;
             }

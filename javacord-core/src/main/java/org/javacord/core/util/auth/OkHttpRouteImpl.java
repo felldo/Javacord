@@ -22,7 +22,7 @@ public class OkHttpRouteImpl implements Route {
      *
      * @param route The real route from OkHttp.
      */
-    public OkHttpRouteImpl(okhttp3.Route route) {
+    public OkHttpRouteImpl(final okhttp3.Route route) {
         this.route = route;
     }
 
@@ -42,14 +42,14 @@ public class OkHttpRouteImpl implements Route {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
         if ((o == null) || (getClass() != o.getClass())) {
             return false;
         }
-        OkHttpRouteImpl that = (OkHttpRouteImpl) o;
+        final OkHttpRouteImpl that = (OkHttpRouteImpl) o;
         return Objects.equals(getUrl(), that.getUrl())
                 && Objects.equals(getProxy(), that.getProxy())
                 && Objects.equals(getInetSocketAddress(), that.getInetSocketAddress());

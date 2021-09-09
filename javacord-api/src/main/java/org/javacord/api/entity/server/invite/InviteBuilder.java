@@ -21,7 +21,7 @@ public class InviteBuilder {
      *
      * @param channel The channel for the invite.
      */
-    public InviteBuilder(ServerChannel channel) {
+    public InviteBuilder(final ServerChannel channel) {
         delegate = DelegateFactory.createInviteBuilderDelegate(channel);
     }
 
@@ -31,7 +31,7 @@ public class InviteBuilder {
      * @param reason The reason for this update.
      * @return The current instance in order to chain call methods.
      */
-    public InviteBuilder setAuditLogReason(String reason) {
+    public InviteBuilder setAuditLogReason(final String reason) {
         delegate.setAuditLogReason(reason);
         return this;
     }
@@ -43,7 +43,7 @@ public class InviteBuilder {
      * @param maxAge The duration of the invite in seconds before expiry, or 0 for never.
      * @return The current instance in order to chain call methods.
      */
-    public InviteBuilder setMaxAgeInSeconds(int maxAge) {
+    public InviteBuilder setMaxAgeInSeconds(final int maxAge) {
         delegate.setMaxAgeInSeconds(maxAge);
         return this;
     }
@@ -67,7 +67,7 @@ public class InviteBuilder {
      * @param maxUses The max number of uses or 0 for unlimited.
      * @return The current instance in order to chain call methods.
      */
-    public InviteBuilder setMaxUses(int maxUses) {
+    public InviteBuilder setMaxUses(final int maxUses) {
         delegate.setMaxUses(maxUses);
         return this;
     }
@@ -79,7 +79,7 @@ public class InviteBuilder {
      * @param temporary Whether this invite should only grant temporary membership or not.
      * @return The current instance in order to chain call methods.
      */
-    public InviteBuilder setTemporary(boolean temporary) {
+    public InviteBuilder setTemporary(final boolean temporary) {
         delegate.setTemporary(temporary);
         return this;
     }
@@ -91,7 +91,7 @@ public class InviteBuilder {
      * @param unique Whether this invite should be unique or not.
      * @return The current instance in order to chain call methods.
      */
-    public InviteBuilder setUnique(boolean unique) {
+    public InviteBuilder setUnique(final boolean unique) {
         delegate.setUnique(unique);
         return this;
     }

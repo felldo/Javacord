@@ -11,18 +11,18 @@ public class SlashCommandOptionChoiceBuilderDelegateImpl
     private Integer intValue;
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
-    public void setValue(String value) {
+    public void setValue(final String value) {
         stringValue = value;
         intValue = null;
     }
 
     @Override
-    public void setValue(int value) {
+    public void setValue(final int value) {
         stringValue = null;
         intValue = value;
     }

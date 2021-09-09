@@ -30,7 +30,7 @@ public class RatelimitBucket {
      * @param api The api/shard to use.
      * @param endpoint The REST endpoint the ratelimit is tracked for.
      */
-    public RatelimitBucket(DiscordApi api, RestEndpoint endpoint) {
+    public RatelimitBucket(final DiscordApi api, final RestEndpoint endpoint) {
         this(api, endpoint, null);
     }
 
@@ -41,7 +41,7 @@ public class RatelimitBucket {
      * @param endpoint The REST endpoint the ratelimit is tracked for.
      * @param majorUrlParameter The url parameter this bucket is specific for. May be null.
      */
-    public RatelimitBucket(DiscordApi api, RestEndpoint endpoint, String majorUrlParameter) {
+    public RatelimitBucket(final DiscordApi api, RestEndpoint endpoint, final String majorUrlParameter) {
         this.api = (DiscordApiImpl) api;
         if (endpoint.isGlobal()) {
             endpoint = null;
@@ -56,7 +56,7 @@ public class RatelimitBucket {
      * @param api A discord api instance.
      * @param resetTimestamp The reset timestamp of the global ratelimit.
      */
-    public static void setGlobalRatelimitResetTimestamp(DiscordApi api, long resetTimestamp) {
+    public static void setGlobalRatelimitResetTimestamp(final DiscordApi api, final long resetTimestamp) {
         globalRatelimitResetTimestamp.put(api.getToken(), resetTimestamp);
     }
 
@@ -65,7 +65,7 @@ public class RatelimitBucket {
      *
      * @param request The request to add.
      */
-    public void addRequestToQueue(RestRequest<?> request) {
+    public void addRequestToQueue(final RestRequest<?> request) {
         requestQueue.add(request);
     }
 
@@ -92,7 +92,7 @@ public class RatelimitBucket {
      *
      * @param ratelimitRemaining The remaining requests till ratelimit.
      */
-    public void setRatelimitRemaining(int ratelimitRemaining) {
+    public void setRatelimitRemaining(final int ratelimitRemaining) {
         this.ratelimitRemaining = ratelimitRemaining;
     }
 
@@ -101,7 +101,7 @@ public class RatelimitBucket {
      *
      * @param ratelimitResetTimestamp The ratelimit reset timestamp.
      */
-    public void setRatelimitResetTimestamp(long ratelimitResetTimestamp) {
+    public void setRatelimitResetTimestamp(final long ratelimitResetTimestamp) {
         this.ratelimitResetTimestamp = ratelimitResetTimestamp;
     }
 
@@ -111,9 +111,9 @@ public class RatelimitBucket {
      * @return The time in seconds how long you have to wait till there's space in the bucket again.
      */
     public int getTimeTillSpaceGetsAvailable() {
-        long globalRatelimitResetTimestamp =
+        final long globalRatelimitResetTimestamp =
                 RatelimitBucket.globalRatelimitResetTimestamp.getOrDefault(api.getToken(), 0L);
-        long timestamp = System.currentTimeMillis() + (api.getTimeOffset() == null ? 0 : api.getTimeOffset());
+        final long timestamp = System.currentTimeMillis() + (api.getTimeOffset() == null ? 0 : api.getTimeOffset());
         if (ratelimitRemaining > 0 && (globalRatelimitResetTimestamp - timestamp) <= 0) {
             return 0;
         }
@@ -127,13 +127,13 @@ public class RatelimitBucket {
      * @param majorUrlParameter The major url parameter.
      * @return Whether a bucket created with the given parameters would equal this bucket or not.
      */
-    public boolean equals(RestEndpoint endpoint, String majorUrlParameter) {
+    public boolean equals(RestEndpoint endpoint, final String majorUrlParameter) {
         if (endpoint.isGlobal()) {
             endpoint = null;
         }
-        boolean endpointSame = this.endpoint == endpoint;
-        boolean majorUrlParameterBothNull = this.majorUrlParameter == null && majorUrlParameter == null;
-        boolean majorUrlParameterEqual =
+        final boolean endpointSame = this.endpoint == endpoint;
+        final boolean majorUrlParameterBothNull = this.majorUrlParameter == null && majorUrlParameter == null;
+        final boolean majorUrlParameterEqual =
                 this.majorUrlParameter != null && this.majorUrlParameter.equals(majorUrlParameter);
 
         return endpointSame && (majorUrlParameterBothNull || majorUrlParameterEqual);
@@ -141,19 +141,19 @@ public class RatelimitBucket {
 
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (!(obj instanceof RatelimitBucket)) {
             return false;
         }
-        RatelimitBucket otherBucket = (RatelimitBucket) obj;
+        final RatelimitBucket otherBucket = (RatelimitBucket) obj;
         return equals(otherBucket.endpoint, otherBucket.majorUrlParameter);
     }
 
     @Override
     public int hashCode() {
         int hash = 42;
-        int urlParamHash = majorUrlParameter == null ? 0 : majorUrlParameter.hashCode();
-        int endpointHash = endpoint == null ? 0 : endpoint.hashCode();
+        final int urlParamHash = majorUrlParameter == null ? 0 : majorUrlParameter.hashCode();
+        final int endpointHash = endpoint == null ? 0 : endpoint.hashCode();
 
         hash = hash * 11 + urlParamHash;
         hash = hash * 17 + endpointHash;

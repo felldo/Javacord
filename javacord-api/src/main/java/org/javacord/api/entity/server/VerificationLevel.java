@@ -22,7 +22,7 @@ public enum VerificationLevel {
      *
      * @param id The id of the verification level.
      */
-    VerificationLevel(int id) {
+    VerificationLevel(final int id) {
         this.id = id;
     }
 
@@ -41,8 +41,8 @@ public enum VerificationLevel {
      * @param id The id of the verification level.
      * @return The verification level with the given id.
      */
-    public static VerificationLevel fromId(int id) {
-        for (VerificationLevel verificationLevel : values()) {
+    public static VerificationLevel fromId(final int id) {
+        for (final VerificationLevel verificationLevel : values()) {
             if (verificationLevel.getId() == id) {
                 return verificationLevel;
             }

@@ -24,7 +24,7 @@ public class OkHttpResponseImpl implements Response {
      *
      * @param response The real response from OkHttp.
      */
-    public OkHttpResponseImpl(okhttp3.Response response) {
+    public OkHttpResponseImpl(final okhttp3.Response response) {
         this.response = response;
     }
 
@@ -45,7 +45,7 @@ public class OkHttpResponseImpl implements Response {
 
     @Override
     public Optional<String> getBody() throws IOException {
-        ResponseBody responseBody = response.body();
+        final ResponseBody responseBody = response.body();
         if (responseBody == null) {
             return Optional.empty();
         }
@@ -54,7 +54,7 @@ public class OkHttpResponseImpl implements Response {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         try {
             if (this == o) {
                 return true;
@@ -62,12 +62,12 @@ public class OkHttpResponseImpl implements Response {
             if ((o == null) || (getClass() != o.getClass())) {
                 return false;
             }
-            OkHttpResponseImpl that = (OkHttpResponseImpl) o;
+            final OkHttpResponseImpl that = (OkHttpResponseImpl) o;
             return getCode() == that.getCode()
                     && Objects.equals(getMessage(), that.getMessage())
                     && Objects.equals(getHeaders(), that.getHeaders())
                     && Objects.equals(getBody(), that.getBody());
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -76,7 +76,7 @@ public class OkHttpResponseImpl implements Response {
     public int hashCode() {
         try {
             return Objects.hash(getCode(), getMessage(), getHeaders(), getBody());
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -86,7 +86,7 @@ public class OkHttpResponseImpl implements Response {
         String body;
         try {
             body = getBody().toString();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             body = "<unknown>";
         }
         return String.format(

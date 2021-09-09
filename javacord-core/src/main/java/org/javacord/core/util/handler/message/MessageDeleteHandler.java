@@ -30,23 +30,23 @@ public class MessageDeleteHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public MessageDeleteHandler(DiscordApi api) {
+    public MessageDeleteHandler(final DiscordApi api) {
         super(api, true, "MESSAGE_DELETE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        long messageId = packet.get("id").asLong();
-        long channelId = packet.get("channel_id").asLong();
+    public void handle(final JsonNode packet) {
+        final long messageId = packet.get("id").asLong();
+        final long channelId = packet.get("channel_id").asLong();
 
-        Optional<TextChannel> optionalChannel = api.getTextChannelById(channelId);
+        final Optional<TextChannel> optionalChannel = api.getTextChannelById(channelId);
         if (optionalChannel.isPresent()) {
-            TextChannel channel = optionalChannel.get();
-            MessageDeleteEvent event = new MessageDeleteEventImpl(api, messageId, channel);
+            final TextChannel channel = optionalChannel.get();
+            final MessageDeleteEvent event = new MessageDeleteEventImpl(api, messageId, channel);
 
             api.removeMessageFromCache(messageId);
 
-            Optional<Server> optionalServer = channel.asServerChannel().map(ServerChannel::getServer);
+            final Optional<Server> optionalServer = channel.asServerChannel().map(ServerChannel::getServer);
             api.getEventDispatcher().dispatchMessageDeleteEvent(
                     optionalServer.map(DispatchQueueSelector.class::cast).orElse(api),
                     messageId,

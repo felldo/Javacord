@@ -54,7 +54,7 @@ public interface SelectMenu extends LowLevelComponent {
      * @param options The select menu options.
      * @return The created select menu.
      */
-    static SelectMenu create(String customId, List<SelectMenuOption> options) {
+    static SelectMenu create(final String customId, final List<SelectMenuOption> options) {
         return new SelectMenuBuilder()
                 .setCustomId(customId)
                 .addOptions(options)
@@ -69,7 +69,7 @@ public interface SelectMenu extends LowLevelComponent {
      * @param isDisabled Set if the menu should be disabled.
      * @return The created select menu.
      */
-    static SelectMenu create(String customId, List<SelectMenuOption> options, boolean isDisabled) {
+    static SelectMenu create(final String customId, final List<SelectMenuOption> options, final boolean isDisabled) {
         return new SelectMenuBuilder()
                 .setCustomId(customId)
                 .addOptions(options)
@@ -85,7 +85,7 @@ public interface SelectMenu extends LowLevelComponent {
      * @param options The select menu options.
      * @return The created select menu.
      */
-    static SelectMenu create(String customId, String placeholder, List<SelectMenuOption> options) {
+    static SelectMenu create(final String customId, final String placeholder, final List<SelectMenuOption> options) {
         return new SelectMenuBuilder()
                 .setCustomId(customId)
                 .setPlaceholder(placeholder)
@@ -102,7 +102,7 @@ public interface SelectMenu extends LowLevelComponent {
      * @param isDisabled Set if the menu should be disabled.
      * @return The created select menu.
      */
-    static SelectMenu create(String customId, String placeholder, List<SelectMenuOption> options, boolean isDisabled) {
+    static SelectMenu create(final String customId, final String placeholder, final List<SelectMenuOption> options, final boolean isDisabled) {
         return new SelectMenuBuilder()
                 .setCustomId(customId)
                 .setPlaceholder(placeholder)
@@ -121,8 +121,8 @@ public interface SelectMenu extends LowLevelComponent {
      * @param options The select menu options.
      * @return The created select menu.
      */
-    static SelectMenu create(String customId, String placeholder, int minimumValues,
-                             int maximumValues, List<SelectMenuOption> options) {
+    static SelectMenu create(final String customId, final String placeholder, final int minimumValues,
+                             final int maximumValues, final List<SelectMenuOption> options) {
         return new SelectMenuBuilder()
                 .setCustomId(customId)
                 .setPlaceholder(placeholder)
@@ -143,8 +143,8 @@ public interface SelectMenu extends LowLevelComponent {
      * @param isDisabled Set if the menu should be disabled.
      * @return The created select menu.
      */
-    static SelectMenu create(String customId, String placeholder, int minimumValues,
-                             int maximumValues, List<SelectMenuOption> options, boolean isDisabled) {
+    static SelectMenu create(final String customId, final String placeholder, final int minimumValues,
+                             final int maximumValues, final List<SelectMenuOption> options, final boolean isDisabled) {
         return new SelectMenuBuilder()
                 .setCustomId(customId)
                 .setPlaceholder(placeholder)

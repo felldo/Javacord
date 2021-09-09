@@ -19,7 +19,7 @@ public interface Specializable<S> {
      * @return Returns an {@code Optional} of this instance if it could be cast, otherwise an empty result.
      * @throws NullPointerException If the type is {@code null}.
      */
-    default <T extends S> Optional<T> as(Class<T> type) {
+    default <T extends S> Optional<T> as(final Class<T> type) {
         Objects.requireNonNull(type, "type must not be null");
         return type.isAssignableFrom(this.getClass()) ? Optional.of(type.cast(this)) : Optional.empty();
     }

@@ -25,7 +25,7 @@ public enum UserFlag {
      * @param flag The bitmask of the flag.
      * @param description The description of the flag.
      */
-    UserFlag(int flag, String description) {
+    UserFlag(final int flag, final String description) {
         this.flag = flag;
         this.description = description;
     }

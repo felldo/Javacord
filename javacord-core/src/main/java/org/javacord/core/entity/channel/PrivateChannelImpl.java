@@ -55,7 +55,7 @@ public class PrivateChannelImpl implements PrivateChannel, Cleanupable, Internal
      * @param api The discord api instance.
      * @param data The json data of the channel.
      */
-    public PrivateChannelImpl(DiscordApiImpl api, JsonNode data) {
+    public PrivateChannelImpl(final DiscordApiImpl api, final JsonNode data) {
         this(api, data.get("id").asLong(),
                 new UserImpl(api, data.get("recipients").get(0), (MemberImpl) null, null),
                 data.get("recipients").get(0).get("id").asLong());
@@ -69,7 +69,7 @@ public class PrivateChannelImpl implements PrivateChannel, Cleanupable, Internal
      * @param recipient The recipient of the channel.
      * @param recipientId The id of the recipient of the channel.
      */
-    public PrivateChannelImpl(DiscordApiImpl api, String channelId, UserImpl recipient, Long recipientId) {
+    public PrivateChannelImpl(final DiscordApiImpl api, final String channelId, final UserImpl recipient, final Long recipientId) {
         this(api, Long.parseLong(channelId), recipient, recipientId);
     }
 
@@ -81,7 +81,7 @@ public class PrivateChannelImpl implements PrivateChannel, Cleanupable, Internal
      * @param recipient The recipient of the channel.
      * @param recipientId The id of the recipient of the channel.
      */
-    public PrivateChannelImpl(DiscordApiImpl api, long channelId, UserImpl recipient, Long recipientId) {
+    public PrivateChannelImpl(final DiscordApiImpl api, final long channelId, final UserImpl recipient, final Long recipientId) {
         this.api = api;
         this.recipient = recipient;
         this.recipientId = recipientId;
@@ -94,11 +94,11 @@ public class PrivateChannelImpl implements PrivateChannel, Cleanupable, Internal
         api.addChannelToCache(this);
     }
 
-    private void updateRecipientId(long recipientId) {
+    private void updateRecipientId(final long recipientId) {
         this.recipientId = recipientId;
     }
 
-    private void updateRecipient(UserImpl recipient) {
+    private void updateRecipient(final UserImpl recipient) {
         if (this.recipientId == recipient.getId()) {
             this.recipient = recipient;
         }
@@ -115,17 +115,17 @@ public class PrivateChannelImpl implements PrivateChannel, Cleanupable, Internal
      *
      * @return The private channel with the id.
      */
-    public static PrivateChannelImpl getOrCreatePrivateChannel(DiscordApiImpl api, long channelId, long userId,
-                                                               UserImpl user) {
-        Optional<PrivateChannel> optionalChannel = api.getPrivateChannelById(channelId);
+    public static PrivateChannelImpl getOrCreatePrivateChannel(final DiscordApiImpl api, final long channelId, final long userId,
+                                                               final UserImpl user) {
+        final Optional<PrivateChannel> optionalChannel = api.getPrivateChannelById(channelId);
         if (optionalChannel.isPresent()) {
             // if necessary update private channel information
-            PrivateChannelImpl channel = (PrivateChannelImpl) optionalChannel.get();
+            final PrivateChannelImpl channel = (PrivateChannelImpl) optionalChannel.get();
             if (!channel.getRecipientId().isPresent() && userId != api.getYourself().getId()) {
                 channel.updateRecipientId(userId);
             }
             if (!channel.getRecipient().isPresent()) {
-                UserImpl recipient;
+                final UserImpl recipient;
                 if (user == null) {
                     recipient = (UserImpl) api.getCachedUserById(userId).orElse(null);
                 } else {
@@ -142,7 +142,7 @@ public class PrivateChannelImpl implements PrivateChannel, Cleanupable, Internal
             return dispatchPrivateChannelCreateEvent(api, new PrivateChannelImpl(api, channelId, null, null));
         }
 
-        UserImpl recipient;
+        final UserImpl recipient;
         if (user == null) {
             recipient = (UserImpl) api.getCachedUserById(userId).orElse(null);
         } else {
@@ -159,10 +159,10 @@ public class PrivateChannelImpl implements PrivateChannel, Cleanupable, Internal
      *
      * @return The given private channel to make things easier.
      */
-    public static PrivateChannelImpl dispatchPrivateChannelCreateEvent(DiscordApiImpl api,
-                                                                        PrivateChannelImpl privateChannel) {
+    public static PrivateChannelImpl dispatchPrivateChannelCreateEvent(final DiscordApiImpl api,
+                                                                       final PrivateChannelImpl privateChannel) {
         // dispatch PrivateChannelCreateEvent
-        PrivateChannelCreateEvent event = new PrivateChannelCreateEventImpl(privateChannel);
+        final PrivateChannelCreateEvent event = new PrivateChannelCreateEventImpl(privateChannel);
         api.getEventDispatcher()
                 .dispatchPrivateChannelCreateEvent(api, privateChannel.getRecipient().orElse(null), event);
         return privateChannel;
@@ -199,7 +199,7 @@ public class PrivateChannelImpl implements PrivateChannel, Cleanupable, Internal
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return (this == o)
                || !((o == null)
                     || (getClass() != o.getClass())

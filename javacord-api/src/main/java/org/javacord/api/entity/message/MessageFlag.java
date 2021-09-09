@@ -25,7 +25,7 @@ public enum MessageFlag {
      *
      * @param id The id of the type.
      */
-    MessageFlag(int id) {
+    MessageFlag(final int id) {
         this.id = id;
     }
 
@@ -44,7 +44,7 @@ public enum MessageFlag {
      * @param id The id of the message flag type.
      * @return The message flag type with the given id or {@link MessageFlag#UNKNOWN} if unknown id.
      */
-    public static MessageFlag getFlagTypeById(int id) {
+    public static MessageFlag getFlagTypeById(final int id) {
         switch (id) {
             case 64:
                 return EPHEMERAL;

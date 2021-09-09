@@ -25,7 +25,7 @@ public class PermissionsImpl implements Permissions {
      * @param allow A long containing all allowed permission types.
      * @param deny  A long containing all denied permission types.
      */
-    public PermissionsImpl(long allow, long deny) {
+    public PermissionsImpl(final long allow, final long deny) {
         this.allowed = allow;
         this.denied = deny;
     }
@@ -36,10 +36,10 @@ public class PermissionsImpl implements Permissions {
      * @param allow A long containing all allowed permission types.
      *              Every other type will be set to deny.
      */
-    public PermissionsImpl(long allow) {
+    public PermissionsImpl(final long allow) {
         this.allowed = allow;
         long tempDenied = 0;
-        for (PermissionType type : PermissionType.values()) {
+        for (final PermissionType type : PermissionType.values()) {
             if (!type.isSet(allow)) {
                 // set everything which is not allowed to deny.
                 tempDenied = type.set(tempDenied, true);
@@ -59,7 +59,7 @@ public class PermissionsImpl implements Permissions {
     }
 
     @Override
-    public PermissionState getState(PermissionType type) {
+    public PermissionState getState(final PermissionType type) {
         if (type.isSet(allowed)) {
             return PermissionState.ALLOWED;
         }
@@ -80,11 +80,11 @@ public class PermissionsImpl implements Permissions {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (!(obj instanceof PermissionsImpl)) {
             return false;
         }
-        PermissionsImpl other = (PermissionsImpl) obj;
+        final PermissionsImpl other = (PermissionsImpl) obj;
         return other.allowed == allowed && other.denied == denied;
     }
 

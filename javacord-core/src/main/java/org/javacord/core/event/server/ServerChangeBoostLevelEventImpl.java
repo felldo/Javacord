@@ -26,7 +26,7 @@ public class ServerChangeBoostLevelEventImpl extends ServerEventImpl implements 
      * @param newBoostLevel The new boost level of the server.
      * @param oldBoostLevel The old boost level of the server.
      */
-    public ServerChangeBoostLevelEventImpl(ServerImpl server, BoostLevel newBoostLevel, BoostLevel oldBoostLevel) {
+    public ServerChangeBoostLevelEventImpl(final ServerImpl server, final BoostLevel newBoostLevel, final BoostLevel oldBoostLevel) {
         super(server);
         this.oldBoostLevel = oldBoostLevel;
         this.newBoostLevel = newBoostLevel;

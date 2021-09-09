@@ -16,7 +16,7 @@ public class InteractionFollowupMessageBuilderImpl
      *
      * @param interaction The interaction to use.
      */
-    public InteractionFollowupMessageBuilderImpl(InteractionBase interaction) {
+    public InteractionFollowupMessageBuilderImpl(final InteractionBase interaction) {
         super(InteractionFollowupMessageBuilder.class);
         this.interaction = (InteractionImpl) interaction;
     }
@@ -27,12 +27,12 @@ public class InteractionFollowupMessageBuilderImpl
     }
 
     @Override
-    public CompletableFuture<Message> update(long messageId) {
+    public CompletableFuture<Message> update(final long messageId) {
         return update(String.valueOf(messageId));
     }
 
     @Override
-    public CompletableFuture<Message> update(String messageId) {
+    public CompletableFuture<Message> update(final String messageId) {
         return this.delegate.editFollowupMessage(interaction, messageId);
     }
 }

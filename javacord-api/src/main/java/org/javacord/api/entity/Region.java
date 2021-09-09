@@ -54,7 +54,7 @@ public enum Region implements Nameable {
      * @param name The name of the region.
      * @param vip If the region is for VIPs or not.
      */
-    Region(String key, String name, boolean vip) {
+    Region(final String key, final String name, final boolean vip) {
         this.key = key;
         this.name = name;
         this.vip = vip;
@@ -94,8 +94,8 @@ public enum Region implements Nameable {
      * @param key The key of the region.
      * @return The region with the given key. {@link Region#UNKNOWN} if no region for the given key was found.
      */
-    public static Region getRegionByKey(String key) {
-        for (Region region : values()) {
+    public static Region getRegionByKey(final String key) {
+        for (final Region region : values()) {
             if (region.getKey().equalsIgnoreCase(key) && region != UNKNOWN) {
                 return region;
             }

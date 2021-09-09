@@ -33,8 +33,8 @@ public interface ChannelCategory extends ServerChannel, ChannelCategoryAttachabl
      * @param user The user to check.
      * @return The visible channels in the category.
      */
-    default List<ServerChannel> getVisibleChannels(User user) {
-        List<ServerChannel> channels = new ArrayList<>(getChannels());
+    default List<ServerChannel> getVisibleChannels(final User user) {
+        final List<ServerChannel> channels = new ArrayList<>(getChannels());
         channels.removeIf(channel -> !channel.canSee(user));
         return Collections.unmodifiableList(channels);
     }
@@ -45,8 +45,8 @@ public interface ChannelCategory extends ServerChannel, ChannelCategoryAttachabl
      * @param user The user to check.
      * @return Whether the given user can see all channels in this category or not.
      */
-    default boolean canSeeAll(User user) {
-        for (ServerChannel channel : getChannels()) {
+    default boolean canSeeAll(final User user) {
+        for (final ServerChannel channel : getChannels()) {
             if (!channel.canSee(user)) {
                 return false;
             }
@@ -76,7 +76,7 @@ public interface ChannelCategory extends ServerChannel, ChannelCategoryAttachabl
      * @param categorizable The categorizable to add.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> addCategorizable(Categorizable categorizable) {
+    default CompletableFuture<Void> addCategorizable(final Categorizable categorizable) {
         return categorizable.updateCategory(this);
     }
 
@@ -86,7 +86,7 @@ public interface ChannelCategory extends ServerChannel, ChannelCategoryAttachabl
      * @param categorizable The categorizable to remove.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> removeCategorizable(Categorizable categorizable) {
+    default CompletableFuture<Void> removeCategorizable(final Categorizable categorizable) {
         if (categorizable.getCategory().map(this::equals).orElse(false)) {
             return categorizable.removeCategory();
         }
@@ -100,11 +100,11 @@ public interface ChannelCategory extends ServerChannel, ChannelCategoryAttachabl
 
     @Override
     default CompletableFuture<ChannelCategory> getLatestInstance() {
-        Optional<ChannelCategory> currentCachedInstance = getCurrentCachedInstance();
+        final Optional<ChannelCategory> currentCachedInstance = getCurrentCachedInstance();
         if (currentCachedInstance.isPresent()) {
             return CompletableFuture.completedFuture(currentCachedInstance.get());
         } else {
-            CompletableFuture<ChannelCategory> result = new CompletableFuture<>();
+            final CompletableFuture<ChannelCategory> result = new CompletableFuture<>();
             result.completeExceptionally(new NoSuchElementException());
             return result;
         }

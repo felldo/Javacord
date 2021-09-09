@@ -13,7 +13,7 @@ public class GroupChannelDeleteEventImpl extends GroupChannelEventImpl implement
      *
      * @param channel The channel of the event.
      */
-    public GroupChannelDeleteEventImpl(GroupChannel channel) {
+    public GroupChannelDeleteEventImpl(final GroupChannel channel) {
         super(channel);
     }
 

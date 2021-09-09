@@ -57,7 +57,7 @@ public interface ExceptionLoggerDelegate {
      * @param throwable The throwable to unwrap.
      * @return The unwrapped throwable.
      */
-    static Throwable unwrapThrowable(Throwable throwable) {
+    static Throwable unwrapThrowable(final Throwable throwable) {
         Throwable result = throwable;
         Throwable cause = result.getCause();
         while ((result instanceof CompletionException) && (cause != null)) {

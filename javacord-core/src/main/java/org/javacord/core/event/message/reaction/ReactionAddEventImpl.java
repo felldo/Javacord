@@ -25,7 +25,7 @@ public class ReactionAddEventImpl extends SingleReactionEventImpl implements Rea
      * @param member The member if it happened in a server.
      */
     public ReactionAddEventImpl(
-            DiscordApi api, long messageId, TextChannel channel, Emoji emoji, long userId, Member member) {
+            final DiscordApi api, final long messageId, final TextChannel channel, final Emoji emoji, final long userId, final Member member) {
         super(api, messageId, channel, emoji, userId);
     }
 

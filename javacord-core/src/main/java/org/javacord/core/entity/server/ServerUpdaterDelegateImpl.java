@@ -201,43 +201,43 @@ public class ServerUpdaterDelegateImpl implements ServerUpdaterDelegate {
      *
      * @param server The server to update.
      */
-    public ServerUpdaterDelegateImpl(Server server) {
+    public ServerUpdaterDelegateImpl(final Server server) {
         this.server = server;
     }
 
     @Override
-    public void setAuditLogReason(String reason) {
+    public void setAuditLogReason(final String reason) {
         this.reason = reason;
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
-    public void setRegion(Region region) {
+    public void setRegion(final Region region) {
         this.region = region;
     }
 
     @Override
-    public void setExplicitContentFilterLevel(ExplicitContentFilterLevel explicitContentFilterLevel) {
+    public void setExplicitContentFilterLevel(final ExplicitContentFilterLevel explicitContentFilterLevel) {
         this.explicitContentFilterLevel = explicitContentFilterLevel;
     }
 
     @Override
-    public void setVerificationLevel(VerificationLevel verificationLevel) {
+    public void setVerificationLevel(final VerificationLevel verificationLevel) {
         this.verificationLevel = verificationLevel;
     }
 
     @Override
     public void setDefaultMessageNotificationLevel(
-            DefaultMessageNotificationLevel defaultMessageNotificationLevel) {
+            final DefaultMessageNotificationLevel defaultMessageNotificationLevel) {
         this.defaultMessageNotificationLevel = defaultMessageNotificationLevel;
     }
 
     @Override
-    public void setAfkChannel(ServerVoiceChannel afkChannel) {
+    public void setAfkChannel(final ServerVoiceChannel afkChannel) {
         this.afkChannel = afkChannel;
         updateAfkChannel = true;
     }
@@ -248,60 +248,60 @@ public class ServerUpdaterDelegateImpl implements ServerUpdaterDelegate {
     }
 
     @Override
-    public void setAfkTimeoutInSeconds(int afkTimeout) {
+    public void setAfkTimeoutInSeconds(final int afkTimeout) {
         this.afkTimeout = afkTimeout;
     }
 
     @Override
-    public void setIcon(BufferedImage icon) {
+    public void setIcon(final BufferedImage icon) {
         this.icon = (icon == null) ? null : new FileContainer(icon, "png");
         updateIcon = true;
     }
 
     @Override
-    public void setIcon(BufferedImage icon, String fileType) {
+    public void setIcon(final BufferedImage icon, final String fileType) {
         this.icon = (icon == null) ? null : new FileContainer(icon, fileType);
         updateIcon = true;
     }
 
     @Override
-    public void setIcon(File icon) {
+    public void setIcon(final File icon) {
         this.icon = (icon == null) ? null : new FileContainer(icon);
         updateIcon = true;
     }
 
     @Override
-    public void setIcon(Icon icon) {
+    public void setIcon(final Icon icon) {
         this.icon = (icon == null) ? null : new FileContainer(icon);
         updateIcon = true;
     }
 
     @Override
-    public void setIcon(URL icon) {
+    public void setIcon(final URL icon) {
         this.icon = (icon == null) ? null : new FileContainer(icon);
         updateIcon = true;
     }
 
     @Override
-    public void setIcon(byte[] icon) {
+    public void setIcon(final byte[] icon) {
         this.icon = (icon == null) ? null : new FileContainer(icon, "png");
         updateIcon = true;
     }
 
     @Override
-    public void setIcon(byte[] icon, String fileType) {
+    public void setIcon(final byte[] icon, final String fileType) {
         this.icon = (icon == null) ? null : new FileContainer(icon, fileType);
         updateIcon = true;
     }
 
     @Override
-    public void setIcon(InputStream icon) {
+    public void setIcon(final InputStream icon) {
         this.icon = (icon == null) ? null : new FileContainer(icon, "png");
         updateIcon = true;
     }
 
     @Override
-    public void setIcon(InputStream icon, String fileType) {
+    public void setIcon(final InputStream icon, final String fileType) {
         this.icon = (icon == null) ? null : new FileContainer(icon, fileType);
         updateIcon = true;
     }
@@ -313,60 +313,60 @@ public class ServerUpdaterDelegateImpl implements ServerUpdaterDelegate {
     }
 
     @Override
-    public void setOwner(User owner) {
+    public void setOwner(final User owner) {
         this.owner = owner;
     }
 
     @Override
-    public void setSplash(BufferedImage splash) {
+    public void setSplash(final BufferedImage splash) {
         this.splash = (splash == null) ? null : new FileContainer(splash, "png");
         updateSplash = true;
     }
 
     @Override
-    public void setSplash(BufferedImage splash, String fileType) {
+    public void setSplash(final BufferedImage splash, final String fileType) {
         this.splash = (splash == null) ? null : new FileContainer(splash, fileType);
         updateSplash = true;
     }
 
     @Override
-    public void setSplash(File splash) {
+    public void setSplash(final File splash) {
         this.splash = (splash == null) ? null : new FileContainer(splash);
         updateSplash = true;
     }
 
     @Override
-    public void setSplash(Icon splash) {
+    public void setSplash(final Icon splash) {
         this.splash = (splash == null) ? null : new FileContainer(splash);
         updateSplash = true;
     }
 
     @Override
-    public void setSplash(URL splash) {
+    public void setSplash(final URL splash) {
         this.splash = (splash == null) ? null : new FileContainer(splash);
         updateSplash = true;
     }
 
     @Override
-    public void setSplash(byte[] splash) {
+    public void setSplash(final byte[] splash) {
         this.splash = (splash == null) ? null : new FileContainer(splash, "png");
         updateSplash = true;
     }
 
     @Override
-    public void setSplash(byte[] splash, String fileType) {
+    public void setSplash(final byte[] splash, final String fileType) {
         this.splash = (splash == null) ? null : new FileContainer(splash, fileType);
         updateSplash = true;
     }
 
     @Override
-    public void setSplash(InputStream splash) {
+    public void setSplash(final InputStream splash) {
         this.splash = (splash == null) ? null : new FileContainer(splash, "png");
         updateSplash = true;
     }
 
     @Override
-    public void setSplash(InputStream splash, String fileType) {
+    public void setSplash(final InputStream splash, final String fileType) {
         this.splash = (splash == null) ? null : new FileContainer(splash, fileType);
         updateSplash = true;
     }
@@ -378,55 +378,55 @@ public class ServerUpdaterDelegateImpl implements ServerUpdaterDelegate {
     }
 
     @Override
-    public void setBanner(BufferedImage banner) {
+    public void setBanner(final BufferedImage banner) {
         this.banner = (banner == null) ? null : new FileContainer(banner, "png");
         updateBanner = true;
     }
 
     @Override
-    public void setBanner(BufferedImage banner, String fileType) {
+    public void setBanner(final BufferedImage banner, final String fileType) {
         this.banner = (banner == null) ? null : new FileContainer(banner, fileType);
         updateBanner = true;
     }
 
     @Override
-    public void setBanner(File banner) {
+    public void setBanner(final File banner) {
         this.banner = (banner == null) ? null : new FileContainer(banner);
         updateBanner = true;
     }
 
     @Override
-    public void setBanner(Icon banner) {
+    public void setBanner(final Icon banner) {
         this.banner = (banner == null) ? null : new FileContainer(banner);
         updateBanner = true;
     }
 
     @Override
-    public void setBanner(URL banner) {
+    public void setBanner(final URL banner) {
         this.banner = (banner == null) ? null : new FileContainer(banner);
         updateBanner = true;
     }
 
     @Override
-    public void setBanner(byte[] banner) {
+    public void setBanner(final byte[] banner) {
         this.banner = (banner == null) ? null : new FileContainer(banner, "png");
         updateBanner = true;
     }
 
     @Override
-    public void setBanner(byte[] banner, String fileType) {
+    public void setBanner(final byte[] banner, final String fileType) {
         this.banner = (banner == null) ? null : new FileContainer(banner, fileType);
         updateBanner = true;
     }
 
     @Override
-    public void setBanner(InputStream banner) {
+    public void setBanner(final InputStream banner) {
         this.banner = (banner == null) ? null : new FileContainer(banner, "png");
         updateBanner = true;
     }
 
     @Override
-    public void setBanner(InputStream banner, String fileType) {
+    public void setBanner(final InputStream banner, final String fileType) {
         this.banner = (banner == null) ? null : new FileContainer(banner, fileType);
         updateBanner = true;
     }
@@ -438,7 +438,7 @@ public class ServerUpdaterDelegateImpl implements ServerUpdaterDelegate {
     }
 
     @Override
-    public void setRulesChannel(ServerTextChannel rulesChannel) {
+    public void setRulesChannel(final ServerTextChannel rulesChannel) {
         this.rulesChannel = rulesChannel;
         updateRulesChannel = true;
     }
@@ -449,7 +449,7 @@ public class ServerUpdaterDelegateImpl implements ServerUpdaterDelegate {
     }
 
     @Override
-    public void setModeratorsOnlyChannel(ServerTextChannel moderatorsOnlyChannel) {
+    public void setModeratorsOnlyChannel(final ServerTextChannel moderatorsOnlyChannel) {
         this.moderatorsOnlyChannel = moderatorsOnlyChannel;
         updateModeratorsOnlyChannel = true;
     }
@@ -460,13 +460,13 @@ public class ServerUpdaterDelegateImpl implements ServerUpdaterDelegate {
     }
 
     @Override
-    public void setPreferredLocale(Locale locale) {
+    public void setPreferredLocale(final Locale locale) {
         this.locale = locale;
         updateLocale = true;
     }
 
     @Override
-    public void setSystemChannel(ServerTextChannel systemChannel) {
+    public void setSystemChannel(final ServerTextChannel systemChannel) {
         this.systemChannel = systemChannel;
         updateSystemChannel = true;
     }
@@ -477,79 +477,79 @@ public class ServerUpdaterDelegateImpl implements ServerUpdaterDelegate {
     }
 
     @Override
-    public void setNickname(User user, String nickname) {
+    public void setNickname(final User user, final String nickname) {
         userNicknames.put(user, nickname);
     }
 
     @Override
-    public void setMuted(User user, boolean muted) {
+    public void setMuted(final User user, final boolean muted) {
         userMuted.put(user, muted);
     }
 
     @Override
-    public void setDeafened(User user, boolean deafened) {
+    public void setDeafened(final User user, final boolean deafened) {
         userDeafened.put(user, deafened);
     }
 
     @Override
-    public void setVoiceChannel(User user, ServerVoiceChannel channel) {
+    public void setVoiceChannel(final User user, final ServerVoiceChannel channel) {
         userMoveTargets.put(user, channel);
     }
 
     @Override
-    public void reorderRoles(List<Role> roles) {
+    public void reorderRoles(final List<Role> roles) {
         newRolesOrder = roles;
     }
 
     @Override
-    public void addRoleToUser(User user, Role role) {
-        Collection<Role> userRoles = this.userRoles.computeIfAbsent(user, u -> new ArrayList<>(server.getRoles(u)));
+    public void addRoleToUser(final User user, final Role role) {
+        final Collection<Role> userRoles = this.userRoles.computeIfAbsent(user, u -> new ArrayList<>(server.getRoles(u)));
         userRoles.add(role);
     }
 
     @Override
-    public void addRolesToUser(User user, Collection<Role> roles) {
-        Collection<Role> userRoles = this.userRoles.computeIfAbsent(user, u -> new ArrayList<>(server.getRoles(u)));
+    public void addRolesToUser(final User user, final Collection<Role> roles) {
+        final Collection<Role> userRoles = this.userRoles.computeIfAbsent(user, u -> new ArrayList<>(server.getRoles(u)));
         userRoles.addAll(roles);
     }
 
     @Override
-    public void removeRoleFromUser(User user, Role role) {
-        Collection<Role> userRoles = this.userRoles.computeIfAbsent(user, u -> new ArrayList<>(server.getRoles(u)));
+    public void removeRoleFromUser(final User user, final Role role) {
+        final Collection<Role> userRoles = this.userRoles.computeIfAbsent(user, u -> new ArrayList<>(server.getRoles(u)));
         userRoles.remove(role);
     }
 
     @Override
-    public void removeRolesFromUser(User user, Collection<Role> roles) {
-        Collection<Role> userRoles = this.userRoles.computeIfAbsent(user, u -> new ArrayList<>(server.getRoles(u)));
+    public void removeRolesFromUser(final User user, final Collection<Role> roles) {
+        final Collection<Role> userRoles = this.userRoles.computeIfAbsent(user, u -> new ArrayList<>(server.getRoles(u)));
         userRoles.removeAll(roles);
     }
 
     @Override
-    public void removeAllRolesFromUser(User user) {
-        Collection<Role> userRoles = this.userRoles.computeIfAbsent(user, u -> new ArrayList<>(server.getRoles(u)));
+    public void removeAllRolesFromUser(final User user) {
+        final Collection<Role> userRoles = this.userRoles.computeIfAbsent(user, u -> new ArrayList<>(server.getRoles(u)));
         userRoles.clear();
     }
 
     @Override
     public CompletableFuture<Void> update() {
         // A set with all members that get updates
-        HashSet<User> members = new HashSet<>(userRoles.keySet());
+        final HashSet<User> members = new HashSet<>(userRoles.keySet());
         members.addAll(userNicknames.keySet());
         members.addAll(userMuted.keySet());
         members.addAll(userDeafened.keySet());
         members.addAll(userMoveTargets.keySet());
 
         // A list with all tasks
-        List<CompletableFuture<?>> tasks = new ArrayList<>();
+        final List<CompletableFuture<?>> tasks = new ArrayList<>();
 
         members.forEach(member -> {
             boolean patchMember = false;
-            ObjectNode updateNode = JsonNodeFactory.instance.objectNode();
+            final ObjectNode updateNode = JsonNodeFactory.instance.objectNode();
 
-            Collection<Role> roles = userRoles.get(member);
+            final Collection<Role> roles = userRoles.get(member);
             if (roles != null) {
-                ArrayNode rolesJson = updateNode.putArray("roles");
+                final ArrayNode rolesJson = updateNode.putArray("roles");
                 roles.stream()
                         .map(DiscordEntity::getIdAsString)
                         .forEach(rolesJson::add);
@@ -557,7 +557,7 @@ public class ServerUpdaterDelegateImpl implements ServerUpdaterDelegate {
             }
 
             if (userNicknames.containsKey(member)) {
-                String nickname = userNicknames.get(member);
+                final String nickname = userNicknames.get(member);
                 if (member.isYourself()) {
                     tasks.add(
                             new RestRequest<Void>(server.getApi(), RestMethod.PATCH, RestEndpoint.OWN_NICKNAME)
@@ -582,7 +582,7 @@ public class ServerUpdaterDelegateImpl implements ServerUpdaterDelegate {
             }
 
             if (userMoveTargets.containsKey(member)) {
-                ServerVoiceChannel channel = userMoveTargets.get(member);
+                final ServerVoiceChannel channel = userMoveTargets.get(member);
                 if (member.isYourself()) {
                     ((DiscordApiImpl) server.getApi()).getWebSocketAdapter()
                             .sendVoiceStateUpdate(server, channel, null, null);
@@ -611,7 +611,7 @@ public class ServerUpdaterDelegateImpl implements ServerUpdaterDelegate {
 
         // Server settings
         boolean patchServer = false;
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         if (name != null) {
             body.put("name", name);
             patchServer = true;
@@ -704,7 +704,7 @@ public class ServerUpdaterDelegateImpl implements ServerUpdaterDelegate {
                 CompletableFuture<Void> iconFuture = null;
                 if (icon != null) {
                     iconFuture = icon.asByteArray(server.getApi()).thenAccept(bytes -> {
-                        String base64Icon = "data:image/" + icon.getFileType() + ";base64,"
+                        final String base64Icon = "data:image/" + icon.getFileType() + ";base64,"
                                 + Base64.getEncoder().encodeToString(bytes);
                         body.put("icon", base64Icon);
                     });
@@ -712,7 +712,7 @@ public class ServerUpdaterDelegateImpl implements ServerUpdaterDelegate {
                 CompletableFuture<Void> splashFuture = null;
                 if (splash != null) {
                     splashFuture = splash.asByteArray(server.getApi()).thenAccept(bytes -> {
-                        String base64Splash = "data:image/" + splash.getFileType() + ";base64,"
+                        final String base64Splash = "data:image/" + splash.getFileType() + ";base64,"
                                 + Base64.getEncoder().encodeToString(bytes);
                         body.put("splash", base64Splash);
                     });
@@ -720,13 +720,13 @@ public class ServerUpdaterDelegateImpl implements ServerUpdaterDelegate {
                 CompletableFuture<Void> bannerFuture = null;
                 if (banner != null) {
                     bannerFuture = banner.asByteArray(server.getApi()).thenAccept(bytes -> {
-                        String base64Banner = "data:image/" + banner.getFileType() + ";base64,"
+                        final String base64Banner = "data:image/" + banner.getFileType() + ";base64,"
                                 + Base64.getEncoder().encodeToString(bytes);
                         body.put("banner", base64Banner);
                     });
                 }
-                CompletableFuture<Void> future;
-                List<CompletableFuture<Void>> futureList = new ArrayList<>();
+                final CompletableFuture<Void> future;
+                final List<CompletableFuture<Void>> futureList = new ArrayList<>();
                 if (iconFuture != null) {
                     futureList.add(iconFuture);
                 }
@@ -753,7 +753,7 @@ public class ServerUpdaterDelegateImpl implements ServerUpdaterDelegate {
             }
         }
 
-        CompletableFuture<?>[] tasksArray = tasks.toArray(new CompletableFuture<?>[tasks.size()]);
+        final CompletableFuture<?>[] tasksArray = tasks.toArray(new CompletableFuture<?>[tasks.size()]);
         return CompletableFuture.allOf(tasksArray);
     }
 

@@ -13,7 +13,7 @@ public class ServerJoinEventImpl extends ServerEventImpl implements ServerJoinEv
      *
      * @param server The server of the event.
      */
-    public ServerJoinEventImpl(Server server) {
+    public ServerJoinEventImpl(final Server server) {
         super(server);
     }
 

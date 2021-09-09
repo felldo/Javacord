@@ -24,32 +24,32 @@ public class ChannelCategoryBuilder extends ServerChannelBuilder {
      *
      * @param server The server of the channel category.
      */
-    public ChannelCategoryBuilder(Server server) {
+    public ChannelCategoryBuilder(final Server server) {
         delegate = DelegateFactory.createChannelCategoryBuilderDelegate(server);
     }
 
     @Override
-    public ChannelCategoryBuilder setAuditLogReason(String reason) {
+    public ChannelCategoryBuilder setAuditLogReason(final String reason) {
         delegate.setAuditLogReason(reason);
         return this;
     }
 
     @Override
-    public ChannelCategoryBuilder setName(String name) {
+    public ChannelCategoryBuilder setName(final String name) {
         delegate.setName(name);
         return this;
     }
 
     @Override
     public <T extends Permissionable & DiscordEntity> ChannelCategoryBuilder addPermissionOverwrite(
-                T permissionable, Permissions permissions) {
+            final T permissionable, final Permissions permissions) {
         delegate.addPermissionOverwrite(permissionable, permissions);
         return this;
     }
 
     @Override
     public <T extends Permissionable & DiscordEntity> ChannelCategoryBuilder removePermissionOverwrite(
-                T permissionable) {
+            final T permissionable) {
         delegate.removePermissionOverwrite(permissionable);
         return this;
     }

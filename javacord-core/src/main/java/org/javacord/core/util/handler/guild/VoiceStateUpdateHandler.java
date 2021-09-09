@@ -43,24 +43,24 @@ public class VoiceStateUpdateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public VoiceStateUpdateHandler(DiscordApi api) {
+    public VoiceStateUpdateHandler(final DiscordApi api) {
         super(api, true, "VOICE_STATE_UPDATE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
+    public void handle(final JsonNode packet) {
         if (!packet.hasNonNull("user_id")) {
             return;
         }
 
-        long userId = packet.get("user_id").asLong();
+        final long userId = packet.get("user_id").asLong();
         if (packet.hasNonNull("guild_id")) {
             handleServerVoiceChannel(packet, userId);
         } else if (packet.hasNonNull("channel_id")) {
-            long channelId = packet.get("channel_id").asLong();
-            Optional<VoiceChannel> optionalChannel = api.getVoiceChannelById(channelId);
+            final long channelId = packet.get("channel_id").asLong();
+            final Optional<VoiceChannel> optionalChannel = api.getVoiceChannelById(channelId);
             if (optionalChannel.isPresent()) {
-                VoiceChannel voiceChannel = optionalChannel.get();
+                final VoiceChannel voiceChannel = optionalChannel.get();
                 if (voiceChannel instanceof PrivateChannel) {
                     handlePrivateChannel(userId, ((PrivateChannelImpl) voiceChannel));
                 } else if (voiceChannel instanceof GroupChannel) {
@@ -76,17 +76,17 @@ public class VoiceStateUpdateHandler extends PacketHandler {
         }
     }
 
-    private void handleSelf(JsonNode packet) {
+    private void handleSelf(final JsonNode packet) {
         // We need the session id to connect to an audio websocket
-        String sessionId = packet.get("session_id").asText();
-        long channelId = packet.get("channel_id").asLong();
-        Optional<ServerVoiceChannel> optionalChannel = api.getServerVoiceChannelById(channelId);
+        final String sessionId = packet.get("session_id").asText();
+        final long channelId = packet.get("channel_id").asLong();
+        final Optional<ServerVoiceChannel> optionalChannel = api.getServerVoiceChannelById(channelId);
         if (optionalChannel.isPresent()) {
-            ServerVoiceChannel channel = optionalChannel.get();
+            final ServerVoiceChannel channel = optionalChannel.get();
             dispatchVoiceStateUpdateEvent(
                     channel, channel.getServer(), packet.get("session_id").asText());
 
-            AudioConnectionImpl pendingAudioConnection =
+            final AudioConnectionImpl pendingAudioConnection =
                     api.getPendingAudioConnectionByServerId(channel.getServer().getId());
             if (pendingAudioConnection != null) {
                 pendingAudioConnection.setSessionId(sessionId);
@@ -102,15 +102,15 @@ public class VoiceStateUpdateHandler extends PacketHandler {
         }
     }
 
-    private void handleServerVoiceChannel(JsonNode packet, long userId) {
+    private void handleServerVoiceChannel(final JsonNode packet, final long userId) {
         api.getPossiblyUnreadyServerById(packet.get("guild_id").asLong())
                 .map(ServerImpl.class::cast).ifPresent(server -> {
-                    Member member = new MemberImpl(api, server, packet.get("member"), null);
-                    Optional<ServerVoiceChannelImpl> oldChannel = server
+                    final Member member = new MemberImpl(api, server, packet.get("member"), null);
+                    final Optional<ServerVoiceChannelImpl> oldChannel = server
                             .getConnectedVoiceChannel(userId)
                             .map(ServerVoiceChannelImpl.class::cast);
 
-                    Optional<ServerVoiceChannelImpl> newChannel;
+                    final Optional<ServerVoiceChannelImpl> newChannel;
                     if (packet.hasNonNull("channel_id")) {
                         newChannel = server
                                 .getVoiceChannelById(packet.get("channel_id").asLong())
@@ -136,65 +136,65 @@ public class VoiceStateUpdateHandler extends PacketHandler {
                         logger.warn("Received VOICE_STATE_UPDATE packet without non-null member field: {}", packet);
                         return;
                     }
-                    MemberImpl newMember = new MemberImpl(api, server, packet.get("member"), null);
-                    Member oldMember = server.getRealMemberById(packet.get("user_id").asLong()).orElse(null);
+                    final MemberImpl newMember = new MemberImpl(api, server, packet.get("member"), null);
+                    final Member oldMember = server.getRealMemberById(packet.get("user_id").asLong()).orElse(null);
 
-                    boolean newSelfMuted = packet.get("self_mute").asBoolean();
-                    boolean oldSelfMuted = server.isSelfMuted(userId);
+                    final boolean newSelfMuted = packet.get("self_mute").asBoolean();
+                    final boolean oldSelfMuted = server.isSelfMuted(userId);
                     if (newSelfMuted != oldSelfMuted) {
-                        UserChangeSelfMutedEventImpl event = new UserChangeSelfMutedEventImpl(newMember, oldMember);
+                        final UserChangeSelfMutedEventImpl event = new UserChangeSelfMutedEventImpl(newMember, oldMember);
                         api.getEventDispatcher()
                                 .dispatchUserChangeSelfMutedEvent(server, server, newMember.getUser(), event);
                     }
 
-                    boolean newSelfDeafened = packet.get("self_deaf").asBoolean();
-                    boolean oldSelfDeafened = server.isSelfDeafened(userId);
+                    final boolean newSelfDeafened = packet.get("self_deaf").asBoolean();
+                    final boolean oldSelfDeafened = server.isSelfDeafened(userId);
                     if (newSelfDeafened != oldSelfDeafened) {
-                        UserChangeSelfDeafenedEventImpl event = new UserChangeSelfDeafenedEventImpl(
+                        final UserChangeSelfDeafenedEventImpl event = new UserChangeSelfDeafenedEventImpl(
                                 newMember, oldMember);
                         api.getEventDispatcher()
                                 .dispatchUserChangeSelfDeafenedEvent(server, server, newMember.getUser(), event);
                     }
 
-                    boolean newMuted = packet.get("mute").asBoolean();
-                    boolean oldMuted = server.isMuted(userId);
+                    final boolean newMuted = packet.get("mute").asBoolean();
+                    final boolean oldMuted = server.isMuted(userId);
                     if (newMuted != oldMuted) {
                         server.setMuted(userId, newMuted);
-                        UserChangeMutedEventImpl event = new UserChangeMutedEventImpl(newMember, oldMember);
+                        final UserChangeMutedEventImpl event = new UserChangeMutedEventImpl(newMember, oldMember);
                         api.getEventDispatcher()
                                 .dispatchUserChangeMutedEvent(server, server, newMember.getUser(), event);
                     }
 
-                    boolean newDeafened = packet.get("deaf").asBoolean();
-                    boolean oldDeafened = server.isDeafened(userId);
+                    final boolean newDeafened = packet.get("deaf").asBoolean();
+                    final boolean oldDeafened = server.isDeafened(userId);
                     if (newDeafened != oldDeafened) {
                         server.setDeafened(userId, newDeafened);
-                        UserChangeDeafenedEventImpl event = new UserChangeDeafenedEventImpl(newMember, oldMember);
+                        final UserChangeDeafenedEventImpl event = new UserChangeDeafenedEventImpl(newMember, oldMember);
                         api.getEventDispatcher()
                                 .dispatchUserChangeDeafenedEvent(server, server, newMember.getUser(), event);
                     }
                 });
     }
 
-    private void handlePrivateChannel(long userId, PrivateChannelImpl channel) {
+    private void handlePrivateChannel(final long userId, final PrivateChannelImpl channel) {
         //channel.addConnectedUser(user);
         //dispatchVoiceChannelMemberJoinEvent(user, channel);
     }
 
-    private void handleGroupChannel(long userId, GroupChannelImpl channel) {
+    private void handleGroupChannel(final long userId, final GroupChannelImpl channel) {
         //channel.addConnectedUser(user);
         //dispatchVoiceChannelMemberJoinEvent(user, channel);
     }
 
-    private void dispatchVoiceStateUpdateEvent(ServerVoiceChannel newChannel, Server server, String sessionId) {
-        VoiceStateUpdateEvent event = new VoiceStateUpdateEventImpl(newChannel, sessionId);
+    private void dispatchVoiceStateUpdateEvent(final ServerVoiceChannel newChannel, final Server server, final String sessionId) {
+        final VoiceStateUpdateEvent event = new VoiceStateUpdateEventImpl(newChannel, sessionId);
 
         api.getEventDispatcher().dispatchVoiceStateUpdateEvent((DispatchQueueSelector) server, newChannel, event);
     }
 
     private void dispatchServerVoiceChannelMemberJoinEvent(
-            Member member, ServerVoiceChannel newChannel, ServerVoiceChannel oldChannel, Server server) {
-        ServerVoiceChannelMemberJoinEvent event = new ServerVoiceChannelMemberJoinEventImpl(
+            final Member member, final ServerVoiceChannel newChannel, final ServerVoiceChannel oldChannel, final Server server) {
+        final ServerVoiceChannelMemberJoinEvent event = new ServerVoiceChannelMemberJoinEventImpl(
                 member, newChannel, oldChannel);
 
         api.getEventDispatcher().dispatchServerVoiceChannelMemberJoinEvent(
@@ -202,8 +202,8 @@ public class VoiceStateUpdateHandler extends PacketHandler {
     }
 
     private void dispatchServerVoiceChannelMemberLeaveEvent(
-            Member member, ServerVoiceChannel newChannel, ServerVoiceChannel oldChannel, Server server) {
-        ServerVoiceChannelMemberLeaveEvent event = new ServerVoiceChannelMemberLeaveEventImpl(
+            final Member member, final ServerVoiceChannel newChannel, final ServerVoiceChannel oldChannel, final Server server) {
+        final ServerVoiceChannelMemberLeaveEvent event = new ServerVoiceChannelMemberLeaveEventImpl(
                 member, newChannel, oldChannel);
 
         api.getEventDispatcher().dispatchServerVoiceChannelMemberLeaveEvent(

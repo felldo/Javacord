@@ -17,7 +17,7 @@ public class SlashCommandPermissionsImpl implements SlashCommandPermissions {
      *
      * @param data The json data of the slash command permissions.
      */
-    public SlashCommandPermissionsImpl(JsonNode data) {
+    public SlashCommandPermissionsImpl(final JsonNode data) {
         id = data.get("id").asLong();
         type = SlashCommandPermissionType.fromValue(data.get("type").asInt());
         permission = data.get("permission").asBoolean();
@@ -31,7 +31,7 @@ public class SlashCommandPermissionsImpl implements SlashCommandPermissions {
      * @param permission The permission.
      *
      */
-    public SlashCommandPermissionsImpl(long id, SlashCommandPermissionType type, boolean permission) {
+    public SlashCommandPermissionsImpl(final long id, final SlashCommandPermissionType type, final boolean permission) {
         this.id = id;
         this.type = type;
         this.permission = permission;
@@ -58,7 +58,7 @@ public class SlashCommandPermissionsImpl implements SlashCommandPermissions {
      * @return The provided object with the data of the embed.
      */
     public ObjectNode toJsonNode() {
-        ObjectNode node = JsonNodeFactory.instance.objectNode();
+        final ObjectNode node = JsonNodeFactory.instance.objectNode();
         node.put("id", id);
         node.put("type", type.getValue());
         node.put("permission", permission);

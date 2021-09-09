@@ -15,7 +15,7 @@ public class ComponentInteractionOriginalMessageUpdaterImpl
      *
      * @param interaction The interaction to use.
      */
-    public ComponentInteractionOriginalMessageUpdaterImpl(MessageComponentInteraction interaction) {
+    public ComponentInteractionOriginalMessageUpdaterImpl(final MessageComponentInteraction interaction) {
         super(ComponentInteractionOriginalMessageUpdater.class);
         this.interaction = (MessageComponentInteractionImpl) interaction;
     }

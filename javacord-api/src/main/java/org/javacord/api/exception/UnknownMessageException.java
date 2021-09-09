@@ -17,8 +17,8 @@ public class UnknownMessageException extends NotFoundException {
      * @param request The information about the request.
      * @param response The information about the response.
      */
-    public UnknownMessageException(Exception origin, String message, RestRequestInformation request,
-                                   RestRequestResponseInformation response) {
+    public UnknownMessageException(final Exception origin, final String message, final RestRequestInformation request,
+                                   final RestRequestResponseInformation response) {
         super(origin, message, request, response);
     }
 

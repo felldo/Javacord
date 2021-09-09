@@ -15,7 +15,7 @@ public class ServerMemberUnbanEventImpl extends ServerMemberEventImpl implements
      * @param server The server of the event.
      * @param user The user of the event.
      */
-    public ServerMemberUnbanEventImpl(Server server, User user) {
+    public ServerMemberUnbanEventImpl(final Server server, final User user) {
         super(server, user);
     }
 

@@ -14,7 +14,7 @@ public class SlashCommandPermissionsBuilder {
      * @param id The id.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandPermissionsBuilder setId(long id) {
+    public SlashCommandPermissionsBuilder setId(final long id) {
         delegate.setId(id);
         return this;
     }
@@ -25,7 +25,7 @@ public class SlashCommandPermissionsBuilder {
      * @param type The type.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandPermissionsBuilder setType(SlashCommandPermissionType type) {
+    public SlashCommandPermissionsBuilder setType(final SlashCommandPermissionType type) {
         delegate.setType(type);
         return this;
     }
@@ -36,7 +36,7 @@ public class SlashCommandPermissionsBuilder {
      * @param permission The permission.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandPermissionsBuilder setPermission(boolean permission) {
+    public SlashCommandPermissionsBuilder setPermission(final boolean permission) {
         delegate.setPermission(permission);
         return this;
     }

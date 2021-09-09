@@ -29,7 +29,7 @@ public class ServerChangeVanityUrlCodeEventImpl extends ServerEventImpl implemen
      * @param newVanityCode The new vanity url code of the server.
      * @param oldVanityCode The old vanity url code of the server.
      */
-    public ServerChangeVanityUrlCodeEventImpl(ServerImpl server, String newVanityCode, String oldVanityCode) {
+    public ServerChangeVanityUrlCodeEventImpl(final ServerImpl server, final String newVanityCode, final String oldVanityCode) {
         super(server);
         this.oldVanityCode = oldVanityCode;
         this.newVanityUrlCode = newVanityCode;

@@ -26,8 +26,8 @@ public class ServerChangePreferredLocaleEventImpl extends ServerEventImpl implem
      * @param oldPreferredLocale The new preferred locale of the server.
      * @param newPreferredLocale The old preferred locale of the server.
      */
-    public ServerChangePreferredLocaleEventImpl(ServerImpl server,
-                                                Locale newPreferredLocale, Locale oldPreferredLocale) {
+    public ServerChangePreferredLocaleEventImpl(final ServerImpl server,
+                                                final Locale newPreferredLocale, final Locale oldPreferredLocale) {
         super(server);
         this.oldPreferredLocale = oldPreferredLocale;
         this.newPreferredLocale = newPreferredLocale;

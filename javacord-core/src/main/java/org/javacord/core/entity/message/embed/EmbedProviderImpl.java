@@ -26,7 +26,7 @@ public class EmbedProviderImpl implements EmbedProvider {
      *
      * @param data The json data of the provider.
      */
-    public EmbedProviderImpl(JsonNode data) {
+    public EmbedProviderImpl(final JsonNode data) {
         name = data.has("name") ? data.get("name").asText() : null;
         url = data.has("url") && !data.get("url").isNull() ? data.get("url").asText() : null;
     }
@@ -43,7 +43,7 @@ public class EmbedProviderImpl implements EmbedProvider {
         }
         try {
             return new URL(url);
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the url of the embed provider is malformed! Please contact the developer!", e);
             return null;
         }

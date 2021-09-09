@@ -25,7 +25,7 @@ public class ServerChangeOwnerEventImpl extends ServerEventImpl implements Serve
      * @param newOwnerId The id of the new owner of the server.
      * @param oldOwnerId The id of the old owner of the server.
      */
-    public ServerChangeOwnerEventImpl(Server server, long newOwnerId, long oldOwnerId) {
+    public ServerChangeOwnerEventImpl(final Server server, final long newOwnerId, final long oldOwnerId) {
         super(server);
         this.newOwnerId = newOwnerId;
         this.oldOwnerId = oldOwnerId;

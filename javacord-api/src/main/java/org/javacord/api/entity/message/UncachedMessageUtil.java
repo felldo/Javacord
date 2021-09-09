@@ -21,7 +21,7 @@ public interface UncachedMessageUtil extends UncachedMessageAttachableListenerMa
      * @param messageId The id of the message.
      * @return The new message object.
      */
-    default CompletableFuture<Message> crossPost(long channelId, long messageId) {
+    default CompletableFuture<Message> crossPost(final long channelId, final long messageId) {
         return crossPost(Long.toUnsignedString(channelId), Long.toUnsignedString(messageId));
     }
 
@@ -146,7 +146,7 @@ public interface UncachedMessageUtil extends UncachedMessageAttachableListenerMa
      * @param embeds    An array of the new embeds of the message.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Message> edit(long channelId, long messageId, EmbedBuilder... embeds) {
+    default CompletableFuture<Message> edit(final long channelId, final long messageId, final EmbedBuilder... embeds) {
         return edit(channelId, messageId, Arrays.asList(embeds));
     }
 
@@ -168,7 +168,7 @@ public interface UncachedMessageUtil extends UncachedMessageAttachableListenerMa
      * @param embeds    An array of the new embeds of the message.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Message> edit(String channelId, String messageId, EmbedBuilder... embeds) {
+    default CompletableFuture<Message> edit(final String channelId, final String messageId, final EmbedBuilder... embeds) {
         return edit(channelId, messageId, Arrays.asList(embeds));
     }
 
@@ -191,7 +191,7 @@ public interface UncachedMessageUtil extends UncachedMessageAttachableListenerMa
      * @param embeds    An array of the new embeds of the message.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Message> edit(long channelId, long messageId, String content, EmbedBuilder... embeds) {
+    default CompletableFuture<Message> edit(final long channelId, final long messageId, final String content, final EmbedBuilder... embeds) {
         return edit(channelId, messageId, content, embeds);
     }
 
@@ -215,8 +215,8 @@ public interface UncachedMessageUtil extends UncachedMessageAttachableListenerMa
      * @param embeds    An array of the new embeds of the message.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Message> edit(String channelId, String messageId, String content,
-                                            EmbedBuilder... embeds) {
+    default CompletableFuture<Message> edit(final String channelId, final String messageId, final String content,
+                                            final EmbedBuilder... embeds) {
         return edit(channelId, messageId, content, embeds);
     }
 
@@ -242,8 +242,8 @@ public interface UncachedMessageUtil extends UncachedMessageAttachableListenerMa
      * @param updateEmbed   Whether to update or remove the embed.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Message> edit(long channelId, long messageId, String content, boolean updateContent,
-                                            EmbedBuilder embed, boolean updateEmbed) {
+    default CompletableFuture<Message> edit(final long channelId, final long messageId, final String content, final boolean updateContent,
+                                            final EmbedBuilder embed, final boolean updateEmbed) {
         return edit(channelId, messageId, content, updateContent, Collections.singletonList(embed), updateEmbed);
     }
 
@@ -272,8 +272,8 @@ public interface UncachedMessageUtil extends UncachedMessageAttachableListenerMa
      * @param updateEmbed   Whether to update or remove the embed.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Message> edit(String channelId, String messageId, String content, boolean updateContent,
-                                            EmbedBuilder embed, boolean updateEmbed) {
+    default CompletableFuture<Message> edit(final String channelId, final String messageId, final String content, final boolean updateContent,
+                                            final EmbedBuilder embed, final boolean updateEmbed) {
         return edit(channelId, messageId, content, updateContent, Collections.singletonList(embed), updateEmbed);
     }
 

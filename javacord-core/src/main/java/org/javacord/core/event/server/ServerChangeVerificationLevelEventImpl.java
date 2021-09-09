@@ -28,7 +28,7 @@ public class ServerChangeVerificationLevelEventImpl extends ServerEventImpl
      * @param oldVerificationLevel The old verification level of the server.
      */
     public ServerChangeVerificationLevelEventImpl(
-            Server server, VerificationLevel newVerificationLevel, VerificationLevel oldVerificationLevel) {
+            final Server server, final VerificationLevel newVerificationLevel, final VerificationLevel oldVerificationLevel) {
         super(server);
         this.newVerificationLevel = newVerificationLevel;
         this.oldVerificationLevel = oldVerificationLevel;

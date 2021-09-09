@@ -17,7 +17,7 @@ public class UserChangeDeafenedEventImpl extends ServerUserEventImpl implements 
      * @param newMember The new member.
      * @param oldMember The old member.
      */
-    public UserChangeDeafenedEventImpl(Member newMember, Member oldMember) {
+    public UserChangeDeafenedEventImpl(final Member newMember, final Member oldMember) {
         super(newMember.getUser(), newMember.getServer());
         this.newMember = newMember;
         this.oldMember = oldMember;

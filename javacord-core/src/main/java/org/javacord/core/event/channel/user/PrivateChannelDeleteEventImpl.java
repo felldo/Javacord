@@ -13,7 +13,7 @@ public class PrivateChannelDeleteEventImpl extends PrivateChannelEventImpl imple
      *
      * @param channel The channel of the event.
      */
-    public PrivateChannelDeleteEventImpl(PrivateChannel channel) {
+    public PrivateChannelDeleteEventImpl(final PrivateChannel channel) {
         super(channel);
     }
 

@@ -37,13 +37,13 @@ public class ChannelCreateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public ChannelCreateHandler(DiscordApi api) {
+    public ChannelCreateHandler(final DiscordApi api) {
         super(api, true, "CHANNEL_CREATE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        ChannelType type = ChannelType.fromId(packet.get("type").asInt());
+    public void handle(final JsonNode packet) {
+        final ChannelType type = ChannelType.fromId(packet.get("type").asInt());
         switch (type) {
             case SERVER_TEXT_CHANNEL:
                 handleServerTextChannel(packet);
@@ -83,11 +83,11 @@ public class ChannelCreateHandler extends PacketHandler {
      *
      * @param channel The channel data.
      */
-    private void handleChannelCategory(JsonNode channel) {
-        long serverId = channel.get("guild_id").asLong();
+    private void handleChannelCategory(final JsonNode channel) {
+        final long serverId = channel.get("guild_id").asLong();
         api.getPossiblyUnreadyServerById(serverId).ifPresent(server -> {
-            ChannelCategory channelCategory = ((ServerImpl) server).getOrCreateChannelCategory(channel);
-            ServerChannelCreateEvent event = new ServerChannelCreateEventImpl(channelCategory);
+            final ChannelCategory channelCategory = ((ServerImpl) server).getOrCreateChannelCategory(channel);
+            final ServerChannelCreateEvent event = new ServerChannelCreateEventImpl(channelCategory);
             api.getEventDispatcher().dispatchServerChannelCreateEvent((DispatchQueueSelector) server, server, event);
         });
     }
@@ -97,11 +97,11 @@ public class ChannelCreateHandler extends PacketHandler {
      *
      * @param channel The channel data.
      */
-    private void handleServerTextChannel(JsonNode channel) {
-        long serverId = channel.get("guild_id").asLong();
+    private void handleServerTextChannel(final JsonNode channel) {
+        final long serverId = channel.get("guild_id").asLong();
         api.getPossiblyUnreadyServerById(serverId).ifPresent(server -> {
-            ServerTextChannel textChannel = ((ServerImpl) server).getOrCreateServerTextChannel(channel);
-            ServerChannelCreateEvent event = new ServerChannelCreateEventImpl(textChannel);
+            final ServerTextChannel textChannel = ((ServerImpl) server).getOrCreateServerTextChannel(channel);
+            final ServerChannelCreateEvent event = new ServerChannelCreateEventImpl(textChannel);
 
             api.getEventDispatcher().dispatchServerChannelCreateEvent((DispatchQueueSelector) server, server, event);
         });
@@ -112,11 +112,11 @@ public class ChannelCreateHandler extends PacketHandler {
      *
      * @param channel The channel data.
      */
-    private void handleServerVoiceChannel(JsonNode channel) {
-        long serverId = channel.get("guild_id").asLong();
+    private void handleServerVoiceChannel(final JsonNode channel) {
+        final long serverId = channel.get("guild_id").asLong();
         api.getPossiblyUnreadyServerById(serverId).ifPresent(server -> {
-            ServerVoiceChannel voiceChannel = ((ServerImpl) server).getOrCreateServerVoiceChannel(channel);
-            ServerChannelCreateEvent event = new ServerChannelCreateEventImpl(voiceChannel);
+            final ServerVoiceChannel voiceChannel = ((ServerImpl) server).getOrCreateServerVoiceChannel(channel);
+            final ServerChannelCreateEvent event = new ServerChannelCreateEventImpl(voiceChannel);
 
             api.getEventDispatcher().dispatchServerChannelCreateEvent((DispatchQueueSelector) server, server, event);
         });
@@ -127,11 +127,11 @@ public class ChannelCreateHandler extends PacketHandler {
      *
      * @param channel The channel data.
      */
-    private void handleServerStageVoiceChannel(JsonNode channel) {
-        long serverId = channel.get("guild_id").asLong();
+    private void handleServerStageVoiceChannel(final JsonNode channel) {
+        final long serverId = channel.get("guild_id").asLong();
         api.getPossiblyUnreadyServerById(serverId).ifPresent(server -> {
-            ServerStageVoiceChannel voiceChannel = ((ServerImpl) server).getOrCreateServerStageVoiceChannel(channel);
-            ServerChannelCreateEvent event = new ServerChannelCreateEventImpl(voiceChannel);
+            final ServerStageVoiceChannel voiceChannel = ((ServerImpl) server).getOrCreateServerStageVoiceChannel(channel);
+            final ServerChannelCreateEvent event = new ServerChannelCreateEventImpl(voiceChannel);
 
             api.getEventDispatcher().dispatchServerChannelCreateEvent((DispatchQueueSelector) server, server, event);
         });
@@ -142,16 +142,16 @@ public class ChannelCreateHandler extends PacketHandler {
      *
      * @param channel The channel data.
      */
-    private void handlePrivateChannel(JsonNode channel) {
+    private void handlePrivateChannel(final JsonNode channel) {
         // A CHANNEL_CREATE packet was sent every time a bot account receives a message, see
         // https://github.com/discord/discord-api-docs/issues/184 and
         // https://github.com/discord/discord-api-docs/issues/2248
 
-        UserImpl recipient = new UserImpl(api, channel.get("recipients").get(0), (MemberImpl) null, null);
+        final UserImpl recipient = new UserImpl(api, channel.get("recipients").get(0), (MemberImpl) null, null);
         if (!recipient.getPrivateChannel().isPresent()) {
-            PrivateChannel privateChannel =
+            final PrivateChannel privateChannel =
                     new PrivateChannelImpl(api, channel.get("id").asText(), recipient, recipient.getId());
-            PrivateChannelCreateEvent event = new PrivateChannelCreateEventImpl(privateChannel);
+            final PrivateChannelCreateEvent event = new PrivateChannelCreateEventImpl(privateChannel);
 
             api.getEventDispatcher().dispatchPrivateChannelCreateEvent(api, recipient, event);
         }
@@ -162,11 +162,11 @@ public class ChannelCreateHandler extends PacketHandler {
      *
      * @param channel The channel data.
      */
-    private void handleGroupChannel(JsonNode channel) {
-        long channelId = channel.get("id").asLong();
+    private void handleGroupChannel(final JsonNode channel) {
+        final long channelId = channel.get("id").asLong();
         if (!api.getGroupChannelById(channelId).isPresent()) {
-            GroupChannel groupChannel = new GroupChannelImpl(api, channel);
-            GroupChannelCreateEvent event = new GroupChannelCreateEventImpl(groupChannel);
+            final GroupChannel groupChannel = new GroupChannelImpl(api, channel);
+            final GroupChannelCreateEvent event = new GroupChannelCreateEventImpl(groupChannel);
 
             api.getEventDispatcher().dispatchGroupChannelCreateEvent(api, groupChannel.getMembers(), event);
         }

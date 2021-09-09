@@ -8,7 +8,7 @@ public enum ComponentType {
 
     private final int data;
 
-    ComponentType(int i) {
+    ComponentType(final int i) {
         this.data = i;
     }
 
@@ -32,7 +32,7 @@ public enum ComponentType {
      * @param identifier A component type identifier.
      * @return A ComponentType enumerator.
      */
-    public static ComponentType fromId(int identifier) {
+    public static ComponentType fromId(final int identifier) {
         if (identifier == 1) {
             return ACTION_ROW;
         } else if (identifier == 2) {

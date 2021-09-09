@@ -28,7 +28,7 @@ public class ServerChannelBuilder {
      * @param reason The reason for this update.
      * @return The current instance in order to chain call methods.
      */
-    public ServerChannelBuilder setAuditLogReason(String reason) {
+    public ServerChannelBuilder setAuditLogReason(final String reason) {
         delegate.setAuditLogReason(reason);
         return this;
     }
@@ -39,7 +39,7 @@ public class ServerChannelBuilder {
      * @param name The name of the channel.
      * @return The current instance in order to chain call methods.
      */
-    public ServerChannelBuilder setName(String name) {
+    public ServerChannelBuilder setName(final String name) {
         delegate.setName(name);
         return this;
     }
@@ -53,7 +53,7 @@ public class ServerChannelBuilder {
      * @return The current instance in order to chain call methods.
      */
     public <T extends Permissionable & DiscordEntity> ServerChannelBuilder addPermissionOverwrite(
-            T permissionable, Permissions permissions) {
+            final T permissionable, final Permissions permissions) {
         delegate.addPermissionOverwrite(permissionable, permissions);
         return this;
     }
@@ -66,7 +66,7 @@ public class ServerChannelBuilder {
      * @return The current instance in order to chain call methods.
      */
     public <T extends Permissionable & DiscordEntity> ServerChannelBuilder removePermissionOverwrite(
-            T permissionable) {
+            final T permissionable) {
         delegate.removePermissionOverwrite(permissionable);
         return this;
     }

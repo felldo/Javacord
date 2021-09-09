@@ -60,7 +60,7 @@ public interface AuditLogEntry extends DiscordEntity {
      * @param limit The maximum amount of audit log entries.
      * @return The audit log.
      */
-    default CompletableFuture<AuditLog> getAuditLogBefore(int limit) {
+    default CompletableFuture<AuditLog> getAuditLogBefore(final int limit) {
         return getAuditLog().getServer().getAuditLogBefore(limit, this);
     }
 
@@ -71,7 +71,7 @@ public interface AuditLogEntry extends DiscordEntity {
      * @param type The action type of the audit log.
      * @return The audit log.
      */
-    default CompletableFuture<AuditLog> getAuditLogBefore(int limit, AuditLogActionType type) {
+    default CompletableFuture<AuditLog> getAuditLogBefore(final int limit, final AuditLogActionType type) {
         return getAuditLog().getServer().getAuditLogBefore(limit, this, type);
     }
 

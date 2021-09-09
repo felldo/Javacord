@@ -16,7 +16,7 @@ public class AudioPacket {
     private static final int NONCE_LENGTH = 24;
 
     private boolean encrypted;
-    private byte[] header;
+    private final byte[] header;
     private byte[] audioFrame;
 
     /**
@@ -26,7 +26,7 @@ public class AudioPacket {
      * @param sequence The sequence.
      * @param timestamp The timestamp.
      */
-    public AudioPacket(int ssrc, char sequence, int timestamp) {
+    public AudioPacket(final int ssrc, final char sequence, final int timestamp) {
         this(null, ssrc, sequence, timestamp);
     }
 
@@ -38,13 +38,13 @@ public class AudioPacket {
      * @param sequence The sequence.
      * @param timestamp The timestamp.
      */
-    public AudioPacket(byte[] audioFrame, int ssrc, char sequence, int timestamp) {
+    public AudioPacket(byte[] audioFrame, final int ssrc, final char sequence, final int timestamp) {
         if (audioFrame == null) {
             audioFrame = SilentAudioSource.SILENCE_FRAME;
         }
         this.audioFrame = audioFrame;
         // See https://discordapp.com/developers/docs/topics/voice-connections#encrypting-and-sending-voice
-        ByteBuffer buffer = ByteBuffer.allocate(RTP_HEADER_LENGTH)
+        final ByteBuffer buffer = ByteBuffer.allocate(RTP_HEADER_LENGTH)
                 .put(0, RTP_TYPE)
                 .put(1, RTP_VERSION)
                 .putChar(2, sequence)
@@ -58,8 +58,8 @@ public class AudioPacket {
      *
      * @param key The key used to encrypt the packet.
      */
-    public void encrypt(byte[] key) {
-        byte[] nonce = new byte[NONCE_LENGTH];
+    public void encrypt(final byte[] key) {
+        final byte[] nonce = new byte[NONCE_LENGTH];
         System.arraycopy(header, 0, nonce, 0, RTP_HEADER_LENGTH);
         audioFrame = new SecretBox(ByteString.of(key)).seal(ByteString.of(nonce), ByteString.of(audioFrame))
                 .toByteArray();
@@ -72,8 +72,8 @@ public class AudioPacket {
      * @param address The destination address.
      * @return The created datagram packet.
      */
-    public DatagramPacket asUdpPacket(InetSocketAddress address) {
-        byte[] packet = new byte[header.length + audioFrame.length];
+    public DatagramPacket asUdpPacket(final InetSocketAddress address) {
+        final byte[] packet = new byte[header.length + audioFrame.length];
         System.arraycopy(header, 0, packet, 0, header.length);
         System.arraycopy(audioFrame, 0, packet, header.length, audioFrame.length);
         return new DatagramPacket(packet, packet.length, address);

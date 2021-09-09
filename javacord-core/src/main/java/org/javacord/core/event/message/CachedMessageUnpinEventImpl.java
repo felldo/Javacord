@@ -13,7 +13,7 @@ public class CachedMessageUnpinEventImpl extends CertainMessageEventImpl impleme
      *
      * @param message The message.
      */
-    public CachedMessageUnpinEventImpl(Message message) {
+    public CachedMessageUnpinEventImpl(final Message message) {
         super(message);
     }
 

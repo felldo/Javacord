@@ -189,12 +189,12 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
     public CompletableFuture<DiscordApi> login() {
         prepareListeners();
         logger.debug("Creating shard {} of {}", currentShard.get() + 1, totalShards.get());
-        CompletableFuture<DiscordApi> future = new CompletableFuture<>();
+        final CompletableFuture<DiscordApi> future = new CompletableFuture<>();
         if (token == null) {
             future.completeExceptionally(new IllegalArgumentException("You cannot login without a token!"));
             return future;
         }
-        try (CloseableThreadContext.Instance closeableThreadContextInstance =
+        try (final CloseableThreadContext.Instance closeableThreadContextInstance =
                      CloseableThreadContext.put("shard", Integer.toString(currentShard.get()))) {
             new DiscordApiImpl(accountType, token, currentShard.get(), totalShards.get(), intents,
                     waitForServersOnStartup, waitForUsersOnStartup, registerShutdownHook, globalRatelimiter,
@@ -214,13 +214,13 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
             return;
         }
         preparedListeners = new ConcurrentHashMap<>();
-        Stream<Class<? extends GloballyAttachableListener>> eventTypes = Stream.concat(
+        final Stream<Class<? extends GloballyAttachableListener>> eventTypes = Stream.concat(
                 listeners.keySet().stream(),
                 Stream.concat(listenerSuppliers.keySet().stream(),
                         listenerFunctions.keySet().stream())
         ).distinct();
         eventTypes.forEach(type -> {
-            ArrayList<Function<DiscordApi, GloballyAttachableListener>> typeListenerFunctions = new ArrayList<>();
+            final ArrayList<Function<DiscordApi, GloballyAttachableListener>> typeListenerFunctions = new ArrayList<>();
             listeners.getOrDefault(type, Collections.emptyList()).forEach(
                     listener -> typeListenerFunctions.add(api -> listener)
             );
@@ -239,7 +239,7 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
     }
 
     @Override
-    public Collection<CompletableFuture<DiscordApi>> loginShards(int... shards) {
+    public Collection<CompletableFuture<DiscordApi>> loginShards(final int... shards) {
         Objects.requireNonNull(shards);
         if (shards.length == 0) {
             return Collections.emptyList();
@@ -260,11 +260,11 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
             logger.info("Creating {} out of {} shards ({})", shards.length, getTotalShards(), shards);
         }
 
-        Collection<CompletableFuture<DiscordApi>> result = new ArrayList<>(shards.length);
-        int currentShard = getCurrentShard();
-        for (int shard : shards) {
+        final Collection<CompletableFuture<DiscordApi>> result = new ArrayList<>(shards.length);
+        final int currentShard = getCurrentShard();
+        for (final int shard : shards) {
             if (currentShard != 0) {
-                CompletableFuture<DiscordApi> future = new CompletableFuture<>();
+                final CompletableFuture<DiscordApi> future = new CompletableFuture<>();
                 future.completeExceptionally(new IllegalArgumentException(
                         "You cannot use loginShards or loginAllShards after setting the current shard!"));
                 result.add(future);
@@ -278,37 +278,37 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
     }
 
     @Override
-    public void setGlobalRatelimiter(Ratelimiter ratelimiter) {
+    public void setGlobalRatelimiter(final Ratelimiter ratelimiter) {
         globalRatelimiter = ratelimiter;
     }
 
     @Override
-    public void setGatewayIdentifyRatelimiter(Ratelimiter ratelimiter) {
+    public void setGatewayIdentifyRatelimiter(final Ratelimiter ratelimiter) {
         gatewayIdentifyRatelimiter = ratelimiter;
     }
 
     @Override
-    public void setProxySelector(ProxySelector proxySelector) {
+    public void setProxySelector(final ProxySelector proxySelector) {
         this.proxySelector = proxySelector;
     }
 
     @Override
-    public void setProxy(Proxy proxy) {
+    public void setProxy(final Proxy proxy) {
         this.proxy = proxy;
     }
 
     @Override
-    public void setProxyAuthenticator(Authenticator authenticator) {
+    public void setProxyAuthenticator(final Authenticator authenticator) {
         proxyAuthenticator = authenticator;
     }
 
     @Override
-    public void setTrustAllCertificates(boolean trustAllCertificates) {
+    public void setTrustAllCertificates(final boolean trustAllCertificates) {
         this.trustAllCertificates = trustAllCertificates;
     }
 
     @Override
-    public void setToken(String token) {
+    public void setToken(final String token) {
         this.token = token;
         PrivacyProtectionLogger.addPrivateData(token);
     }
@@ -319,7 +319,7 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
     }
 
     @Override
-    public void setAccountType(AccountType type) {
+    public void setAccountType(final AccountType type) {
         this.accountType = type;
     }
 
@@ -329,7 +329,7 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
     }
 
     @Override
-    public void setTotalShards(int totalShards) {
+    public void setTotalShards(final int totalShards) {
         if (currentShard.get() >= totalShards) {
             throw new IllegalArgumentException("currentShard cannot be greater or equal than totalShards!");
         }
@@ -345,7 +345,7 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
     }
 
     @Override
-    public void setCurrentShard(int currentShard) {
+    public void setCurrentShard(final int currentShard) {
         if (currentShard >= totalShards.get()) {
             throw new IllegalArgumentException("currentShard cannot be greater or equal than totalShards!");
         }
@@ -361,7 +361,7 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
     }
 
     @Override
-    public void setWaitForServersOnStartup(boolean waitForServersOnStartup) {
+    public void setWaitForServersOnStartup(final boolean waitForServersOnStartup) {
         this.waitForServersOnStartup = waitForServersOnStartup;
     }
 
@@ -371,7 +371,7 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
     }
 
     @Override
-    public void setWaitForUsersOnStartup(boolean waitForUsersOnStartup) {
+    public void setWaitForUsersOnStartup(final boolean waitForUsersOnStartup) {
         this.waitForUsersOnStartup = waitForUsersOnStartup;
     }
 
@@ -381,7 +381,7 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
     }
 
     @Override
-    public void setShutdownHookRegistrationEnabled(boolean registerShutdownHook) {
+    public void setShutdownHookRegistrationEnabled(final boolean registerShutdownHook) {
         this.registerShutdownHook = registerShutdownHook;
     }
 
@@ -391,14 +391,14 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
     }
 
     @Override
-    public void addIntents(Intent... intents) {
+    public void addIntents(final Intent... intents) {
         this.intents.addAll(Arrays.asList(intents));
     }
 
     @Override
-    public void setAllIntentsWhere(Predicate<Intent> condition) {
+    public void setAllIntentsWhere(final Predicate<Intent> condition) {
         intents = new HashSet<>();
-        for (Intent value : Intent.values()) {
+        for (final Intent value : Intent.values()) {
             if (condition.test(value)) {
                 intents.add(value);
             }
@@ -406,7 +406,7 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
     }
 
     @Override
-    public void setUserCacheEnabled(boolean enabled) {
+    public void setUserCacheEnabled(final boolean enabled) {
         userCacheEnabled = enabled;
     }
 
@@ -417,7 +417,7 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
 
     @Override
     public CompletableFuture<Void> setRecommendedTotalShards() {
-        CompletableFuture<Void> future = new CompletableFuture<>();
+        final CompletableFuture<Void> future = new CompletableFuture<>();
         if (token == null) {
             future.completeExceptionally(
                     new IllegalArgumentException("You cannot request the recommended total shards without a token!"));
@@ -428,11 +428,11 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
         return future;
     }
 
-    private void setRecommendedTotalShards(CompletableFuture<Void> future) {
-        DiscordApiImpl api = new DiscordApiImpl(
+    private void setRecommendedTotalShards(final CompletableFuture<Void> future) {
+        final DiscordApiImpl api = new DiscordApiImpl(
                 token, globalRatelimiter, gatewayIdentifyRatelimiter, proxySelector, proxy, proxyAuthenticator,
                 trustAllCertificates);
-        RestRequest<JsonNode> botGatewayRequest = new RestRequest<>(api, RestMethod.GET, RestEndpoint.GATEWAY_BOT);
+        final RestRequest<JsonNode> botGatewayRequest = new RestRequest<>(api, RestMethod.GET, RestEndpoint.GATEWAY_BOT);
         botGatewayRequest
                 .execute(RestRequestResult::getJsonBody)
                 .thenAccept(resultJson -> {
@@ -442,7 +442,7 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
                     future.complete(null);
                 })
                 .exceptionally(t -> {
-                    int retryDelay = api.getReconnectDelay(retryAttempt.incrementAndGet());
+                    final int retryDelay = api.getReconnectDelay(retryAttempt.incrementAndGet());
                     logger.info("Retrying to get recommended total shards in {} seconds!", retryDelay);
                     api.getThreadPool().getScheduler().schedule(
                             () -> setRecommendedTotalShards(future), retryDelay, TimeUnit.SECONDS);
@@ -453,16 +453,16 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends GloballyAttachableListener> void addListener(Class<T> listenerClass, T listener) {
+    public <T extends GloballyAttachableListener> void addListener(final Class<T> listenerClass, final T listener) {
         this.listeners.computeIfAbsent(listenerClass, clazz -> new CopyOnWriteArrayList<>());
-        List<T> listeners = (List<T>) this.listeners.get(listenerClass);
+        final List<T> listeners = (List<T>) this.listeners.get(listenerClass);
         if (!listeners.contains(listener)) {
             listeners.add(listener);
         }
     }
 
     @Override
-    public void addListener(GloballyAttachableListener listener) {
+    public void addListener(final GloballyAttachableListener listener) {
         if (!this.unspecifiedListeners.contains(listener)) {
             this.unspecifiedListeners.add(listener);
         }
@@ -470,16 +470,16 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
 
     @Override
     public <T extends GloballyAttachableListener> void addListener(
-            Class<T> listenerClass, Supplier<T> listenerSupplier) {
+            final Class<T> listenerClass, final Supplier<T> listenerSupplier) {
         this.listenerSuppliers.computeIfAbsent(listenerClass, clazz -> new CopyOnWriteArrayList<>());
-        List<Supplier<? extends GloballyAttachableListener>> listeners = this.listenerSuppliers.get(listenerClass);
+        final List<Supplier<? extends GloballyAttachableListener>> listeners = this.listenerSuppliers.get(listenerClass);
         if (!listeners.contains(listenerSupplier)) {
             listeners.add(listenerSupplier);
         }
     }
 
     @Override
-    public void addListener(Supplier<GloballyAttachableListener> listenerSupplier) {
+    public void addListener(final Supplier<GloballyAttachableListener> listenerSupplier) {
         if (!this.unspecifiedListenerSuppliers.contains(listenerSupplier)) {
             this.unspecifiedListenerSuppliers.add(listenerSupplier);
         }
@@ -487,9 +487,9 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
 
     @Override
     public <T extends GloballyAttachableListener> void addListener(
-            Class<T> listenerClass, Function<DiscordApi, T> listenerFunction) {
+            final Class<T> listenerClass, final Function<DiscordApi, T> listenerFunction) {
         this.listenerFunctions.computeIfAbsent(listenerClass, clazz -> new CopyOnWriteArrayList<>());
-        List<Function<DiscordApi, ? extends GloballyAttachableListener>> functions =
+        final List<Function<DiscordApi, ? extends GloballyAttachableListener>> functions =
                 this.listenerFunctions.get(listenerClass);
         if (!functions.contains(listenerFunction)) {
             functions.add(listenerFunction);
@@ -497,19 +497,19 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
     }
 
     @Override
-    public void addListener(Function<DiscordApi, GloballyAttachableListener> listenerFunction) {
+    public void addListener(final Function<DiscordApi, GloballyAttachableListener> listenerFunction) {
         if (!this.unspecifiedListenerFunctions.contains(listenerFunction)) {
             this.unspecifiedListenerFunctions.add(listenerFunction);
         }
     }
 
     @Override
-    public void removeListener(GloballyAttachableListener listener) {
+    public void removeListener(final GloballyAttachableListener listener) {
         this.unspecifiedListeners.remove(listener);
     }
 
     @Override
-    public <T extends GloballyAttachableListener> void removeListener(Class<T> listenerClass, T listener) {
+    public <T extends GloballyAttachableListener> void removeListener(final Class<T> listenerClass, final T listener) {
         this.listeners.computeIfPresent(listenerClass, (clazz, listeners) -> {
             listeners.remove(listener);
             return listeners.isEmpty() ? null : listeners;
@@ -517,13 +517,13 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
     }
 
     @Override
-    public void removeListenerSupplier(Supplier<GloballyAttachableListener> listenerSupplier) {
+    public void removeListenerSupplier(final Supplier<GloballyAttachableListener> listenerSupplier) {
         this.unspecifiedListenerSuppliers.remove(listenerSupplier);
     }
 
     @Override
     public <T extends GloballyAttachableListener> void removeListenerSupplier(
-            Class<T> listenerClass, Supplier<T> listenerSupplier) {
+            final Class<T> listenerClass, final Supplier<T> listenerSupplier) {
         this.listenerSuppliers.computeIfPresent(listenerClass, (clazz, suppliers) -> {
             suppliers.remove(listenerSupplier);
             return suppliers.isEmpty() ? null : suppliers;
@@ -531,13 +531,13 @@ public class DiscordApiBuilderDelegateImpl implements DiscordApiBuilderDelegate 
     }
 
     @Override
-    public void removeListenerFunction(Function<DiscordApi, GloballyAttachableListener> listenerFunction) {
+    public void removeListenerFunction(final Function<DiscordApi, GloballyAttachableListener> listenerFunction) {
         this.unspecifiedListenerFunctions.remove(listenerFunction);
     }
 
     @Override
     public <T extends GloballyAttachableListener> void removeListenerFunction(
-            Class<T> listenerClass, Function<DiscordApi, T> listenerFunction) {
+            final Class<T> listenerClass, final Function<DiscordApi, T> listenerFunction) {
         this.listenerFunctions.computeIfPresent(listenerClass, (clazz, functions) -> {
             functions.remove(listenerFunction);
             return functions.isEmpty() ? null : functions;

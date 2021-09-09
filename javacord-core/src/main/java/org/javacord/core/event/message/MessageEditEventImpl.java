@@ -46,8 +46,8 @@ public class MessageEditEventImpl extends RequestableMessageEventImpl implements
      * @param oldEmbeds The old embeds of the message.
      */
     public MessageEditEventImpl(
-            DiscordApi api, long messageId, TextChannel channel, String newContent, List<Embed> newEmbeds,
-            String oldContent, List<Embed> oldEmbeds) {
+            final DiscordApi api, final long messageId, final TextChannel channel, final String newContent, final List<Embed> newEmbeds,
+            final String oldContent, final List<Embed> oldEmbeds) {
         super(api, messageId, channel);
         this.newContent = newContent;
         this.newEmbeds = newEmbeds;

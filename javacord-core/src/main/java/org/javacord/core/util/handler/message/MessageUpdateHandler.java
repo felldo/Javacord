@@ -48,43 +48,43 @@ public class MessageUpdateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public MessageUpdateHandler(DiscordApi api) {
+    public MessageUpdateHandler(final DiscordApi api) {
         super(api, true, "MESSAGE_UPDATE");
-        long offset = this.api.getTimeOffset() == null ? 0 : this.api.getTimeOffset();
+        final long offset = this.api.getTimeOffset() == null ? 0 : this.api.getTimeOffset();
         api.getThreadPool().getScheduler().scheduleAtFixedRate(() -> {
             try {
                 lastKnownEditTimestamps.entrySet().removeIf(
                         entry -> System.currentTimeMillis() + offset - entry.getValue() > 5000);
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 logger.error("Failed to clean last known edit timestamps cache!", t);
             }
         }, 1, 1, TimeUnit.MINUTES);
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        long messageId = packet.get("id").asLong();
-        long channelId = packet.get("channel_id").asLong();
+    public void handle(final JsonNode packet) {
+        final long messageId = packet.get("id").asLong();
+        final long channelId = packet.get("channel_id").asLong();
 
-        Optional<TextChannel> optionalChannel = api.getTextChannelById(channelId);
+        final Optional<TextChannel> optionalChannel = api.getTextChannelById(channelId);
         if (!optionalChannel.isPresent()) {
             LoggerUtil.logMissingChannel(logger, channelId);
             return;
         }
 
-        TextChannel channel = optionalChannel.get();
-        Optional<MessageImpl> message = api.getCachedMessageById(messageId).map(msg -> (MessageImpl) msg);
+        final TextChannel channel = optionalChannel.get();
+        final Optional<MessageImpl> message = api.getCachedMessageById(messageId).map(msg -> (MessageImpl) msg);
 
         message.ifPresent(msg -> {
-            boolean newPinnedFlag = packet.hasNonNull("pinned") ? packet.get("pinned").asBoolean() : msg.isPinned();
-            boolean oldPinnedFlag = msg.isPinned();
+            final boolean newPinnedFlag = packet.hasNonNull("pinned") ? packet.get("pinned").asBoolean() : msg.isPinned();
+            final boolean oldPinnedFlag = msg.isPinned();
             if (newPinnedFlag != oldPinnedFlag) {
                 msg.setPinned(newPinnedFlag);
 
                 if (newPinnedFlag) {
-                    CachedMessagePinEvent event = new CachedMessagePinEventImpl(msg);
+                    final CachedMessagePinEvent event = new CachedMessagePinEventImpl(msg);
 
-                    Optional<Server> optionalServer =
+                    final Optional<Server> optionalServer =
                             msg.getChannel().asServerChannel().map(ServerChannel::getServer);
                     api.getEventDispatcher().dispatchCachedMessagePinEvent(
                             optionalServer.map(DispatchQueueSelector.class::cast).orElse(api),
@@ -93,9 +93,9 @@ public class MessageUpdateHandler extends PacketHandler {
                             msg.getChannel(),
                             event);
                 } else {
-                    CachedMessageUnpinEvent event = new CachedMessageUnpinEventImpl(msg);
+                    final CachedMessageUnpinEvent event = new CachedMessageUnpinEventImpl(msg);
 
-                    Optional<Server> optionalServer =
+                    final Optional<Server> optionalServer =
                             msg.getChannel().asServerChannel().map(ServerChannel::getServer);
                     api.getEventDispatcher().dispatchCachedMessageUnpinEvent(
                             optionalServer.map(DispatchQueueSelector.class::cast).orElse(api),
@@ -114,36 +114,36 @@ public class MessageUpdateHandler extends PacketHandler {
                 msg.setMentionsEveryone(packet.get("mention_everyone").asBoolean());
             });
 
-            long editTimestamp =
+            final long editTimestamp =
                     OffsetDateTime.parse(packet.get("edited_timestamp").asText()).toInstant().toEpochMilli();
-            long lastKnownEditTimestamp = lastKnownEditTimestamps.getOrDefault(messageId, 0L);
+            final long lastKnownEditTimestamp = lastKnownEditTimestamps.getOrDefault(messageId, 0L);
             lastKnownEditTimestamps.put(messageId, editTimestamp);
 
             boolean isMostLikelyAnEdit = true;
-            long offset = api.getTimeOffset() == null ? 0 : api.getTimeOffset();
+            final long offset = api.getTimeOffset() == null ? 0 : api.getTimeOffset();
             if (editTimestamp == lastKnownEditTimestamp) {
                 isMostLikelyAnEdit = false;
             } else if (System.currentTimeMillis() + offset - editTimestamp > 5000) {
                 isMostLikelyAnEdit = false;
             }
 
-            String oldContent = message.map(Message::getContent).orElse(null);
-            List<Embed> oldEmbeds = message.map(Message::getEmbeds).orElse(null);
+            final String oldContent = message.map(Message::getContent).orElse(null);
+            final List<Embed> oldEmbeds = message.map(Message::getEmbeds).orElse(null);
 
             String newContent = null;
             if (packet.has("content")) {
                 newContent = packet.get("content").asText();
-                String finalNewContent = newContent;
+                final String finalNewContent = newContent;
                 message.ifPresent(msg -> msg.setContent(finalNewContent));
             }
             List<Embed> newEmbeds = null;
             if (packet.has("embeds")) {
                 newEmbeds = new ArrayList<>();
-                for (JsonNode embedJson : packet.get("embeds")) {
-                    Embed embed = new EmbedImpl(embedJson);
+                for (final JsonNode embedJson : packet.get("embeds")) {
+                    final Embed embed = new EmbedImpl(embedJson);
                     newEmbeds.add(embed);
                 }
-                List<Embed> finalNewEmbeds = newEmbeds;
+                final List<Embed> finalNewEmbeds = newEmbeds;
                 message.ifPresent(msg -> msg.setEmbeds(finalNewEmbeds));
             }
 
@@ -183,8 +183,8 @@ public class MessageUpdateHandler extends PacketHandler {
      *
      * @param event The event to dispatch.
      */
-    private void dispatchEditEvent(MessageEditEvent event) {
-        Optional<Server> optionalServer =
+    private void dispatchEditEvent(final MessageEditEvent event) {
+        final Optional<Server> optionalServer =
                 event.getChannel().asServerChannel().map(ServerChannel::getServer);
         api.getEventDispatcher().dispatchMessageEditEvent(
                 optionalServer.map(DispatchQueueSelector.class::cast).orElse(api),

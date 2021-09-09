@@ -32,8 +32,8 @@ public class KnownCustomEmojiChangeWhitelistedRolesEventImpl extends KnownCustom
      * @param newWhitelist The new whitelist of the custom emoji.
      * @param oldWhitelist The old whitelist of the custom emoji.
      */
-    public KnownCustomEmojiChangeWhitelistedRolesEventImpl(KnownCustomEmoji emoji, Collection<Role> newWhitelist,
-                                                           Collection<Role> oldWhitelist) {
+    public KnownCustomEmojiChangeWhitelistedRolesEventImpl(final KnownCustomEmoji emoji, final Collection<Role> newWhitelist,
+                                                           final Collection<Role> oldWhitelist) {
         super(emoji);
         this.newWhitelist = newWhitelist;
         this.oldWhitelist = oldWhitelist;

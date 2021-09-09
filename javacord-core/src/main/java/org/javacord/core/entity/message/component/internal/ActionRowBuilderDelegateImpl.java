@@ -18,19 +18,19 @@ public class ActionRowBuilderDelegateImpl implements ActionRowBuilderDelegate {
     private final List<LowLevelComponent> components = new ArrayList<>();
 
     @Override
-    public void addComponents(List<LowLevelComponent> components) {
+    public void addComponents(final List<LowLevelComponent> components) {
         this.components.addAll(components);
     }
 
     @Override
-    public void copy(ActionRow actionRow) {
+    public void copy(final ActionRow actionRow) {
         actionRow.getComponents().forEach(component -> {
             if (component.getType() == ComponentType.BUTTON) {
-                ButtonBuilder builder = new ButtonBuilder();
+                final ButtonBuilder builder = new ButtonBuilder();
                 builder.copy((Button) component);
                 components.add(builder.build());
             } else if (component.getType() == ComponentType.SELECT_MENU) {
-                SelectMenuBuilder builder = new SelectMenuBuilder();
+                final SelectMenuBuilder builder = new SelectMenuBuilder();
                 builder.copy((SelectMenu) component);
                 components.add(builder.build());
             }
@@ -38,23 +38,23 @@ public class ActionRowBuilderDelegateImpl implements ActionRowBuilderDelegate {
     }
 
     @Override
-    public void removeComponent(LowLevelComponent component) {
+    public void removeComponent(final LowLevelComponent component) {
         components.remove(component);
     }
 
     @Override
-    public void removeComponent(int index) {
+    public void removeComponent(final int index) {
         components.remove(index);
     }
 
     @Override
-    public void removeComponent(String customId) {
+    public void removeComponent(final String customId) {
         components.removeIf(componentBuilder -> {
             if (componentBuilder.getType() == ComponentType.BUTTON) {
-                ButtonBuilder buttonBuilder = (ButtonBuilder) componentBuilder;
+                final ButtonBuilder buttonBuilder = (ButtonBuilder) componentBuilder;
                 return buttonBuilder.getDelegate().getCustomId().equals(customId);
             } else if (componentBuilder.getType() == ComponentType.SELECT_MENU) {
-                SelectMenuBuilder selectMenuBuilder = (SelectMenuBuilder) componentBuilder;
+                final SelectMenuBuilder selectMenuBuilder = (SelectMenuBuilder) componentBuilder;
                 return selectMenuBuilder.getDelegate().getCustomId().equals(customId);
             }
             return false;

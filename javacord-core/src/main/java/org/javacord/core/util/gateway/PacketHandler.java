@@ -30,7 +30,7 @@ public abstract class PacketHandler {
      * @param async Whether the packet should be handled in a new thread or in the websocket thread.
      * @param type The type of packet the class handles.
      */
-    public PacketHandler(DiscordApi api, boolean async, String type) {
+    public PacketHandler(final DiscordApi api, final boolean async, final String type) {
         this.api = (DiscordApiImpl) api;
         this.async = async;
         this.type = type;
@@ -49,7 +49,7 @@ public abstract class PacketHandler {
             executorService.submit(() -> {
                 try {
                     handle(packet);
-                } catch (Throwable t) {
+                } catch (final Throwable t) {
                     logger.warn("Couldn't handle packet of type {}. Please contact the developer! (packet: {})",
                             getType(), packet, t);
                 }
@@ -57,7 +57,7 @@ public abstract class PacketHandler {
         } else {
             try {
                 handle(packet);
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 logger.warn("Couldn't handle packet of type {}. Please contact the developer! (packet: {})",
                         getType(), packet, t);
             }
@@ -86,7 +86,7 @@ public abstract class PacketHandler {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         return obj instanceof PacketHandler && ((PacketHandler) obj).getType().equals(getType());
     }
 

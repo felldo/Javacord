@@ -10,7 +10,7 @@ public enum ButtonStyle {
 
     private final int data;
 
-    ButtonStyle(int i) {
+    ButtonStyle(final int i) {
         this.data = i;
     }
 
@@ -34,7 +34,7 @@ public enum ButtonStyle {
      * @param name Button style name.
      * @return A ButtonStyle enumerator.
      */
-    public static ButtonStyle fromName(String name) {
+    public static ButtonStyle fromName(final String name) {
         switch (name) {
             case "blurple":
                 return PRIMARY;
@@ -57,7 +57,7 @@ public enum ButtonStyle {
      * @param colorId The style's internal value.
      * @return A ButtonStyle enumerator.
      */
-    public static ButtonStyle fromId(int colorId) {
+    public static ButtonStyle fromId(final int colorId) {
         switch (colorId) {
             case 1:
                 return PRIMARY;

@@ -19,7 +19,7 @@ public abstract class RoleEventImpl extends ServerEventImpl implements RoleEvent
      *
      * @param role The role of the event.
      */
-    public RoleEventImpl(Role role) {
+    public RoleEventImpl(final Role role) {
         super(role.getServer());
         this.role = role;
     }

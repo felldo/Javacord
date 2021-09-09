@@ -59,17 +59,17 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
     private final List<EmbedFieldImpl> fields = new ArrayList<>();
 
     @Override
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
     @Override
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
     @Override
-    public void setUrl(String url) {
+    public void setUrl(final String url) {
         this.url = url;
     }
 
@@ -79,172 +79,172 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
     }
 
     @Override
-    public void setTimestamp(Instant timestamp) {
+    public void setTimestamp(final Instant timestamp) {
         this.timestamp = timestamp;
     }
 
     @Override
-    public void setColor(Color color) {
+    public void setColor(final Color color) {
         this.color = color;
     }
 
     @Override
-    public void setFooter(String text) {
+    public void setFooter(final String text) {
         footerText = text;
         footerIconUrl = null;
         footerIconContainer = null;
     }
 
     @Override
-    public void setFooter(String text, String iconUrl) {
+    public void setFooter(final String text, final String iconUrl) {
         footerText = text;
         footerIconUrl = iconUrl;
         footerIconContainer = null;
     }
 
     @Override
-    public void setFooter(String text, Icon icon) {
+    public void setFooter(final String text, final Icon icon) {
         footerText = text;
         footerIconUrl = icon.getUrl().toString();
         footerIconContainer = null;
     }
 
     @Override
-    public void setFooter(String text, File icon) {
+    public void setFooter(final String text, final File icon) {
         footerText = text;
         footerIconUrl = null;
         if (icon == null) {
             footerIconContainer = null;
         } else {
             footerIconContainer = new FileContainer(icon);
-            footerIconContainer.setFileTypeOrName(UUID.randomUUID().toString() + "." + FileUtils.getExtension(icon));
+            footerIconContainer.setFileTypeOrName(UUID.randomUUID() + "." + FileUtils.getExtension(icon));
         }
     }
 
     @Override
-    public void setFooter(String text, InputStream icon) {
+    public void setFooter(final String text, final InputStream icon) {
         setFooter(text, icon, "png");
     }
 
     @Override
-    public void setFooter(String text, InputStream icon, String fileType) {
+    public void setFooter(final String text, final InputStream icon, final String fileType) {
         footerText = text;
         footerIconUrl = null;
         if (icon == null) {
             footerIconContainer = null;
         } else {
             footerIconContainer = new FileContainer(icon, fileType);
-            footerIconContainer.setFileTypeOrName(UUID.randomUUID().toString() + "." + fileType);
+            footerIconContainer.setFileTypeOrName(UUID.randomUUID() + "." + fileType);
         }
     }
 
     @Override
-    public void setFooter(String text, byte[] icon) {
+    public void setFooter(final String text, final byte[] icon) {
         setFooter(text, icon, "png");
     }
 
     @Override
-    public void setFooter(String text, byte[] icon, String fileType) {
+    public void setFooter(final String text, final byte[] icon, final String fileType) {
         footerText = text;
         footerIconUrl = null;
         if (icon == null) {
             footerIconContainer = null;
         } else {
             footerIconContainer = new FileContainer(icon, fileType);
-            footerIconContainer.setFileTypeOrName(UUID.randomUUID().toString() + "." + fileType);
+            footerIconContainer.setFileTypeOrName(UUID.randomUUID() + "." + fileType);
         }
     }
 
     @Override
-    public void setFooter(String text, BufferedImage icon) {
+    public void setFooter(final String text, final BufferedImage icon) {
         setFooter(text, icon, "png");
     }
 
     @Override
-    public void setFooter(String text, BufferedImage icon, String fileType) {
+    public void setFooter(final String text, final BufferedImage icon, final String fileType) {
         footerText = text;
         footerIconUrl = null;
         if (icon == null) {
             footerIconContainer = null;
         } else {
             footerIconContainer = new FileContainer(icon, fileType);
-            footerIconContainer.setFileTypeOrName(UUID.randomUUID().toString() + "." + fileType);
+            footerIconContainer.setFileTypeOrName(UUID.randomUUID() + "." + fileType);
         }
     }
 
     @Override
-    public void setImage(String url) {
+    public void setImage(final String url) {
         imageUrl = url;
         imageContainer = null;
     }
 
     @Override
-    public void setImage(Icon image) {
+    public void setImage(final Icon image) {
         imageUrl = image.getUrl().toString();
         imageContainer = null;
     }
 
     @Override
-    public void setImage(File image) {
+    public void setImage(final File image) {
         imageUrl = null;
         if (image == null) {
             imageContainer = null;
         } else {
             imageContainer = new FileContainer(image);
-            imageContainer.setFileTypeOrName(UUID.randomUUID().toString() + "." + FileUtils.getExtension(image));
+            imageContainer.setFileTypeOrName(UUID.randomUUID() + "." + FileUtils.getExtension(image));
         }
     }
 
     @Override
-    public void setImage(InputStream image) {
+    public void setImage(final InputStream image) {
         setImage(image, "png");
     }
 
     @Override
-    public void setImage(InputStream image, String fileType) {
+    public void setImage(final InputStream image, final String fileType) {
         imageUrl = null;
         if (image == null) {
             imageContainer = null;
         } else {
             imageContainer = new FileContainer(image, fileType);
-            imageContainer.setFileTypeOrName(UUID.randomUUID().toString() + "." + fileType);
+            imageContainer.setFileTypeOrName(UUID.randomUUID() + "." + fileType);
         }
     }
 
     @Override
-    public void setImage(byte[] image) {
+    public void setImage(final byte[] image) {
         setImage(image, "png");
     }
 
     @Override
-    public void setImage(byte[] image, String fileType) {
+    public void setImage(final byte[] image, final String fileType) {
         imageUrl = null;
         if (image == null) {
             imageContainer = null;
         } else {
             imageContainer = new FileContainer(image, fileType);
-            imageContainer.setFileTypeOrName(UUID.randomUUID().toString() + "." + fileType);
+            imageContainer.setFileTypeOrName(UUID.randomUUID() + "." + fileType);
         }
     }
 
     @Override
-    public void setImage(BufferedImage image) {
+    public void setImage(final BufferedImage image) {
         setImage(image, "png");
     }
 
     @Override
-    public void setImage(BufferedImage image, String fileType) {
+    public void setImage(final BufferedImage image, final String fileType) {
         imageUrl = null;
         if (image == null) {
             imageContainer = null;
         } else {
             imageContainer = new FileContainer(image, fileType);
-            imageContainer.setFileTypeOrName(UUID.randomUUID().toString() + "." + fileType);
+            imageContainer.setFileTypeOrName(UUID.randomUUID() + "." + fileType);
         }
     }
 
     @Override
-    public void setAuthor(MessageAuthor author) {
+    public void setAuthor(final MessageAuthor author) {
         authorName = author.getDisplayName();
         authorUrl = null;
         authorIconUrl = author.getAvatar().getUrl().toString();
@@ -252,7 +252,7 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
     }
 
     @Override
-    public void setAuthor(User author) {
+    public void setAuthor(final User author) {
         authorName = author.getName();
         authorUrl = null;
         authorIconUrl = author.getAvatar().getUrl().toString();
@@ -260,7 +260,7 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
     }
 
     @Override
-    public void setAuthor(String name) {
+    public void setAuthor(final String name) {
         authorName = name;
         authorUrl = null;
         authorIconUrl = null;
@@ -268,7 +268,7 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
     }
 
     @Override
-    public void setAuthor(String name, String url, String iconUrl) {
+    public void setAuthor(final String name, final String url, final String iconUrl) {
         authorName = name;
         authorUrl = url;
         authorIconUrl = iconUrl;
@@ -276,7 +276,7 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
     }
 
     @Override
-    public void setAuthor(String name, String url, Icon icon) {
+    public void setAuthor(final String name, final String url, final Icon icon) {
         authorName = name;
         authorUrl = url;
         authorIconUrl = icon.getUrl().toString();
@@ -284,7 +284,7 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
     }
 
     @Override
-    public void setAuthor(String name, String url, File icon) {
+    public void setAuthor(final String name, final String url, final File icon) {
         authorName = name;
         authorUrl = url;
         authorIconUrl = null;
@@ -292,17 +292,17 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
             authorIconContainer = null;
         } else {
             authorIconContainer = new FileContainer(icon);
-            authorIconContainer.setFileTypeOrName(UUID.randomUUID().toString() + "." + FileUtils.getExtension(icon));
+            authorIconContainer.setFileTypeOrName(UUID.randomUUID() + "." + FileUtils.getExtension(icon));
         }
     }
 
     @Override
-    public void setAuthor(String name, String url, InputStream icon) {
+    public void setAuthor(final String name, final String url, final InputStream icon) {
         setAuthor(name, url, icon, "png");
     }
 
     @Override
-    public void setAuthor(String name, String url, InputStream icon, String fileType) {
+    public void setAuthor(final String name, final String url, final InputStream icon, final String fileType) {
         authorName = name;
         authorUrl = url;
         authorIconUrl = null;
@@ -310,17 +310,17 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
             authorIconContainer = null;
         } else {
             authorIconContainer = new FileContainer(icon, fileType);
-            authorIconContainer.setFileTypeOrName(UUID.randomUUID().toString() + "." + fileType);
+            authorIconContainer.setFileTypeOrName(UUID.randomUUID() + "." + fileType);
         }
     }
 
     @Override
-    public void setAuthor(String name, String url, byte[] icon) {
+    public void setAuthor(final String name, final String url, final byte[] icon) {
         setAuthor(name, url, icon, "png");
     }
 
     @Override
-    public void setAuthor(String name, String url, byte[] icon, String fileType) {
+    public void setAuthor(final String name, final String url, final byte[] icon, final String fileType) {
         authorName = name;
         authorUrl = url;
         authorIconUrl = null;
@@ -328,17 +328,17 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
             authorIconContainer = null;
         } else {
             authorIconContainer = new FileContainer(icon, fileType);
-            authorIconContainer.setFileTypeOrName(UUID.randomUUID().toString() + "." + fileType);
+            authorIconContainer.setFileTypeOrName(UUID.randomUUID() + "." + fileType);
         }
     }
 
     @Override
-    public void setAuthor(String name, String url, BufferedImage icon) {
+    public void setAuthor(final String name, final String url, final BufferedImage icon) {
         setAuthor(name, url, icon, "png");
     }
 
     @Override
-    public void setAuthor(String name, String url, BufferedImage icon, String fileType) {
+    public void setAuthor(final String name, final String url, final BufferedImage icon, final String fileType) {
         authorName = name;
         authorUrl = url;
         authorIconUrl = null;
@@ -346,89 +346,89 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
             authorIconContainer = null;
         } else {
             authorIconContainer = new FileContainer(icon, fileType);
-            authorIconContainer.setFileTypeOrName(UUID.randomUUID().toString() + "." + fileType);
+            authorIconContainer.setFileTypeOrName(UUID.randomUUID() + "." + fileType);
         }
     }
 
     @Override
-    public void setThumbnail(String url) {
+    public void setThumbnail(final String url) {
         thumbnailUrl = url;
         thumbnailContainer = null;
     }
 
     @Override
-    public void setThumbnail(Icon thumbnail) {
+    public void setThumbnail(final Icon thumbnail) {
         thumbnailUrl = thumbnail.getUrl().toString();
         thumbnailContainer = null;
     }
 
     @Override
-    public void setThumbnail(File thumbnail) {
+    public void setThumbnail(final File thumbnail) {
         thumbnailUrl = null;
         if (thumbnail == null) {
             thumbnailContainer = null;
         } else {
             thumbnailContainer = new FileContainer(thumbnail);
             thumbnailContainer.setFileTypeOrName(
-                    UUID.randomUUID().toString() + "." + FileUtils.getExtension(thumbnail));
+                    UUID.randomUUID() + "." + FileUtils.getExtension(thumbnail));
         }
     }
 
     @Override
-    public void setThumbnail(InputStream thumbnail) {
+    public void setThumbnail(final InputStream thumbnail) {
         setThumbnail(thumbnail, "png");
     }
 
     @Override
-    public void setThumbnail(InputStream thumbnail, String fileType) {
+    public void setThumbnail(final InputStream thumbnail, final String fileType) {
         thumbnailUrl = null;
         if (thumbnail == null) {
             thumbnailContainer = null;
         } else {
             thumbnailContainer = new FileContainer(thumbnail, fileType);
-            thumbnailContainer.setFileTypeOrName(UUID.randomUUID().toString() + "." + fileType);
+            thumbnailContainer.setFileTypeOrName(UUID.randomUUID() + "." + fileType);
         }
     }
 
     @Override
-    public void setThumbnail(byte[] thumbnail) {
+    public void setThumbnail(final byte[] thumbnail) {
         setThumbnail(thumbnail, "png");
     }
 
     @Override
-    public void setThumbnail(byte[] thumbnail, String fileType) {
+    public void setThumbnail(final byte[] thumbnail, final String fileType) {
         thumbnailUrl = null;
         if (thumbnail == null) {
             thumbnailContainer = null;
         } else {
             thumbnailContainer = new FileContainer(thumbnail, fileType);
-            thumbnailContainer.setFileTypeOrName(UUID.randomUUID().toString() + "." + fileType);
+            thumbnailContainer.setFileTypeOrName(UUID.randomUUID() + "." + fileType);
         }
     }
 
     @Override
-    public void setThumbnail(BufferedImage thumbnail) {
+    public void setThumbnail(final BufferedImage thumbnail) {
         setThumbnail(thumbnail, "png");
     }
 
     @Override
-    public void setThumbnail(BufferedImage thumbnail, String fileType) {
+    public void setThumbnail(final BufferedImage thumbnail, final String fileType) {
         thumbnailUrl = null;
         if (thumbnail == null) {
             thumbnailContainer = null;
         } else {
             thumbnailContainer = new FileContainer(thumbnail, fileType);
-            thumbnailContainer.setFileTypeOrName(UUID.randomUUID().toString() + "." + fileType);
+            thumbnailContainer.setFileTypeOrName(UUID.randomUUID() + "." + fileType);
         }
     }
 
     @Override
-    public void addField(String name, String value, boolean inline) {
+    public void addField(final String name, final String value, final boolean inline) {
         fields.add(new EmbedFieldImpl(name, value, inline));
     }
 
     @Override
-    public void updateFields(Predicate<EmbedField> predicate, Consumer<EditableEmbedField> updater) {
+    public void updateFields(final Predicate<EmbedField> predicate, final Consumer<EditableEmbedField> updater) {
         fields.stream()
                 .filter(predicate)
                 .map(EditableEmbedFieldImpl::new)
@@ -436,7 +436,7 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
     }
 
     @Override
-    public void removeFields(Predicate<EmbedField> predicate) {
+    public void removeFields(final Predicate<EmbedField> predicate) {
         fields.removeIf(predicate);
     }
 
@@ -455,7 +455,7 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
      * @return The required attachments for this embed.
      */
     public List<FileContainer> getRequiredAttachments() {
-        List<FileContainer> requiredAttachments = new ArrayList<>();
+        final List<FileContainer> requiredAttachments = new ArrayList<>();
         if (footerIconContainer != null) {
             requiredAttachments.add(footerIconContainer);
         }
@@ -477,7 +477,7 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
      * @return The embed as a ObjectNode.
      */
     public ObjectNode toJsonNode() {
-        ObjectNode object = JsonNodeFactory.instance.objectNode();
+        final ObjectNode object = JsonNodeFactory.instance.objectNode();
         return toJsonNode(object);
     }
 
@@ -487,7 +487,7 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
      * @param object The object, the data should be added to.
      * @return The provided object with the data of the embed.
      */
-    public ObjectNode toJsonNode(ObjectNode object) {
+    public ObjectNode toJsonNode(final ObjectNode object) {
         object.put("type", "rich");
         if (title != null && !title.equals("")) {
             object.put("title", title);
@@ -505,7 +505,7 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
             object.put("timestamp", DateTimeFormatter.ISO_INSTANT.format(timestamp));
         }
         if ((footerText != null && !footerText.equals("")) || (footerIconUrl != null && !footerIconUrl.equals(""))) {
-            ObjectNode footer = object.putObject("footer");
+            final ObjectNode footer = object.putObject("footer");
             if (footerText != null && !footerText.equals("")) {
                 footer.put("text", footerText);
             }
@@ -523,7 +523,7 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
             object.putObject("image").put("url", "attachment://" + imageContainer.getFileTypeOrName());
         }
         if (authorName != null && !authorName.equals("")) {
-            ObjectNode author = object.putObject("author");
+            final ObjectNode author = object.putObject("author");
             author.put("name", authorName);
             if (authorUrl != null && !authorUrl.equals("")) {
                 author.put("url", authorUrl);
@@ -542,9 +542,9 @@ public class EmbedBuilderDelegateImpl implements EmbedBuilderDelegate {
             object.putObject("thumbnail").put("url", "attachment://" + thumbnailContainer.getFileTypeOrName());
         }
         if (fields.size() > 0) {
-            ArrayNode jsonFields = object.putArray("fields");
-            for (EmbedField field : fields) {
-                ObjectNode jsonField = jsonFields.addObject();
+            final ArrayNode jsonFields = object.putArray("fields");
+            for (final EmbedField field : fields) {
+                final ObjectNode jsonField = jsonFields.addObject();
                 jsonField.put("name", field.getName());
                 jsonField.put("value", field.getValue());
                 jsonField.put("inline", field.isInline());

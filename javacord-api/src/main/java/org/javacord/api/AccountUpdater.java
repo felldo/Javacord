@@ -25,7 +25,7 @@ public class AccountUpdater {
      *
      * @param api The discord api instance.
      */
-    public AccountUpdater(DiscordApi api) {
+    public AccountUpdater(final DiscordApi api) {
         delegate = DelegateFactory.createAccountUpdaterDelegate(api);
     }
 
@@ -35,7 +35,7 @@ public class AccountUpdater {
      * @param username The username to set.
      * @return The current instance in order to chain call methods.
      */
-    public AccountUpdater setUsername(String username) {
+    public AccountUpdater setUsername(final String username) {
         delegate.setUsername(username);
         return this;
     }
@@ -47,7 +47,7 @@ public class AccountUpdater {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public AccountUpdater setAvatar(BufferedImage avatar) {
+    public AccountUpdater setAvatar(final BufferedImage avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -59,7 +59,7 @@ public class AccountUpdater {
      * @param fileType The type of the avatar, e.g. "png" or "jpg".
      * @return The current instance in order to chain call methods.
      */
-    public AccountUpdater setAvatar(BufferedImage avatar, String fileType) {
+    public AccountUpdater setAvatar(final BufferedImage avatar, final String fileType) {
         delegate.setAvatar(avatar, fileType);
         return this;
     }
@@ -70,7 +70,7 @@ public class AccountUpdater {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public AccountUpdater setAvatar(File avatar) {
+    public AccountUpdater setAvatar(final File avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -81,7 +81,7 @@ public class AccountUpdater {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public AccountUpdater setAvatar(Icon avatar) {
+    public AccountUpdater setAvatar(final Icon avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -92,7 +92,7 @@ public class AccountUpdater {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public AccountUpdater setAvatar(URL avatar) {
+    public AccountUpdater setAvatar(final URL avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -104,7 +104,7 @@ public class AccountUpdater {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public AccountUpdater setAvatar(byte[] avatar) {
+    public AccountUpdater setAvatar(final byte[] avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -116,7 +116,7 @@ public class AccountUpdater {
      * @param fileType The type of the avatar, e.g. "png" or "jpg".
      * @return The current instance in order to chain call methods.
      */
-    public AccountUpdater setAvatar(byte[] avatar, String fileType) {
+    public AccountUpdater setAvatar(final byte[] avatar, final String fileType) {
         delegate.setAvatar(avatar, fileType);
         return this;
     }
@@ -128,7 +128,7 @@ public class AccountUpdater {
      * @param avatar The avatar to set.
      * @return The current instance in order to chain call methods.
      */
-    public AccountUpdater setAvatar(InputStream avatar) {
+    public AccountUpdater setAvatar(final InputStream avatar) {
         delegate.setAvatar(avatar);
         return this;
     }
@@ -140,7 +140,7 @@ public class AccountUpdater {
      * @param fileType The type of the avatar, e.g. "png" or "jpg".
      * @return The current instance in order to chain call methods.
      */
-    public AccountUpdater setAvatar(InputStream avatar, String fileType) {
+    public AccountUpdater setAvatar(final InputStream avatar, final String fileType) {
         delegate.setAvatar(avatar, fileType);
         return this;
     }

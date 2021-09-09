@@ -94,7 +94,7 @@ public enum VoiceGatewayOpcode {
      *
      * @param code The actual numeric code.
      */
-    VoiceGatewayOpcode(int code) {
+    VoiceGatewayOpcode(final int code) {
         this.code = code;
     }
 
@@ -104,7 +104,7 @@ public enum VoiceGatewayOpcode {
      * @param code The actual numeric code.
      * @return The voice gateway opcode with the actual numeric code.
      */
-    public static Optional<VoiceGatewayOpcode> fromCode(int code) {
+    public static Optional<VoiceGatewayOpcode> fromCode(final int code) {
         return Optional.ofNullable(instanceByCode.get(code));
     }
 

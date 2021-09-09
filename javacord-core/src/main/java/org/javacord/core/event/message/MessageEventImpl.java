@@ -38,7 +38,7 @@ public abstract class MessageEventImpl extends EventImpl implements MessageEvent
      *
      * @param message The message.
      */
-    public MessageEventImpl(Message message) {
+    public MessageEventImpl(final Message message) {
         this(message.getApi(), message.getId(), message.getChannel());
     }
 
@@ -49,7 +49,7 @@ public abstract class MessageEventImpl extends EventImpl implements MessageEvent
      * @param messageId The id of the message.
      * @param channel The text channel in which the message was sent.
      */
-    public MessageEventImpl(DiscordApi api, long messageId, TextChannel channel) {
+    public MessageEventImpl(final DiscordApi api, final long messageId, final TextChannel channel) {
         super(api);
         this.messageId = messageId;
         this.channel = channel;
@@ -76,44 +76,44 @@ public abstract class MessageEventImpl extends EventImpl implements MessageEvent
     }
 
     @Override
-    public CompletableFuture<Void> deleteMessage(String reason) {
+    public CompletableFuture<Void> deleteMessage(final String reason) {
         return Message.delete(getApi(), getChannel().getId(), getMessageId(), reason);
     }
 
     @Override
-    public CompletableFuture<Message> editMessage(String content) {
+    public CompletableFuture<Message> editMessage(final String content) {
         return Message.edit(getApi(), getChannel().getId(), getMessageId(), content);
     }
 
     @Override
-    public CompletableFuture<Message> editMessage(List<EmbedBuilder> embeds) {
+    public CompletableFuture<Message> editMessage(final List<EmbedBuilder> embeds) {
         return Message.edit(getApi(), getChannel().getId(), getMessageId(), null, embeds);
     }
 
     @Override
-    public CompletableFuture<Message> editMessage(String content, List<EmbedBuilder> embeds) {
+    public CompletableFuture<Message> editMessage(final String content, final List<EmbedBuilder> embeds) {
         return Message.edit(getApi(), getChannel().getId(), getMessageId(), content, embeds);
     }
 
     @Override
-    public CompletableFuture<Void> addReactionToMessage(String unicodeEmoji) {
+    public CompletableFuture<Void> addReactionToMessage(final String unicodeEmoji) {
         return Message.addReaction(getApi(), getChannel().getId(), getMessageId(), unicodeEmoji);
     }
 
     @Override
-    public CompletableFuture<Void> addReactionToMessage(Emoji emoji) {
+    public CompletableFuture<Void> addReactionToMessage(final Emoji emoji) {
         return Message.addReaction(getApi(), getChannel().getId(), getMessageId(), emoji);
     }
 
     @Override
-    public CompletableFuture<Void> addReactionsToMessage(Emoji... emojis) {
+    public CompletableFuture<Void> addReactionsToMessage(final Emoji... emojis) {
         return CompletableFuture.allOf(Arrays.stream(emojis)
                                                .map(this::addReactionToMessage)
                                                .toArray(CompletableFuture[]::new));
     }
 
     @Override
-    public CompletableFuture<Void> addReactionsToMessage(String... unicodeEmojis) {
+    public CompletableFuture<Void> addReactionsToMessage(final String... unicodeEmojis) {
         return addReactionsToMessage(Arrays.stream(unicodeEmojis)
                                              .map(UnicodeEmojiImpl::fromString)
                                              .toArray(Emoji[]::new));
@@ -125,17 +125,17 @@ public abstract class MessageEventImpl extends EventImpl implements MessageEvent
     }
 
     @Override
-    public CompletableFuture<Void> removeReactionByEmojiFromMessage(User user, Emoji emoji) {
+    public CompletableFuture<Void> removeReactionByEmojiFromMessage(final User user, final Emoji emoji) {
         return Reaction.removeUser(getApi(), getChannel().getId(), getMessageId(), emoji, user.getId());
     }
 
     @Override
-    public CompletableFuture<Void> removeReactionByEmojiFromMessage(User user, String unicodeEmoji) {
+    public CompletableFuture<Void> removeReactionByEmojiFromMessage(final User user, final String unicodeEmoji) {
         return removeReactionByEmojiFromMessage(user, UnicodeEmojiImpl.fromString(unicodeEmoji));
     }
 
     @Override
-    public CompletableFuture<Void> removeReactionByEmojiFromMessage(Emoji emoji) {
+    public CompletableFuture<Void> removeReactionByEmojiFromMessage(final Emoji emoji) {
         return Reaction.getUsers(getApi(), getChannel().getId(), getMessageId(), emoji)
                 .thenCompose(users -> CompletableFuture.allOf(
                         users.stream()
@@ -145,19 +145,19 @@ public abstract class MessageEventImpl extends EventImpl implements MessageEvent
     }
 
     @Override
-    public CompletableFuture<Void> removeReactionByEmojiFromMessage(String unicodeEmoji) {
+    public CompletableFuture<Void> removeReactionByEmojiFromMessage(final String unicodeEmoji) {
         return removeReactionByEmojiFromMessage(UnicodeEmojiImpl.fromString(unicodeEmoji));
     }
 
     @Override
-    public CompletableFuture<Void> removeReactionsByEmojiFromMessage(User user, Emoji... emojis) {
+    public CompletableFuture<Void> removeReactionsByEmojiFromMessage(final User user, final Emoji... emojis) {
         return CompletableFuture.allOf(Arrays.stream(emojis)
                 .map(emoji -> removeReactionByEmojiFromMessage(user, emoji))
                 .toArray(CompletableFuture[]::new));
     }
 
     @Override
-    public CompletableFuture<Void> removeReactionsByEmojiFromMessage(User user, String... unicodeEmojis) {
+    public CompletableFuture<Void> removeReactionsByEmojiFromMessage(final User user, final String... unicodeEmojis) {
         return removeReactionsByEmojiFromMessage(
                 user, Arrays.stream(unicodeEmojis)
                         .map(UnicodeEmojiImpl::fromString)
@@ -165,7 +165,7 @@ public abstract class MessageEventImpl extends EventImpl implements MessageEvent
     }
 
     @Override
-    public CompletableFuture<Void> removeReactionsByEmojiFromMessage(Emoji... emojis) {
+    public CompletableFuture<Void> removeReactionsByEmojiFromMessage(final Emoji... emojis) {
         return CompletableFuture.allOf(
                 Arrays.stream(emojis)
                         .map(this::removeReactionByEmojiFromMessage)
@@ -173,29 +173,29 @@ public abstract class MessageEventImpl extends EventImpl implements MessageEvent
     }
 
     @Override
-    public CompletableFuture<Void> removeReactionsByEmojiFromMessage(String... unicodeEmojis) {
+    public CompletableFuture<Void> removeReactionsByEmojiFromMessage(final String... unicodeEmojis) {
         return removeReactionsByEmojiFromMessage(Arrays.stream(unicodeEmojis)
                                                          .map(UnicodeEmojiImpl::fromString)
                                                          .toArray(Emoji[]::new));
     }
 
     @Override
-    public CompletableFuture<Void> removeOwnReactionByEmojiFromMessage(Emoji emoji) {
+    public CompletableFuture<Void> removeOwnReactionByEmojiFromMessage(final Emoji emoji) {
         return removeReactionByEmojiFromMessage(getApi().getYourself(), emoji);
     }
 
     @Override
-    public CompletableFuture<Void> removeOwnReactionByEmojiFromMessage(String unicodeEmoji) {
+    public CompletableFuture<Void> removeOwnReactionByEmojiFromMessage(final String unicodeEmoji) {
         return removeOwnReactionByEmojiFromMessage(UnicodeEmojiImpl.fromString(unicodeEmoji));
     }
 
     @Override
-    public CompletableFuture<Void> removeOwnReactionsByEmojiFromMessage(Emoji... emojis) {
+    public CompletableFuture<Void> removeOwnReactionsByEmojiFromMessage(final Emoji... emojis) {
         return removeReactionsByEmojiFromMessage(getApi().getYourself(), emojis);
     }
 
     @Override
-    public CompletableFuture<Void> removeOwnReactionsByEmojiFromMessage(String... unicodeEmojis) {
+    public CompletableFuture<Void> removeOwnReactionsByEmojiFromMessage(final String... unicodeEmojis) {
         return removeOwnReactionsByEmojiFromMessage(Arrays.stream(unicodeEmojis)
                                                             .map(UnicodeEmojiImpl::fromString)
                                                             .toArray(Emoji[]::new));

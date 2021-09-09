@@ -25,11 +25,11 @@ public interface UpdatableFromCache<T extends DiscordEntity> extends Updatable<T
 
     @Override
     default CompletableFuture<T> getLatestInstance() {
-        Optional<T> currentCachedInstance = getCurrentCachedInstance();
+        final Optional<T> currentCachedInstance = getCurrentCachedInstance();
         if (currentCachedInstance.isPresent()) {
             return CompletableFuture.completedFuture(currentCachedInstance.get());
         } else {
-            CompletableFuture<T> result = new CompletableFuture<>();
+            final CompletableFuture<T> result = new CompletableFuture<>();
             result.completeExceptionally(new NoSuchElementException());
             return result;
         }

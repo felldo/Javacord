@@ -19,7 +19,7 @@ public abstract class AudioSourceEventImpl implements AudioSourceEvent {
      * @param source The audio source of the event.
      * @param connection The audio connection of the event.
      */
-    public AudioSourceEventImpl(AudioSource source, AudioConnection connection) {
+    public AudioSourceEventImpl(final AudioSource source, final AudioConnection connection) {
         this.source = source;
         this.connection = connection;
     }

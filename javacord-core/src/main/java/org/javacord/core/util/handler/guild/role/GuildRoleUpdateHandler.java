@@ -37,74 +37,74 @@ public class GuildRoleUpdateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public GuildRoleUpdateHandler(DiscordApi api) {
+    public GuildRoleUpdateHandler(final DiscordApi api) {
         super(api, true, "GUILD_ROLE_UPDATE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        JsonNode roleJson = packet.get("role");
-        long roleId = roleJson.get("id").asLong();
+    public void handle(final JsonNode packet) {
+        final JsonNode roleJson = packet.get("role");
+        final long roleId = roleJson.get("id").asLong();
         api.getRoleById(roleId).map(role -> (RoleImpl) role).ifPresent(role -> {
-            Color oldColorObject = role.getColor().orElse(null);
-            int oldColor = role.getColorAsInt();
-            int newColor = roleJson.get("color").asInt(0);
+            final Color oldColorObject = role.getColor().orElse(null);
+            final int oldColor = role.getColorAsInt();
+            final int newColor = roleJson.get("color").asInt(0);
             if (oldColor != newColor) {
                 role.setColor(newColor);
 
-                RoleChangeColorEvent event = new RoleChangeColorEventImpl(
+                final RoleChangeColorEvent event = new RoleChangeColorEventImpl(
                         role, role.getColor().orElse(null), oldColorObject);
 
                 api.getEventDispatcher().dispatchRoleChangeColorEvent(
                         (DispatchQueueSelector) role.getServer(), role, role.getServer(), event);
             }
 
-            boolean oldHoist = role.isDisplayedSeparately();
-            boolean newHoist = roleJson.get("hoist").asBoolean(false);
+            final boolean oldHoist = role.isDisplayedSeparately();
+            final boolean newHoist = roleJson.get("hoist").asBoolean(false);
             if (oldHoist != newHoist) {
                 role.setHoist(newHoist);
 
-                RoleChangeHoistEvent event = new RoleChangeHoistEventImpl(role, oldHoist);
+                final RoleChangeHoistEvent event = new RoleChangeHoistEventImpl(role, oldHoist);
 
                 api.getEventDispatcher().dispatchRoleChangeHoistEvent(
                         (DispatchQueueSelector) role.getServer(), role, role.getServer(), event);
             }
 
-            boolean oldMentionable = role.isMentionable();
-            boolean newMentionable = roleJson.get("mentionable").asBoolean(false);
+            final boolean oldMentionable = role.isMentionable();
+            final boolean newMentionable = roleJson.get("mentionable").asBoolean(false);
             if (oldMentionable != newMentionable) {
                 role.setMentionable(newMentionable);
 
-                RoleChangeMentionableEvent event = new RoleChangeMentionableEventImpl(role, oldMentionable);
+                final RoleChangeMentionableEvent event = new RoleChangeMentionableEventImpl(role, oldMentionable);
 
                 api.getEventDispatcher().dispatchRoleChangeMentionableEvent(
                         (DispatchQueueSelector) role.getServer(), role, role.getServer(), event);
             }
 
-            String oldName = role.getName();
-            String newName = roleJson.get("name").asText();
+            final String oldName = role.getName();
+            final String newName = roleJson.get("name").asText();
             if (!oldName.equals(newName)) {
                 role.setName(newName);
 
-                RoleChangeNameEvent event = new RoleChangeNameEventImpl(role, newName, oldName);
+                final RoleChangeNameEvent event = new RoleChangeNameEventImpl(role, newName, oldName);
 
                 api.getEventDispatcher().dispatchRoleChangeNameEvent(
                         (DispatchQueueSelector) role.getServer(), role, role.getServer(), event);
             }
 
-            Permissions oldPermissions = role.getPermissions();
-            PermissionsImpl newPermissions = new PermissionsImpl(roleJson.get("permissions").asLong(), 0);
+            final Permissions oldPermissions = role.getPermissions();
+            final PermissionsImpl newPermissions = new PermissionsImpl(roleJson.get("permissions").asLong(), 0);
             if (!oldPermissions.equals(newPermissions)) {
                 role.setPermissions(newPermissions);
 
-                RoleChangePermissionsEvent event =
+                final RoleChangePermissionsEvent event =
                         new RoleChangePermissionsEventImpl(role, newPermissions, oldPermissions);
 
                 api.getEventDispatcher().dispatchRoleChangePermissionsEvent(
                         (DispatchQueueSelector) role.getServer(), role, role.getServer(), event);
                 // If bot is affected remove messages from cache that are no longer visible
                 if (role.getUsers().stream().anyMatch(User::isYourself)) {
-                    Set<Long> unreadableChannels = role.getServer().getTextChannels().stream()
+                    final Set<Long> unreadableChannels = role.getServer().getTextChannels().stream()
                             .filter(((Predicate<ServerTextChannel>)ServerTextChannel::canYouSee).negate())
                             .map(ServerTextChannel::getId)
                             .collect(Collectors.toSet());
@@ -115,13 +115,13 @@ public class GuildRoleUpdateHandler extends PacketHandler {
                 }
             }
 
-            int oldPosition = role.getPosition();
-            int oldRawPosition = role.getRawPosition();
-            int newRawPosition = roleJson.get("position").asInt();
+            final int oldPosition = role.getPosition();
+            final int oldRawPosition = role.getRawPosition();
+            final int newRawPosition = roleJson.get("position").asInt();
             if (oldRawPosition != newRawPosition) {
                 role.setRawPosition(newRawPosition);
-                int newPosition = role.getPosition();
-                RoleChangePositionEvent event = new RoleChangePositionEventImpl(role, newRawPosition, oldRawPosition,
+                final int newPosition = role.getPosition();
+                final RoleChangePositionEvent event = new RoleChangePositionEventImpl(role, newRawPosition, oldRawPosition,
                                                                                             newPosition, oldPosition);
 
                 api.getEventDispatcher().dispatchRoleChangePositionEvent(

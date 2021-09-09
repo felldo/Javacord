@@ -29,7 +29,7 @@ public class ServerChangeAfkChannelEventImpl extends ServerEventImpl implements 
      * @param oldAfkChannel The old afk channel of the server.
      */
     public ServerChangeAfkChannelEventImpl(
-            Server server, ServerVoiceChannel newAfkChannel, ServerVoiceChannel oldAfkChannel) {
+            final Server server, final ServerVoiceChannel newAfkChannel, final ServerVoiceChannel oldAfkChannel) {
         super(server);
         this.newAfkChannel = newAfkChannel;
         this.oldAfkChannel = oldAfkChannel;

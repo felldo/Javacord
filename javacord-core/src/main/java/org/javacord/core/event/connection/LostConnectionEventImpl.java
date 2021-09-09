@@ -14,7 +14,7 @@ public class LostConnectionEventImpl extends EventImpl implements LostConnection
      *
      * @param api The api instance of the event.
      */
-    public LostConnectionEventImpl(DiscordApi api) {
+    public LostConnectionEventImpl(final DiscordApi api) {
         super(api);
     }
 

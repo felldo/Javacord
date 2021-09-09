@@ -19,7 +19,7 @@ public abstract class ServerTextChannelEventImpl extends ServerChannelEventImpl 
      *
      * @param channel The channel of the event.
      */
-    public ServerTextChannelEventImpl(ServerTextChannel channel) {
+    public ServerTextChannelEventImpl(final ServerTextChannel channel) {
         super(channel);
         this.channel = channel;
     }

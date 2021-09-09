@@ -22,7 +22,7 @@ public abstract class InteractionMessageBuilderBaseImpl<T> implements Interactio
      * Class constructor.
      * @param myClass The interface to cast to for call chaining.
      */
-    public InteractionMessageBuilderBaseImpl(Class<T> myClass) {
+    public InteractionMessageBuilderBaseImpl(final Class<T> myClass) {
         this.myClass = myClass;
         this.delegate = DelegateFactory.createInteractionMessageBuilderDelegate();
     }
@@ -32,31 +32,31 @@ public abstract class InteractionMessageBuilderBaseImpl<T> implements Interactio
      * @param myClass The interface to cast to for call chaining.
      * @param delegate The delegate to use if required.
      */
-    public InteractionMessageBuilderBaseImpl(Class<T> myClass, InteractionMessageBuilderDelegate delegate) {
+    public InteractionMessageBuilderBaseImpl(final Class<T> myClass, final InteractionMessageBuilderDelegate delegate) {
         this.myClass = myClass;
         this.delegate = delegate;
     }
 
     @Override
-    public T appendCode(String language, String code) {
+    public T appendCode(final String language, final String code) {
         delegate.appendCode(language, code);
         return myClass.cast(this);
     }
 
     @Override
-    public T append(String message, MessageDecoration... decorations) {
+    public T append(final String message, final MessageDecoration... decorations) {
         delegate.append(message, decorations);
         return myClass.cast(this);
     }
 
     @Override
-    public T append(Mentionable entity) {
+    public T append(final Mentionable entity) {
         delegate.append(entity);
         return myClass.cast(this);
     }
 
     @Override
-    public T append(Object object) {
+    public T append(final Object object) {
         delegate.append(object);
         return myClass.cast(this);
     }
@@ -68,31 +68,31 @@ public abstract class InteractionMessageBuilderBaseImpl<T> implements Interactio
     }
 
     @Override
-    public T setContent(String content) {
+    public T setContent(final String content) {
         delegate.setContent(content);
         return myClass.cast(this);
     }
 
     @Override
-    public T addEmbed(EmbedBuilder embed) {
+    public T addEmbed(final EmbedBuilder embed) {
         delegate.addEmbed(embed);
         return myClass.cast(this);
     }
 
     @Override
-    public T addEmbeds(EmbedBuilder... embeds) {
+    public T addEmbeds(final EmbedBuilder... embeds) {
         delegate.addEmbeds(Arrays.asList(embeds));
         return myClass.cast(this);
     }
 
     @Override
-    public T addEmbeds(List<EmbedBuilder> embeds) {
+    public T addEmbeds(final List<EmbedBuilder> embeds) {
         delegate.addEmbeds(embeds);
         return myClass.cast(this);
     }
 
     @Override
-    public T addComponents(HighLevelComponent... components) {
+    public T addComponents(final HighLevelComponent... components) {
         delegate.addComponents(components);
         return myClass.cast(this);
     }
@@ -104,25 +104,25 @@ public abstract class InteractionMessageBuilderBaseImpl<T> implements Interactio
     }
 
     @Override
-    public T removeComponent(int index) {
+    public T removeComponent(final int index) {
         delegate.removeComponent(index);
         return myClass.cast(this);
     }
 
     @Override
-    public T removeComponent(HighLevelComponent builder) {
+    public T removeComponent(final HighLevelComponent builder) {
         delegate.removeComponent(builder);
         return myClass.cast(this);
     }
 
     @Override
-    public T removeEmbed(EmbedBuilder embed) {
+    public T removeEmbed(final EmbedBuilder embed) {
         delegate.removeEmbed(embed);
         return myClass.cast(this);
     }
 
     @Override
-    public T removeEmbeds(EmbedBuilder... embeds) {
+    public T removeEmbeds(final EmbedBuilder... embeds) {
         delegate.removeEmbeds(embeds);
         return myClass.cast(this);
     }
@@ -134,25 +134,25 @@ public abstract class InteractionMessageBuilderBaseImpl<T> implements Interactio
     }
 
     @Override
-    public T setTts(boolean tts) {
+    public T setTts(final boolean tts) {
         delegate.setTts(tts);
         return myClass.cast(this);
     }
 
     @Override
-    public T setAllowedMentions(AllowedMentions allowedMentions) {
+    public T setAllowedMentions(final AllowedMentions allowedMentions) {
         delegate.setAllowedMentions(allowedMentions);
         return myClass.cast(this);
     }
 
     @Override
-    public T setFlags(MessageFlag... messageFlags) {
+    public T setFlags(final MessageFlag... messageFlags) {
         setFlags(EnumSet.copyOf(Arrays.asList(messageFlags)));
         return myClass.cast(this);
     }
 
     @Override
-    public T setFlags(EnumSet<MessageFlag> messageFlags) {
+    public T setFlags(final EnumSet<MessageFlag> messageFlags) {
         delegate.setFlags(messageFlags);
         return myClass.cast(this);
     }

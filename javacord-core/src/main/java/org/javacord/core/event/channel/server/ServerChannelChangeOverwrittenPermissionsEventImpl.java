@@ -45,8 +45,8 @@ public class ServerChannelChangeOverwrittenPermissionsEventImpl extends ServerCh
      * @param entity The entity which permissions got changed.
      */
     public ServerChannelChangeOverwrittenPermissionsEventImpl(
-            ServerChannel channel, Permissions newPermissions, Permissions oldPermissions, long entityId,
-            DiscordEntity entity) {
+            final ServerChannel channel, final Permissions newPermissions, final Permissions oldPermissions, final long entityId,
+            final DiscordEntity entity) {
         super(channel);
         this.newPermissions = newPermissions;
         this.oldPermissions = oldPermissions;

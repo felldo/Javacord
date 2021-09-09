@@ -16,16 +16,16 @@ public class InteractionImmediateResponseBuilderImpl
      *
      * @param interaction The interaction to use.
      */
-    public InteractionImmediateResponseBuilderImpl(InteractionBase interaction) {
+    public InteractionImmediateResponseBuilderImpl(final InteractionBase interaction) {
         super(InteractionImmediateResponseBuilder.class);
         this.interaction = (InteractionImpl) interaction;
     }
 
     @Override
     public CompletableFuture<InteractionOriginalResponseUpdater> respond() {
-        CompletableFuture<InteractionOriginalResponseUpdater> future = new CompletableFuture<>();
+        final CompletableFuture<InteractionOriginalResponseUpdater> future = new CompletableFuture<>();
 
-        CompletableFuture<Void> job = delegate.sendInitialResponse(interaction)
+        final CompletableFuture<Void> job = delegate.sendInitialResponse(interaction)
                 .thenRun(() -> {
                     future.complete(new InteractionOriginalResponseUpdaterImpl(interaction, delegate));
                 })

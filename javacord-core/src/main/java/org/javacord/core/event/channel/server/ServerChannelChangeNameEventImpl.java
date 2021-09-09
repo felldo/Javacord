@@ -25,7 +25,7 @@ public class ServerChannelChangeNameEventImpl extends ServerChannelEventImpl imp
      * @param newName The new name of the channel.
      * @param oldName The old name of the channel.
      */
-    public ServerChannelChangeNameEventImpl(ServerChannel channel, String newName, String oldName) {
+    public ServerChannelChangeNameEventImpl(final ServerChannel channel, final String newName, final String oldName) {
         super(channel);
         this.newName = newName;
         this.oldName = oldName;

@@ -49,16 +49,16 @@ public class GuildMemberUpdateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public GuildMemberUpdateHandler(DiscordApi api) {
+    public GuildMemberUpdateHandler(final DiscordApi api) {
         super(api, true, "GUILD_MEMBER_UPDATE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
+    public void handle(final JsonNode packet) {
         api.getPossiblyUnreadyServerById(packet.get("guild_id").asLong()).map(server -> (ServerImpl) server)
                 .ifPresent(server -> {
-                    MemberImpl newMember = new MemberImpl(api, server, packet, null);
-                    Member oldMember = server.getRealMemberById(newMember.getId()).orElse(null);
+                    final MemberImpl newMember = new MemberImpl(api, server, packet, null);
+                    final Member oldMember = server.getRealMemberById(newMember.getId()).orElse(null);
 
                     api.addMemberToCacheOrReplaceExisting(newMember);
 
@@ -68,7 +68,7 @@ public class GuildMemberUpdateHandler extends PacketHandler {
                     }
 
                     if (!newMember.getNickname().equals(oldMember.getNickname())) {
-                        UserChangeNicknameEvent event =
+                        final UserChangeNicknameEvent event =
                                 new UserChangeNicknameEventImpl(newMember, oldMember);
 
                         api.getEventDispatcher().dispatchUserChangeNicknameEvent(
@@ -76,7 +76,7 @@ public class GuildMemberUpdateHandler extends PacketHandler {
                     }
 
                     if (newMember.isPending() != oldMember.isPending()) {
-                        UserChangePendingEvent event =
+                        final UserChangePendingEvent event =
                                 new UserChangePendingEventImpl(oldMember, newMember);
 
                         api.getEventDispatcher().dispatchUserChangePendingEvent(
@@ -84,11 +84,11 @@ public class GuildMemberUpdateHandler extends PacketHandler {
                     }
 
                     if (packet.has("roles")) {
-                        JsonNode jsonRoles = packet.get("roles");
-                        Collection<Role> newRoles = new HashSet<>();
-                        Collection<Role> oldRoles = oldMember.getRoles();
-                        Collection<Role> intersection = new HashSet<>();
-                        for (JsonNode roleIdJson : jsonRoles) {
+                        final JsonNode jsonRoles = packet.get("roles");
+                        final Collection<Role> newRoles = new HashSet<>();
+                        final Collection<Role> oldRoles = oldMember.getRoles();
+                        final Collection<Role> intersection = new HashSet<>();
+                        for (final JsonNode roleIdJson : jsonRoles) {
                             api.getRoleById(roleIdJson.asText())
                                     .map(role -> {
                                         newRoles.add(role);
@@ -99,26 +99,26 @@ public class GuildMemberUpdateHandler extends PacketHandler {
                         }
 
                         // Added roles
-                        Collection<Role> addedRoles = new ArrayList<>(newRoles);
+                        final Collection<Role> addedRoles = new ArrayList<>(newRoles);
                         addedRoles.removeAll(intersection);
-                        for (Role role : addedRoles) {
+                        for (final Role role : addedRoles) {
                             if (role.isEveryoneRole()) {
                                 continue;
                             }
-                            UserRoleAddEvent event = new UserRoleAddEventImpl(role, newMember);
+                            final UserRoleAddEvent event = new UserRoleAddEventImpl(role, newMember);
 
                             api.getEventDispatcher().dispatchUserRoleAddEvent((DispatchQueueSelector) role.getServer(),
                                     role, role.getServer(), newMember.getId(), event);
                         }
 
                         // Removed roles
-                        Collection<Role> removedRoles = new ArrayList<>(oldRoles);
+                        final Collection<Role> removedRoles = new ArrayList<>(oldRoles);
                         removedRoles.removeAll(intersection);
-                        for (Role role : removedRoles) {
+                        for (final Role role : removedRoles) {
                             if (role.isEveryoneRole()) {
                                 continue;
                             }
-                            UserRoleRemoveEvent event = new UserRoleRemoveEventImpl(role, newMember);
+                            final UserRoleRemoveEvent event = new UserRoleRemoveEventImpl(role, newMember);
 
                             api.getEventDispatcher().dispatchUserRoleRemoveEvent(
                                     (DispatchQueueSelector) role.getServer(), role, role.getServer(), newMember.getId(),
@@ -127,7 +127,7 @@ public class GuildMemberUpdateHandler extends PacketHandler {
                     }
 
                     if (newMember.getUser().isYourself()) {
-                        Set<Long> unreadableChannels = server.getTextChannels().stream()
+                        final Set<Long> unreadableChannels = server.getTextChannels().stream()
                                 .filter(((Predicate<ServerTextChannel>) ServerTextChannel::canYouSee).negate())
                                 .map(ServerTextChannel::getId)
                                 .collect(Collectors.toSet());
@@ -141,30 +141,30 @@ public class GuildMemberUpdateHandler extends PacketHandler {
                     // to allow disabling presences, see
                     // https://github.com/discord/discord-api-docs/pull/1307#issuecomment-581561519
                     if (oldMember.getUser() != null) {
-                        UserImpl oldUser = (UserImpl) oldMember.getUser();
+                        final UserImpl oldUser = (UserImpl) oldMember.getUser();
 
                         boolean userChanged = false;
-                        UserImpl updatedUser = oldUser.replacePartialUserData(packet.get("user"));
+                        final UserImpl updatedUser = oldUser.replacePartialUserData(packet.get("user"));
 
                         if (packet.get("user").has("username")) {
-                            String newName = packet.get("user").get("username").asText();
-                            String oldName = oldUser.getName();
+                            final String newName = packet.get("user").get("username").asText();
+                            final String oldName = oldUser.getName();
                             if (!oldName.equals(newName)) {
                                 dispatchUserChangeNameEvent(updatedUser, newName, oldName);
                                 userChanged = true;
                             }
                         }
                         if (packet.get("user").has("discriminator")) {
-                            String newDiscriminator = packet.get("user").get("discriminator").asText();
-                            String oldDiscriminator = oldUser.getDiscriminator();
+                            final String newDiscriminator = packet.get("user").get("discriminator").asText();
+                            final String oldDiscriminator = oldUser.getDiscriminator();
                             if (!oldDiscriminator.equals(newDiscriminator)) {
                                 dispatchUserChangeDiscriminatorEvent(updatedUser, newDiscriminator, oldDiscriminator);
                                 userChanged = true;
                             }
                         }
                         if (packet.get("user").has("avatar")) {
-                            String newAvatarHash = packet.get("user").get("avatar").asText(null);
-                            String oldAvatarHash = oldUser.getAvatarHash().orElse(null);
+                            final String newAvatarHash = packet.get("user").get("avatar").asText(null);
+                            final String oldAvatarHash = oldUser.getAvatarHash().orElse(null);
                             if (!Objects.deepEquals(newAvatarHash, oldAvatarHash)) {
                                 dispatchUserChangeAvatarEvent(updatedUser, newAvatarHash, oldAvatarHash);
                                 userChanged = true;
@@ -178,8 +178,8 @@ public class GuildMemberUpdateHandler extends PacketHandler {
                 });
     }
 
-    private void dispatchUserChangeNameEvent(User user, String newName, String oldName) {
-        UserChangeNameEvent event = new UserChangeNameEventImpl(user, newName, oldName);
+    private void dispatchUserChangeNameEvent(final User user, final String newName, final String oldName) {
+        final UserChangeNameEvent event = new UserChangeNameEventImpl(user, newName, oldName);
 
         api.getEventDispatcher().dispatchUserChangeNameEvent(
                 api,
@@ -189,8 +189,8 @@ public class GuildMemberUpdateHandler extends PacketHandler {
         );
     }
 
-    private void dispatchUserChangeDiscriminatorEvent(User user, String newDiscriminator, String oldDiscriminator) {
-        UserChangeDiscriminatorEvent event =
+    private void dispatchUserChangeDiscriminatorEvent(final User user, final String newDiscriminator, final String oldDiscriminator) {
+        final UserChangeDiscriminatorEvent event =
                 new UserChangeDiscriminatorEventImpl(user, newDiscriminator, oldDiscriminator);
 
         api.getEventDispatcher().dispatchUserChangeDiscriminatorEvent(
@@ -201,8 +201,8 @@ public class GuildMemberUpdateHandler extends PacketHandler {
         );
     }
 
-    private void dispatchUserChangeAvatarEvent(User user, String newAvatarHash, String oldAvatarHash) {
-        UserChangeAvatarEvent event = new UserChangeAvatarEventImpl(user, newAvatarHash, oldAvatarHash);
+    private void dispatchUserChangeAvatarEvent(final User user, final String newAvatarHash, final String oldAvatarHash) {
+        final UserChangeAvatarEvent event = new UserChangeAvatarEventImpl(user, newAvatarHash, oldAvatarHash);
 
         api.getEventDispatcher().dispatchUserChangeAvatarEvent(
                 api,

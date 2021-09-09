@@ -28,8 +28,8 @@ public class ServerChangeExplicitContentFilterLevelEventImpl extends ServerEvent
      * @param oldExplicitContentFilterLevel The old explicit content filter level of the server.
      */
     public ServerChangeExplicitContentFilterLevelEventImpl(
-            Server server, ExplicitContentFilterLevel newExplicitContentFilterLevel,
-            ExplicitContentFilterLevel oldExplicitContentFilterLevel) {
+            final Server server, final ExplicitContentFilterLevel newExplicitContentFilterLevel,
+            final ExplicitContentFilterLevel oldExplicitContentFilterLevel) {
         super(server);
         this.newExplicitContentFilterLevel = newExplicitContentFilterLevel;
         this.oldExplicitContentFilterLevel = oldExplicitContentFilterLevel;

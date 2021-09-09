@@ -38,7 +38,7 @@ public class MemberCache {
     private final Cache<Member> cache;
     private final UserCache userCache;
 
-    private MemberCache(Cache<Member> cache, UserCache userCache, Cache<Tuple2<Member, Server>> memberServerCache) {
+    private MemberCache(final Cache<Member> cache, final UserCache userCache, final Cache<Tuple2<Member, Server>> memberServerCache) {
         this.cache = cache;
         this.userCache = userCache;
         this.memberServerCache = memberServerCache;
@@ -61,7 +61,7 @@ public class MemberCache {
      * @param member The member to add.
      * @return The new member cache.
      */
-    public MemberCache addMember(Member member) {
+    public MemberCache addMember(final Member member) {
         return new MemberCache(
                 cache.addElement(member),
                 userCache.getUserById(member.getId())
@@ -80,11 +80,11 @@ public class MemberCache {
      * @param member The member to remove.
      * @return The new member cache.
      */
-    public MemberCache removeMember(Member member) {
+    public MemberCache removeMember(final Member member) {
         if (member == null) {
             return this;
         }
-        Tuple2<Member, Server> memberServerTuple = memberServerCache
+        final Tuple2<Member, Server> memberServerTuple = memberServerCache
                 .findAnyByIndex(
                         MEMBER_SERVER_MEMBER_ID_SERVER_ID_INDEX_NAME,
                         Tuple.of(member.getId(), member.getServer().getId())
@@ -107,7 +107,7 @@ public class MemberCache {
      * @param userId The id of the user.
      * @return A list with all servers that the user with the given id is a member of.
      */
-    public Set<Server> getServers(long userId) {
+    public Set<Server> getServers(final long userId) {
         return ImmutableToJavaMapper.mapToJava(
                 memberServerCache.findByIndex(MEMBER_SERVER_MEMBER_ID_INDEX_NAME, userId)
                         .map(tuple -> tuple._2)
@@ -138,7 +138,7 @@ public class MemberCache {
      * @param id The id of the member.
      * @return A set with all member with the given id.
      */
-    public Set<Member> getMembersById(long id) {
+    public Set<Member> getMembersById(final long id) {
         return ImmutableToJavaMapper.mapToJava(cache.findByIndex(ID_INDEX_NAME, id));
     }
 
@@ -148,7 +148,7 @@ public class MemberCache {
      * @param serverId The server id.
      * @return A set with all member of the server with the given id.
      */
-    public Set<Member> getMembersByServer(long serverId) {
+    public Set<Member> getMembersByServer(final long serverId) {
         return ImmutableToJavaMapper.mapToJava(cache.findByIndex(SERVER_ID_INDEX_NAME, serverId));
     }
 
@@ -159,7 +159,7 @@ public class MemberCache {
      * @param serverId The server id.
      * @return The member.
      */
-    public Optional<Member> getMemberByIdAndServer(long id, long serverId) {
+    public Optional<Member> getMemberByIdAndServer(final long id, final long serverId) {
         return cache.findAnyByIndex(ID_AND_SERVER_ID_INDEX_NAME, Tuple.of(id, serverId));
     }
 }

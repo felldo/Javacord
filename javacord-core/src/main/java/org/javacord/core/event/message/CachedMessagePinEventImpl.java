@@ -13,7 +13,7 @@ public class CachedMessagePinEventImpl extends CertainMessageEventImpl implement
      *
      * @param message The message.
      */
-    public CachedMessagePinEventImpl(Message message) {
+    public CachedMessagePinEventImpl(final Message message) {
         super(message);
     }
 

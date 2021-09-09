@@ -18,18 +18,18 @@ public class VoiceServerUpdateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public VoiceServerUpdateHandler(DiscordApi api) {
+    public VoiceServerUpdateHandler(final DiscordApi api) {
         super(api, true, "VOICE_SERVER_UPDATE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        String token = packet.get("token").asText();
-        String endpoint = packet.get("endpoint").asText();
-        long serverId = packet.get("guild_id").asLong();
+    public void handle(final JsonNode packet) {
+        final String token = packet.get("token").asText();
+        final String endpoint = packet.get("endpoint").asText();
+        final long serverId = packet.get("guild_id").asLong();
 
         // We need the session id to connect to an audio websocket
-        AudioConnectionImpl pendingAudioConnection =
+        final AudioConnectionImpl pendingAudioConnection =
                 api.getPendingAudioConnectionByServerId(serverId);
         if (pendingAudioConnection != null) {
             pendingAudioConnection.setToken(token);
@@ -37,7 +37,7 @@ public class VoiceServerUpdateHandler extends PacketHandler {
             pendingAudioConnection.tryConnect();
         }
         api.getServerById(serverId).ifPresent(server -> {
-            VoiceServerUpdateEvent event = new VoiceServerUpdateEventImpl(server, token, endpoint);
+            final VoiceServerUpdateEvent event = new VoiceServerUpdateEventImpl(server, token, endpoint);
             api.getEventDispatcher().dispatchVoiceServerUpdateEvent((DispatchQueueSelector) server, server, event);
         });
     }

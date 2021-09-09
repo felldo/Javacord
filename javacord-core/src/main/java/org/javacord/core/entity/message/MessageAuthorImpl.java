@@ -39,10 +39,10 @@ public class MessageAuthorImpl implements MessageAuthor {
      * @param webhookId The id of the webhook, if the author is a webhook.
      * @param messageJson The json data of the author.
      */
-    public MessageAuthorImpl(Message message, Long webhookId, JsonNode messageJson) {
+    public MessageAuthorImpl(final Message message, final Long webhookId, final JsonNode messageJson) {
         this.message = message;
 
-        JsonNode authorJson = messageJson.get("author");
+        final JsonNode authorJson = messageJson.get("author");
         id = authorJson.get("id").asLong();
         name = authorJson.get("username").asText();
         discriminator = authorJson.get("discriminator").asText();
@@ -112,7 +112,7 @@ public class MessageAuthorImpl implements MessageAuthor {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return (this == o)
                || !((o == null)
                     || (getClass() != o.getClass())

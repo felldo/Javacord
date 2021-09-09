@@ -23,7 +23,7 @@ public class ServerVoiceChannelUpdater extends ServerChannelUpdater {
      *
      * @param channel The channel to update.
      */
-    public ServerVoiceChannelUpdater(ServerVoiceChannel channel) {
+    public ServerVoiceChannelUpdater(final ServerVoiceChannel channel) {
         delegate = DelegateFactory.createServerVoiceChannelUpdaterDelegate(channel);
     }
 
@@ -33,7 +33,7 @@ public class ServerVoiceChannelUpdater extends ServerChannelUpdater {
      * @param bitrate The new bitrate of the channel.
      * @return The current instance in order to chain call methods.
      */
-    public ServerVoiceChannelUpdater setBitrate(int bitrate) {
+    public ServerVoiceChannelUpdater setBitrate(final int bitrate) {
         delegate.setBitrate(bitrate);
         return this;
     }
@@ -44,7 +44,7 @@ public class ServerVoiceChannelUpdater extends ServerChannelUpdater {
      * @param userLimit The new user limit of the channel.
      * @return The current instance in order to chain call methods.
      */
-    public ServerVoiceChannelUpdater setUserLimit(int userLimit) {
+    public ServerVoiceChannelUpdater setUserLimit(final int userLimit) {
         delegate.setUserLimit(userLimit);
         return this;
     }
@@ -65,7 +65,7 @@ public class ServerVoiceChannelUpdater extends ServerChannelUpdater {
      * @param category The new category of the channel.
      * @return The current instance in order to chain call methods.
      */
-    public ServerVoiceChannelUpdater setCategory(ChannelCategory category) {
+    public ServerVoiceChannelUpdater setCategory(final ChannelCategory category) {
         delegate.setCategory(category);
         return this;
     }
@@ -81,33 +81,33 @@ public class ServerVoiceChannelUpdater extends ServerChannelUpdater {
     }
 
     @Override
-    public ServerVoiceChannelUpdater setAuditLogReason(String reason) {
+    public ServerVoiceChannelUpdater setAuditLogReason(final String reason) {
         delegate.setAuditLogReason(reason);
         return this;
     }
 
     @Override
-    public ServerVoiceChannelUpdater setName(String name) {
+    public ServerVoiceChannelUpdater setName(final String name) {
         delegate.setName(name);
         return this;
     }
 
     @Override
-    public ServerVoiceChannelUpdater setRawPosition(int rawPosition) {
+    public ServerVoiceChannelUpdater setRawPosition(final int rawPosition) {
         delegate.setRawPosition(rawPosition);
         return this;
     }
 
     @Override
     public <T extends Permissionable & DiscordEntity> ServerVoiceChannelUpdater addPermissionOverwrite(
-            T permissionable, Permissions permissions) {
+            final T permissionable, final Permissions permissions) {
         delegate.addPermissionOverwrite(permissionable, permissions);
         return this;
     }
 
     @Override
     public <T extends Permissionable & DiscordEntity> ServerVoiceChannelUpdater removePermissionOverwrite(
-            T permissionable) {
+            final T permissionable) {
         delegate.removePermissionOverwrite(permissionable);
         return this;
     }

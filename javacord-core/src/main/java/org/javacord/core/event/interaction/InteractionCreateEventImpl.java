@@ -20,7 +20,7 @@ public class InteractionCreateEventImpl extends EventImpl implements Interaction
      *
      * @param interaction The created interaction.
      */
-    public InteractionCreateEventImpl(Interaction interaction) {
+    public InteractionCreateEventImpl(final Interaction interaction) {
         super(interaction.getApi());
         this.interaction = interaction;
     }

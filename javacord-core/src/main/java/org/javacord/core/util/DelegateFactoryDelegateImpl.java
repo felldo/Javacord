@@ -129,102 +129,102 @@ public class DelegateFactoryDelegateImpl implements DelegateFactoryDelegate {
     }
 
     @Override
-    public PermissionsBuilderDelegate createPermissionsBuilderDelegate(Permissions permissions) {
+    public PermissionsBuilderDelegate createPermissionsBuilderDelegate(final Permissions permissions) {
         return new PermissionsBuilderDelegateImpl(permissions);
     }
 
     @Override
-    public ChannelCategoryBuilderDelegate createChannelCategoryBuilderDelegate(Server server) {
+    public ChannelCategoryBuilderDelegate createChannelCategoryBuilderDelegate(final Server server) {
         return new ChannelCategoryBuilderDelegateImpl((ServerImpl) server);
     }
 
     @Override
-    public ServerTextChannelBuilderDelegate createServerTextChannelBuilderDelegate(Server server) {
+    public ServerTextChannelBuilderDelegate createServerTextChannelBuilderDelegate(final Server server) {
         return new ServerTextChannelBuilderDelegateImpl((ServerImpl) server);
     }
 
     @Override
-    public ServerVoiceChannelBuilderDelegate createServerVoiceChannelBuilderDelegate(Server server) {
+    public ServerVoiceChannelBuilderDelegate createServerVoiceChannelBuilderDelegate(final Server server) {
         return new ServerVoiceChannelBuilderDelegateImpl((ServerImpl) server);
     }
 
     @Override
-    public CustomEmojiBuilderDelegate createCustomEmojiBuilderDelegate(Server server) {
+    public CustomEmojiBuilderDelegate createCustomEmojiBuilderDelegate(final Server server) {
         return new CustomEmojiBuilderDelegateImpl((ServerImpl) server);
     }
 
     @Override
-    public WebhookBuilderDelegate createWebhookBuilderDelegate(ServerTextChannel channel) {
+    public WebhookBuilderDelegate createWebhookBuilderDelegate(final ServerTextChannel channel) {
         return new WebhookBuilderDelegateImpl(channel);
     }
 
     @Override
-    public ServerBuilderDelegate createServerBuilderDelegate(DiscordApi api) {
+    public ServerBuilderDelegate createServerBuilderDelegate(final DiscordApi api) {
         return new ServerBuilderDelegateImpl((DiscordApiImpl) api);
     }
 
     @Override
-    public RoleBuilderDelegate createRoleBuilderDelegate(Server server) {
+    public RoleBuilderDelegate createRoleBuilderDelegate(final Server server) {
         return new RoleBuilderDelegateImpl((ServerImpl) server);
     }
 
     @Override
-    public InviteBuilderDelegate createInviteBuilderDelegate(ServerChannel channel) {
+    public InviteBuilderDelegate createInviteBuilderDelegate(final ServerChannel channel) {
         return new InviteBuilderDelegateImpl(channel);
     }
 
     @Override
-    public AccountUpdaterDelegate createAccountUpdaterDelegate(DiscordApi api) {
+    public AccountUpdaterDelegate createAccountUpdaterDelegate(final DiscordApi api) {
         return new AccountUpdaterDelegateImpl(((DiscordApiImpl) api));
     }
 
     @Override
-    public SlashCommandUpdaterDelegate createSlashCommandUpdaterDelegate(long commandId) {
+    public SlashCommandUpdaterDelegate createSlashCommandUpdaterDelegate(final long commandId) {
         return new SlashCommandUpdaterDelegateImpl(commandId);
     }
 
     @Override
-    public GroupChannelUpdaterDelegate createGroupChannelUpdaterDelegate(GroupChannel channel) {
+    public GroupChannelUpdaterDelegate createGroupChannelUpdaterDelegate(final GroupChannel channel) {
         return new ChannelUpdaterDelegateImpl(channel);
     }
 
     @Override
-    public ServerChannelUpdaterDelegate createServerChannelUpdaterDelegate(ServerChannel channel) {
+    public ServerChannelUpdaterDelegate createServerChannelUpdaterDelegate(final ServerChannel channel) {
         return new ServerChannelUpdaterDelegateImpl(channel);
     }
 
     @Override
-    public ServerTextChannelUpdaterDelegate createServerTextChannelUpdaterDelegate(ServerTextChannel channel) {
+    public ServerTextChannelUpdaterDelegate createServerTextChannelUpdaterDelegate(final ServerTextChannel channel) {
         return new ServerTextChannelUpdaterDelegateImpl(channel);
     }
 
     @Override
-    public ServerVoiceChannelUpdaterDelegate createServerVoiceChannelUpdaterDelegate(ServerVoiceChannel channel) {
+    public ServerVoiceChannelUpdaterDelegate createServerVoiceChannelUpdaterDelegate(final ServerVoiceChannel channel) {
         return new ServerVoiceChannelUpdaterDelegateImpl(channel);
     }
 
     @Override
-    public CustomEmojiUpdaterDelegate createCustomEmojiUpdaterDelegate(KnownCustomEmoji emoji) {
+    public CustomEmojiUpdaterDelegate createCustomEmojiUpdaterDelegate(final KnownCustomEmoji emoji) {
         return new CustomEmojiUpdaterDelegateImpl(emoji);
     }
 
     @Override
-    public RoleUpdaterDelegate createRoleUpdaterDelegate(Role role) {
+    public RoleUpdaterDelegate createRoleUpdaterDelegate(final Role role) {
         return new RoleUpdaterDelegateImpl(role);
     }
 
     @Override
-    public ServerUpdaterDelegate createServerUpdaterDelegate(Server server) {
+    public ServerUpdaterDelegate createServerUpdaterDelegate(final Server server) {
         return new ServerUpdaterDelegateImpl(server);
     }
 
     @Override
-    public WebhookUpdaterDelegate createWebhookUpdaterDelegate(Webhook webhook) {
+    public WebhookUpdaterDelegate createWebhookUpdaterDelegate(final Webhook webhook) {
         return new WebhookUpdaterDelegateImpl(webhook);
     }
 
     @Override
-    public AudioSourceBaseDelegate createAudioSourceBaseDelegate(DiscordApi api) {
+    public AudioSourceBaseDelegate createAudioSourceBaseDelegate(final DiscordApi api) {
         return new AudioSourceBaseDelegateImpl(api);
     }
 
@@ -240,7 +240,7 @@ public class DelegateFactoryDelegateImpl implements DelegateFactoryDelegate {
 
     @Override
     public SlashCommandPermissionsUpdaterDelegate createSlashCommandPermissionsUpdaterDelegate(
-            Server server) {
+            final Server server) {
         return new SlashCommandPermissionsUpdaterDelegateImpl(server);
     }
 

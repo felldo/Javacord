@@ -20,7 +20,7 @@ public abstract class ServerVoiceChannelMemberEventImpl extends ServerVoiceChann
      * @param member The member of the event.
      * @param channel The channel of the event.
      */
-    public ServerVoiceChannelMemberEventImpl(Member member, ServerVoiceChannel channel) {
+    public ServerVoiceChannelMemberEventImpl(final Member member, final ServerVoiceChannel channel) {
         super(channel);
         this.member = member;
     }

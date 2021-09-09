@@ -54,14 +54,14 @@ public abstract class InteractionImpl implements Interaction {
      * @param channel  The channel in which the interaction happened. Can be {@code null}.
      * @param jsonData The json data of the interaction.
      */
-    public InteractionImpl(DiscordApiImpl api, TextChannel channel, JsonNode jsonData) {
+    public InteractionImpl(final DiscordApiImpl api, final TextChannel channel, final JsonNode jsonData) {
         this.api = api;
         this.channel = channel;
 
         id = jsonData.get("id").asLong();
         applicationId = jsonData.get("application_id").asLong();
         if (jsonData.hasNonNull("member")) {
-            MemberImpl member = new MemberImpl(
+            final MemberImpl member = new MemberImpl(
                     api,
                     (ServerImpl) getServer().orElseThrow(AssertionError::new),
                     jsonData.get("member"),
@@ -107,7 +107,7 @@ public abstract class InteractionImpl implements Interaction {
     }
 
     @Override
-    public CompletableFuture<InteractionOriginalResponseUpdater> respondLater(boolean ephemeral) {
+    public CompletableFuture<InteractionOriginalResponseUpdater> respondLater(final boolean ephemeral) {
         return new RestRequest<InteractionOriginalResponseUpdater>(this.api,
                 RestMethod.POST, RestEndpoint.INTERACTION_RESPONSE)
                 .setUrlParameters(getIdAsString(), token)

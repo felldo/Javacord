@@ -33,7 +33,7 @@ public interface MessageComponentCreateEvent extends Event {
      * @param customId The custom id to match.
      * @return The interaction.
      */
-    default Optional<MessageComponentInteraction> getMessageComponentInteractionWithCustomId(String customId) {
+    default Optional<MessageComponentInteraction> getMessageComponentInteractionWithCustomId(final String customId) {
         return getInteraction().asMessageComponentInteractionWithCustomId(customId);
     }
 

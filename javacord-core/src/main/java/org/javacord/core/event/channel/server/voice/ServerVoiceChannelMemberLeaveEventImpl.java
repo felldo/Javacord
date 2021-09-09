@@ -26,7 +26,7 @@ public class ServerVoiceChannelMemberLeaveEventImpl extends ServerVoiceChannelMe
      * @param oldChannel The old channel of the event.
      */
     public ServerVoiceChannelMemberLeaveEventImpl(
-            Member member, ServerVoiceChannel newChannel, ServerVoiceChannel oldChannel) {
+            final Member member, final ServerVoiceChannel newChannel, final ServerVoiceChannel oldChannel) {
         super(member, oldChannel);
         this.newChannel = newChannel;
     }

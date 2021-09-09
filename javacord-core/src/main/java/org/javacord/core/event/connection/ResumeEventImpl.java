@@ -14,7 +14,7 @@ public class ResumeEventImpl extends EventImpl implements ResumeEvent {
      *
      * @param api The api instance of the event.
      */
-    public ResumeEventImpl(DiscordApi api) {
+    public ResumeEventImpl(final DiscordApi api) {
         super(api);
     }
 

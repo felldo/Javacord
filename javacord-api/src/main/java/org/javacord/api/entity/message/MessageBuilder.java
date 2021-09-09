@@ -27,8 +27,8 @@ public class MessageBuilder extends MessageBuilderBase<MessageBuilder> {
      * @param message The message to copy.
      * @return A message builder which would produce the same text as the given message.
      */
-    public static MessageBuilder fromMessage(Message message) {
-        MessageBuilder builder = new MessageBuilder();
+    public static MessageBuilder fromMessage(final Message message) {
+        final MessageBuilder builder = new MessageBuilder();
 
         return builder.copy(message);
     }
@@ -39,7 +39,7 @@ public class MessageBuilder extends MessageBuilderBase<MessageBuilder> {
      * @param message The message to copy.
      * @return The current instance in order to chain call methods.
      */
-    public MessageBuilder copy(Message message) {
+    public MessageBuilder copy(final Message message) {
         delegate.copy(message);
         return this;
     }
@@ -50,7 +50,7 @@ public class MessageBuilder extends MessageBuilderBase<MessageBuilder> {
      * @param tts Whether the message should be text to speech or not.
      * @return The current instance in order to chain call methods.
      */
-    public MessageBuilder setTts(boolean tts) {
+    public MessageBuilder setTts(final boolean tts) {
         delegate.setTts(tts);
         return this;
     }
@@ -61,7 +61,7 @@ public class MessageBuilder extends MessageBuilderBase<MessageBuilder> {
      * @param message The message to reply to.
      * @return The current instance in order to chain call methods.
      */
-    public MessageBuilder replyTo(Message message) {
+    public MessageBuilder replyTo(final Message message) {
         delegate.replyTo(message.getId());
         return this;
     }
@@ -72,7 +72,7 @@ public class MessageBuilder extends MessageBuilderBase<MessageBuilder> {
      * @param messageId The id of the message to reply to.
      * @return The current instance in order to chain call methods.
      */
-    public MessageBuilder replyTo(long messageId) {
+    public MessageBuilder replyTo(final long messageId) {
         delegate.replyTo(messageId);
         return this;
     }
@@ -83,7 +83,7 @@ public class MessageBuilder extends MessageBuilderBase<MessageBuilder> {
      * @param user The user to which the message should be sent.
      * @return The sent message.
      */
-    public CompletableFuture<Message> send(User user) {
+    public CompletableFuture<Message> send(final User user) {
         return delegate.send(user);
     }
 
@@ -93,7 +93,7 @@ public class MessageBuilder extends MessageBuilderBase<MessageBuilder> {
      * @param channel The channel in which the message should be sent.
      * @return The sent message.
      */
-    public CompletableFuture<Message> send(TextChannel channel) {
+    public CompletableFuture<Message> send(final TextChannel channel) {
         return delegate.send(channel);
     }
 
@@ -103,7 +103,7 @@ public class MessageBuilder extends MessageBuilderBase<MessageBuilder> {
      * @param webhook The webhook from which the message should be sent.
      * @return The sent message.
      */
-    public CompletableFuture<Message> send(IncomingWebhook webhook) {
+    public CompletableFuture<Message> send(final IncomingWebhook webhook) {
         return delegate.send(webhook);
     }
 
@@ -113,7 +113,7 @@ public class MessageBuilder extends MessageBuilderBase<MessageBuilder> {
      * @param messageable The receiver of the message.
      * @return The sent message.
      */
-    public CompletableFuture<Message> send(Messageable messageable) {
+    public CompletableFuture<Message> send(final Messageable messageable) {
         return delegate.send(messageable);
     }
 
@@ -125,7 +125,7 @@ public class MessageBuilder extends MessageBuilderBase<MessageBuilder> {
      * @param webhookToken The token of the webhook from which the message should be sent.
      * @return The sent message.
      */
-    public CompletableFuture<Message> sendWithWebhook(DiscordApi api, long webhookId, String webhookToken) {
+    public CompletableFuture<Message> sendWithWebhook(final DiscordApi api, final long webhookId, final String webhookToken) {
         return delegate.sendWithWebhook(api, Long.toUnsignedString(webhookId), webhookToken);
     }
 
@@ -137,7 +137,7 @@ public class MessageBuilder extends MessageBuilderBase<MessageBuilder> {
      * @param webhookToken The token of the webhook from which the message should be sent.
      * @return The sent message.
      */
-    public CompletableFuture<Message> sendWithWebhook(DiscordApi api, String webhookId, String webhookToken) {
+    public CompletableFuture<Message> sendWithWebhook(final DiscordApi api, final String webhookId, final String webhookToken) {
         return delegate.sendWithWebhook(api, webhookId, webhookToken);
     }
 
@@ -150,9 +150,9 @@ public class MessageBuilder extends MessageBuilderBase<MessageBuilder> {
      * @return The sent message.
      * @throws IllegalArgumentException If the link isn't valid.
      */
-    public CompletableFuture<Message> sendWithWebhook(DiscordApi api, String webhookUrl)
+    public CompletableFuture<Message> sendWithWebhook(final DiscordApi api, final String webhookUrl)
             throws IllegalArgumentException {
-        Matcher matcher = DiscordRegexPattern.WEBHOOK_URL.matcher(webhookUrl);
+        final Matcher matcher = DiscordRegexPattern.WEBHOOK_URL.matcher(webhookUrl);
 
         if (!matcher.matches()) {
             throw new IllegalArgumentException("The webhook url has an invalid format");

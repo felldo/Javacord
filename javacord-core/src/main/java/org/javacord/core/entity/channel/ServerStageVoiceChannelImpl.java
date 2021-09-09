@@ -23,7 +23,7 @@ public class ServerStageVoiceChannelImpl extends ServerVoiceChannelImpl
      * @param server The server of the channel.
      * @param data The json data of the channel.
      */
-    public ServerStageVoiceChannelImpl(DiscordApiImpl api, ServerImpl server, JsonNode data) {
+    public ServerStageVoiceChannelImpl(final DiscordApiImpl api, final ServerImpl server, final JsonNode data) {
         super(api, server, data);
 
         if (data.hasNonNull("topic")) {
@@ -44,7 +44,7 @@ public class ServerStageVoiceChannelImpl extends ServerVoiceChannelImpl
      *
      * @param topic The new topic of the channel.
      */
-    public void setTopic(String topic) {
+    public void setTopic(final String topic) {
         this.topic = topic;
     }
 

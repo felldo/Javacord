@@ -32,7 +32,7 @@ public class AllowedMentionsBuilder {
      * @param value If roles should be mentioned or not.
      * @return The current instance in order to chain call methods.
      */
-    public AllowedMentionsBuilder setMentionRoles(boolean value) {
+    public AllowedMentionsBuilder setMentionRoles(final boolean value) {
         delegate.setMentionRoles(value);
         return this;
     }
@@ -44,7 +44,7 @@ public class AllowedMentionsBuilder {
      * @param value If users should be mentioned or not.
      * @return The current instance in order to chain call methods.
      */
-    public AllowedMentionsBuilder setMentionUsers(boolean value) {
+    public AllowedMentionsBuilder setMentionUsers(final boolean value) {
         delegate.setMentionUsers(value);
         return this;
     }
@@ -55,7 +55,7 @@ public class AllowedMentionsBuilder {
      * @param value If @everyone and @here should be mentioned.
      * @return The current instance in order to chain call methods.
      */
-    public AllowedMentionsBuilder setMentionEveryoneAndHere(boolean value) {
+    public AllowedMentionsBuilder setMentionEveryoneAndHere(final boolean value) {
         delegate.setMentionEveryoneAndHere(value);
         return this;
     }
@@ -66,7 +66,7 @@ public class AllowedMentionsBuilder {
      * @param roleId The id of the role.
      * @return The current instance in order to chain call methods.
      */
-    public AllowedMentionsBuilder addRole(String roleId) {
+    public AllowedMentionsBuilder addRole(final String roleId) {
         delegate.addRole(roleId);
         return this;
     }
@@ -77,7 +77,7 @@ public class AllowedMentionsBuilder {
      * @param roleId The id of the role.
      * @return The current instance in order to chain call methods.
      */
-    public AllowedMentionsBuilder addRole(long roleId) {
+    public AllowedMentionsBuilder addRole(final long roleId) {
         delegate.addRole(roleId);
         return this;
     }
@@ -88,7 +88,7 @@ public class AllowedMentionsBuilder {
      * @param roleIds A collection of role id's which will be mentioned.
      * @return The current instance in order to chain call methods.
      */
-    public AllowedMentionsBuilder addRoles(Collection<Long> roleIds) {
+    public AllowedMentionsBuilder addRoles(final Collection<Long> roleIds) {
         delegate.addRoles(roleIds);
         return this;
     }
@@ -100,7 +100,7 @@ public class AllowedMentionsBuilder {
      * @param userId The id of the user.
      * @return The current instance in order to chain call methods.
      */
-    public AllowedMentionsBuilder addUser(String userId) {
+    public AllowedMentionsBuilder addUser(final String userId) {
         delegate.addUser(userId);
         return this;
     }
@@ -111,7 +111,7 @@ public class AllowedMentionsBuilder {
      * @param userId The id of the user.
      * @return The current instance in order to chain call methods.
      */
-    public AllowedMentionsBuilder addUser(long userId) {
+    public AllowedMentionsBuilder addUser(final long userId) {
         delegate.addUser(userId);
         return this;
     }
@@ -122,7 +122,7 @@ public class AllowedMentionsBuilder {
      * @param userIds A collection of user id's which will be mentioned.
      * @return The current instance in order to chain call methods.
      */
-    public AllowedMentionsBuilder addUsers(Collection<Long> userIds) {
+    public AllowedMentionsBuilder addUsers(final Collection<Long> userIds) {
         delegate.addUsers(userIds);
         return this;
     }
@@ -134,7 +134,7 @@ public class AllowedMentionsBuilder {
      * @param roleId The id of the role.
      * @return The current instance in order to chain call methods.
      */
-    public AllowedMentionsBuilder removeRole(String roleId) {
+    public AllowedMentionsBuilder removeRole(final String roleId) {
         delegate.removeRole(roleId);
         return this;
     }
@@ -145,7 +145,7 @@ public class AllowedMentionsBuilder {
      * @param roleId The id of the role.
      * @return The current instance in order to chain call methods.
      */
-    public AllowedMentionsBuilder removeRole(long roleId) {
+    public AllowedMentionsBuilder removeRole(final long roleId) {
         delegate.removeRole(roleId);
         return this;
     }
@@ -156,7 +156,7 @@ public class AllowedMentionsBuilder {
      * @param roleIds A collection of role id's which will be removed from the list.
      * @return The current instance in order to chain call methods.
      */
-    public AllowedMentionsBuilder removeRoles(Collection<Long> roleIds) {
+    public AllowedMentionsBuilder removeRoles(final Collection<Long> roleIds) {
         delegate.removeRoles(roleIds);
         return this;
     }
@@ -167,7 +167,7 @@ public class AllowedMentionsBuilder {
      * @param userId The id of the user.
      * @return The current instance in order to chain call methods.
      */
-    public AllowedMentionsBuilder removeUser(String userId) {
+    public AllowedMentionsBuilder removeUser(final String userId) {
         delegate.removeUser(userId);
         return this;
     }
@@ -178,7 +178,7 @@ public class AllowedMentionsBuilder {
      * @param userId The id of the user.
      * @return The current instance in order to chain call methods.
      */
-    public AllowedMentionsBuilder removeUser(long userId) {
+    public AllowedMentionsBuilder removeUser(final long userId) {
         delegate.removeUser(userId);
         return this;
     }
@@ -189,7 +189,7 @@ public class AllowedMentionsBuilder {
      * @param userIds A collection of user id's which will be removed from the list.
      * @return The current instance in order to chain call methods.
      */
-    public AllowedMentionsBuilder removeUsers(Collection<Long> userIds) {
+    public AllowedMentionsBuilder removeUsers(final Collection<Long> userIds) {
         delegate.removeUsers(userIds);
         return this;
     }

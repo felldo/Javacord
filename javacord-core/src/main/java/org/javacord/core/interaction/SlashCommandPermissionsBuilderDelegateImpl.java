@@ -19,18 +19,18 @@ public class SlashCommandPermissionsBuilderDelegateImpl implements SlashCommandP
     }
 
     @Override
-    public void setId(long id) {
+    public void setId(final long id) {
         this.id = id;
     }
 
     @Override
-    public void setType(SlashCommandPermissionType type) {
+    public void setType(final SlashCommandPermissionType type) {
         Objects.requireNonNull(type,"The type can not be null!");
         this.type = type;
     }
 
     @Override
-    public void setPermission(boolean permission) {
+    public void setPermission(final boolean permission) {
         this.permission = permission;
     }
 

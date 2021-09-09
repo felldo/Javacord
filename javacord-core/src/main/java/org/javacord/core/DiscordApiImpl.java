@@ -413,9 +413,9 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *                                      require it.
      * @param trustAllCertificates          Whether to trust all SSL certificates.
      */
-    public DiscordApiImpl(String token, Ratelimiter globalRatelimiter, Ratelimiter gatewayIdentifyRatelimiter,
-                          ProxySelector proxySelector, Proxy proxy, Authenticator proxyAuthenticator,
-                          boolean trustAllCertificates) {
+    public DiscordApiImpl(final String token, final Ratelimiter globalRatelimiter, final Ratelimiter gatewayIdentifyRatelimiter,
+                          final ProxySelector proxySelector, final Proxy proxy, final Authenticator proxyAuthenticator,
+                          final boolean trustAllCertificates) {
         this(AccountType.BOT, token, 0, 1, Collections.emptySet(), true, false, globalRatelimiter,
                 gatewayIdentifyRatelimiter, proxySelector, proxy, proxyAuthenticator, trustAllCertificates, null);
     }
@@ -445,20 +445,20 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *                                      successful.
      */
     public DiscordApiImpl(
-            AccountType accountType,
-            String token,
-            int currentShard,
-            int totalShards,
-            Set<Intent> intents,
-            boolean waitForServersOnStartup,
-            boolean waitForUsersOnStartup,
-            Ratelimiter globalRatelimiter,
-            Ratelimiter gatewayIdentifyRatelimiter,
-            ProxySelector proxySelector,
-            Proxy proxy,
-            Authenticator proxyAuthenticator,
-            boolean trustAllCertificates,
-            CompletableFuture<DiscordApi> ready
+            final AccountType accountType,
+            final String token,
+            final int currentShard,
+            final int totalShards,
+            final Set<Intent> intents,
+            final boolean waitForServersOnStartup,
+            final boolean waitForUsersOnStartup,
+            final Ratelimiter globalRatelimiter,
+            final Ratelimiter gatewayIdentifyRatelimiter,
+            final ProxySelector proxySelector,
+            final Proxy proxy,
+            final Authenticator proxyAuthenticator,
+            final boolean trustAllCertificates,
+            final CompletableFuture<DiscordApi> ready
     ) {
         this(accountType, token, currentShard, totalShards, intents, waitForServersOnStartup, waitForUsersOnStartup,
                 true, globalRatelimiter, gatewayIdentifyRatelimiter, proxySelector, proxy, proxyAuthenticator,
@@ -492,21 +492,21 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *                                      testing.
      */
     private DiscordApiImpl(
-            AccountType accountType,
-            String token,
-            int currentShard,
-            int totalShards,
-            Set<Intent> intents,
-            boolean waitForServersOnStartup,
-            boolean waitForUsersOnStartup,
-            Ratelimiter globalRatelimiter,
-            Ratelimiter gatewayIdentifyRatelimiter,
-            ProxySelector proxySelector,
-            Proxy proxy,
-            Authenticator proxyAuthenticator,
-            boolean trustAllCertificates,
-            CompletableFuture<DiscordApi> ready,
-            Dns dns) {
+            final AccountType accountType,
+            final String token,
+            final int currentShard,
+            final int totalShards,
+            final Set<Intent> intents,
+            final boolean waitForServersOnStartup,
+            final boolean waitForUsersOnStartup,
+            final Ratelimiter globalRatelimiter,
+            final Ratelimiter gatewayIdentifyRatelimiter,
+            final ProxySelector proxySelector,
+            final Proxy proxy,
+            final Authenticator proxyAuthenticator,
+            final boolean trustAllCertificates,
+            final CompletableFuture<DiscordApi> ready,
+            final Dns dns) {
         this(accountType, token, currentShard, totalShards, intents, waitForServersOnStartup, waitForUsersOnStartup,
                 true, globalRatelimiter, gatewayIdentifyRatelimiter, proxySelector, proxy, proxyAuthenticator,
                 trustAllCertificates, ready, dns, Collections.emptyMap(), Collections.emptyList(), false);
@@ -543,27 +543,27 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      */
     @SuppressWarnings("unchecked")
     public DiscordApiImpl(
-            AccountType accountType,
-            String token,
-            int currentShard,
-            int totalShards,
-            Set<Intent> intents,
-            boolean waitForServersOnStartup,
-            boolean waitForUsersOnStartup,
-            boolean registerShutdownHook,
-            Ratelimiter globalRatelimiter,
-            Ratelimiter gatewayIdentifyRatelimiter,
-            ProxySelector proxySelector,
-            Proxy proxy,
-            Authenticator proxyAuthenticator,
-            boolean trustAllCertificates,
-            CompletableFuture<DiscordApi> ready,
-            Dns dns,
-            Map<Class<? extends GloballyAttachableListener>,
+            final AccountType accountType,
+            final String token,
+            final int currentShard,
+            final int totalShards,
+            final Set<Intent> intents,
+            final boolean waitForServersOnStartup,
+            final boolean waitForUsersOnStartup,
+            final boolean registerShutdownHook,
+            final Ratelimiter globalRatelimiter,
+            final Ratelimiter gatewayIdentifyRatelimiter,
+            final ProxySelector proxySelector,
+            final Proxy proxy,
+            final Authenticator proxyAuthenticator,
+            final boolean trustAllCertificates,
+            final CompletableFuture<DiscordApi> ready,
+            final Dns dns,
+            final Map<Class<? extends GloballyAttachableListener>,
                     List<Function<DiscordApi,GloballyAttachableListener>>
                     > listenerSourceMap,
-            List<Function<DiscordApi, GloballyAttachableListener>> unspecifiedListeners,
-            boolean userCacheEnabled
+            final List<Function<DiscordApi, GloballyAttachableListener>> unspecifiedListeners,
+            final boolean userCacheEnabled
     ) {
         this.accountType = accountType;
         this.token = token;
@@ -590,7 +590,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
             throw new IllegalArgumentException("Cannot wait for users when GUILD_MEMBERS intent is not set!");
         }
 
-        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder()
+        final OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder()
                 .addInterceptor(chain -> chain.proceed(chain.request()
                         .newBuilder()
                         .addHeader("User-Agent", Javacord.USER_AGENT)
@@ -609,7 +609,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
         if (trustAllCertificates) {
             logger.warn("All SSL certificates are trusted when connecting to the Discord API and websocket. "
                     + "This increases the risk of man-in-the-middle attacks!");
-            TrustAllTrustManager trustManager = new TrustAllTrustManager();
+            final TrustAllTrustManager trustManager = new TrustAllTrustManager();
             httpClientBuilder.sslSocketFactory(trustManager.createSslSocketFactory(), trustManager);
         }
         this.httpClient = httpClientBuilder.build();
@@ -624,9 +624,9 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
                             // Register listeners
                             listenerSourceMap.forEach((clazz, listenerSources) ->
                                     listenerSources.forEach(listenerSource -> {
-                                        Class<GloballyAttachableListener> type
+                                        final Class<GloballyAttachableListener> type
                                                 = (Class<GloballyAttachableListener>) clazz;
-                                        GloballyAttachableListener listener = listenerSource.apply(this);
+                                        final GloballyAttachableListener listener = listenerSource.apply(this);
                                         addListener(type, type.cast(listener));
                                     }
                             ));
@@ -653,7 +653,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
                                     new IllegalStateException("Websocket closed before READY packet was received!"));
                         }
                     });
-                } catch (Throwable t) {
+                } catch (final Throwable t) {
                     if (websocketAdapter != null) {
                         websocketAdapter.disconnect();
                     }
@@ -667,12 +667,12 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
                     for (Reference<? extends Message> messageRef = messagesCleanupQueue.poll();
                             messageRef != null;
                             messageRef = messagesCleanupQueue.poll()) {
-                        Long messageId = messageIdByRef.remove(messageRef);
+                        final Long messageId = messageIdByRef.remove(messageRef);
                         if (messageId != null) {
                             messages.remove(messageId, messageRef);
                         }
                     }
-                } catch (Throwable t) {
+                } catch (final Throwable t) {
                     logger.error("Failed to process messages cleanup queue!", t);
                 }
             }, 30, 30, TimeUnit.SECONDS);
@@ -680,7 +680,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
             if (registerShutdownHook) {
                 // Add shutdown hook
                 ready.thenAccept(api -> {
-                    WeakReference<DiscordApi> discordApiReference = new WeakReference<>(api);
+                    final WeakReference<DiscordApi> discordApiReference = new WeakReference<>(api);
                     Runtime.getRuntime().addShutdownHook(new Thread(() -> Optional.ofNullable(discordApiReference.get())
                             .ifPresent(DiscordApi::disconnect),
                             String.format("Javacord - Shutdown Disconnector (%s)", api)));
@@ -688,7 +688,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
             }
         } else {
             if (registerShutdownHook) {
-                WeakReference<DiscordApi> discordApiReference = new WeakReference<>(this);
+                final WeakReference<DiscordApi> discordApiReference = new WeakReference<>(this);
                 Runtime.getRuntime().addShutdownHook(new Thread(() -> Optional.ofNullable(discordApiReference.get())
                         .ifPresent(DiscordApi::disconnect),
                         String.format("Javacord - Shutdown Disconnector (%s)", this)));
@@ -780,7 +780,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param serverId The server id.
      * @return The audio connection.
      */
-    public AudioConnectionImpl getAudioConnectionByServerId(long serverId) {
+    public AudioConnectionImpl getAudioConnectionByServerId(final long serverId) {
         return audioConnections.get(serverId);
     }
 
@@ -790,7 +790,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param serverId The server id.
      * @param connection The audio connection.
      */
-    public void setAudioConnection(long serverId, AudioConnectionImpl connection) {
+    public void setAudioConnection(final long serverId, final AudioConnectionImpl connection) {
         audioConnections.put(serverId, connection);
     }
 
@@ -799,7 +799,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param serverId The server id.
      */
-    public void removeAudioConnection(long serverId) {
+    public void removeAudioConnection(final long serverId) {
         audioConnections.remove(serverId);
     }
 
@@ -809,7 +809,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param serverId The server id.
      * @return The pending audio connection.
      */
-    public AudioConnectionImpl getPendingAudioConnectionByServerId(long serverId) {
+    public AudioConnectionImpl getPendingAudioConnectionByServerId(final long serverId) {
         return pendingAudioConnections.get(serverId);
     }
 
@@ -819,7 +819,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param serverId The server id.
      * @param connection The pending audio connection.
      */
-    public void setPendingAudioConnection(long serverId, AudioConnectionImpl connection) {
+    public void setPendingAudioConnection(final long serverId, final AudioConnectionImpl connection) {
         pendingAudioConnections.put(serverId, connection);
     }
 
@@ -828,7 +828,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param serverId The server id.
      */
-    public void removePendingAudioConnection(long serverId) {
+    public void removePendingAudioConnection(final long serverId) {
         pendingAudioConnections.remove(serverId);
     }
 
@@ -838,7 +838,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @return A collection with all servers.
      */
     public Collection<Server> getAllServers() {
-        ArrayList<Server> allServers = new ArrayList<>(nonReadyServers.values());
+        final ArrayList<Server> allServers = new ArrayList<>(nonReadyServers.values());
         allServers.addAll(servers.values());
         return Collections.unmodifiableList(allServers);
     }
@@ -849,7 +849,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param id The of the server.
      * @return The server with the given id.
      */
-    public Optional<Server> getPossiblyUnreadyServerById(long id) {
+    public Optional<Server> getPossiblyUnreadyServerById(final long id) {
         if (nonReadyServers.containsKey(id)) {
             return Optional.ofNullable(nonReadyServers.get(id));
         }
@@ -861,7 +861,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param server The server to add.
      */
-    public void addServerToCache(ServerImpl server) {
+    public void addServerToCache(final ServerImpl server) {
         // Remove in case, there's an old instance in cache
         removeServerFromCache(server.getId());
 
@@ -878,7 +878,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param serverId The id of the server to remove.
      */
-    public void removeServerFromCache(long serverId) {
+    public void removeServerFromCache(final long serverId) {
         servers.computeIfPresent(serverId, (key, server) -> {
             ((Cleanupable) server).cleanup();
             return null;
@@ -894,9 +894,9 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param channel The channel to add.
      */
-    public void addChannelToCache(Channel channel) {
+    public void addChannelToCache(final Channel channel) {
         entityCache.getAndUpdate(cache -> {
-            Channel oldChannel = cache.getChannelCache().getChannelById(channel.getId()).orElse(null);
+            final Channel oldChannel = cache.getChannelCache().getChannelById(channel.getId()).orElse(null);
             if (oldChannel != channel && oldChannel instanceof Cleanupable) {
                 ((Cleanupable) oldChannel).cleanup();
             }
@@ -910,9 +910,9 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param userId The id of the user.
      * @param mapper A function that takes the old user presence (or null) and returns the new user presence.
      */
-    public void updateUserPresence(long userId, UnaryOperator<UserPresence> mapper) {
+    public void updateUserPresence(final long userId, final UnaryOperator<UserPresence> mapper) {
         entityCache.getAndUpdate(cache -> {
-            UserPresence presence = cache.getUserPresenceCache().getPresenceByUserId(userId)
+            final UserPresence presence = cache.getUserPresenceCache().getPresenceByUserId(userId)
                     .orElseGet(() -> new UserPresence(userId, null, null, io.vavr.collection.HashMap.empty()));
             return cache.updateUserPresenceCache(userPresenceCache ->
                     userPresenceCache.removeUserPresence(presence).addUserPresence(mapper.apply(presence)));
@@ -924,9 +924,9 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param channelId The id of the channel to remove.
      */
-    public void removeChannelFromCache(long channelId) {
+    public void removeChannelFromCache(final long channelId) {
         entityCache.getAndUpdate(cache -> {
-            Channel channel = cache.getChannelCache().getChannelById(channelId).orElse(null);
+            final Channel channel = cache.getChannelCache().getChannelById(channelId).orElse(null);
             if (channel == null) {
                 return cache;
             }
@@ -942,12 +942,12 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param member The member to add.
      */
-    public void addMemberToCacheOrReplaceExisting(Member member) {
+    public void addMemberToCacheOrReplaceExisting(final Member member) {
         if (!isUserCacheEnabled()) {
             return;
         }
         entityCache.getAndUpdate(cache -> {
-            Member oldMember = cache.getMemberCache()
+            final Member oldMember = cache.getMemberCache()
                     .getMemberByIdAndServer(member.getId(), member.getServer().getId())
                     .orElse(null);
             return cache.updateMemberCache(memberCache -> memberCache.removeMember(oldMember).addMember(member));
@@ -959,10 +959,10 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param user The new user object.
      */
-    public void updateUserOfAllMembers(User user) {
+    public void updateUserOfAllMembers(final User user) {
         entityCache.getAndUpdate(cache ->  {
             JavacordEntityCache newCache = cache;
-            for (Member member : cache.getMemberCache().getMembersById(user.getId())) {
+            for (final Member member : cache.getMemberCache().getMembersById(user.getId())) {
                 newCache = newCache.updateMemberCache(memberCache -> memberCache
                         .removeMember(member)
                         .addMember(((MemberImpl) member).setUser((UserImpl) user))
@@ -978,9 +978,9 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param memberId The id of the member to remove.
      * @param serverId The id of the member's server.
      */
-    public void removeMemberFromCache(long memberId, long serverId) {
+    public void removeMemberFromCache(final long memberId, final long serverId) {
         entityCache.getAndUpdate(cache -> {
-            Member member = cache.getMemberCache().getMemberByIdAndServer(memberId, serverId).orElse(null);
+            final Member member = cache.getMemberCache().getMemberByIdAndServer(memberId, serverId).orElse(null);
             if (member == null) {
                 return cache;
             }
@@ -993,7 +993,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param serverId The id of the server.
      */
-    public void addUnavailableServerToCache(long serverId) {
+    public void addUnavailableServerToCache(final long serverId) {
         unavailableServers.add(serverId);
     }
 
@@ -1002,7 +1002,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param serverId The id of the server.
      */
-    private void removeUnavailableServerFromCache(long serverId) {
+    private void removeUnavailableServerFromCache(final long serverId) {
         unavailableServers.remove(serverId);
     }
 
@@ -1020,7 +1020,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param latestGatewayLatencyNanos The latest gateway latency.
      */
-    public void setLatestGatewayLatencyNanos(long latestGatewayLatencyNanos) {
+    public void setLatestGatewayLatencyNanos(final long latestGatewayLatencyNanos) {
         this.latestGatewayLatencyNanos = latestGatewayLatencyNanos;
     }
 
@@ -1029,7 +1029,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param yourself The user of the connected account.
      */
-    public void setYourself(User yourself) {
+    public void setYourself(final User yourself) {
         you = yourself;
     }
 
@@ -1048,7 +1048,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param timeOffset The time offset to set.
      */
-    public void setTimeOffset(Long timeOffset) {
+    public void setTimeOffset(final Long timeOffset) {
         this.timeOffset = timeOffset;
     }
 
@@ -1059,8 +1059,8 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param data The data of the emoji.
      * @return The emoji for the given json object.
      */
-    public KnownCustomEmoji getOrCreateKnownCustomEmoji(Server server, JsonNode data) {
-        long id = Long.parseLong(data.get("id").asText());
+    public KnownCustomEmoji getOrCreateKnownCustomEmoji(final Server server, final JsonNode data) {
+        final long id = Long.parseLong(data.get("id").asText());
         return customEmojis.computeIfAbsent(id, key -> new KnownCustomEmojiImpl(this, server, data));
     }
 
@@ -1070,9 +1070,9 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param data The data of the emoji.
      * @return The emoji for the given json object.
      */
-    public CustomEmoji getKnownCustomEmojiOrCreateCustomEmoji(JsonNode data) {
-        long id = Long.parseLong(data.get("id").asText());
-        CustomEmoji emoji = customEmojis.get(id);
+    public CustomEmoji getKnownCustomEmojiOrCreateCustomEmoji(final JsonNode data) {
+        final long id = Long.parseLong(data.get("id").asText());
+        final CustomEmoji emoji = customEmojis.get(id);
         return emoji == null ? new CustomEmojiImpl(this, data) : emoji;
     }
 
@@ -1085,8 +1085,8 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @return The emoji for the given json object.
      */
     @Override
-    public CustomEmoji getKnownCustomEmojiOrCreateCustomEmoji(long id, String name, boolean animated) {
-        CustomEmoji emoji = customEmojis.get(id);
+    public CustomEmoji getKnownCustomEmojiOrCreateCustomEmoji(final long id, final String name, final boolean animated) {
+        final CustomEmoji emoji = customEmojis.get(id);
         return emoji == null ? new CustomEmojiImpl(this, id, name, animated) : emoji;
     }
 
@@ -1095,7 +1095,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param emoji The emoji to remove.
      */
-    public void removeCustomEmoji(KnownCustomEmoji emoji) {
+    public void removeCustomEmoji(final KnownCustomEmoji emoji) {
         customEmojis.remove(emoji.getId());
     }
 
@@ -1106,8 +1106,8 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param data The data of the message.
      * @return The message for the given json object.
      */
-    public Message getOrCreateMessage(TextChannel channel, JsonNode data) {
-        long id = Long.parseLong(data.get("id").asText());
+    public Message getOrCreateMessage(final TextChannel channel, final JsonNode data) {
+        final long id = Long.parseLong(data.get("id").asText());
         synchronized (messages) {
             return getCachedMessageById(id).orElseGet(() -> new MessageImpl(this, channel, data));
         }
@@ -1118,10 +1118,10 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param message The message to add.
      */
-    public void addMessageToCache(Message message) {
+    public void addMessageToCache(final Message message) {
         messages.compute(message.getId(), (key, value) -> {
             if ((value == null) || (value.get() == null)) {
-                WeakReference<Message> result = new WeakReference<>(message, messagesCleanupQueue);
+                final WeakReference<Message> result = new WeakReference<>(message, messagesCleanupQueue);
                 messageIdByRef.put(result, key);
                 return result;
             }
@@ -1134,8 +1134,8 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      *
      * @param messageId The id of the message to remove.
      */
-    public void removeMessageFromCache(long messageId) {
-        WeakReference<Message> messageRef = messages.remove(messageId);
+    public void removeMessageFromCache(final long messageId) {
+        final WeakReference<Message> messageRef = messages.remove(messageId);
         if (messageRef != null) {
             messageIdByRef.remove(messageRef, messageId);
         }
@@ -1156,8 +1156,8 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      */
     @SuppressWarnings("unchecked")
     public <T extends ObjectAttachableListener> ListenerManager<T> addObjectListener(
-            Class<?> objectClass, long objectId, Class<T> listenerClass, T listener) {
-        Map<ObjectAttachableListener, ListenerManagerImpl<? extends ObjectAttachableListener>> listeners =
+            final Class<?> objectClass, final long objectId, final Class<T> listenerClass, final T listener) {
+        final Map<ObjectAttachableListener, ListenerManagerImpl<? extends ObjectAttachableListener>> listeners =
                 objectListeners
                         .computeIfAbsent(objectClass, key -> new ConcurrentHashMap<>())
                         .computeIfAbsent(objectId, key -> new ConcurrentHashMap<>())
@@ -1176,28 +1176,28 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param <T> The type of the listener.
      */
     public <T extends ObjectAttachableListener> void removeObjectListener(
-            Class<?> objectClass, long objectId, Class<T> listenerClass, T listener) {
+            final Class<?> objectClass, final long objectId, final Class<T> listenerClass, final T listener) {
         synchronized (objectListeners) {
             if (objectClass == null) {
                 return;
             }
-            Map<Long, Map<Class<? extends ObjectAttachableListener>, Map<ObjectAttachableListener,
+            final Map<Long, Map<Class<? extends ObjectAttachableListener>, Map<ObjectAttachableListener,
                     ListenerManagerImpl<? extends ObjectAttachableListener>>>> objectListener =
                     objectListeners.get(objectClass);
             if (objectListener == null) {
                 return;
             }
-            Map<Class<? extends ObjectAttachableListener>, Map<ObjectAttachableListener,
+            final Map<Class<? extends ObjectAttachableListener>, Map<ObjectAttachableListener,
                     ListenerManagerImpl<? extends ObjectAttachableListener>>> listeners = objectListener.get(objectId);
             if (listeners == null) {
                 return;
             }
-            Map<ObjectAttachableListener, ListenerManagerImpl<? extends ObjectAttachableListener>> classListeners =
+            final Map<ObjectAttachableListener, ListenerManagerImpl<? extends ObjectAttachableListener>> classListeners =
                     listeners.get(listenerClass);
             if (classListeners == null) {
                 return;
             }
-            ListenerManagerImpl<? extends ObjectAttachableListener> listenerManager = classListeners.get(listener);
+            final ListenerManagerImpl<? extends ObjectAttachableListener> listenerManager = classListeners.get(listener);
             if (listenerManager == null) {
                 return;
             }
@@ -1222,12 +1222,12 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param objectClass The class of the object.
      * @param objectId The id of the object.
      */
-    public void removeObjectListeners(Class<?> objectClass, long objectId) {
+    public void removeObjectListeners(final Class<?> objectClass, final long objectId) {
         if (objectClass == null) {
             return;
         }
         synchronized (objectListeners) {
-            Map<Long, Map<Class<? extends ObjectAttachableListener>,
+            final Map<Long, Map<Class<? extends ObjectAttachableListener>,
                     Map<ObjectAttachableListener, ListenerManagerImpl<? extends ObjectAttachableListener>>>>
                     objects = objectListeners.get(objectClass);
             if (objects == null) {
@@ -1260,7 +1260,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      */
     @SuppressWarnings("unchecked")
     public <T extends ObjectAttachableListener> Map<T, List<Class<T>>> getObjectListeners(
-            Class<?> objectClass, long objectId) {
+            final Class<?> objectClass, final long objectId) {
         return Collections.unmodifiableMap(Optional.ofNullable(objectClass)
                 .map(objectListeners::get)
                 .map(objectListener -> objectListener.get(objectId))
@@ -1289,7 +1289,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      */
     @SuppressWarnings("unchecked")
     public <T extends ObjectAttachableListener> List<T> getObjectListeners(
-            Class<?> objectClass, long objectId, Class<T> listenerClass) {
+            final Class<?> objectClass, final long objectId, final Class<T> listenerClass) {
         return Collections.unmodifiableList((List<T>) Optional.ofNullable(objectClass)
                 .map(objectListeners::get)
                 .map(objectListener -> objectListener.get(objectId))
@@ -1314,7 +1314,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends GloballyAttachableListener> List<T> getListeners(Class<T> listenerClass) {
+    public <T extends GloballyAttachableListener> List<T> getListeners(final Class<T> listenerClass) {
         return Collections.unmodifiableList((List<T>) Optional.ofNullable(listenerClass)
                 .map(listeners::get)
                 .map(Map::keySet)
@@ -1350,21 +1350,21 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     }
 
     @Override
-    public CompletableFuture<SlashCommand> getGlobalSlashCommandById(long commandId) {
+    public CompletableFuture<SlashCommand> getGlobalSlashCommandById(final long commandId) {
         return new RestRequest<SlashCommand>(this, RestMethod.GET, RestEndpoint.SLASH_COMMANDS)
                 .setUrlParameters(String.valueOf(clientId), String.valueOf(commandId))
                 .execute(result -> new SlashCommandImpl(this, result.getJsonBody()));
     }
 
     @Override
-    public CompletableFuture<List<SlashCommand>> getServerSlashCommands(Server server) {
+    public CompletableFuture<List<SlashCommand>> getServerSlashCommands(final Server server) {
         return new RestRequest<List<SlashCommand>>(this, RestMethod.GET, RestEndpoint.SERVER_SLASH_COMMANDS)
                 .setUrlParameters(String.valueOf(clientId), server.getIdAsString())
                 .execute(result -> jsonToSlashCommandList(result.getJsonBody()));
     }
 
     @Override
-    public CompletableFuture<SlashCommand> getServerSlashCommandById(Server server, long commandId) {
+    public CompletableFuture<SlashCommand> getServerSlashCommandById(final Server server, final long commandId) {
         return new RestRequest<SlashCommand>(this, RestMethod.GET, RestEndpoint.SERVER_SLASH_COMMANDS)
                 .setUrlParameters(String.valueOf(clientId), server.getIdAsString(), String.valueOf(commandId))
                 .execute(result -> new SlashCommandImpl(this, result.getJsonBody()));
@@ -1372,7 +1372,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
 
     @Override
     public CompletableFuture<List<ServerSlashCommandPermissions>> getServerSlashCommandPermissions(
-            Server server) {
+            final Server server) {
         return new RestRequest<List<ServerSlashCommandPermissions>>(this, RestMethod.GET,
                 RestEndpoint.SERVER_SLASH_COMMAND_PERMISSIONS)
                 .setUrlParameters(String.valueOf(clientId), server.getIdAsString())
@@ -1381,7 +1381,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
 
     @Override
     public CompletableFuture<ServerSlashCommandPermissions> getServerSlashCommandPermissionsById(
-            Server server, long commandId) {
+            final Server server, final long commandId) {
         return new RestRequest<ServerSlashCommandPermissions>(this, RestMethod.GET,
                 RestEndpoint.SLASH_COMMAND_PERMISSIONS)
                 .setUrlParameters(String.valueOf(clientId), server.getIdAsString(), String.valueOf(commandId))
@@ -1390,13 +1390,13 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
 
     @Override
     public CompletableFuture<List<ServerSlashCommandPermissions>> batchUpdateSlashCommandPermissions(
-            Server server, List<ServerSlashCommandPermissionsBuilder> slashCommandPermissionsBuilders) {
-        ArrayNode body = JsonNodeFactory.instance.arrayNode();
-        for (ServerSlashCommandPermissionsBuilder permission : slashCommandPermissionsBuilders) {
-            ObjectNode node = JsonNodeFactory.instance.objectNode();
+            final Server server, final List<ServerSlashCommandPermissionsBuilder> slashCommandPermissionsBuilders) {
+        final ArrayNode body = JsonNodeFactory.instance.arrayNode();
+        for (final ServerSlashCommandPermissionsBuilder permission : slashCommandPermissionsBuilders) {
+            final ObjectNode node = JsonNodeFactory.instance.objectNode();
             node.put("id", permission.getCommandId());
-            ArrayNode array = node.putArray("permissions");
-            for (SlashCommandPermissions permissionPermission : permission.getPermissions()) {
+            final ArrayNode array = node.putArray("permissions");
+            for (final SlashCommandPermissions permissionPermission : permission.getPermissions()) {
                 array.add(((SlashCommandPermissionsImpl) permissionPermission).toJsonNode());
             }
             body.add(node);
@@ -1410,17 +1410,17 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     }
 
     private List<ServerSlashCommandPermissions> jsonToServerSlashCommandPermissionsList(
-            JsonNode resultJson) {
-        List<ServerSlashCommandPermissions> permissions = new ArrayList<>();
-        for (JsonNode jsonNode : resultJson) {
+            final JsonNode resultJson) {
+        final List<ServerSlashCommandPermissions> permissions = new ArrayList<>();
+        for (final JsonNode jsonNode : resultJson) {
             permissions.add(new ServerSlashCommandPermissionsImpl(jsonNode));
         }
         return permissions;
     }
 
-    private List<SlashCommand> jsonToSlashCommandList(JsonNode resultJson) {
-        List<SlashCommand> slashCommands = new ArrayList<>();
-        for (JsonNode slashCommandJson : resultJson) {
+    private List<SlashCommand> jsonToSlashCommandList(final JsonNode resultJson) {
+        final List<SlashCommand> slashCommands = new ArrayList<>();
+        for (final JsonNode slashCommandJson : resultJson) {
             slashCommands.add(new SlashCommandImpl(this, slashCommandJson));
         }
         return Collections.unmodifiableList(slashCommands);
@@ -1428,9 +1428,9 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
 
     @Override
     public CompletableFuture<List<SlashCommand>> bulkOverwriteGlobalSlashCommands(
-            List<SlashCommandBuilder> slashCommandBuilderList) {
-        ArrayNode body = JsonNodeFactory.instance.arrayNode();
-        for (SlashCommandBuilder slashCommandBuilder : slashCommandBuilderList) {
+            final List<SlashCommandBuilder> slashCommandBuilderList) {
+        final ArrayNode body = JsonNodeFactory.instance.arrayNode();
+        for (final SlashCommandBuilder slashCommandBuilder : slashCommandBuilderList) {
             body.add(((SlashCommandBuilderDelegateImpl) slashCommandBuilder.getDelegate())
                     .getJsonBodyForSlashCommand());
         }
@@ -1443,9 +1443,9 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
 
     @Override
     public CompletableFuture<List<SlashCommand>> bulkOverwriteServerSlashCommands(
-            Server server, List<SlashCommandBuilder> slashCommandBuilderList) {
-        ArrayNode body = JsonNodeFactory.instance.arrayNode();
-        for (SlashCommandBuilder slashCommandBuilder : slashCommandBuilderList) {
+            final Server server, final List<SlashCommandBuilder> slashCommandBuilderList) {
+        final ArrayNode body = JsonNodeFactory.instance.arrayNode();
+        for (final SlashCommandBuilder slashCommandBuilder : slashCommandBuilderList) {
             body.add(((SlashCommandBuilderDelegateImpl) slashCommandBuilder.getDelegate())
                     .getJsonBodyForSlashCommand());
         }
@@ -1484,7 +1484,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     @Override
     public Optional<Ratelimiter> getGlobalRatelimiter() {
         if (globalRatelimiter == null) {
-            Ratelimiter ratelimiter = defaultGlobalRatelimiter.computeIfAbsent(
+            final Ratelimiter ratelimiter = defaultGlobalRatelimiter.computeIfAbsent(
                     getToken(),
                     (token) -> new LocalRatelimiter(5, Duration.ofMillis(112L)));
             return Optional.of(ratelimiter);
@@ -1513,8 +1513,8 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
         return CompletableFuture.supplyAsync(() -> {
             restLatencyLock.lock();
             try {
-                RestRequest<Duration> request = new RestRequest<>(this, RestMethod.GET, RestEndpoint.CURRENT_USER);
-                long nanoStart = System.nanoTime();
+                final RestRequest<Duration> request = new RestRequest<>(this, RestMethod.GET, RestEndpoint.CURRENT_USER);
+                final long nanoStart = System.nanoTime();
                 return request.execute(result -> Duration.ofNanos(System.nanoTime() - nanoStart)).join();
             } finally {
                 restLatencyLock.unlock();
@@ -1523,7 +1523,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     }
 
     @Override
-    public void setMessageCacheSize(int capacity, int storageTimeInSeconds) {
+    public void setMessageCacheSize(final int capacity, final int storageTimeInSeconds) {
         this.defaultMessageCacheCapacity = capacity;
         this.defaultMessageCacheStorageTimeInSeconds = storageTimeInSeconds;
         getChannels().stream()
@@ -1546,7 +1546,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     }
 
     @Override
-    public void setAutomaticMessageCacheCleanupEnabled(boolean automaticMessageCacheCleanupEnabled) {
+    public void setAutomaticMessageCacheCleanupEnabled(final boolean automaticMessageCacheCleanupEnabled) {
         this.defaultAutomaticMessageCacheCleanupEnabled = automaticMessageCacheCleanupEnabled;
         getChannels().stream()
                 .filter(TextChannel.class::isInstance)
@@ -1619,7 +1619,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     }
 
     @Override
-    public void updateStatus(UserStatus status) {
+    public void updateStatus(final UserStatus status) {
         if (status == null) {
             throw new IllegalArgumentException("The status cannot be null");
         }
@@ -1640,7 +1640,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param name The name of the activity.
      * @param streamingUrl The Url used for streaming.
      */
-    private void updateActivity(ActivityType type, String name, String streamingUrl) {
+    private void updateActivity(final ActivityType type, final String name, final String streamingUrl) {
         if (name == null) {
             activity = null;
         } else if (streamingUrl == null) {
@@ -1653,17 +1653,17 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
 
 
     @Override
-    public void updateActivity(String name) {
+    public void updateActivity(final String name) {
         updateActivity(ActivityType.PLAYING, name, null);
     }
 
     @Override
-    public void updateActivity(ActivityType type, String name) {
+    public void updateActivity(final ActivityType type, final String name) {
         updateActivity(type, name, null);
     }
 
     @Override
-    public void updateActivity(String name, String streamingUrl) {
+    public void updateActivity(final String name, final String streamingUrl) {
         updateActivity(ActivityType.STREAMING, name, streamingUrl);
     }
 
@@ -1721,12 +1721,12 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     }
 
     @Override
-    public void setReconnectDelay(Function<Integer, Integer> reconnectDelayProvider) {
+    public void setReconnectDelay(final Function<Integer, Integer> reconnectDelayProvider) {
         this.reconnectDelayProvider = reconnectDelayProvider;
     }
 
     @Override
-    public int getReconnectDelay(int attempt) {
+    public int getReconnectDelay(final int attempt) {
         if (attempt < 0) {
             throw new IllegalArgumentException("attempt must be 1 or greater");
         }
@@ -1740,14 +1740,14 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     }
 
     @Override
-    public CompletableFuture<Webhook> getWebhookById(long id) {
+    public CompletableFuture<Webhook> getWebhookById(final long id) {
         return new RestRequest<Webhook>(this, RestMethod.GET, RestEndpoint.WEBHOOK)
                 .setUrlParameters(Long.toUnsignedString(id))
                 .execute(result -> WebhookImpl.createWebhook(this, result.getJsonBody()));
     }
 
     @Override
-    public CompletableFuture<IncomingWebhook> getIncomingWebhookByIdAndToken(String id, String token) {
+    public CompletableFuture<IncomingWebhook> getIncomingWebhookByIdAndToken(final String id, final String token) {
         return new RestRequest<IncomingWebhook>(this, RestMethod.GET, RestEndpoint.WEBHOOK)
                 .setUrlParameters(id, token)
                 .execute(result -> new IncomingWebhookImpl(this, result.getJsonBody()));
@@ -1759,7 +1759,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     }
 
     @Override
-    public CompletableFuture<Invite> getInviteByCode(String code) {
+    public CompletableFuture<Invite> getInviteByCode(final String code) {
         return new RestRequest<Invite>(this, RestMethod.GET, RestEndpoint.INVITE)
                 .setUrlParameters(code)
                 .addQueryParameter("with_counts", "false")
@@ -1767,7 +1767,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     }
 
     @Override
-    public CompletableFuture<Invite> getInviteWithMemberCountsByCode(String code) {
+    public CompletableFuture<Invite> getInviteWithMemberCountsByCode(final String code) {
         return new RestRequest<Invite>(this, RestMethod.GET, RestEndpoint.INVITE)
                 .setUrlParameters(code)
                 .addQueryParameter("with_counts", "true")
@@ -1785,12 +1785,12 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     }
 
     @Override
-    public Optional<User> getCachedUserById(long id) {
+    public Optional<User> getCachedUserById(final long id) {
         return getEntityCache().get().getMemberCache().getUserCache().getUserById(id);
     }
 
     @Override
-    public CompletableFuture<User> getUserById(long id) {
+    public CompletableFuture<User> getUserById(final long id) {
         return getCachedUserById(id)
                 .map(CompletableFuture::completedFuture)
                 .orElseGet(() -> new RestRequest<User>(this, RestMethod.GET, RestEndpoint.USER)
@@ -1814,7 +1814,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param filter The filter for messages to be included.
      * @return A set of cached messages satisfying the condition.
      */
-    public MessageSet getCachedMessagesWhere(Predicate<Message> filter) {
+    public MessageSet getCachedMessagesWhere(final Predicate<Message> filter) {
         synchronized (messages) {
             return new MessageSetImpl(messages.values().stream()
                     .map(Reference::get)
@@ -1830,7 +1830,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param filter The condition on which to execute the code.
      * @param action The action to be applied to the messages.
      */
-    public void forEachCachedMessageWhere(Predicate<Message> filter, Consumer<Message> action) {
+    public void forEachCachedMessageWhere(final Predicate<Message> filter, final Consumer<Message> action) {
         synchronized (messages) {
             messages.values().stream()
                     .map(Reference::get)
@@ -1841,7 +1841,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     }
 
     @Override
-    public Optional<Message> getCachedMessageById(long id) {
+    public Optional<Message> getCachedMessageById(final long id) {
         return Optional.ofNullable(messages.get(id)).map(Reference::get);
     }
 
@@ -1851,7 +1851,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     }
 
     @Override
-    public Optional<Server> getServerById(long id) {
+    public Optional<Server> getServerById(final long id) {
         return Optional.ofNullable(servers.get(id));
     }
 
@@ -1861,7 +1861,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     }
 
     @Override
-    public Optional<KnownCustomEmoji> getCustomEmojiById(long id) {
+    public Optional<KnownCustomEmoji> getCustomEmojiById(final long id) {
         return Optional.ofNullable(customEmojis.get(id));
     }
 
@@ -1916,14 +1916,14 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     }
 
     @Override
-    public Optional<Channel> getChannelById(long id) {
+    public Optional<Channel> getChannelById(final long id) {
         return entityCache.get().getChannelCache().getChannelById(id);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public Collection<ListenerManager<? extends GloballyAttachableListener>> addListener(
-            GloballyAttachableListener listener) {
+            final GloballyAttachableListener listener) {
         return ClassHelper.getInterfacesAsStream(listener.getClass())
                 .filter(GloballyAttachableListener.class::isAssignableFrom)
                 .filter(listenerClass -> listenerClass != GloballyAttachableListener.class)
@@ -1934,21 +1934,21 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends GloballyAttachableListener> ListenerManager<T> addListener(Class<T> listenerClass, T listener) {
+    public <T extends GloballyAttachableListener> ListenerManager<T> addListener(final Class<T> listenerClass, final T listener) {
         return (ListenerManager<T>) listeners
                 .computeIfAbsent(listenerClass, key -> Collections.synchronizedMap(new LinkedHashMap<>()))
                 .computeIfAbsent(listener, key -> new ListenerManagerImpl<>(this, listener, listenerClass));
     }
 
     @Override
-    public <T extends GloballyAttachableListener> void removeListener(Class<T> listenerClass, T listener) {
+    public <T extends GloballyAttachableListener> void removeListener(final Class<T> listenerClass, final T listener) {
         synchronized (listeners) {
-            Map<GloballyAttachableListener, ListenerManagerImpl<? extends GloballyAttachableListener>> classListeners =
+            final Map<GloballyAttachableListener, ListenerManagerImpl<? extends GloballyAttachableListener>> classListeners =
                     listeners.get(listenerClass);
             if (classListeners == null) {
                 return;
             }
-            ListenerManagerImpl<? extends GloballyAttachableListener> listenerManager = classListeners.get(listener);
+            final ListenerManagerImpl<? extends GloballyAttachableListener> listenerManager = classListeners.get(listener);
             if (listenerManager == null) {
                 return;
             }
@@ -1963,7 +1963,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void removeListener(GloballyAttachableListener listener) {
+    public void removeListener(final GloballyAttachableListener listener) {
         ClassHelper.getInterfacesAsStream(listener.getClass())
                 .filter(GloballyAttachableListener.class::isAssignableFrom)
                 .filter(listenerClass -> listenerClass != GloballyAttachableListener.class)

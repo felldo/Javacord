@@ -13,7 +13,7 @@ public class WebhooksUpdateEventImpl extends ServerTextChannelEventImpl implemen
      *
      * @param channel The channel of the event.
      */
-    public WebhooksUpdateEventImpl(ServerTextChannel channel) {
+    public WebhooksUpdateEventImpl(final ServerTextChannel channel) {
         super(channel);
     }
 

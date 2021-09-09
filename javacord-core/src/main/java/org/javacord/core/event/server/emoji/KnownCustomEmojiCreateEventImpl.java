@@ -13,7 +13,7 @@ public class KnownCustomEmojiCreateEventImpl extends KnownCustomEmojiEventImpl i
      *
      * @param emoji The created emoji.
      */
-    public KnownCustomEmojiCreateEventImpl(KnownCustomEmoji emoji) {
+    public KnownCustomEmojiCreateEventImpl(final KnownCustomEmoji emoji) {
         super(emoji);
     }
 

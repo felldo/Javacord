@@ -82,7 +82,7 @@ public class MessageCacheImpl implements MessageCache, Cleanupable {
      * @param storageTimeInSeconds The storage time in seconds.
      * @param automaticCleanupEnabled Whether automatic message cache cleanup is enabled.
      */
-    public MessageCacheImpl(DiscordApi api, int capacity, int storageTimeInSeconds, boolean automaticCleanupEnabled) {
+    public MessageCacheImpl(final DiscordApi api, final int capacity, final int storageTimeInSeconds, final boolean automaticCleanupEnabled) {
         this.api = (DiscordApiImpl) api;
         this.capacity = capacity;
         this.storageTimeInSeconds = storageTimeInSeconds;
@@ -105,7 +105,7 @@ public class MessageCacheImpl implements MessageCache, Cleanupable {
                                 + "Either increase your heap settings or decrease your message cache settings!",
                                 removedMessages);
                 }
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 logger.error("Failed to clean softly referenced messages!", t);
             }
         }, 30, 30, TimeUnit.SECONDS);
@@ -116,7 +116,7 @@ public class MessageCacheImpl implements MessageCache, Cleanupable {
      *
      * @param message The message to add.
      */
-    public void addMessage(Message message) {
+    public void addMessage(final Message message) {
         synchronized (messages) {
             api.addMessageToCache(message);
             if (messages.stream().map(Reference::get).anyMatch(message::equals)) {
@@ -124,7 +124,7 @@ public class MessageCacheImpl implements MessageCache, Cleanupable {
             }
             // Add the message in the correct order
             messages.removeIf(messageRef -> messageRef.get() == null);
-            Reference<Message> messageRef = new SoftReference<>(message, messagesCleanupQueue);
+            final Reference<Message> messageRef = new SoftReference<>(message, messagesCleanupQueue);
             int pos = Collections.binarySearch(messages, messageRef, Comparator.comparing(Reference::get));
             if (pos < 0) {
                 pos = -pos - 1;
@@ -138,7 +138,7 @@ public class MessageCacheImpl implements MessageCache, Cleanupable {
      *
      * @param message The message to add.
      */
-    public void addCacheForeverMessage(Message message) {
+    public void addCacheForeverMessage(final Message message) {
         cacheForeverMessages.add(message);
     }
 
@@ -147,7 +147,7 @@ public class MessageCacheImpl implements MessageCache, Cleanupable {
      *
      * @param message The message to remove.
      */
-    public void removeCacheForeverMessage(Message message) {
+    public void removeCacheForeverMessage(final Message message) {
         cacheForeverMessages.remove(message);
     }
 
@@ -156,7 +156,7 @@ public class MessageCacheImpl implements MessageCache, Cleanupable {
      *
      * @param message The message to remove.
      */
-    public void removeMessage(Message message) {
+    public void removeMessage(final Message message) {
         synchronized (messages) {
             messages.removeIf(messageRef -> Objects.equals(messageRef.get(), message));
         }
@@ -166,12 +166,12 @@ public class MessageCacheImpl implements MessageCache, Cleanupable {
      * Cleans the cache.
      */
     public void clean() {
-        Instant minAge = Instant.now().minus(storageTimeInSeconds, ChronoUnit.SECONDS);
+        final Instant minAge = Instant.now().minus(storageTimeInSeconds, ChronoUnit.SECONDS);
         synchronized (messages) {
             messages.removeIf(messageRef -> Optional.ofNullable(messageRef.get())
                     .map(message -> !message.isCachedForever() && message.getCreationTimestamp().isBefore(minAge))
                     .orElse(true));
-            long foreverCachedAmount = messages.stream()
+            final long foreverCachedAmount = messages.stream()
                     .map(Reference::get)
                     .filter(Objects::nonNull)
                     .filter(Message::isCachedForever)
@@ -191,7 +191,7 @@ public class MessageCacheImpl implements MessageCache, Cleanupable {
     }
 
     @Override
-    public void setCapacity(int capacity) {
+    public void setCapacity(final int capacity) {
         this.capacity = Math.max(capacity, 0);
     }
 
@@ -201,12 +201,12 @@ public class MessageCacheImpl implements MessageCache, Cleanupable {
     }
 
     @Override
-    public void setStorageTimeInSeconds(int storageTimeInSeconds) {
+    public void setStorageTimeInSeconds(final int storageTimeInSeconds) {
         this.storageTimeInSeconds = Math.max(storageTimeInSeconds, 0);
     }
 
     @Override
-    public void setAutomaticCleanupEnabled(boolean automaticCleanupEnabled) {
+    public void setAutomaticCleanupEnabled(final boolean automaticCleanupEnabled) {
         if (automaticCleanupEnabled) {
             cleanFuture.updateAndGet(future -> {
                 // already enabled
@@ -217,7 +217,7 @@ public class MessageCacheImpl implements MessageCache, Cleanupable {
                 return api.getThreadPool().getScheduler().scheduleWithFixedDelay(() -> {
                     try {
                         clean();
-                    } catch (Throwable t) {
+                    } catch (final Throwable t) {
                         logger.error("Failed to clean message cache!", t);
                     }
                 }, 1, 1, TimeUnit.MINUTES);

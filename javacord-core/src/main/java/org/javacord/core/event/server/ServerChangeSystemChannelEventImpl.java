@@ -29,7 +29,7 @@ public class ServerChangeSystemChannelEventImpl extends ServerEventImpl implemen
      * @param oldSystemChannel The old system channel of the server.
      */
     public ServerChangeSystemChannelEventImpl(
-            Server server, ServerTextChannel newSystemChannel, ServerTextChannel oldSystemChannel) {
+            final Server server, final ServerTextChannel newSystemChannel, final ServerTextChannel oldSystemChannel) {
         super(server);
         this.newSystemChannel = newSystemChannel;
         this.oldSystemChannel = oldSystemChannel;

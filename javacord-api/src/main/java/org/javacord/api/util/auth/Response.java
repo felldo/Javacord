@@ -83,7 +83,7 @@ public interface Response {
      * @param headerName The name of the header for which to return the values.
      * @return The headers of the response with the given name.
      */
-    default List<String> getHeaders(String headerName) {
+    default List<String> getHeaders(final String headerName) {
         return getHeaders().get(headerName);
     }
 
@@ -112,8 +112,8 @@ public interface Response {
      * @param authenticationScheme The authentication scheme to get the challenges for.
      * @return The authentication challenges of this response for the given scheme.
      */
-    default Stream<Challenge> getChallenges(String authenticationScheme) {
-        String authenticationHeader;
+    default Stream<Challenge> getChallenges(final String authenticationScheme) {
+        final String authenticationHeader;
         switch (getCode()) {
             case HttpURLConnection.HTTP_PROXY_AUTH:
                 authenticationHeader = "Proxy-Authenticate";
@@ -129,7 +129,7 @@ public interface Response {
 
         return getHeaders(authenticationHeader).stream()
                 .flatMap(authenticationHeaderValue -> {
-                    Map.Entry<String, String> cacheKey =
+                    final Map.Entry<String, String> cacheKey =
                             new AbstractMap.SimpleEntry<>(authenticationHeaderValue,
                                     authenticationScheme == null ? null : authenticationScheme.toLowerCase(Locale.US));
                     return CHALLENGES_CACHE.computeIfAbsent(cacheKey, s -> {
@@ -138,14 +138,14 @@ public interface Response {
                         }
 
                         // needed to properly abort if a header is invalid due to repeated auth param names
-                        List<Challenge> result = new ArrayList<>();
+                        final List<Challenge> result = new ArrayList<>();
 
-                        String[] challengeParts =
+                        final String[] challengeParts =
                                 AUTHENTICATION_HEADER_VALUE_SPLIT_PATTERN.split(authenticationHeaderValue);
                         String authScheme = null;
-                        Map<String, String> authParams = new HashMap<>();
+                        final Map<String, String> authParams = new HashMap<>();
                         for (int i = 0, j = challengeParts.length; i < j; i++) {
-                            String challengePart = challengeParts[i];
+                            final String challengePart = challengeParts[i];
 
                             // skip empty parts that can occur as first and last element
                             if (challengePart.isEmpty()) {
@@ -157,21 +157,21 @@ public interface Response {
                             if (AUTH_SCHEME_PATTERN.matcher(challengePart).matches()) {
                                 newAuthScheme = challengePart;
                             } else if (AUTH_SCHEME_AND_TOKEN68_PATTERN.matcher(challengePart).matches()) {
-                                String[] authSchemeAndToken68 = WHITESPACE_SPLIT_PATTERN.split(challengePart, 2);
+                                final String[] authSchemeAndToken68 = WHITESPACE_SPLIT_PATTERN.split(challengePart, 2);
                                 newAuthScheme = authSchemeAndToken68[0];
                                 if (authParams.put(null, authSchemeAndToken68[1]) != null) {
                                     // if the regex is correct, this must not happen
                                     throw new AssertionError();
                                 }
                             } else if (AUTH_SCHEME_AND_PARAM_PATTERN.matcher(challengePart).matches()) {
-                                String[] authSchemeAndParam = WHITESPACE_SPLIT_PATTERN.split(challengePart, 2);
+                                final String[] authSchemeAndParam = WHITESPACE_SPLIT_PATTERN.split(challengePart, 2);
                                 newAuthScheme = authSchemeAndParam[0];
                                 authParam = authSchemeAndParam[1];
                             } else if (AUTH_PARAM_PATTERN.matcher(challengePart).matches()) {
                                 authParam = challengePart;
                             } else {
                                 // comma in quoted string part got split wrongly
-                                StringBuilder patternBuilder = new StringBuilder();
+                                final StringBuilder patternBuilder = new StringBuilder();
                                 patternBuilder.append('^').append(Pattern.quote(challengeParts[0]));
                                 for (int i2 = 1; i2 < i; i2++) {
                                     patternBuilder
@@ -186,7 +186,7 @@ public interface Response {
                                     patternBuilder
                                             .append(AUTHENTICATION_HEADER_VALUE_SPLIT_PATTERN_PART)
                                             .append(Pattern.quote(challengeParts[i++]));
-                                    Matcher matcher = Pattern.compile(
+                                    final Matcher matcher = Pattern.compile(
                                             patternBuilder.toString()).matcher(authenticationHeaderValue);
                                     if (!matcher.find()) {
                                         // if the algorithm is flawless, this must not happen
@@ -210,9 +210,9 @@ public interface Response {
                             }
 
                             if (authParam != null) {
-                                String[] authParamPair = AUTH_PARAM_SPLIT_PATTERN.split(authParam, 2);
+                                final String[] authParamPair = AUTH_PARAM_SPLIT_PATTERN.split(authParam, 2);
                                 // lower-case to easily check for multiple occurrences
-                                String authParamKey = authParamPair[0].toLowerCase(Locale.US);
+                                final String authParamKey = authParamPair[0].toLowerCase(Locale.US);
                                 String authParamValue = authParamPair[1];
                                 if (!TOKEN_PATTERN.matcher(authParamValue).matches()) {
                                     authParamValue = authParamValue.substring(1, authParamValue.length() - 1);

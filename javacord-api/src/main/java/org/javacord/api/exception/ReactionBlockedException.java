@@ -16,8 +16,8 @@ public class ReactionBlockedException extends MissingPermissionsException {
      * @param request The information about the request.
      * @param response The information about the response.
      */
-    public ReactionBlockedException(Exception origin, String message, RestRequestInformation request,
-                                    RestRequestResponseInformation response) {
+    public ReactionBlockedException(final Exception origin, final String message, final RestRequestInformation request,
+                                    final RestRequestResponseInformation response) {
         super(origin, message, request, response);
     }
 

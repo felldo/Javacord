@@ -13,11 +13,11 @@ import java.security.cert.X509Certificate;
  */
 public class TrustAllTrustManager implements X509TrustManager {
     @Override
-    public void checkClientTrusted(X509Certificate[] x509Certificates, String s) {
+    public void checkClientTrusted(final X509Certificate[] x509Certificates, final String s) {
     }
 
     @Override
-    public void checkServerTrusted(X509Certificate[] x509Certificates, String s) {
+    public void checkServerTrusted(final X509Certificate[] x509Certificates, final String s) {
     }
 
     @Override
@@ -32,10 +32,10 @@ public class TrustAllTrustManager implements X509TrustManager {
      */
     public SSLSocketFactory createSslSocketFactory() {
         try {
-            SSLContext sslContext = SSLContext.getInstance("TLS");
+            final SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, new TrustManager[]{this}, null);
             return sslContext.getSocketFactory();
-        } catch (NoSuchAlgorithmException | KeyManagementException e) {
+        } catch (final NoSuchAlgorithmException | KeyManagementException e) {
             throw new AssertionError(e);
         }
     }

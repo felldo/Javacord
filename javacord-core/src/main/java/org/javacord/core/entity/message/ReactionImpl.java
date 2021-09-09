@@ -41,12 +41,12 @@ public class ReactionImpl implements Reaction {
      * @param message The message, the reaction belongs to.
      * @param data The json data of the reaction.
      */
-    public ReactionImpl(Message message, JsonNode data) {
+    public ReactionImpl(final Message message, final JsonNode data) {
         this.message = message;
         this.count.set(data.get("count").asInt());
         this.containsYou = data.get("me").asBoolean();
 
-        JsonNode emojiJson = data.get("emoji");
+        final JsonNode emojiJson = data.get("emoji");
         if (!emojiJson.has("id") || emojiJson.get("id").isNull()) {
             emoji = UnicodeEmojiImpl.fromString(emojiJson.get("name").asText());
         } else {
@@ -62,7 +62,7 @@ public class ReactionImpl implements Reaction {
      * @param count The amount of users who used this reaction.
      * @param you Whether this reaction is used by you or not.
      */
-    public ReactionImpl(Message message, Emoji emoji, int count, boolean you) {
+    public ReactionImpl(final Message message, final Emoji emoji, final int count, final boolean you) {
         this.message = message;
         this.emoji = emoji;
         this.count.set(count);
@@ -74,7 +74,7 @@ public class ReactionImpl implements Reaction {
      *
      * @param you If you added the reaction.
      */
-    public void incrementCount(boolean you) {
+    public void incrementCount(final boolean you) {
         count.getAndIncrement();
         if (you) {
             containsYou = true;
@@ -86,7 +86,7 @@ public class ReactionImpl implements Reaction {
      *
      * @param you If you removed the reaction.
      */
-    public void decrementCount(boolean you) {
+    public void decrementCount(final boolean you) {
         count.decrementAndGet();
         if (you) {
             containsYou = false;

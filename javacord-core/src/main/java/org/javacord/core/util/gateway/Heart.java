@@ -46,8 +46,8 @@ public class Heart {
      * @param closeFrameSender     A bi consumer that sends a close frame with the given code and reason.
      * @param voice                Voice websocket hearts beat differently.
      */
-    public Heart(DiscordApiImpl api, Consumer<WebSocketFrame> heartbeatFrameSender,
-                 BiConsumer<Integer, String> closeFrameSender, boolean voice) {
+    public Heart(final DiscordApiImpl api, final Consumer<WebSocketFrame> heartbeatFrameSender,
+                 final BiConsumer<Integer, String> closeFrameSender, final boolean voice) {
         this.api = api;
         this.heartbeatFrameSender = heartbeatFrameSender;
         this.closeFrameSender = closeFrameSender;
@@ -60,16 +60,16 @@ public class Heart {
      *
      * @param packet The packet to handle.
      */
-    public void handlePacket(JsonNode packet) {
+    public void handlePacket(final JsonNode packet) {
         if (!voice) {
             // For normal websockets, the last sequence number is sent in the heartbeat
             if (packet.has("s") && !packet.get("s").isNull()) {
                 lastSeq = packet.get("s").asInt();
             }
         }
-        int heartbeatAckOp = voice ? VoiceGatewayOpcode.HEARTBEAT_ACK.getCode() : GatewayOpcode.HEARTBEAT_ACK.getCode();
+        final int heartbeatAckOp = voice ? VoiceGatewayOpcode.HEARTBEAT_ACK.getCode() : GatewayOpcode.HEARTBEAT_ACK.getCode();
         if (packet.get("op").asInt() == heartbeatAckOp) {
-            long gatewayLatency = System.nanoTime() - lastHeartbeatSentTimeNanos;
+            final long gatewayLatency = System.nanoTime() - lastHeartbeatSentTimeNanos;
             if (!voice) {
                 api.setLatestGatewayLatencyNanos(gatewayLatency);
             }
@@ -84,7 +84,7 @@ public class Heart {
      * .
      * @param interval Unlike a human heart, websocket hearts have a fixed beating interval.
      */
-    public void startBeating(int interval) {
+    public void startBeating(final int interval) {
         // first heartbeat should assume last heartbeat was answered properly
         heartbeatAckReceived.set(true);
         heartbeatTimer.updateAndGet(future -> {
@@ -102,7 +102,7 @@ public class Heart {
                         //         WebSocketCloseReason.HEARTBEAT_NOT_PROPERLY_ANSWERED.getNumericCloseCode(),
                         //         WebSocketCloseReason.HEARTBEAT_NOT_PROPERLY_ANSWERED.getCloseReason());
                     }
-                } catch (Throwable t) {
+                } catch (final Throwable t) {
                     // R.I.P.
                     stethoscope.error("Failed to send heartbeat or close web socket!", t);
                 }
@@ -114,10 +114,10 @@ public class Heart {
      * Ba boom, ba boom, ba boom, ba boom, ...
      */
     public void beat() {
-        ObjectNode heartbeatPacket = JsonNodeFactory.instance.objectNode()
+        final ObjectNode heartbeatPacket = JsonNodeFactory.instance.objectNode()
                 .put("op", voice ? VoiceGatewayOpcode.HEARTBEAT.getCode() : GatewayOpcode.HEARTBEAT.getCode())
                 .put("d", voice ? (int) (Math.random() * Integer.MAX_VALUE) : lastSeq);
-        WebSocketFrame heartbeatFrame = WebSocketFrame.createTextFrame(heartbeatPacket.toString());
+        final WebSocketFrame heartbeatFrame = WebSocketFrame.createTextFrame(heartbeatPacket.toString());
         heartbeatFrameSender.accept(heartbeatFrame);
         lastHeartbeatSentTimeNanos = System.nanoTime();
         // Ba boom, ba boom, ba boom, ba boom, ...

@@ -26,7 +26,7 @@ public class ServerChannelChangeNsfwFlagEventImpl extends ServerChannelEventImpl
      * @param newNsfwFlag The new nsfw flag of the channel.
      * @param oldNsfwFlag The old nsfw flag of the channel.
      */
-    public ServerChannelChangeNsfwFlagEventImpl(ServerChannel channel, boolean newNsfwFlag, boolean oldNsfwFlag) {
+    public ServerChannelChangeNsfwFlagEventImpl(final ServerChannel channel, final boolean newNsfwFlag, final boolean oldNsfwFlag) {
         super(channel);
         this.newNsfwFlag = newNsfwFlag;
         this.oldNsfwFlag = oldNsfwFlag;

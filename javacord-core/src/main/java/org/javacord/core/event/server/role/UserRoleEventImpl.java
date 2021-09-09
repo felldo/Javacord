@@ -18,7 +18,7 @@ public abstract class UserRoleEventImpl extends RoleEventImpl implements UserRol
      * @param role The role of the event.
      * @param member The member of the event.
      */
-    public UserRoleEventImpl(Role role, Member member) {
+    public UserRoleEventImpl(final Role role, final Member member) {
         super(role);
         this.member = member;
     }

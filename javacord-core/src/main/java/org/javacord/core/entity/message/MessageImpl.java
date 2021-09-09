@@ -155,7 +155,7 @@ public class MessageImpl implements Message, InternalMessageAttachableListenerMa
      * @param channel The channel of the message.
      * @param data The json data of the message.
      */
-    public MessageImpl(DiscordApiImpl api, TextChannel channel, JsonNode data) {
+    public MessageImpl(final DiscordApiImpl api, final TextChannel channel, final JsonNode data) {
         this.api = api;
         this.channel = channel;
 
@@ -172,43 +172,43 @@ public class MessageImpl implements Message, InternalMessageAttachableListenerMa
 
         type = MessageType.byType(data.get("type").asInt(), data.has("webhook_id"));
 
-        Long webhookId = data.has("webhook_id") ? data.get("webhook_id").asLong() : null;
+        final Long webhookId = data.has("webhook_id") ? data.get("webhook_id").asLong() : null;
         author = new MessageAuthorImpl(this, webhookId, data);
 
-        MessageCacheImpl cache = (MessageCacheImpl) channel.getMessageCache();
+        final MessageCacheImpl cache = (MessageCacheImpl) channel.getMessageCache();
         cache.addMessage(this);
 
         if (data.has("embeds")) {
-            for (JsonNode embedJson : data.get("embeds")) {
-                Embed embed = new EmbedImpl(embedJson);
+            for (final JsonNode embedJson : data.get("embeds")) {
+                final Embed embed = new EmbedImpl(embedJson);
                 embeds.add(embed);
             }
         }
 
         if (data.has("components")) {
-            for (JsonNode componentJson : data.get("components")) {
-                ActionRowImpl actionRow = new ActionRowImpl(componentJson);
+            for (final JsonNode componentJson : data.get("components")) {
+                final ActionRowImpl actionRow = new ActionRowImpl(componentJson);
                 components.add(actionRow);
             }
         }
 
         if (data.has("reactions")) {
-            for (JsonNode reactionJson : data.get("reactions")) {
-                Reaction reaction = new ReactionImpl(this, reactionJson);
+            for (final JsonNode reactionJson : data.get("reactions")) {
+                final Reaction reaction = new ReactionImpl(this, reactionJson);
                 reactions.add(reaction);
             }
         }
 
         if (data.has("attachments")) {
-            for (JsonNode attachmentJson : data.get("attachments")) {
-                MessageAttachment attachment = new MessageAttachmentImpl(this, attachmentJson);
+            for (final JsonNode attachmentJson : data.get("attachments")) {
+                final MessageAttachment attachment = new MessageAttachmentImpl(this, attachmentJson);
                 attachments.add(attachment);
             }
         }
 
         if (data.has("mentions")) {
-            for (JsonNode mentionJson : data.get("mentions")) {
-                User user = new UserImpl(api, mentionJson, (MemberImpl) null,
+            for (final JsonNode mentionJson : data.get("mentions")) {
+                final User user = new UserImpl(api, mentionJson, (MemberImpl) null,
                         getServer().map(ServerImpl.class::cast).orElse(null));
                 mentions.add(user);
             }
@@ -216,7 +216,7 @@ public class MessageImpl implements Message, InternalMessageAttachableListenerMa
 
         if (data.hasNonNull("mention_roles")) {
             getServer().ifPresent(server -> {
-                for (JsonNode roleMentionJson : data.get("mention_roles")) {
+                for (final JsonNode roleMentionJson : data.get("mention_roles")) {
                     server.getRoleById(roleMentionJson.asText()).ifPresent(roleMentions::add);
                 }
             });
@@ -252,7 +252,7 @@ public class MessageImpl implements Message, InternalMessageAttachableListenerMa
      *
      * @param content The content to set.
      */
-    public void setContent(String content) {
+    public void setContent(final String content) {
         this.content = content;
     }
 
@@ -261,7 +261,7 @@ public class MessageImpl implements Message, InternalMessageAttachableListenerMa
      *
      * @param pinned The pinned flag to set.
      */
-    public void setPinned(boolean pinned) {
+    public void setPinned(final boolean pinned) {
         this.pinned = pinned;
     }
 
@@ -270,7 +270,7 @@ public class MessageImpl implements Message, InternalMessageAttachableListenerMa
      *
      * @param mentionsEveryone The mentions everyone flag to set.
      */
-    public void setMentionsEveryone(boolean mentionsEveryone) {
+    public void setMentionsEveryone(final boolean mentionsEveryone) {
         this.mentionsEveryone = mentionsEveryone;
     }
 
@@ -279,7 +279,7 @@ public class MessageImpl implements Message, InternalMessageAttachableListenerMa
      *
      * @param lastEditTime The last edit time of the message.
      */
-    public void setLastEditTime(Instant lastEditTime) {
+    public void setLastEditTime(final Instant lastEditTime) {
         this.lastEditTime = lastEditTime;
     }
 
@@ -288,7 +288,7 @@ public class MessageImpl implements Message, InternalMessageAttachableListenerMa
      *
      * @param embeds The embeds to set.
      */
-    public void setEmbeds(List<Embed> embeds) {
+    public void setEmbeds(final List<Embed> embeds) {
         this.embeds.clear();
         this.embeds.addAll(embeds);
     }
@@ -298,7 +298,7 @@ public class MessageImpl implements Message, InternalMessageAttachableListenerMa
      *
      * @param tts The new flag.
      */
-    public void setTts(boolean tts) {
+    public void setTts(final boolean tts) {
         this.tts = tts;
     }
 
@@ -308,8 +308,8 @@ public class MessageImpl implements Message, InternalMessageAttachableListenerMa
      * @param emoji The emoji.
      * @param you Whether this reaction is used by you or not.
      */
-    public void addReaction(Emoji emoji, boolean you) {
-        Optional<Reaction> reaction = reactions.stream().filter(r -> emoji.equalsEmoji(r.getEmoji())).findAny();
+    public void addReaction(final Emoji emoji, final boolean you) {
+        final Optional<Reaction> reaction = reactions.stream().filter(r -> emoji.equalsEmoji(r.getEmoji())).findAny();
         reaction.ifPresent(r -> ((ReactionImpl) r).incrementCount(you));
         if (!reaction.isPresent()) {
             reactions.add(new ReactionImpl(this, emoji, 1, you));
@@ -322,8 +322,8 @@ public class MessageImpl implements Message, InternalMessageAttachableListenerMa
      * @param emoji The emoji.
      * @param you Whether this reaction is used by you or not.
      */
-    public void removeReaction(Emoji emoji, boolean you) {
-        Optional<Reaction> reaction = reactions.stream().filter(r -> emoji.equalsEmoji(r.getEmoji())).findAny();
+    public void removeReaction(final Emoji emoji, final boolean you) {
+        final Optional<Reaction> reaction = reactions.stream().filter(r -> emoji.equalsEmoji(r.getEmoji())).findAny();
         reaction.ifPresent(r -> ((ReactionImpl) r).decrementCount(you));
         reactions.removeIf(r -> r.getCount() <= 0);
     }
@@ -362,15 +362,15 @@ public class MessageImpl implements Message, InternalMessageAttachableListenerMa
 
     @Override
     public List<CustomEmoji> getCustomEmojis() {
-        String content = getContent();
-        List<CustomEmoji> emojis = new ArrayList<>();
-        Matcher customEmoji = DiscordRegexPattern.CUSTOM_EMOJI.matcher(content);
+        final String content = getContent();
+        final List<CustomEmoji> emojis = new ArrayList<>();
+        final Matcher customEmoji = DiscordRegexPattern.CUSTOM_EMOJI.matcher(content);
         while (customEmoji.find()) {
-            long id = Long.parseLong(customEmoji.group("id"));
-            String name = customEmoji.group("name");
-            boolean animated = customEmoji.group(0).charAt(1) == 'a';
+            final long id = Long.parseLong(customEmoji.group("id"));
+            final String name = customEmoji.group("name");
+            final boolean animated = customEmoji.group(0).charAt(1) == 'a';
             // TODO Maybe it would be better to cache the custom emoji objects inside the message object
-            CustomEmoji emoji = ((DiscordApiImpl) getApi()).getKnownCustomEmojiOrCreateCustomEmoji(id, name, animated);
+            final CustomEmoji emoji = getApi().getKnownCustomEmojiOrCreateCustomEmoji(id, name, animated);
             emojis.add(emoji);
         }
         return Collections.unmodifiableList(emojis);
@@ -437,7 +437,7 @@ public class MessageImpl implements Message, InternalMessageAttachableListenerMa
     }
 
     @Override
-    public void setCachedForever(boolean cachedForever) {
+    public void setCachedForever(final boolean cachedForever) {
         this.cacheForever = cachedForever;
         if (cachedForever) {
             // Just make sure it's in the cache
@@ -474,50 +474,50 @@ public class MessageImpl implements Message, InternalMessageAttachableListenerMa
     }
 
     @Override
-    public CompletableFuture<Void> addReactions(String... unicodeEmojis) {
+    public CompletableFuture<Void> addReactions(final String... unicodeEmojis) {
         return addReactions(Arrays.stream(unicodeEmojis).map(UnicodeEmojiImpl::fromString).toArray(Emoji[]::new));
     }
 
     @Override
-    public CompletableFuture<Void> removeReactionByEmoji(User user, String unicodeEmoji) {
+    public CompletableFuture<Void> removeReactionByEmoji(final User user, final String unicodeEmoji) {
         return removeReactionByEmoji(user, UnicodeEmojiImpl.fromString(unicodeEmoji));
     }
 
     @Override
-    public CompletableFuture<Void> removeReactionByEmoji(String unicodeEmoji) {
+    public CompletableFuture<Void> removeReactionByEmoji(final String unicodeEmoji) {
         return removeReactionByEmoji(UnicodeEmojiImpl.fromString(unicodeEmoji));
     }
 
     @Override
-    public CompletableFuture<Void> removeReactionsByEmoji(User user, String... unicodeEmojis) {
+    public CompletableFuture<Void> removeReactionsByEmoji(final User user, final String... unicodeEmojis) {
         return removeReactionsByEmoji(user,
                 Arrays.stream(unicodeEmojis).map(UnicodeEmojiImpl::fromString).toArray(Emoji[]::new));
     }
 
     @Override
-    public CompletableFuture<Void> removeReactionsByEmoji(String... unicodeEmojis) {
+    public CompletableFuture<Void> removeReactionsByEmoji(final String... unicodeEmojis) {
         return removeReactionsByEmoji(
                 Arrays.stream(unicodeEmojis).map(UnicodeEmojiImpl::fromString).toArray(Emoji[]::new));
     }
 
     @Override
-    public CompletableFuture<Void> removeOwnReactionByEmoji(String unicodeEmoji) {
+    public CompletableFuture<Void> removeOwnReactionByEmoji(final String unicodeEmoji) {
         return removeOwnReactionByEmoji(UnicodeEmojiImpl.fromString(unicodeEmoji));
     }
 
     @Override
-    public CompletableFuture<Void> removeOwnReactionsByEmoji(String... unicodeEmojis) {
+    public CompletableFuture<Void> removeOwnReactionsByEmoji(final String... unicodeEmojis) {
         return removeOwnReactionsByEmoji(
                 Arrays.stream(unicodeEmojis).map(UnicodeEmojiImpl::fromString).toArray(Emoji[]::new));
     }
 
     @Override
-    public int compareTo(Message otherMessage) {
+    public int compareTo(final Message otherMessage) {
         return Long.compareUnsigned(getId(), otherMessage.getId());
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return (this == o)
                || !((o == null)
                     || (getClass() != o.getClass())

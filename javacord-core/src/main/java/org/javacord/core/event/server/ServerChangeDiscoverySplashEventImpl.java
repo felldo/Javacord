@@ -38,8 +38,8 @@ public class ServerChangeDiscoverySplashEventImpl extends ServerEventImpl implem
      * @param newDiscoverySplashHash The new discovery splash hash of the server.
      * @param oldDiscoverySplashHash The old discovery splash hash of the server.
      */
-    public ServerChangeDiscoverySplashEventImpl(ServerImpl server,
-                                                String newDiscoverySplashHash, String oldDiscoverySplashHash) {
+    public ServerChangeDiscoverySplashEventImpl(final ServerImpl server,
+                                                final String newDiscoverySplashHash, final String oldDiscoverySplashHash) {
         super(server);
         this.oldDiscoverySplashHash = oldDiscoverySplashHash;
         this.newDiscoverySplashHash = newDiscoverySplashHash;
@@ -61,7 +61,7 @@ public class ServerChangeDiscoverySplashEventImpl extends ServerEventImpl implem
      * @param discoverySplashHash The hash of the discovery splash.
      * @return The discovery splash with the given hash.
      */
-    private Optional<Icon> getDiscoverySplash(String discoverySplashHash) {
+    private Optional<Icon> getDiscoverySplash(final String discoverySplashHash) {
         if (discoverySplashHash == null) {
             return Optional.empty();
         }
@@ -69,7 +69,7 @@ public class ServerChangeDiscoverySplashEventImpl extends ServerEventImpl implem
             return Optional.of(new IconImpl(getApi(),
                     new URL("https://cdn.discordapp.com/discovery-splashes/" + getServer().getIdAsString()
                             + "/" + discoverySplashHash + ".png")));
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             throw new AssertionError("Failed to create discovery splash url", e);
         }
     }

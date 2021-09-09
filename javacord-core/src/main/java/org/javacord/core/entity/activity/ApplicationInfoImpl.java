@@ -29,7 +29,7 @@ public class ApplicationInfoImpl implements ApplicationInfo {
      * @param api The discord api.
      * @param data The json data of the application.
      */
-    public ApplicationInfoImpl(DiscordApi api, JsonNode data) {
+    public ApplicationInfoImpl(final DiscordApi api, final JsonNode data) {
         this.api = api;
 
         clientId = data.get("id").asLong();

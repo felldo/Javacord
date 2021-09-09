@@ -27,7 +27,7 @@ public class UserChangeAvatarEventImpl extends UserEventImpl implements UserChan
      * @param newAvatarHash The new avatar hash of the user.
      * @param oldAvatarHash The old avatar hash of the user.
      */
-    public UserChangeAvatarEventImpl(User user, String newAvatarHash, String oldAvatarHash) {
+    public UserChangeAvatarEventImpl(final User user, final String newAvatarHash, final String oldAvatarHash) {
         super(user);
         this.newAvatarHash = newAvatarHash;
         this.oldAvatarHash = oldAvatarHash;

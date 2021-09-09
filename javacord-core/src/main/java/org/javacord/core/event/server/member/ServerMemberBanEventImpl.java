@@ -22,7 +22,7 @@ public class ServerMemberBanEventImpl extends ServerEventImpl implements ServerM
      * @param server The server of the event.
      * @param user The user of the event.
      */
-    public ServerMemberBanEventImpl(Server server, User user) {
+    public ServerMemberBanEventImpl(final Server server, final User user) {
         super(server);
         this.user = user;
     }

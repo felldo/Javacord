@@ -15,7 +15,7 @@ public class ActionRowBuilder implements HighLevelComponentBuilder {
      * @param components The low-level components.
      * @return The builder instance to chain methods.
      */
-    public ActionRowBuilder addComponents(LowLevelComponent... components) {
+    public ActionRowBuilder addComponents(final LowLevelComponent... components) {
         return addComponents(Arrays.asList(components));
     }
 
@@ -25,7 +25,7 @@ public class ActionRowBuilder implements HighLevelComponentBuilder {
      * @param components The list containing low-level components.
      * @return The builder instance to chain methods.
      */
-    public ActionRowBuilder addComponents(List<LowLevelComponent> components) {
+    public ActionRowBuilder addComponents(final List<LowLevelComponent> components) {
         delegate.addComponents(components);
         return this;
     }
@@ -36,7 +36,7 @@ public class ActionRowBuilder implements HighLevelComponentBuilder {
      * @param actionRow The action row to copy.
      * @return The builder instance to chain methods.
      */
-    public ActionRowBuilder copy(ActionRow actionRow) {
+    public ActionRowBuilder copy(final ActionRow actionRow) {
         delegate.copy(actionRow);
         return this;
     }
@@ -47,7 +47,7 @@ public class ActionRowBuilder implements HighLevelComponentBuilder {
      * @param component The low-level component being removed.
      * @return The builder instance to chain methods.
      */
-    public ActionRowBuilder removeComponent(LowLevelComponent component) {
+    public ActionRowBuilder removeComponent(final LowLevelComponent component) {
         delegate.removeComponent(component);
         return this;
     }
@@ -58,7 +58,7 @@ public class ActionRowBuilder implements HighLevelComponentBuilder {
      * @param index The index placement to remove.
      * @return The builder instance to chain methods.
      */
-    public ActionRowBuilder removeComponent(int index) {
+    public ActionRowBuilder removeComponent(final int index) {
         delegate.removeComponent(index);
         return this;
     }
@@ -69,7 +69,7 @@ public class ActionRowBuilder implements HighLevelComponentBuilder {
      * @param customId The low-level component's identifier.
      * @return The builder instance to chain methods.
      */
-    public ActionRowBuilder removeComponent(String customId) {
+    public ActionRowBuilder removeComponent(final String customId) {
         delegate.removeComponent(customId);
         return this;
     }

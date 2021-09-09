@@ -88,7 +88,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param role The role that is to be managed.
      * @return Whether the user can manage the role.
      */
-    default boolean canManageRole(Role role) {
+    default boolean canManageRole(final Role role) {
         return role.getServer().canManageRole(this, role);
     }
 
@@ -109,7 +109,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param channel The channel to check.
      * @return Whether this user is connected to the given channel or not.
      */
-    default boolean isConnected(ServerVoiceChannel channel) {
+    default boolean isConnected(final ServerVoiceChannel channel) {
         return channel.isConnected(getId());
     }
 
@@ -119,7 +119,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param server The server to check.
      * @return The server voice channel the user is connected to.
      */
-    default Optional<ServerVoiceChannel> getConnectedVoiceChannel(Server server) {
+    default Optional<ServerVoiceChannel> getConnectedVoiceChannel(final Server server) {
         return server.getConnectedVoiceChannel(getId());
     }
 
@@ -189,7 +189,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @see #getStatusOnClient(DiscordClient)
      */
     default Set<DiscordClient> getCurrentClients() {
-        Set<DiscordClient> connectedClients = Arrays
+        final Set<DiscordClient> connectedClients = Arrays
                 .stream(DiscordClient.values())
                 .filter(client -> getStatusOnClient(client) != UserStatus.OFFLINE)
                 .collect(Collectors.toSet());
@@ -259,7 +259,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param nickname The new nickname of the user.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateNickname(Server server, String nickname) {
+    default CompletableFuture<Void> updateNickname(final Server server, final String nickname) {
         return server.updateNickname(this, nickname);
     }
 
@@ -274,7 +274,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param reason The audit log reason for this update.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> updateNickname(Server server, String nickname, String reason) {
+    default CompletableFuture<Void> updateNickname(final Server server, final String nickname, final String reason) {
         return server.updateNickname(this, nickname, reason);
     }
 
@@ -287,7 +287,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param server The server.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> resetNickname(Server server) {
+    default CompletableFuture<Void> resetNickname(final Server server) {
         return server.resetNickname(this);
     }
 
@@ -301,7 +301,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param reason The audit log reason for this update.
      * @return A future to check if the update was successful.
      */
-    default CompletableFuture<Void> resetNickname(Server server, String reason) {
+    default CompletableFuture<Void> resetNickname(final Server server, final String reason) {
         return server.resetNickname(this, reason);
     }
 
@@ -331,7 +331,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param channel The channel to move the user to.
      * @return A future to check if the move was successful.
      */
-    default CompletableFuture<Void> move(ServerVoiceChannel channel) {
+    default CompletableFuture<Void> move(final ServerVoiceChannel channel) {
         return channel.getServer().moveUser(this, channel);
     }
 
@@ -357,7 +357,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param server The server to mute this user on.
      * @return A future to check if the mute was successful.
      */
-    default CompletableFuture<Void> mute(Server server) {
+    default CompletableFuture<Void> mute(final Server server) {
         return server.muteUser(this);
     }
 
@@ -368,7 +368,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param reason The audit log reason for this action.
      * @return A future to check if the mute was successful.
      */
-    default CompletableFuture<Void> mute(Server server, String reason) {
+    default CompletableFuture<Void> mute(final Server server, final String reason) {
         return server.muteUser(this, reason);
     }
 
@@ -378,7 +378,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param server The server to unmute this user on.
      * @return A future to check if the unmute was successful.
      */
-    default CompletableFuture<Void> unmute(Server server) {
+    default CompletableFuture<Void> unmute(final Server server) {
         return server.unmuteUser(this);
     }
 
@@ -389,7 +389,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param reason The audit log reason for this action.
      * @return A future to check if the unmute was successful.
      */
-    default CompletableFuture<Void> unmute(Server server, String reason) {
+    default CompletableFuture<Void> unmute(final Server server, final String reason) {
         return server.unmuteUser(this, reason);
     }
 
@@ -399,7 +399,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param server The server to check.
      * @return Whether the user is muted in the given server.
      */
-    default boolean isMuted(Server server) {
+    default boolean isMuted(final Server server) {
         return server.isMuted(getId());
     }
 
@@ -409,7 +409,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param server The server to deafen this user on.
      * @return A future to check if the deafen was successful.
      */
-    default CompletableFuture<Void> deafen(Server server) {
+    default CompletableFuture<Void> deafen(final Server server) {
         return server.deafenUser(this);
     }
 
@@ -420,7 +420,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param reason The audit log reason for this action.
      * @return A future to check if the deafen was successful.
      */
-    default CompletableFuture<Void> deafen(Server server, String reason) {
+    default CompletableFuture<Void> deafen(final Server server, final String reason) {
         return server.deafenUser(this, reason);
     }
 
@@ -430,7 +430,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param server The server to undeafen this user on.
      * @return A future to check if the undeafen was successful.
      */
-    default CompletableFuture<Void> undeafen(Server server) {
+    default CompletableFuture<Void> undeafen(final Server server) {
         return server.undeafenUser(this);
     }
 
@@ -441,7 +441,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param reason The audit log reason for this action.
      * @return A future to check if the undeafen was successful.
      */
-    default CompletableFuture<Void> undeafen(Server server, String reason) {
+    default CompletableFuture<Void> undeafen(final Server server, final String reason) {
         return server.undeafenUser(this, reason);
     }
 
@@ -451,7 +451,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @param server The server to check.
      * @return Whether the user is deafened in the given server.
      */
-    default boolean isDeafened(Server server) {
+    default boolean isDeafened(final Server server) {
         return server.isDeafened(getId());
     }
 
@@ -529,7 +529,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @return A future to check if the update was successful.
      * @see Server#addRoleToUser(User, Role)
      */
-    default CompletableFuture<Void> addRole(Role role) {
+    default CompletableFuture<Void> addRole(final Role role) {
         return addRole(role, null);
     }
 
@@ -544,7 +544,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @return A future to check if the update was successful.
      * @see Server#addRoleToUser(User, Role, String)
      */
-    default CompletableFuture<Void> addRole(Role role, String reason) {
+    default CompletableFuture<Void> addRole(final Role role, final String reason) {
         return role.getServer().addRoleToUser(this, role, reason);
     }
 
@@ -558,7 +558,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @return A future to check if the update was successful.
      * @see Server#removeRoleFromUser(User, Role)
      */
-    default CompletableFuture<Void> removeRole(Role role) {
+    default CompletableFuture<Void> removeRole(final Role role) {
         return removeRole(role, null);
     }
 
@@ -573,7 +573,7 @@ public interface User extends DiscordEntity, Messageable, Nameable, Mentionable,
      * @return A future to check if the update was successful.
      * @see Server#removeRoleFromUser(User, Role, String)
      */
-    default CompletableFuture<Void> removeRole(Role role, String reason) {
+    default CompletableFuture<Void> removeRole(final Role role, final String reason) {
         return role.getServer().removeRoleFromUser(this, role, reason);
     }
 

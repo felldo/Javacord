@@ -32,7 +32,7 @@ public class ButtonImpl extends ComponentImpl implements Button {
      *
      * @param data The json data of the button.
      */
-    public ButtonImpl(JsonNode data) {
+    public ButtonImpl(final JsonNode data) {
         super(ComponentType.BUTTON);
         this.style = ButtonStyle.fromId(data.get("style").asInt());
         this.label = data.has("label") ? data.get("label").asText() : null;
@@ -41,15 +41,15 @@ public class ButtonImpl extends ComponentImpl implements Button {
         this.disabled = data.has("disabled") ? data.get("disabled").asBoolean() : null;
 
         if (data.has("emoji")) {
-            JsonNode emojiObj = data.get("emoji");
+            final JsonNode emojiObj = data.get("emoji");
             if (emojiObj.has("id")) {
-                long id = emojiObj.get("id").asLong();
-                String name = emojiObj.get("name").asText();
-                boolean isAnimated = emojiObj.has("animated");
+                final long id = emojiObj.get("id").asLong();
+                final String name = emojiObj.get("name").asText();
+                final boolean isAnimated = emojiObj.has("animated");
 
                 this.emoji = new CustomEmojiImpl(null, id, name, isAnimated);
             } else {
-                String name = emojiObj.get("name").asText();
+                final String name = emojiObj.get("name").asText();
                 this.emoji = UnicodeEmojiImpl.fromString(name);
             }
         } else {
@@ -67,8 +67,8 @@ public class ButtonImpl extends ComponentImpl implements Button {
      * @param disabled Whether the button is disabled.
      * @param emoji The button's emoji.
      */
-    public ButtonImpl(ButtonStyle style, String label, String customId, String url,
-                      Boolean disabled, Emoji emoji) {
+    public ButtonImpl(final ButtonStyle style, final String label, final String customId, final String url,
+                      final Boolean disabled, final Emoji emoji) {
         super(ComponentType.BUTTON);
         this.style = style;
         this.label = label;
@@ -110,7 +110,7 @@ public class ButtonImpl extends ComponentImpl implements Button {
 
     @Override
     public ObjectNode toJsonNode() {
-        ObjectNode object = JsonNodeFactory.instance.objectNode();
+        final ObjectNode object = JsonNodeFactory.instance.objectNode();
         return toJsonNode(object);
     }
 
@@ -120,7 +120,7 @@ public class ButtonImpl extends ComponentImpl implements Button {
      * @param object The object, the data should be added to.
      * @return The button as a ObjectNode.
      */
-    public ObjectNode toJsonNode(ObjectNode object) {
+    public ObjectNode toJsonNode(final ObjectNode object) {
         object.put("type", ComponentType.BUTTON.value());
 
         // 1. Style is not optional; Buttons without a style are not accepted
@@ -159,12 +159,12 @@ public class ButtonImpl extends ComponentImpl implements Button {
         }
 
         if (emoji != null) {
-            ObjectNode emojiObj = JsonNodeFactory.instance.objectNode();
+            final ObjectNode emojiObj = JsonNodeFactory.instance.objectNode();
             if (emoji.isUnicodeEmoji()) {
-                Optional<String> unicodeEmojiOptional = emoji.asUnicodeEmoji();
+                final Optional<String> unicodeEmojiOptional = emoji.asUnicodeEmoji();
                 unicodeEmojiOptional.ifPresent(emojiName -> emojiObj.put("name", emojiName));
             } else if (emoji.isCustomEmoji()) {
-                Optional<CustomEmoji> customEmojiOptional = emoji.asCustomEmoji();
+                final Optional<CustomEmoji> customEmojiOptional = emoji.asCustomEmoji();
                 customEmojiOptional.ifPresent(customEmoji -> emojiObj.put("id", customEmoji.getId()));
             }
             object.set("emoji", emojiObj);

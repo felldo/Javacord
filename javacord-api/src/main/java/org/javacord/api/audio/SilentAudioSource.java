@@ -35,7 +35,7 @@ public class SilentAudioSource extends AudioSourceBase implements PauseableAudio
      *             As audio frames have a fixed size of {@code 20ms}, units bellow {@link TimeUnit#MILLISECONDS} are
      *             not recommended.
      */
-    public SilentAudioSource(DiscordApi api, long duration, TimeUnit unit) {
+    public SilentAudioSource(final DiscordApi api, final long duration, final TimeUnit unit) {
         super(api);
         this.duration = unit.toMillis(duration) / 20;
         position = new AtomicLong(this.duration);
@@ -48,7 +48,7 @@ public class SilentAudioSource extends AudioSourceBase implements PauseableAudio
      *
      * @param toCopy The silent audio source to copy from.
      */
-    public SilentAudioSource(SilentAudioSource toCopy) {
+    public SilentAudioSource(final SilentAudioSource toCopy) {
         this(toCopy.getApi(), toCopy.duration * 20, TimeUnit.MILLISECONDS);
     }
 
@@ -83,7 +83,7 @@ public class SilentAudioSource extends AudioSourceBase implements PauseableAudio
     }
 
     @Override
-    public void setPaused(boolean paused) {
+    public void setPaused(final boolean paused) {
         this.paused = paused;
     }
 
@@ -93,7 +93,7 @@ public class SilentAudioSource extends AudioSourceBase implements PauseableAudio
     }
 
     @Override
-    public long setPosition(long position, TimeUnit unit) {
+    public long setPosition(final long position, final TimeUnit unit) {
         long newPosition = unit.toMillis(position) / 20;
 
         // Don't set a position that's larger than the duration

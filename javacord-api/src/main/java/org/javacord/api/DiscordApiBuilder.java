@@ -60,7 +60,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param shardsCondition The predicate for identifying shards to connect, starting with {@code 0}!
      * @return A collection of {@link CompletableFuture}s which contain the {@code DiscordApi}s for the shards.
      */
-    public Collection<CompletableFuture<DiscordApi>> loginShards(IntPredicate shardsCondition) {
+    public Collection<CompletableFuture<DiscordApi>> loginShards(final IntPredicate shardsCondition) {
         return loginShards(IntStream.range(0, delegate.getTotalShards()).filter(shardsCondition).toArray());
     }
 
@@ -72,7 +72,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param shards The shards to connect, starting with {@code 0}!
      * @return A collection of {@link CompletableFuture}s which contain the {@code DiscordApi}s for the shards.
      */
-    public Collection<CompletableFuture<DiscordApi>> loginShards(int... shards) {
+    public Collection<CompletableFuture<DiscordApi>> loginShards(final int... shards) {
         return delegate.loginShards(shards);
     }
 
@@ -91,7 +91,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param ratelimiter The ratelimiter used to control global ratelimits.
      * @return The current instance in order to chain call methods.
      */
-    public DiscordApiBuilder setGlobalRatelimiter(Ratelimiter ratelimiter) {
+    public DiscordApiBuilder setGlobalRatelimiter(final Ratelimiter ratelimiter) {
         delegate.setGlobalRatelimiter(ratelimiter);
         return this;
     }
@@ -111,7 +111,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param ratelimiter The ratelimiter used to control the 5 seconds gateway identify ratelimit.
      * @return The current instance in order to chain call methods.
      */
-    public DiscordApiBuilder setGatewayIdentifyRatelimiter(Ratelimiter ratelimiter) {
+    public DiscordApiBuilder setGatewayIdentifyRatelimiter(final Ratelimiter ratelimiter) {
         delegate.setGatewayIdentifyRatelimiter(ratelimiter);
         return this;
     }
@@ -138,7 +138,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @see ProxySelector#setDefault(ProxySelector)
      * @see <a href=https://docs.oracle.com/javase/8/docs/technotes/guides/net/properties.html>Networking Properties</a>
      */
-    public DiscordApiBuilder setProxySelector(ProxySelector proxySelector) {
+    public DiscordApiBuilder setProxySelector(final ProxySelector proxySelector) {
         delegate.setProxySelector(proxySelector);
         return this;
     }
@@ -164,7 +164,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @see ProxySelector#setDefault(ProxySelector)
      * @see <a href=https://docs.oracle.com/javase/8/docs/technotes/guides/net/properties.html>Networking Properties</a>
      */
-    public DiscordApiBuilder setProxy(Proxy proxy) {
+    public DiscordApiBuilder setProxy(final Proxy proxy) {
         delegate.setProxy(proxy);
         return this;
     }
@@ -182,7 +182,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @see #setProxySelector(ProxySelector)
      * @see java.net.Authenticator#setDefault(java.net.Authenticator)
      */
-    public DiscordApiBuilder setProxyAuthenticator(Authenticator authenticator) {
+    public DiscordApiBuilder setProxyAuthenticator(final Authenticator authenticator) {
         delegate.setProxyAuthenticator(authenticator);
         return this;
     }
@@ -198,7 +198,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param trustAllCertificates Whether to trust all SSL certificates.
      * @return The current instance in order to chain call methods.
      */
-    public DiscordApiBuilder setTrustAllCertificates(boolean trustAllCertificates) {
+    public DiscordApiBuilder setTrustAllCertificates(final boolean trustAllCertificates) {
         delegate.setTrustAllCertificates(trustAllCertificates);
         return this;
     }
@@ -211,7 +211,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param token The token to set.
      * @return The current instance in order to chain call methods.
      */
-    public DiscordApiBuilder setToken(String token) {
+    public DiscordApiBuilder setToken(final String token) {
         delegate.setToken(token);
         return this;
     }
@@ -234,7 +234,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param type The account type.
      * @return The current instance in order to chain call methods.
      */
-    public DiscordApiBuilder setAccountType(AccountType type) {
+    public DiscordApiBuilder setAccountType(final AccountType type) {
         delegate.setAccountType(type);
         return this;
     }
@@ -258,7 +258,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @return The current instance in order to chain call methods.
      * @see <a href="https://discord.com/developers/docs/topics/gateway#sharding">API docs</a>
      */
-    public DiscordApiBuilder setTotalShards(int totalShards) {
+    public DiscordApiBuilder setTotalShards(final int totalShards) {
         delegate.setTotalShards(totalShards);
         return this;
     }
@@ -283,7 +283,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @return The current instance in order to chain call methods.
      * @see <a href="https://discord.com/developers/docs/topics/gateway#sharding">API docs</a>
      */
-    public DiscordApiBuilder setCurrentShard(int currentShard) {
+    public DiscordApiBuilder setCurrentShard(final int currentShard) {
         delegate.setCurrentShard(currentShard);
         return this;
     }
@@ -309,7 +309,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      *                                to become available on startup or not.
      * @return The current instance in order to chain call methods.
      */
-    public DiscordApiBuilder setWaitForServersOnStartup(boolean waitForServersOnStartup) {
+    public DiscordApiBuilder setWaitForServersOnStartup(final boolean waitForServersOnStartup) {
         delegate.setWaitForServersOnStartup(waitForServersOnStartup);
         return this;
     }
@@ -333,7 +333,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param waitForUsersOnStartup Whether Javacord should wait for all users to be cached or not.
      * @return The current instance in order to chain call methods.
      */
-    public DiscordApiBuilder setWaitForUsersOnStartup(boolean waitForUsersOnStartup) {
+    public DiscordApiBuilder setWaitForUsersOnStartup(final boolean waitForUsersOnStartup) {
         delegate.setWaitForUsersOnStartup(waitForUsersOnStartup);
         return this;
     }
@@ -357,7 +357,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param registerShutdownHook Whether the shutdown hook should be registered or not.
      * @return The current instance in order to chain call methods.
      */
-    public DiscordApiBuilder setShutdownHookRegistrationEnabled(boolean registerShutdownHook) {
+    public DiscordApiBuilder setShutdownHookRegistrationEnabled(final boolean registerShutdownHook) {
         delegate.setShutdownHookRegistrationEnabled(registerShutdownHook);
         return this;
     }
@@ -379,7 +379,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param intents One or more intents from {@link Intent}.
      * @return The current instance in order to chain call methods.
      */
-    public DiscordApiBuilder setIntents(Intent... intents) {
+    public DiscordApiBuilder setIntents(final Intent... intents) {
         setAllIntentsWhere(intent -> Arrays.asList(intents).contains(intent));
         return this;
     }
@@ -412,7 +412,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param intentsToOmit One or more {@code Intent}s which should be omitted.
      * @return The current instance in order to chain call methods.
      */
-    public DiscordApiBuilder setAllIntentsExcept(Intent... intentsToOmit) {
+    public DiscordApiBuilder setAllIntentsExcept(final Intent... intentsToOmit) {
         setAllIntentsWhere(intent -> !Arrays.asList(intentsToOmit).contains(intent));
         return this;
     }
@@ -423,7 +423,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param intentsToOmit One or more {@code Intent}s which should be omitted.
      * @return The current instance in order to chain call methods.
      */
-    public DiscordApiBuilder setAllNonPrivilegedIntentsExcept(Intent... intentsToOmit) {
+    public DiscordApiBuilder setAllNonPrivilegedIntentsExcept(final Intent... intentsToOmit) {
         setAllIntentsWhere(intent -> !intent.isPrivileged() && !Arrays.asList(intentsToOmit).contains(intent));
         return this;
     }
@@ -434,7 +434,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param intentsToInclude One or more {@code Intent}s which should be included.
      * @return The current instance in order to chain call methods.
      */
-    public DiscordApiBuilder setAllNonPrivilegedIntentsAnd(Intent... intentsToInclude) {
+    public DiscordApiBuilder setAllNonPrivilegedIntentsAnd(final Intent... intentsToInclude) {
         setAllIntentsWhere(intent -> !intent.isPrivileged());
         addIntents(intentsToInclude);
         return this;
@@ -446,7 +446,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param intents The intents to add.
      * @return The current instance in order to chain call methods.
      */
-    public DiscordApiBuilder addIntents(Intent... intents) {
+    public DiscordApiBuilder addIntents(final Intent... intents) {
         delegate.addIntents(intents);
         return this;
     }
@@ -457,7 +457,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param condition Whether the intent should be added or not.
      * @return The current instance in order to chain call methods.
      */
-    public DiscordApiBuilder setAllIntentsWhere(Predicate<Intent> condition) {
+    public DiscordApiBuilder setAllIntentsWhere(final Predicate<Intent> condition) {
         delegate.setAllIntentsWhere(condition);
         return this;
     }
@@ -470,7 +470,7 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
      * @param enabled Whether the user cache should be enabled.
      * @return The current instance in order to chain call methods.
      */
-    public DiscordApiBuilder setUserCacheEnabled(boolean enabled) {
+    public DiscordApiBuilder setUserCacheEnabled(final boolean enabled) {
         delegate.setUserCacheEnabled(enabled);
         return this;
     }
@@ -497,77 +497,77 @@ public class DiscordApiBuilder implements ChainableGloballyAttachableListenerMan
     }
 
     @Override
-    public <T extends GloballyAttachableListener> DiscordApiBuilder addListener(Class<T> listenerClass, T listener) {
+    public <T extends GloballyAttachableListener> DiscordApiBuilder addListener(final Class<T> listenerClass, final T listener) {
         delegate.addListener(listenerClass, listener);
         return this;
     }
 
     @Override
-    public DiscordApiBuilder addListener(GloballyAttachableListener listener) {
+    public DiscordApiBuilder addListener(final GloballyAttachableListener listener) {
         delegate.addListener(listener);
         return this;
     }
 
     @Override
     public <T extends GloballyAttachableListener> DiscordApiBuilder addListener(
-                                            Class<T> listenerClass, Supplier<T> listenerSupplier) {
+            final Class<T> listenerClass, final Supplier<T> listenerSupplier) {
         delegate.addListener(listenerClass, listenerSupplier);
         return this;
     }
 
     @Override
-    public DiscordApiBuilder addListener(Supplier<GloballyAttachableListener> listenerSupplier) {
+    public DiscordApiBuilder addListener(final Supplier<GloballyAttachableListener> listenerSupplier) {
         delegate.addListener(listenerSupplier);
         return this;
     }
 
     @Override
     public <T extends GloballyAttachableListener> DiscordApiBuilder addListener(
-                                Class<T> listenerClass, Function<DiscordApi, T> listenerFunction) {
+            final Class<T> listenerClass, final Function<DiscordApi, T> listenerFunction) {
         delegate.addListener(listenerClass, listenerFunction);
         return this;
     }
 
     @Override
-    public DiscordApiBuilder addListener(Function<DiscordApi, GloballyAttachableListener> listenerFunction) {
+    public DiscordApiBuilder addListener(final Function<DiscordApi, GloballyAttachableListener> listenerFunction) {
         delegate.addListener(listenerFunction);
         return this;
     }
 
     @Override
-    public DiscordApiBuilder removeListener(GloballyAttachableListener listener) {
+    public DiscordApiBuilder removeListener(final GloballyAttachableListener listener) {
         delegate.removeListener(listener);
         return this;
     }
 
     @Override
-    public <T extends GloballyAttachableListener> DiscordApiBuilder removeListener(Class<T> listenerClass, T listener) {
+    public <T extends GloballyAttachableListener> DiscordApiBuilder removeListener(final Class<T> listenerClass, final T listener) {
         delegate.removeListener(listenerClass, listener);
         return this;
     }
 
     @Override
-    public DiscordApiBuilder removeListenerSupplier(Supplier<GloballyAttachableListener> listenerSupplier) {
+    public DiscordApiBuilder removeListenerSupplier(final Supplier<GloballyAttachableListener> listenerSupplier) {
         delegate.removeListenerSupplier(listenerSupplier);
         return this;
     }
 
     @Override
     public <T extends GloballyAttachableListener> DiscordApiBuilder removeListenerSupplier(
-                                                            Class<T> listenerClass, Supplier<T> listenerSupplier) {
+            final Class<T> listenerClass, final Supplier<T> listenerSupplier) {
         delegate.removeListenerSupplier(listenerClass, listenerSupplier);
         return this;
     }
 
     @Override
-    public DiscordApiBuilder removeListenerFunction(Function<DiscordApi, GloballyAttachableListener> listenerFunction) {
+    public DiscordApiBuilder removeListenerFunction(final Function<DiscordApi, GloballyAttachableListener> listenerFunction) {
         delegate.removeListenerFunction(listenerFunction);
         return this;
     }
 
     @Override
     public <T extends GloballyAttachableListener> DiscordApiBuilder removeListenerFunction(
-                                                    Class<T> listenerClass, Function<DiscordApi, T> listenerFunction) {
+            final Class<T> listenerClass, final Function<DiscordApi, T> listenerFunction) {
         delegate.removeListenerFunction(listenerClass, listenerFunction);
         return this;
     }

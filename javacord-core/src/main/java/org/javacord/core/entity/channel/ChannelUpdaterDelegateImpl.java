@@ -30,19 +30,19 @@ public class ChannelUpdaterDelegateImpl implements GroupChannelUpdaterDelegate {
      *
      * @param channel The channel to update.
      */
-    public ChannelUpdaterDelegateImpl(GroupChannel channel) {
+    public ChannelUpdaterDelegateImpl(final GroupChannel channel) {
         this.channel = channel;
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
     public CompletableFuture<Void> update() {
         boolean patchChannel = false;
-        ObjectNode body = JsonNodeFactory.instance.objectNode();
+        final ObjectNode body = JsonNodeFactory.instance.objectNode();
         if (name != null) {
             body.put("name", name);
             patchChannel = true;

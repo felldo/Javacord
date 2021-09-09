@@ -64,7 +64,7 @@ public enum AuditLogChangeType implements Nameable {
      *
      * @param name The name of the type.
      */
-    AuditLogChangeType(String name) {
+    AuditLogChangeType(final String name) {
         this.name = name;
     }
 
@@ -84,8 +84,8 @@ public enum AuditLogChangeType implements Nameable {
      * @param name The name of the type.
      * @return The type with the given name.
      */
-    public static AuditLogChangeType fromName(String name) {
-        for (AuditLogChangeType type : values()) {
+    public static AuditLogChangeType fromName(final String name) {
+        for (final AuditLogChangeType type : values()) {
             if (type.getName().equals(name)) {
                 return type;
             }

@@ -367,7 +367,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param name The name of the option to search for.
      * @return The option with the specified name, if found; an empty Optional otherwise
      */
-    default Optional<SlashCommandInteractionOption> getOptionByName(String name) {
+    default Optional<SlashCommandInteractionOption> getOptionByName(final String name) {
         return getOptions()
                 .stream()
                 .filter(option -> option.getName().equalsIgnoreCase(name))
@@ -380,7 +380,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param name The name of the option to search for.
      * @return An Optional with the string value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<String> getOptionStringRepresentationValueByName(String name) {
+    default Optional<String> getOptionStringRepresentationValueByName(final String name) {
         return getOptionByName(name).flatMap(SlashCommandInteractionOption::getStringRepresentationValue);
     }
 
@@ -390,7 +390,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param name The name of the option to search for.
      * @return An Optional with the string value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<String> getOptionStringValueByName(String name) {
+    default Optional<String> getOptionStringValueByName(final String name) {
         return getOptionByName(name).flatMap(SlashCommandInteractionOption::getStringValue);
     }
 
@@ -400,7 +400,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param name The name of the option to search for.
      * @return An Optional with the integer value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<Integer> getOptionIntValueByName(String name) {
+    default Optional<Integer> getOptionIntValueByName(final String name) {
         return getOptionByName(name).flatMap(SlashCommandInteractionOption::getIntValue);
     }
 
@@ -410,7 +410,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param name The name of the option to search for.
      * @return An Optional with the boolean value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<Boolean> getOptionBooleanValueByName(String name) {
+    default Optional<Boolean> getOptionBooleanValueByName(final String name) {
         return getOptionByName(name).flatMap(SlashCommandInteractionOption::getBooleanValue);
     }
 
@@ -422,7 +422,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param name The name of the option to search for.
      * @return An Optional with the user value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<User> getOptionUserValueByName(String name) {
+    default Optional<User> getOptionUserValueByName(final String name) {
         return getOptionByName(name).flatMap(SlashCommandInteractionOption::getUserValue);
     }
 
@@ -432,7 +432,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param name The name of the option to search for.
      * @return An Optional with the user value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<CompletableFuture<User>> requestOptionUserValueByName(String name) {
+    default Optional<CompletableFuture<User>> requestOptionUserValueByName(final String name) {
         return getOptionByName(name).flatMap(SlashCommandInteractionOption::requestUserValue);
     }
 
@@ -442,7 +442,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param name The name of the option to search for.
      * @return An Optional with the channel value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<ServerChannel> getOptionChannelValueByName(String name) {
+    default Optional<ServerChannel> getOptionChannelValueByName(final String name) {
         return getOptionByName(name).flatMap(SlashCommandInteractionOption::getChannelValue);
     }
 
@@ -452,7 +452,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param name The name of the option to search for.
      * @return An Optional with the role value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<Role> getOptionRoleValueByName(String name) {
+    default Optional<Role> getOptionRoleValueByName(final String name) {
         return getOptionByName(name).flatMap(SlashCommandInteractionOption::getRoleValue);
     }
 
@@ -465,7 +465,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param name The name of the option to search for.
      * @return An Optional with the mentionable value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<Mentionable> getOptionMentionableValueByName(String name) {
+    default Optional<Mentionable> getOptionMentionableValueByName(final String name) {
         return getOptionByName(name).flatMap(SlashCommandInteractionOption::getMentionableValue);
     }
 
@@ -475,7 +475,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param name The name of the option to search for.
      * @return An Optional with the mentionable value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<CompletableFuture<Mentionable>> requestOptionMentionableValueByName(String name) {
+    default Optional<CompletableFuture<Mentionable>> requestOptionMentionableValueByName(final String name) {
         return getOptionByName(name).flatMap(SlashCommandInteractionOption::requestFirstOptionMentionableValue);
     }
 
@@ -485,7 +485,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param name The name of the option to search for.
      * @return An Optional with the double value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<Double> getOptionNumberValueByName(String name) {
+    default Optional<Double> getOptionNumberValueByName(final String name) {
         return getOptionByName(name).flatMap(SlashCommandInteractionOption::getNumberValue);
     }
 
@@ -495,7 +495,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param index The index of the option to search for.
      * @return The option with the specified index, if found; an empty Optional otherwise
      */
-    default Optional<SlashCommandInteractionOption> getOptionByIndex(int index) {
+    default Optional<SlashCommandInteractionOption> getOptionByIndex(final int index) {
         return getOptions()
                 .stream()
                 .skip(index)
@@ -508,7 +508,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param index The index of the option to search for.
      * @return An Optional with the string value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<String> getOptionStringRepresentationValueByIndex(int index) {
+    default Optional<String> getOptionStringRepresentationValueByIndex(final int index) {
         return getOptionByIndex(index).flatMap(SlashCommandInteractionOption::getStringRepresentationValue);
     }
 
@@ -518,7 +518,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param index The index of the option to search for.
      * @return An Optional with the string value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<String> getOptionStringValueByIndex(int index) {
+    default Optional<String> getOptionStringValueByIndex(final int index) {
         return getOptionByIndex(index).flatMap(SlashCommandInteractionOption::getStringValue);
     }
 
@@ -528,7 +528,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param index The index of the option to search for.
      * @return An Optional with the integer value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<Integer> getOptionIntValueByIndex(int index) {
+    default Optional<Integer> getOptionIntValueByIndex(final int index) {
         return getOptionByIndex(index).flatMap(SlashCommandInteractionOption::getIntValue);
     }
 
@@ -538,7 +538,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param index The index of the option to search for.
      * @return An Optional with the boolean value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<Boolean> getOptionBooleanValueByIndex(int index) {
+    default Optional<Boolean> getOptionBooleanValueByIndex(final int index) {
         return getOptionByIndex(index).flatMap(SlashCommandInteractionOption::getBooleanValue);
     }
 
@@ -550,7 +550,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param index The index of the option to search for.
      * @return An Optional with the user value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<User> getOptionUserValueByIndex(int index) {
+    default Optional<User> getOptionUserValueByIndex(final int index) {
         return getOptionByIndex(index).flatMap(SlashCommandInteractionOption::getUserValue);
     }
 
@@ -560,7 +560,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param index The index of the option to search for.
      * @return An Optional with the user value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<CompletableFuture<User>> requestOptionUserValueByIndex(int index) {
+    default Optional<CompletableFuture<User>> requestOptionUserValueByIndex(final int index) {
         return getOptionByIndex(index).flatMap(SlashCommandInteractionOption::requestUserValue);
     }
 
@@ -570,7 +570,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param index The index of the option to search for.
      * @return An Optional with the channel value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<ServerChannel> getOptionChannelValueByIndex(int index) {
+    default Optional<ServerChannel> getOptionChannelValueByIndex(final int index) {
         return getOptionByIndex(index).flatMap(SlashCommandInteractionOption::getChannelValue);
     }
 
@@ -580,7 +580,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param index The index of the option to search for.
      * @return An Optional with the role value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<Role> getOptionRoleValueByIndex(int index) {
+    default Optional<Role> getOptionRoleValueByIndex(final int index) {
         return getOptionByIndex(index).flatMap(SlashCommandInteractionOption::getRoleValue);
     }
 
@@ -593,7 +593,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param index The index of the option to search for.
      * @return An Optional with the mentionable value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<Mentionable> getOptionMentionableValueByIndex(int index) {
+    default Optional<Mentionable> getOptionMentionableValueByIndex(final int index) {
         return getOptionByIndex(index).flatMap(SlashCommandInteractionOption::getMentionableValue);
     }
 
@@ -603,7 +603,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param index The index of the option to search for.
      * @return An Optional with the mentionable value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<CompletableFuture<Mentionable>> requestOptionMentionableValueByIndex(int index) {
+    default Optional<CompletableFuture<Mentionable>> requestOptionMentionableValueByIndex(final int index) {
         return getOptionByIndex(index).flatMap(SlashCommandInteractionOption::requestFirstOptionMentionableValue);
     }
 
@@ -613,7 +613,7 @@ public interface SlashCommandInteractionOptionsProvider {
      * @param index The index of the option to search for.
      * @return An Optional with the double value of such an option if it exists; an empty Optional otherwise
      */
-    default Optional<Double> getOptionNumberValueByIndex(int index) {
+    default Optional<Double> getOptionNumberValueByIndex(final int index) {
         return getOptionByIndex(index).flatMap(SlashCommandInteractionOption::getNumberValue);
     }
 }

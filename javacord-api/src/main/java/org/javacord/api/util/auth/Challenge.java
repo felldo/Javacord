@@ -29,11 +29,11 @@ public final class Challenge {
      * @param scheme     The authentication scheme for this challenge.
      * @param authParams The auth params for this challenge.
      */
-    public Challenge(String scheme, Map<String, String> authParams) {
+    public Challenge(final String scheme, final Map<String, String> authParams) {
         this.scheme = scheme.toLowerCase(Locale.US);
-        Map<String, String> newAuthParams = new HashMap<>();
-        for (Entry<String, String> authParam : authParams.entrySet()) {
-            String key = (authParam.getKey() == null) ? null : authParam.getKey().toLowerCase(Locale.US);
+        final Map<String, String> newAuthParams = new HashMap<>();
+        for (final Entry<String, String> authParam : authParams.entrySet()) {
+            final String key = (authParam.getKey() == null) ? null : authParam.getKey().toLowerCase(Locale.US);
             newAuthParams.put(key, authParam.getValue());
         }
         this.authParams = Collections.unmodifiableMap(newAuthParams);
@@ -70,14 +70,14 @@ public final class Challenge {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
         if ((o == null) || (getClass() != o.getClass())) {
             return false;
         }
-        Challenge that = (Challenge) o;
+        final Challenge that = (Challenge) o;
         return Objects.equals(scheme, that.scheme)
                 && Objects.equals(authParams, that.authParams);
     }

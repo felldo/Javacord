@@ -41,9 +41,9 @@ public class UserChangeStatusEventImpl extends OptionalUserEventImpl implements 
      * @param newClientStatus The new client specific status of the user.
      * @param oldClientStatus The old client specific status of the user.
      */
-    public UserChangeStatusEventImpl(DiscordApi api, long userId, UserStatus newStatus, UserStatus oldStatus,
-                                     Map<DiscordClient, UserStatus> newClientStatus,
-                                     Map<DiscordClient, UserStatus> oldClientStatus) {
+    public UserChangeStatusEventImpl(final DiscordApi api, final long userId, final UserStatus newStatus, final UserStatus oldStatus,
+                                     final Map<DiscordClient, UserStatus> newClientStatus,
+                                     final Map<DiscordClient, UserStatus> oldClientStatus) {
         super(api, userId);
         this.newStatus = newStatus;
         this.oldStatus = oldStatus;
@@ -62,12 +62,12 @@ public class UserChangeStatusEventImpl extends OptionalUserEventImpl implements 
     }
 
     @Override
-    public UserStatus getOldStatusOnClient(DiscordClient client) {
+    public UserStatus getOldStatusOnClient(final DiscordClient client) {
         return oldClientStatus.getOrElse(client, UserStatus.OFFLINE);
     }
 
     @Override
-    public UserStatus getNewStatusOnClient(DiscordClient client) {
+    public UserStatus getNewStatusOnClient(final DiscordClient client) {
         return newClientStatus.getOrElse(client, UserStatus.OFFLINE);
     }
 

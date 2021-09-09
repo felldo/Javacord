@@ -12,12 +12,12 @@ public class Log4jPropertySource implements PropertySource {
     }
 
     @Override
-    public void forEach(BiConsumer<String, String> action) {
+    public void forEach(final BiConsumer<String, String> action) {
         action.accept("log4j.isThreadContextMapInheritable", "true");
     }
 
     @Override
-    public CharSequence getNormalForm(Iterable<? extends CharSequence> tokens) {
+    public CharSequence getNormalForm(final Iterable<? extends CharSequence> tokens) {
         return "log4j." + Util.joinAsCamelCase(tokens);
     }
 

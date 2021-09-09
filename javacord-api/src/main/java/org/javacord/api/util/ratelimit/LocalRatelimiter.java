@@ -49,7 +49,7 @@ public class LocalRatelimiter implements Ratelimiter {
      * @deprecated Use {@link #LocalRatelimiter(int, Duration)} instead.
      */
     @Deprecated
-    public LocalRatelimiter(int amount, int seconds) {
+    public LocalRatelimiter(final int amount, final int seconds) {
         this.amount = amount;
         bucketDuration = Duration.ofSeconds(seconds);
     }
@@ -60,7 +60,7 @@ public class LocalRatelimiter implements Ratelimiter {
      * @param amount The amount available per reset interval.
      * @param bucketDuration The time to wait until the available quota resets.
      */
-    public LocalRatelimiter(int amount, Duration bucketDuration) {
+    public LocalRatelimiter(final int amount, final Duration bucketDuration) {
         this.amount = amount;
         this.bucketDuration = bucketDuration;
     }
@@ -129,7 +129,7 @@ public class LocalRatelimiter implements Ratelimiter {
             remainingQuota = amount;
             try {
                 nextResetNanos = System.nanoTime() + bucketDuration.toNanos();
-            } catch (ArithmeticException e) {
+            } catch (final ArithmeticException e) {
                 // An ArithmeticException means that the duration was too large to be represented
                 // as a long. While such a value is completely non-sense and should not be used, we
                 // still don't want an exception.

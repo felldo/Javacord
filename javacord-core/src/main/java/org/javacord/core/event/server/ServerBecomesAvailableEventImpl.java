@@ -13,7 +13,7 @@ public class ServerBecomesAvailableEventImpl extends ServerEventImpl implements 
      *
      * @param server The server of the event.
      */
-    public ServerBecomesAvailableEventImpl(Server server) {
+    public ServerBecomesAvailableEventImpl(final Server server) {
         super(server);
     }
 

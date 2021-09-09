@@ -16,7 +16,7 @@ public interface DiscordEntity {
      * @return The creation date of the Discord entity.
      * @see <a href="https://discord.com/developers/docs/reference#snowflake-ids">Discord docs</a>
      */
-    static Instant getCreationTimestamp(long entityId) {
+    static Instant getCreationTimestamp(final long entityId) {
         // The first 42 bits (of the total 64) are the timestamp
         // Discord starts its counter at the first second of 2015
         return Instant.ofEpochMilli((entityId >>> 22) + 1420070400000L);

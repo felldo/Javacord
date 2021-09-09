@@ -145,7 +145,7 @@ public class InviteImpl implements RichInvite {
      * @param api The discord api instance.
      * @param data The json data of the invite.
      */
-    public InviteImpl(DiscordApi api, JsonNode data) {
+    public InviteImpl(final DiscordApi api, final JsonNode data) {
         this.api = api;
         this.code = data.get("code").asText();
         if (data.has("guild")) {
@@ -159,9 +159,9 @@ public class InviteImpl implements RichInvite {
                     : null;
         } else if (data.has("guild_id")) {
             this.serverId = Long.parseLong(data.get("guild_id").asText());
-            Optional<Server> serverOptional = api.getServerById(serverId);
+            final Optional<Server> serverOptional = api.getServerById(serverId);
             if (serverOptional.isPresent()) {
-                ServerImpl server = (ServerImpl) serverOptional.get();
+                final ServerImpl server = (ServerImpl) serverOptional.get();
                 this.serverName = server.getName();
                 this.serverIcon = server.getIconHash();
                 this.serverSplash = server.getSplashHash();
@@ -178,9 +178,9 @@ public class InviteImpl implements RichInvite {
             this.channelType = ChannelType.fromId(data.get("channel").get("type").asInt());
         } else if (data.has("channel_id")) {
             this.channelId = Long.parseLong(data.get("channel_id").asText());
-            Optional<ServerChannel> channelOptional = api.getServerChannelById(channelId);
+            final Optional<ServerChannel> channelOptional = api.getServerChannelById(channelId);
             if (channelOptional.isPresent()) {
-                ServerChannel channel = channelOptional.get();
+                final ServerChannel channel = channelOptional.get();
                 this.channelName = channel.getName();
                 this.channelType = channel.getType();
             } else {
@@ -197,7 +197,7 @@ public class InviteImpl implements RichInvite {
         this.approximatePresenceCount = (data.has("approximate_presence_count"))
                 ? data.get("approximate_presence_count").asInt()
                 : null;
-        MemberImpl targetMember = null;
+        final MemberImpl targetMember = null;
         this.targetUser = data.has("target_user")
                 ? new UserImpl((DiscordApiImpl) api, data.get("inviter"), targetMember,
                 getServer().map(ServerImpl.class::cast).orElse(null))
@@ -207,7 +207,7 @@ public class InviteImpl implements RichInvite {
                 : null;
 
         // Rich data (may not be present)
-        MemberImpl member = null;
+        final MemberImpl member = null;
         this.inviter = data.has("inviter")
                 ? new UserImpl((DiscordApiImpl) api, data.get("inviter"), member,
                 getServer().map(ServerImpl.class::cast).orElse(null))
@@ -260,7 +260,7 @@ public class InviteImpl implements RichInvite {
             return Optional.of(new IconImpl(
                     api, new URL("https://" + Javacord.DISCORD_CDN_DOMAIN + "/icons/"
                                  + Long.toUnsignedString(getServerId()) + "/" + serverIcon + ".png")));
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the url of the icon is malformed! Please contact the developer!", e);
             return Optional.empty();
         }
@@ -275,7 +275,7 @@ public class InviteImpl implements RichInvite {
             return Optional.of(new IconImpl(
                     api, new URL("https://" + Javacord.DISCORD_CDN_DOMAIN + "/splashes/"
                                  + Long.toUnsignedString(getServerId()) + "/" + serverSplash + ".png")));
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the url of the icon is malformed! Please contact the developer!", e);
             return Optional.empty();
         }
@@ -302,7 +302,7 @@ public class InviteImpl implements RichInvite {
     }
 
     @Override
-    public CompletableFuture<Void> delete(String reason) {
+    public CompletableFuture<Void> delete(final String reason) {
         return new RestRequest<Void>(getApi(), RestMethod.DELETE, RestEndpoint.INVITE)
                 .setUrlParameters(getCode())
                 .setAuditLogReason(reason)

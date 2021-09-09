@@ -58,7 +58,7 @@ public class WebhookImpl implements Webhook, Specializable<WebhookImpl>, Interna
      * @param api The discord api instance.
      * @param data The json data of the webhook.
      */
-    protected WebhookImpl(DiscordApi api, JsonNode data) {
+    protected WebhookImpl(final DiscordApi api, final JsonNode data) {
         this.api = (DiscordApiImpl) api;
 
         this.type = WebhookType.fromValue(data.get("type").asInt());
@@ -78,7 +78,7 @@ public class WebhookImpl implements Webhook, Specializable<WebhookImpl>, Interna
      * @param data The json data of the webhook.
      * @return The new webhook.
      */
-    public static WebhookImpl createWebhook(DiscordApi api, JsonNode data) {
+    public static WebhookImpl createWebhook(final DiscordApi api, final JsonNode data) {
         if (data.hasNonNull("token")) {
             return new IncomingWebhookImpl(api, data);
         } else {
@@ -93,9 +93,9 @@ public class WebhookImpl implements Webhook, Specializable<WebhookImpl>, Interna
      * @param jsonArray The json array of the webhooks.
      * @return A list of all the incoming webhooks from the array.
      */
-    public static List<Webhook> createAllIncomingWebhooksFromJsonArray(DiscordApi api, JsonNode jsonArray) {
-        List<Webhook> webhooks = new ArrayList<>();
-        for (JsonNode webhookJson : jsonArray) {
+    public static List<Webhook> createAllIncomingWebhooksFromJsonArray(final DiscordApi api, final JsonNode jsonArray) {
+        final List<Webhook> webhooks = new ArrayList<>();
+        for (final JsonNode webhookJson : jsonArray) {
             if (WebhookType.fromValue(webhookJson.get("type").asInt()) == WebhookType.INCOMING) {
                 webhooks.add(createWebhook(api, webhookJson));
             }
@@ -157,11 +157,11 @@ public class WebhookImpl implements Webhook, Specializable<WebhookImpl>, Interna
     @Override
     public Optional<Icon> getAvatar() {
         if (avatarId != null) {
-            String url = "https://" + Javacord.DISCORD_CDN_DOMAIN + "/avatars/" + getIdAsString() + "/" + avatarId
+            final String url = "https://" + Javacord.DISCORD_CDN_DOMAIN + "/avatars/" + getIdAsString() + "/" + avatarId
                     + (avatarId.startsWith("a_") ? ".gif" : ".png");
             try {
                 return Optional.of(new IconImpl(getApi(), new URL(url)));
-            } catch (MalformedURLException e) {
+            } catch (final MalformedURLException e) {
                 logger.warn("Seems like the url of the avatar is malformed! Please contact the developer!", e);
             }
         }
@@ -169,7 +169,7 @@ public class WebhookImpl implements Webhook, Specializable<WebhookImpl>, Interna
     }
 
     @Override
-    public CompletableFuture<Void> delete(String reason) {
+    public CompletableFuture<Void> delete(final String reason) {
         return new RestRequest<Void>(getApi(), RestMethod.DELETE, RestEndpoint.WEBHOOK)
                 .setUrlParameters(getIdAsString())
                 .setAuditLogReason(reason)
@@ -177,7 +177,7 @@ public class WebhookImpl implements Webhook, Specializable<WebhookImpl>, Interna
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return (this == o)
                || !((o == null)
                     || (getClass() != o.getClass())

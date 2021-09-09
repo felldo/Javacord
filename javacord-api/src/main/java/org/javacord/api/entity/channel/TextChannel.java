@@ -95,7 +95,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @see #typeContinuouslyAfter(long, TimeUnit)
      * @see #typeContinuouslyAfter(long, TimeUnit, Consumer)
      */
-    default NonThrowingAutoCloseable typeContinuously(Consumer<Throwable> exceptionHandler) {
+    default NonThrowingAutoCloseable typeContinuously(final Consumer<Throwable> exceptionHandler) {
         return typeContinuouslyAfter(0, TimeUnit.NANOSECONDS, exceptionHandler);
     }
 
@@ -125,7 +125,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @see #typeContinuously(Consumer)
      * @see #typeContinuouslyAfter(long, TimeUnit, Consumer)
      */
-    default NonThrowingAutoCloseable typeContinuouslyAfter(long delay, TimeUnit timeUnit) {
+    default NonThrowingAutoCloseable typeContinuouslyAfter(final long delay, final TimeUnit timeUnit) {
         return typeContinuouslyAfter(delay, timeUnit, null);
     }
 
@@ -157,30 +157,30 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @see #typeContinuouslyAfter(long, TimeUnit)
      */
     default NonThrowingAutoCloseable typeContinuouslyAfter(
-            long delay, TimeUnit timeUnit, Consumer<Throwable> exceptionHandler) {
+            final long delay, final TimeUnit timeUnit, final Consumer<Throwable> exceptionHandler) {
         // the delegate that does the actual type indicator sending and error handling
-        Runnable typeRunnable = () -> {
+        final Runnable typeRunnable = () -> {
             try {
-                CompletableFuture<?> typeFuture = type();
+                final CompletableFuture<?> typeFuture = type();
                 if (exceptionHandler != null) {
                     typeFuture.exceptionally(throwable -> {
                         exceptionHandler.accept(throwable);
                         return null;
                     });
                 }
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 ExceptionLogger.getConsumer().accept(t);
             }
         };
 
-        DiscordApi api = getApi();
+        final DiscordApi api = getApi();
 
         // schedule regular type indicator sending
-        Future<?> typingIndicator = api.getThreadPool().getScheduler().scheduleWithFixedDelay(
+        final Future<?> typingIndicator = api.getThreadPool().getScheduler().scheduleWithFixedDelay(
                 typeRunnable, TimeUnit.NANOSECONDS.convert(delay, timeUnit), 8_000_000_000L, TimeUnit.NANOSECONDS);
 
         // prevent messages from other commands to interrupt the typing indicator too long
-        ListenerManager<MessageCreateListener> typingInterruptedListenerManager =
+        final ListenerManager<MessageCreateListener> typingInterruptedListenerManager =
                 api.addMessageCreateListener(event -> {
                     if (event.getMessage().getAuthor().isYourself()) {
                         typeRunnable.run();
@@ -203,7 +203,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param messages The messages to delete.
      * @return A future to tell us if the deletion was successful.
      */
-    default CompletableFuture<Void> bulkDelete(Iterable<Message> messages) {
+    default CompletableFuture<Void> bulkDelete(final Iterable<Message> messages) {
         return bulkDelete(StreamSupport.stream(messages.spliterator(), false).mapToLong(Message::getId).toArray());
     }
 
@@ -227,13 +227,13 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param messageIds The ids of the messages to delete.
      * @return A future to tell us if the deletion was successful.
      */
-    default CompletableFuture<Void> bulkDelete(String... messageIds) {
-        long[] messageLongIds = Arrays.stream(messageIds).filter(s -> {
+    default CompletableFuture<Void> bulkDelete(final String... messageIds) {
+        final long[] messageLongIds = Arrays.stream(messageIds).filter(s -> {
             try {
                 //noinspection ResultOfMethodCallIgnored
                 Long.parseLong(s);
                 return true;
-            } catch (NumberFormatException e) {
+            } catch (final NumberFormatException e) {
                 return false;
             }
         }).mapToLong(Long::parseLong).toArray();
@@ -249,7 +249,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param messages The messages to delete.
      * @return A future to tell us if the deletion was successful.
      */
-    default CompletableFuture<Void> bulkDelete(Message... messages) {
+    default CompletableFuture<Void> bulkDelete(final Message... messages) {
         return bulkDelete(Arrays.stream(messages).mapToLong(Message::getId).toArray());
     }
 
@@ -262,7 +262,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param messages The messages to delete.
      * @return A future to tell us if the deletion was successful.
      */
-    default CompletableFuture<Void> deleteMessages(Iterable<Message> messages) {
+    default CompletableFuture<Void> deleteMessages(final Iterable<Message> messages) {
         return deleteMessages(StreamSupport.stream(messages.spliterator(), false).mapToLong(Message::getId).toArray());
     }
 
@@ -275,7 +275,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param messageIds The ids of the messages to delete.
      * @return A future to tell us if the deletion was successful.
      */
-    default CompletableFuture<Void> deleteMessages(long... messageIds) {
+    default CompletableFuture<Void> deleteMessages(final long... messageIds) {
         return Message.delete(getApi(), getId(), messageIds);
     }
 
@@ -288,13 +288,13 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param messageIds The ids of the messages to delete.
      * @return A future to tell us if the deletion was successful.
      */
-    default CompletableFuture<Void> deleteMessages(String... messageIds) {
-        long[] messageLongIds = Arrays.stream(messageIds).filter(s -> {
+    default CompletableFuture<Void> deleteMessages(final String... messageIds) {
+        final long[] messageLongIds = Arrays.stream(messageIds).filter(s -> {
             try {
                 //noinspection ResultOfMethodCallIgnored
                 Long.parseLong(s);
                 return true;
-            } catch (NumberFormatException e) {
+            } catch (final NumberFormatException e) {
                 return false;
             }
         }).mapToLong(Long::parseLong).toArray();
@@ -310,7 +310,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param messages The messages to delete.
      * @return A future to tell us if the deletion was successful.
      */
-    default CompletableFuture<Void> deleteMessages(Message... messages) {
+    default CompletableFuture<Void> deleteMessages(final Message... messages) {
         return deleteMessages(Arrays.stream(messages).mapToLong(Message::getId).toArray());
     }
 
@@ -328,10 +328,10 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param id The id of the message.
      * @return The message with the given id.
      */
-    default CompletableFuture<Message> getMessageById(String id) {
+    default CompletableFuture<Message> getMessageById(final String id) {
         try {
             return getMessageById(Long.parseLong(id));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             return getMessageById(-1);
         }
     }
@@ -401,7 +401,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @return The messages.
      * @see #getMessagesBeforeAsStream(Message)
      */
-    default CompletableFuture<MessageSet> getMessagesBefore(int limit, Message before) {
+    default CompletableFuture<MessageSet> getMessagesBefore(final int limit, final Message before) {
         return getMessagesBefore(limit, before.getId());
     }
 
@@ -427,7 +427,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @return The messages.
      * @see #getMessagesBeforeAsStream(Message)
      */
-    default CompletableFuture<MessageSet> getMessagesBeforeUntil(Predicate<Message> condition, Message before) {
+    default CompletableFuture<MessageSet> getMessagesBeforeUntil(final Predicate<Message> condition, final Message before) {
         return getMessagesBeforeUntil(condition, before.getId());
     }
 
@@ -452,7 +452,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @return The messages.
      * @see #getMessagesBeforeAsStream(Message)
      */
-    default CompletableFuture<MessageSet> getMessagesBeforeWhile(Predicate<Message> condition, Message before) {
+    default CompletableFuture<MessageSet> getMessagesBeforeWhile(final Predicate<Message> condition, final Message before) {
         return getMessagesBeforeWhile(condition, before.getId());
     }
 
@@ -478,7 +478,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @return The stream.
      * @see #getMessagesBefore(int, Message)
      */
-    default Stream<Message> getMessagesBeforeAsStream(Message before) {
+    default Stream<Message> getMessagesBeforeAsStream(final Message before) {
         return getMessagesBeforeAsStream(before.getId());
     }
 
@@ -500,7 +500,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @return The messages.
      * @see #getMessagesAfterAsStream(Message)
      */
-    default CompletableFuture<MessageSet> getMessagesAfter(int limit, Message after) {
+    default CompletableFuture<MessageSet> getMessagesAfter(final int limit, final Message after) {
         return getMessagesAfter(limit, after.getId());
     }
 
@@ -526,7 +526,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @return The messages.
      * @see #getMessagesAfterAsStream(Message)
      */
-    default CompletableFuture<MessageSet> getMessagesAfterUntil(Predicate<Message> condition, Message after) {
+    default CompletableFuture<MessageSet> getMessagesAfterUntil(final Predicate<Message> condition, final Message after) {
         return getMessagesAfterUntil(condition, after.getId());
     }
 
@@ -550,7 +550,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @return The messages.
      * @see #getMessagesAfterAsStream(Message)
      */
-    default CompletableFuture<MessageSet> getMessagesAfterWhile(Predicate<Message> condition, Message after) {
+    default CompletableFuture<MessageSet> getMessagesAfterWhile(final Predicate<Message> condition, final Message after) {
         return getMessagesAfterWhile(condition, after.getId());
     }
 
@@ -576,7 +576,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @return The stream.
      * @see #getMessagesAfter(int, Message)
      */
-    default Stream<Message> getMessagesAfterAsStream(Message after) {
+    default Stream<Message> getMessagesAfterAsStream(final Message after) {
         return getMessagesAfterAsStream(after.getId());
     }
 
@@ -608,7 +608,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @return The messages.
      * @see #getMessagesAroundAsStream(Message)
      */
-    default CompletableFuture<MessageSet> getMessagesAround(int limit, Message around) {
+    default CompletableFuture<MessageSet> getMessagesAround(final int limit, final Message around) {
         return getMessagesAround(limit, around.getId());
     }
 
@@ -642,7 +642,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @return The messages.
      * @see #getMessagesAroundAsStream(Message)
      */
-    default CompletableFuture<MessageSet> getMessagesAroundUntil(Predicate<Message> condition, Message around) {
+    default CompletableFuture<MessageSet> getMessagesAroundUntil(final Predicate<Message> condition, final Message around) {
         return getMessagesAroundUntil(condition, around.getId());
     }
 
@@ -676,7 +676,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @return The messages.
      * @see #getMessagesAroundAsStream(Message)
      */
-    default CompletableFuture<MessageSet> getMessagesAroundWhile(Predicate<Message> condition, Message around) {
+    default CompletableFuture<MessageSet> getMessagesAroundWhile(final Predicate<Message> condition, final Message around) {
         return getMessagesAroundWhile(condition, around.getId());
     }
 
@@ -710,7 +710,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @return The stream.
      * @see #getMessagesAround(int, Message)
      */
-    default Stream<Message> getMessagesAroundAsStream(Message around) {
+    default Stream<Message> getMessagesAroundAsStream(final Message around) {
         return getMessagesAroundAsStream(around.getId());
     }
 
@@ -734,7 +734,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @return The messages.
      * @see #getMessagesBetweenAsStream(long, long)
      */
-    default CompletableFuture<MessageSet> getMessagesBetween(Message from, Message to) {
+    default CompletableFuture<MessageSet> getMessagesBetween(final Message from, final Message to) {
         return getMessagesBetween(from.getId(), to.getId());
     }
 
@@ -763,7 +763,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @see #getMessagesBetweenAsStream(long, long)
      */
     default CompletableFuture<MessageSet> getMessagesBetweenUntil(
-            Predicate<Message> condition, Message from, Message to) {
+            final Predicate<Message> condition, final Message from, final Message to) {
         return getMessagesBetweenUntil(condition, from.getId(), to.getId());
     }
 
@@ -792,7 +792,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @see #getMessagesBetweenAsStream(long, long)
      */
     default CompletableFuture<MessageSet> getMessagesBetweenWhile(
-            Predicate<Message> condition, Message from, Message to) {
+            final Predicate<Message> condition, final Message from, final Message to) {
         return getMessagesBetweenWhile(condition, from.getId(), to.getId());
     }
 
@@ -822,7 +822,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @return The stream.
      * @see #getMessagesBetween(long, long)
      */
-    default Stream<Message> getMessagesBetweenAsStream(Message from, Message to) {
+    default Stream<Message> getMessagesBetweenAsStream(final Message from, final Message to) {
         return getMessagesBetweenAsStream(from.getId(), to.getId());
     }
 
@@ -864,17 +864,17 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param user The user to check.
      * @return Whether the given user can write messages or not.
      */
-    default boolean canWrite(User user) {
-        Optional<PrivateChannel> privateChannel = asPrivateChannel();
+    default boolean canWrite(final User user) {
+        final Optional<PrivateChannel> privateChannel = asPrivateChannel();
         if (privateChannel.isPresent()) {
             return user.isYourself() || privateChannel.get().getRecipient()
                     .map(recipient -> recipient.equals(user)).orElse(false);
         }
-        Optional<GroupChannel> groupChannel = asGroupChannel();
+        final Optional<GroupChannel> groupChannel = asGroupChannel();
         if (groupChannel.isPresent()) {
             return user.isYourself() || groupChannel.get().getMembers().contains(user);
         }
-        Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
+        final Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
         return !severTextChannel.isPresent()
                || severTextChannel.get().hasPermission(user, PermissionType.ADMINISTRATOR)
                || severTextChannel.get()
@@ -903,11 +903,11 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param user The user to check.
      * @return Whether the given user can use external emojis or not.
      */
-    default boolean canUseExternalEmojis(User user) {
+    default boolean canUseExternalEmojis(final User user) {
         if (!canWrite(user)) {
             return false;
         }
-        Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
+        final Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
         return !severTextChannel.isPresent()
                || severTextChannel.get().hasAnyPermission(user,
                                                           PermissionType.ADMINISTRATOR,
@@ -936,11 +936,11 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param user The user to check.
      * @return Whether the given user can embed links or not.
      */
-    default boolean canEmbedLinks(User user) {
+    default boolean canEmbedLinks(final User user) {
         if (!canWrite(user)) {
             return false;
         }
-        Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
+        final Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
         return !severTextChannel.isPresent()
                || severTextChannel.get().hasAnyPermission(user,
                                                           PermissionType.ADMINISTRATOR,
@@ -967,11 +967,11 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param user The user to check.
      * @return Whether the given user can read the message history or not.
      */
-    default boolean canReadMessageHistory(User user) {
+    default boolean canReadMessageHistory(final User user) {
         if (!canSee(user)) {
             return false;
         }
-        Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
+        final Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
         return !severTextChannel.isPresent()
                || severTextChannel.get().hasAnyPermission(user,
                                                           PermissionType.ADMINISTRATOR,
@@ -998,11 +998,11 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param user The user to check.
      * @return Whether the given user can use tts or not.
      */
-    default boolean canUseTts(User user) {
+    default boolean canUseTts(final User user) {
         if (!canWrite(user)) {
             return false;
         }
-        Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
+        final Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
         return !severTextChannel.isPresent()
                || severTextChannel.get().hasAnyPermission(user,
                                                           PermissionType.ADMINISTRATOR,
@@ -1027,17 +1027,17 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param user The user to check.
      * @return Whether the given user can attach files or not.
      */
-    default boolean canAttachFiles(User user) {
-        Optional<PrivateChannel> privateChannel = asPrivateChannel();
+    default boolean canAttachFiles(final User user) {
+        final Optional<PrivateChannel> privateChannel = asPrivateChannel();
         if (privateChannel.isPresent()) {
             return user.isYourself() || privateChannel.get().getRecipient()
                     .map(recipient -> recipient.equals(user)).orElse(false);
         }
-        Optional<GroupChannel> groupChannel = asGroupChannel();
+        final Optional<GroupChannel> groupChannel = asGroupChannel();
         if (groupChannel.isPresent()) {
             return user.isYourself() || groupChannel.get().getMembers().contains(user);
         }
-        Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
+        final Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
         return !severTextChannel.isPresent()
                || severTextChannel.get().hasPermission(user, PermissionType.ADMINISTRATOR)
                || (severTextChannel.get().hasPermission(user, PermissionType.ATTACH_FILE)
@@ -1059,17 +1059,17 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param user The user to check.
      * @return Whether the given user is allowed to add <b>new</b> reactions to messages in this channel or not.
      */
-    default boolean canAddNewReactions(User user) {
-        Optional<PrivateChannel> privateChannel = asPrivateChannel();
+    default boolean canAddNewReactions(final User user) {
+        final Optional<PrivateChannel> privateChannel = asPrivateChannel();
         if (privateChannel.isPresent()) {
             return user.isYourself() || privateChannel.get().getRecipient()
                     .map(recipient -> recipient.equals(user)).orElse(false);
         }
-        Optional<GroupChannel> groupChannel = asGroupChannel();
+        final Optional<GroupChannel> groupChannel = asGroupChannel();
         if (groupChannel.isPresent()) {
             return user.isYourself() || groupChannel.get().getMembers().contains(user);
         }
-        Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
+        final Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
         return !severTextChannel.isPresent()
                || severTextChannel.get().hasPermission(user, PermissionType.ADMINISTRATOR)
                || severTextChannel.get().hasPermissions(user,
@@ -1096,11 +1096,11 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param user The user to check.
      * @return Whether the given user can manage messages or not.
      */
-    default boolean canManageMessages(User user) {
+    default boolean canManageMessages(final User user) {
         if (!canSee(user)) {
             return false;
         }
-        Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
+        final Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
         return !severTextChannel.isPresent()
                || severTextChannel.get().hasAnyPermission(user,
                                                           PermissionType.ADMINISTRATOR,
@@ -1128,7 +1128,7 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param user The user to check.
      * @return Whether the given user can remove reactions of others or not.
      */
-    default boolean canRemoveReactionsOfOthers(User user) {
+    default boolean canRemoveReactionsOfOthers(final User user) {
         return canManageMessages(user);
     }
 
@@ -1151,11 +1151,11 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
      * @param user The user to check.
      * @return Whether the given user can mention everyone (@everyone) or not.
      */
-    default boolean canMentionEveryone(User user) {
+    default boolean canMentionEveryone(final User user) {
         if (!canSee(user)) {
             return false;
         }
-        Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
+        final Optional<ServerTextChannel> severTextChannel = asServerTextChannel();
         return !severTextChannel.isPresent()
                || severTextChannel.get().hasPermission(user, PermissionType.ADMINISTRATOR)
                || (severTextChannel.get().hasPermission(user, PermissionType.MENTION_EVERYONE)
@@ -1180,11 +1180,11 @@ public interface TextChannel extends Channel, Messageable, TextChannelAttachable
 
     @Override
     default CompletableFuture<? extends TextChannel> getLatestInstance() {
-        Optional<? extends TextChannel> currentCachedInstance = getCurrentCachedInstance();
+        final Optional<? extends TextChannel> currentCachedInstance = getCurrentCachedInstance();
         if (currentCachedInstance.isPresent()) {
             return CompletableFuture.completedFuture(currentCachedInstance.get());
         } else {
-            CompletableFuture<? extends TextChannel> result = new CompletableFuture<>();
+            final CompletableFuture<? extends TextChannel> result = new CompletableFuture<>();
             result.completeExceptionally(new NoSuchElementException());
             return result;
         }

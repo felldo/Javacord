@@ -21,7 +21,7 @@ public class SlashCommandOptionBuilder {
      * @param type The type.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandOptionBuilder setType(SlashCommandOptionType type) {
+    public SlashCommandOptionBuilder setType(final SlashCommandOptionType type) {
         delegate.setType(type);
         return this;
     }
@@ -32,7 +32,7 @@ public class SlashCommandOptionBuilder {
      * @param name The name.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandOptionBuilder setName(String name) {
+    public SlashCommandOptionBuilder setName(final String name) {
         delegate.setName(name);
         return this;
     }
@@ -43,7 +43,7 @@ public class SlashCommandOptionBuilder {
      * @param description The description.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandOptionBuilder setDescription(String description) {
+    public SlashCommandOptionBuilder setDescription(final String description) {
         delegate.setDescription(description);
         return this;
     }
@@ -54,7 +54,7 @@ public class SlashCommandOptionBuilder {
      * @param required Whether the option is required.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandOptionBuilder setRequired(boolean required) {
+    public SlashCommandOptionBuilder setRequired(final boolean required) {
         delegate.setRequired(required);
         return this;
     }
@@ -65,7 +65,7 @@ public class SlashCommandOptionBuilder {
      * @param choice The choice.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandOptionBuilder addChoice(SlashCommandOptionChoice choice) {
+    public SlashCommandOptionBuilder addChoice(final SlashCommandOptionChoice choice) {
         delegate.addChoice(choice);
         return this;
     }
@@ -77,7 +77,7 @@ public class SlashCommandOptionBuilder {
      * @param value The value of the choice.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandOptionBuilder addChoice(String name, String value) {
+    public SlashCommandOptionBuilder addChoice(final String name, final String value) {
         delegate.addChoice(new SlashCommandOptionChoiceBuilder().setName(name).setValue(value).build());
         return this;
     }
@@ -89,7 +89,7 @@ public class SlashCommandOptionBuilder {
      * @param value The value of the choice.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandOptionBuilder addChoice(String name, int value) {
+    public SlashCommandOptionBuilder addChoice(final String name, final int value) {
         delegate.addChoice(new SlashCommandOptionChoiceBuilder().setName(name).setValue(value).build());
         return this;
     }
@@ -100,7 +100,7 @@ public class SlashCommandOptionBuilder {
      * @param choices The choices.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandOptionBuilder setChoices(List<SlashCommandOptionChoice> choices) {
+    public SlashCommandOptionBuilder setChoices(final List<SlashCommandOptionChoice> choices) {
         delegate.setChoices(choices);
         return this;
     }
@@ -111,7 +111,7 @@ public class SlashCommandOptionBuilder {
      * @param option The option.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandOptionBuilder addOption(SlashCommandOption option) {
+    public SlashCommandOptionBuilder addOption(final SlashCommandOption option) {
         delegate.addOption(option);
         return this;
     }
@@ -122,7 +122,7 @@ public class SlashCommandOptionBuilder {
      * @param options The options.
      * @return The current instance in order to chain call methods.
      */
-    public SlashCommandOptionBuilder setOptions(List<SlashCommandOption> options) {
+    public SlashCommandOptionBuilder setOptions(final List<SlashCommandOption> options) {
         delegate.setOptions(options);
         return this;
     }

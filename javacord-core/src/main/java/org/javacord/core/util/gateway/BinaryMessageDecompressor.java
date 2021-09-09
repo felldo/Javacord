@@ -27,20 +27,20 @@ public class BinaryMessageDecompressor {
      * @return The decompressed string.
      * @throws DataFormatException If the compressed data format is invalid.
      */
-    public static String decompress(byte[] data) throws DataFormatException {
-        Inflater decompressor = new Inflater();
+    public static String decompress(final byte[] data) throws DataFormatException {
+        final Inflater decompressor = new Inflater();
         decompressor.setInput(data);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length);
-        byte[] buf = new byte[1024];
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length);
+        final byte[] buf = new byte[1024];
         while (!decompressor.finished()) {
-            int count;
+            final int count;
             count = decompressor.inflate(buf);
             bos.write(buf, 0, count);
         }
         try {
             bos.close();
-        } catch (IOException ignored) { }
-        byte[] decompressedData = bos.toByteArray();
+        } catch (final IOException ignored) { }
+        final byte[] decompressedData = bos.toByteArray();
         return new String(decompressedData, StandardCharsets.UTF_8);
     }
 

@@ -24,18 +24,18 @@ public class ServerTextChannelBuilder extends ServerChannelBuilder {
      *
      * @param server The server of the server text channel.
      */
-    public ServerTextChannelBuilder(Server server) {
+    public ServerTextChannelBuilder(final Server server) {
         delegate = DelegateFactory.createServerTextChannelBuilderDelegate(server);
     }
 
     @Override
-    public ServerTextChannelBuilder setAuditLogReason(String reason) {
+    public ServerTextChannelBuilder setAuditLogReason(final String reason) {
         delegate.setAuditLogReason(reason);
         return this;
     }
 
     @Override
-    public ServerTextChannelBuilder setName(String name) {
+    public ServerTextChannelBuilder setName(final String name) {
         delegate.setName(name);
         return this;
     }
@@ -46,7 +46,7 @@ public class ServerTextChannelBuilder extends ServerChannelBuilder {
      * @param topic The topic of the channel.
      * @return The current instance in order to chain call methods.
      */
-    public ServerTextChannelBuilder setTopic(String topic) {
+    public ServerTextChannelBuilder setTopic(final String topic) {
         delegate.setTopic(topic);
         return this;
     }
@@ -57,7 +57,7 @@ public class ServerTextChannelBuilder extends ServerChannelBuilder {
      * @param category The category of the channel.
      * @return The current instance in order to chain call methods.
      */
-    public ServerTextChannelBuilder setCategory(ChannelCategory category) {
+    public ServerTextChannelBuilder setCategory(final ChannelCategory category) {
         delegate.setCategory(category);
         return this;
     }
@@ -68,21 +68,21 @@ public class ServerTextChannelBuilder extends ServerChannelBuilder {
      * @param delay The delay in seconds.
      * @return The current instance in order to chain call methods.
      */
-    public ServerTextChannelBuilder setSlowmodeDelayInSeconds(int delay) {
+    public ServerTextChannelBuilder setSlowmodeDelayInSeconds(final int delay) {
         delegate.setSlowmodeDelayInSeconds(delay);
         return this;
     }
 
     @Override
     public <T extends Permissionable & DiscordEntity> ServerTextChannelBuilder addPermissionOverwrite(
-            T permissionable, Permissions permissions) {
+            final T permissionable, final Permissions permissions) {
         delegate.addPermissionOverwrite(permissionable, permissions);
         return this;
     }
 
     @Override
     public <T extends Permissionable & DiscordEntity> ServerTextChannelBuilder removePermissionOverwrite(
-            T permissionable) {
+            final T permissionable) {
         delegate.removePermissionOverwrite(permissionable);
         return this;
     }

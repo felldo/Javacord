@@ -138,7 +138,7 @@ public interface Webhook extends DiscordEntity, Updatable<Webhook>, WebhookAttac
      * @param name The new name of the webhook.
      * @return The updated webhook.
      */
-    default CompletableFuture<Webhook> updateName(String name) {
+    default CompletableFuture<Webhook> updateName(final String name) {
         return createUpdater().setName(name).update();
     }
 
@@ -151,7 +151,7 @@ public interface Webhook extends DiscordEntity, Updatable<Webhook>, WebhookAttac
      * @param channel The new channel of the webhook.
      * @return The updated webhook.
      */
-    default CompletableFuture<Webhook> updateChannel(ServerTextChannel channel) {
+    default CompletableFuture<Webhook> updateChannel(final ServerTextChannel channel) {
         return createUpdater().setChannel(channel).update();
     }
 
@@ -165,7 +165,7 @@ public interface Webhook extends DiscordEntity, Updatable<Webhook>, WebhookAttac
      * @param avatar The new avatar.
      * @return The updated webhook.
      */
-    default CompletableFuture<Webhook> updateAvatar(BufferedImage avatar) {
+    default CompletableFuture<Webhook> updateAvatar(final BufferedImage avatar) {
         return createUpdater().setAvatar(avatar).update();
     }
 
@@ -179,7 +179,7 @@ public interface Webhook extends DiscordEntity, Updatable<Webhook>, WebhookAttac
      * @param fileType The type of the avatar, e.g. "png" or "jpg".
      * @return The updated webhook.
      */
-    default CompletableFuture<Webhook> updateAvatar(BufferedImage avatar, String fileType) {
+    default CompletableFuture<Webhook> updateAvatar(final BufferedImage avatar, final String fileType) {
         return createUpdater().setAvatar(avatar, fileType).update();
     }
 
@@ -192,7 +192,7 @@ public interface Webhook extends DiscordEntity, Updatable<Webhook>, WebhookAttac
      * @param avatar The new avatar.
      * @return The updated webhook.
      */
-    default CompletableFuture<Webhook> updateAvatar(File avatar) {
+    default CompletableFuture<Webhook> updateAvatar(final File avatar) {
         return createUpdater().setAvatar(avatar).update();
     }
 
@@ -205,7 +205,7 @@ public interface Webhook extends DiscordEntity, Updatable<Webhook>, WebhookAttac
      * @param avatar The new avatar.
      * @return The updated webhook.
      */
-    default CompletableFuture<Webhook> updateAvatar(Icon avatar) {
+    default CompletableFuture<Webhook> updateAvatar(final Icon avatar) {
         return createUpdater().setAvatar(avatar).update();
     }
 
@@ -218,7 +218,7 @@ public interface Webhook extends DiscordEntity, Updatable<Webhook>, WebhookAttac
      * @param avatar The new avatar.
      * @return The updated webhook.
      */
-    default CompletableFuture<Webhook> updateAvatar(URL avatar) {
+    default CompletableFuture<Webhook> updateAvatar(final URL avatar) {
         return createUpdater().setAvatar(avatar).update();
     }
 
@@ -232,7 +232,7 @@ public interface Webhook extends DiscordEntity, Updatable<Webhook>, WebhookAttac
      * @param avatar The new avatar.
      * @return The updated webhook.
      */
-    default CompletableFuture<Webhook> updateAvatar(byte[] avatar) {
+    default CompletableFuture<Webhook> updateAvatar(final byte[] avatar) {
         return createUpdater().setAvatar(avatar).update();
     }
 
@@ -246,7 +246,7 @@ public interface Webhook extends DiscordEntity, Updatable<Webhook>, WebhookAttac
      * @param fileType The type of the avatar, e.g. "png" or "jpg".
      * @return The updated webhook.
      */
-    default CompletableFuture<Webhook> updateAvatar(byte[] avatar, String fileType) {
+    default CompletableFuture<Webhook> updateAvatar(final byte[] avatar, final String fileType) {
         return createUpdater().setAvatar(avatar, fileType).update();
     }
 
@@ -260,7 +260,7 @@ public interface Webhook extends DiscordEntity, Updatable<Webhook>, WebhookAttac
      * @param avatar The new avatar.
      * @return The updated webhook.
      */
-    default CompletableFuture<Webhook> updateAvatar(InputStream avatar) {
+    default CompletableFuture<Webhook> updateAvatar(final InputStream avatar) {
         return createUpdater().setAvatar(avatar).update();
     }
 
@@ -274,7 +274,7 @@ public interface Webhook extends DiscordEntity, Updatable<Webhook>, WebhookAttac
      * @param fileType The type of the avatar, e.g. "png" or "jpg".
      * @return The updated webhook.
      */
-    default CompletableFuture<Webhook> updateAvatar(InputStream avatar, String fileType) {
+    default CompletableFuture<Webhook> updateAvatar(final InputStream avatar, final String fileType) {
         return createUpdater().setAvatar(avatar, fileType).update();
     }
 

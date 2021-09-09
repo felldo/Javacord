@@ -26,7 +26,7 @@ public class UserPresence {
      * @param status The status.
      * @param clientStatus The client status.
      */
-    public UserPresence(long userId, Set<Activity> activities, UserStatus status, Map<DiscordClient,
+    public UserPresence(final long userId, final Set<Activity> activities, final UserStatus status, final Map<DiscordClient,
             UserStatus> clientStatus) {
         this.userId = userId;
         this.activities = activities;
@@ -49,7 +49,7 @@ public class UserPresence {
      * @param activities The activities to set.
      * @return The new user presence with the updated activities.
      */
-    public UserPresence setActivities(Set<Activity> activities) {
+    public UserPresence setActivities(final Set<Activity> activities) {
         return new UserPresence(userId, activities, status, clientStatus);
     }
 
@@ -68,7 +68,7 @@ public class UserPresence {
      * @param status The status to set.
      * @return The new user presence with the updated status.
      */
-    public UserPresence setStatus(UserStatus status) {
+    public UserPresence setStatus(final UserStatus status) {
         return new UserPresence(userId, activities, status, clientStatus);
     }
 
@@ -87,7 +87,7 @@ public class UserPresence {
      * @param clientStatus The client status to set.
      * @return The new user presence with the updated client status.
      */
-    public UserPresence setClientStatus(Map<DiscordClient, UserStatus> clientStatus) {
+    public UserPresence setClientStatus(final Map<DiscordClient, UserStatus> clientStatus) {
         return new UserPresence(userId, activities, status, clientStatus);
     }
 

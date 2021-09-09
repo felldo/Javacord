@@ -20,20 +20,20 @@ public class GuildMemberAddHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public GuildMemberAddHandler(DiscordApi api) {
+    public GuildMemberAddHandler(final DiscordApi api) {
         super(api, true, "GUILD_MEMBER_ADD");
     }
 
     @Override
-    public void handle(JsonNode packet) {
+    public void handle(final JsonNode packet) {
         api.getPossiblyUnreadyServerById(packet.get("guild_id").asLong())
                 .map(server -> (ServerImpl) server)
                 .ifPresent(server -> {
-                    MemberImpl member = server.addMember(packet);
+                    final MemberImpl member = server.addMember(packet);
                     server.incrementMemberCount();
-                    User user = new UserImpl(api, packet.get("user"), member, server);
+                    final User user = new UserImpl(api, packet.get("user"), member, server);
 
-                    ServerMemberJoinEvent event = new ServerMemberJoinEventImpl(server, user);
+                    final ServerMemberJoinEvent event = new ServerMemberJoinEventImpl(server, user);
 
                     api.getEventDispatcher().dispatchServerMemberJoinEvent(server, server, user, event);
                 });

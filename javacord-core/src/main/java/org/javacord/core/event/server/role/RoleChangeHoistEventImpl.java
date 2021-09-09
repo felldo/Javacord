@@ -20,7 +20,7 @@ public class RoleChangeHoistEventImpl extends RoleEventImpl implements RoleChang
      * @param role The role of the event.
      * @param oldHoist The old hoist of the role.
      */
-    public RoleChangeHoistEventImpl(Role role, boolean oldHoist) {
+    public RoleChangeHoistEventImpl(final Role role, final boolean oldHoist) {
         super(role);
         this.oldHoist = oldHoist;
     }

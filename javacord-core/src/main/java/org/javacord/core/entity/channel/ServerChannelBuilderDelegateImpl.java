@@ -43,23 +43,23 @@ public class ServerChannelBuilderDelegateImpl implements ServerChannelBuilderDel
      */
     private final Map<Long, Permissions> overwrittenRolePermissions = new HashMap<>();
 
-    protected ServerChannelBuilderDelegateImpl(ServerImpl server) {
+    protected ServerChannelBuilderDelegateImpl(final ServerImpl server) {
         this.server = server;
     }
 
     @Override
-    public void setAuditLogReason(String reason) {
+    public void setAuditLogReason(final String reason) {
         this.reason = reason;
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
-    public <T extends Permissionable & DiscordEntity> void addPermissionOverwrite(T permissionable,
-                                                                                  Permissions permissions) {
+    public <T extends Permissionable & DiscordEntity> void addPermissionOverwrite(final T permissionable,
+                                                                                  final Permissions permissions) {
         if (permissionable instanceof Role) {
             overwrittenRolePermissions.put(permissionable.getId(), permissions);
         } else if (permissionable instanceof User) {
@@ -68,7 +68,7 @@ public class ServerChannelBuilderDelegateImpl implements ServerChannelBuilderDel
     }
 
     @Override
-    public <T extends Permissionable & DiscordEntity> void removePermissionOverwrite(T permissionable) {
+    public <T extends Permissionable & DiscordEntity> void removePermissionOverwrite(final T permissionable) {
         if (permissionable instanceof Role) {
             overwrittenRolePermissions.remove(permissionable.getId());
         } else if (permissionable instanceof User) {
@@ -76,7 +76,7 @@ public class ServerChannelBuilderDelegateImpl implements ServerChannelBuilderDel
         }
     }
 
-    protected void prepareBody(ObjectNode body) {
+    protected void prepareBody(final ObjectNode body) {
         if (name == null) {
             throw new IllegalStateException("Name is no optional parameter!");
         }
@@ -85,14 +85,14 @@ public class ServerChannelBuilderDelegateImpl implements ServerChannelBuilderDel
         if (overwrittenUserPermissions.size() + overwrittenRolePermissions.size() > 0) {
             permissionOverwrites = body.putArray("permission_overwrites");
         }
-        for (Map.Entry<Long, Permissions> entry : overwrittenUserPermissions.entrySet()) {
+        for (final Map.Entry<Long, Permissions> entry : overwrittenUserPermissions.entrySet()) {
             permissionOverwrites.addObject()
                     .put("id", Long.toUnsignedString(entry.getKey()))
                     .put("type", 1)
                     .put("allow", entry.getValue().getAllowedBitmask())
                     .put("deny", entry.getValue().getDeniedBitmask());
         }
-        for (Map.Entry<Long, Permissions> entry : overwrittenRolePermissions.entrySet()) {
+        for (final Map.Entry<Long, Permissions> entry : overwrittenRolePermissions.entrySet()) {
             permissionOverwrites.addObject()
                     .put("id", Long.toUnsignedString(entry.getKey()))
                     .put("type", 0)

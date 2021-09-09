@@ -27,7 +27,7 @@ public class ServerChangeDescriptionEventImpl extends ServerEventImpl implements
      * @param newDescription The new description of the server.
      * @param oldDescription The old description of the server.
      */
-    public ServerChangeDescriptionEventImpl(ServerImpl server, String newDescription, String oldDescription) {
+    public ServerChangeDescriptionEventImpl(final ServerImpl server, final String newDescription, final String oldDescription) {
         super(server);
         this.newDescription = newDescription;
         this.oldDescription = oldDescription;

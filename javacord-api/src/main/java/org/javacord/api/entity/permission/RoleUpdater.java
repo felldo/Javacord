@@ -21,7 +21,7 @@ public class RoleUpdater {
      *
      * @param role The role to update.
      */
-    public RoleUpdater(Role role) {
+    public RoleUpdater(final Role role) {
         delegate = DelegateFactory.createRoleUpdaterDelegate(role);
     }
 
@@ -31,7 +31,7 @@ public class RoleUpdater {
      * @param reason The reason for this update.
      * @return The current instance in order to chain call methods.
      */
-    public RoleUpdater setAuditLogReason(String reason) {
+    public RoleUpdater setAuditLogReason(final String reason) {
         delegate.setAuditLogReason(reason);
         return this;
     }
@@ -42,7 +42,7 @@ public class RoleUpdater {
      * @param name The new name of the role.
      * @return The current instance in order to chain call methods.
      */
-    public RoleUpdater setName(String name) {
+    public RoleUpdater setName(final String name) {
         delegate.setName(name);
         return this;
     }
@@ -53,7 +53,7 @@ public class RoleUpdater {
      * @param permissions The new permissions of the role.
      * @return The current instance in order to chain call methods.
      */
-    public RoleUpdater setPermissions(Permissions permissions) {
+    public RoleUpdater setPermissions(final Permissions permissions) {
         delegate.setPermissions(permissions);
         return this;
     }
@@ -64,7 +64,7 @@ public class RoleUpdater {
      * @param color The new color of the role.
      * @return The current instance in order to chain call methods.
      */
-    public RoleUpdater setColor(Color color) {
+    public RoleUpdater setColor(final Color color) {
         delegate.setColor(color);
         return this;
     }
@@ -75,7 +75,7 @@ public class RoleUpdater {
      * @param displaySeparately The new display separately flag of the role.
      * @return The current instance in order to chain call methods.
      */
-    public RoleUpdater setDisplaySeparatelyFlag(boolean displaySeparately) {
+    public RoleUpdater setDisplaySeparatelyFlag(final boolean displaySeparately) {
         delegate.setDisplaySeparatelyFlag(displaySeparately);
         return this;
     }
@@ -86,7 +86,7 @@ public class RoleUpdater {
      * @param mentionable The new mentionable flag of the role.
      * @return The current instance in order to chain call methods.
      */
-    public RoleUpdater setMentionableFlag(boolean mentionable) {
+    public RoleUpdater setMentionableFlag(final boolean mentionable) {
         delegate.setMentionableFlag(mentionable);
         return this;
     }

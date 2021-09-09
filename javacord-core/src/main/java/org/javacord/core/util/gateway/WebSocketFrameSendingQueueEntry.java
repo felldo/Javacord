@@ -53,7 +53,7 @@ public class WebSocketFrameSendingQueueEntry implements Comparable<WebSocketFram
      * @param lifecycle Whether this entry is a lifecycle entry.
      */
     public WebSocketFrameSendingQueueEntry(
-            WebSocket webSocket, WebSocketFrame webSocketFrame, boolean priority, boolean lifecycle) {
+            final WebSocket webSocket, final WebSocketFrame webSocketFrame, final boolean priority, final boolean lifecycle) {
         if (lifecycle && (webSocket == null)) {
             throw new IllegalArgumentException("lifecycle frame sending requests must specify the web socket");
         }
@@ -100,7 +100,7 @@ public class WebSocketFrameSendingQueueEntry implements Comparable<WebSocketFram
     }
 
     @Override
-    public int compareTo(WebSocketFrameSendingQueueEntry other) {
+    public int compareTo(final WebSocketFrameSendingQueueEntry other) {
         return ENTRY_COMPARATOR.compare(this, other);
     }
 

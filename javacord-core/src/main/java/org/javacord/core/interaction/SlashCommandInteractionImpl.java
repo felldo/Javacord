@@ -24,15 +24,15 @@ public class SlashCommandInteractionImpl extends InteractionImpl implements Slas
      * @param channel  The channel in which the interaction happened. Can be {@code null}.
      * @param jsonData The json data of the interaction.
      */
-    public SlashCommandInteractionImpl(DiscordApiImpl api, TextChannel channel, JsonNode jsonData) {
+    public SlashCommandInteractionImpl(final DiscordApiImpl api, final TextChannel channel, final JsonNode jsonData) {
         super(api, channel, jsonData);
 
-        JsonNode data = jsonData.get("data");
+        final JsonNode data = jsonData.get("data");
         commandId = data.get("id").asLong();
         commandName = data.get("name").asText();
         options = new ArrayList<>();
         if (data.has("options") && data.get("options").isArray()) {
-            for (JsonNode optionJson : data.get("options")) {
+            for (final JsonNode optionJson : data.get("options")) {
                 options.add(new SlashCommandInteractionOptionImpl(api, optionJson));
             }
         }

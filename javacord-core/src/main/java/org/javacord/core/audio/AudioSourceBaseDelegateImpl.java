@@ -35,7 +35,7 @@ public class AudioSourceBaseDelegateImpl implements
      *
      * @param api The discord api instance.
      */
-    public AudioSourceBaseDelegateImpl(DiscordApi api) {
+    public AudioSourceBaseDelegateImpl(final DiscordApi api) {
         this.api = api;
         id = idCounter.getAndIncrement();
     }
@@ -51,12 +51,12 @@ public class AudioSourceBaseDelegateImpl implements
     }
 
     @Override
-    public void addTransformer(AudioTransformer transformer) {
+    public void addTransformer(final AudioTransformer transformer) {
         throw new UnsupportedOperationException("Not supported in delegate");
     }
 
     @Override
-    public boolean removeTransformer(AudioTransformer transformer) {
+    public boolean removeTransformer(final AudioTransformer transformer) {
         throw new UnsupportedOperationException("Not supported in delegate");
     }
 
@@ -91,7 +91,7 @@ public class AudioSourceBaseDelegateImpl implements
     }
 
     @Override
-    public void setMuted(boolean muted) {
+    public void setMuted(final boolean muted) {
         throw new UnsupportedOperationException("Not supported in delegate");
     }
 

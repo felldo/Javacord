@@ -41,11 +41,11 @@ public class SlashCommandInteractionOptionImpl implements SlashCommandInteractio
      * @param api      The DiscordApi instance.
      * @param jsonData The json data of the option.
      */
-    public SlashCommandInteractionOptionImpl(DiscordApi api, JsonNode jsonData) {
+    public SlashCommandInteractionOptionImpl(final DiscordApi api, final JsonNode jsonData) {
         this.api = api;
         name = jsonData.get("name").asText();
         options = new ArrayList<>();
-        JsonNode valueNode = jsonData.get("value");
+        final JsonNode valueNode = jsonData.get("value");
 
         String localStringRepresentation = null;
         String localStringValue = null;
@@ -57,12 +57,12 @@ public class SlashCommandInteractionOptionImpl implements SlashCommandInteractio
         Long localMentionableValue = null;
         Double localNumberValue = null;
 
-        SlashCommandOptionType type = SlashCommandOptionType.fromValue(jsonData.get("type").asInt());
+        final SlashCommandOptionType type = SlashCommandOptionType.fromValue(jsonData.get("type").asInt());
         switch (type) {
             case SUB_COMMAND:
             case SUB_COMMAND_GROUP:
                 if (jsonData.has("options") && jsonData.get("options").isArray()) {
-                    for (JsonNode optionJson : jsonData.get("options")) {
+                    for (final JsonNode optionJson : jsonData.get("options")) {
                         options.add(new SlashCommandInteractionOptionImpl(api, optionJson));
                     }
                 }
@@ -191,7 +191,7 @@ public class SlashCommandInteractionOptionImpl implements SlashCommandInteractio
 
     @Override
     public Optional<CompletableFuture<Mentionable>> requestMentionableValue() {
-        Optional<CompletableFuture<Mentionable>> cacheOptional = getMentionableValue()
+        final Optional<CompletableFuture<Mentionable>> cacheOptional = getMentionableValue()
                 .map(CompletableFuture::completedFuture);
         if (cacheOptional.isPresent()) {
             return cacheOptional;

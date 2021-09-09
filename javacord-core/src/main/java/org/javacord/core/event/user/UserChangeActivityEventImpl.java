@@ -30,8 +30,8 @@ public class UserChangeActivityEventImpl extends OptionalUserEventImpl implement
      * @param newActivities The new activities of the user.
      * @param oldActivities The old activities of the user.
      */
-    public UserChangeActivityEventImpl(DiscordApi api, long userId, Set<Activity> newActivities,
-                                       Set<Activity> oldActivities) {
+    public UserChangeActivityEventImpl(final DiscordApi api, final long userId, final Set<Activity> newActivities,
+                                       final Set<Activity> oldActivities) {
         super(api, userId);
         this.newActivities = newActivities;
         this.oldActivities = oldActivities;

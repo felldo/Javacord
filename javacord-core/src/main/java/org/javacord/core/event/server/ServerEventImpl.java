@@ -19,7 +19,7 @@ public abstract class ServerEventImpl extends EventImpl implements ServerEvent {
      *
      * @param server The server of the event.
      */
-    public ServerEventImpl(Server server) {
+    public ServerEventImpl(final Server server) {
         super(server.getApi());
         this.server = server;
     }

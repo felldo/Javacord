@@ -32,7 +32,7 @@ public interface Invite {
     default URL getUrl() {
         try {
             return new URL("https://discord.gg/" + getCode());
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             // This should never ever happen
             return null;
         }

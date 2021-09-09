@@ -54,7 +54,7 @@ public enum PermissionType {
      *
      * @param value The value of the permission type.
      */
-    PermissionType(int value) {
+    PermissionType(final int value) {
         this.value = value;
     }
 
@@ -73,7 +73,7 @@ public enum PermissionType {
      * @param i The long to check.
      * @return Whether the permission is "included" or not.
      */
-    public boolean isSet(long i) {
+    public boolean isSet(final long i) {
         return (i & getValue()) != 0;
     }
 
@@ -84,7 +84,7 @@ public enum PermissionType {
      * @param set Whether the type should be set or not.
      * @return The changed long.
      */
-    public long set(long i, boolean set) {
+    public long set(final long i, final boolean set) {
         if (set && !isSet(i)) {
             return i + getValue();
         }

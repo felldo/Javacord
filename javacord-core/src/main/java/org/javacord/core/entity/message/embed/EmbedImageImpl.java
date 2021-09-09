@@ -34,7 +34,7 @@ public class EmbedImageImpl implements EmbedImage {
      *
      * @param data The json data of the image.
      */
-    public EmbedImageImpl(JsonNode data) {
+    public EmbedImageImpl(final JsonNode data) {
         url = data.has("url") ? data.get("url").asText() : null;
         proxyUrl = data.has("proxy_url") ? data.get("proxy_url").asText() : null;
         height = data.has("height") ? data.get("height").asInt() : -1;
@@ -48,7 +48,7 @@ public class EmbedImageImpl implements EmbedImage {
         }
         try {
             return new URL(url);
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the url of the embed image is malformed! Please contact the developer!", e);
             return null;
         }
@@ -61,7 +61,7 @@ public class EmbedImageImpl implements EmbedImage {
         }
         try {
             return new URL(proxyUrl);
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             logger.warn("Seems like the proxy url of the embed image is malformed! Please contact the developer!", e);
             return null;
         }
@@ -78,17 +78,17 @@ public class EmbedImageImpl implements EmbedImage {
     }
 
     @Override
-    public CompletableFuture<BufferedImage> downloadAsBufferedImage(DiscordApi api) {
+    public CompletableFuture<BufferedImage> downloadAsBufferedImage(final DiscordApi api) {
         return new FileContainer(getUrl()).asBufferedImage(api);
     }
 
     @Override
-    public CompletableFuture<byte[]> downloadAsByteArray(DiscordApi api) {
+    public CompletableFuture<byte[]> downloadAsByteArray(final DiscordApi api) {
         return new FileContainer(getUrl()).asByteArray(api);
     }
 
     @Override
-    public InputStream downloadAsInputStream(DiscordApi api) throws IOException {
+    public InputStream downloadAsInputStream(final DiscordApi api) throws IOException {
         return new FileContainer(getUrl()).asInputStream(api);
     }
 

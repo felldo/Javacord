@@ -42,7 +42,7 @@ public class MessageReferenceImpl implements MessageReference {
      * @param message The message that got referenced. Can be null.
      * @param data The json data of the message reference.
      */
-    public MessageReferenceImpl(DiscordApiImpl api, Message message, JsonNode data) {
+    public MessageReferenceImpl(final DiscordApiImpl api, final Message message, final JsonNode data) {
         this.api = api;
         if (data.hasNonNull("guild_id")) {
             this.serverId = data.get("guild_id").asLong();

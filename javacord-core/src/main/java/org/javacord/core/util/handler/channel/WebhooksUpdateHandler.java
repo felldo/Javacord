@@ -27,17 +27,17 @@ public class WebhooksUpdateHandler extends PacketHandler {
      *
      * @param api The api.
      */
-    public WebhooksUpdateHandler(DiscordApi api) {
+    public WebhooksUpdateHandler(final DiscordApi api) {
         super(api, true, "WEBHOOKS_UPDATE");
     }
 
     @Override
-    public void handle(JsonNode packet) {
-        long channelId = packet.get("channel_id").asLong();
-        Optional<ServerTextChannel> optionalChannel =  api.getServerTextChannelById(channelId);
+    public void handle(final JsonNode packet) {
+        final long channelId = packet.get("channel_id").asLong();
+        final Optional<ServerTextChannel> optionalChannel =  api.getServerTextChannelById(channelId);
         if (optionalChannel.isPresent()) {
-            ServerTextChannel channel = optionalChannel.get();
-            WebhooksUpdateEvent event = new WebhooksUpdateEventImpl(channel);
+            final ServerTextChannel channel = optionalChannel.get();
+            final WebhooksUpdateEvent event = new WebhooksUpdateEventImpl(channel);
 
             api.getEventDispatcher().dispatchWebhooksUpdateEvent(
                     (DispatchQueueSelector) channel.getServer(), channel.getServer(), channel, event);

@@ -19,7 +19,7 @@ public class UserChangeNicknameEventImpl extends ServerUserEventImpl implements 
      * @param newMember The new member.
      * @param oldMember The old member.
      */
-    public UserChangeNicknameEventImpl(Member newMember, Member oldMember) {
+    public UserChangeNicknameEventImpl(final Member newMember, final Member oldMember) {
         super(newMember.getUser(), newMember.getServer());
         this.newMember = newMember;
         this.oldMember = oldMember;

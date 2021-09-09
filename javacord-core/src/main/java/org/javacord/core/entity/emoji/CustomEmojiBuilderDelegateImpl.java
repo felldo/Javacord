@@ -59,67 +59,67 @@ public class CustomEmojiBuilderDelegateImpl implements CustomEmojiBuilderDelegat
      *
      * @param server The server of the channel.
      */
-    public CustomEmojiBuilderDelegateImpl(ServerImpl server) {
+    public CustomEmojiBuilderDelegateImpl(final ServerImpl server) {
         this.server = server;
     }
 
     @Override
-    public void setAuditLogReason(String reason) {
+    public void setAuditLogReason(final String reason) {
         this.reason = reason;
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     @Override
-    public void setImage(Icon image) {
+    public void setImage(final Icon image) {
         this.image = (image == null) ? null : new FileContainer(image);
     }
 
     @Override
-    public void setImage(URL image) {
+    public void setImage(final URL image) {
         this.image = (image == null) ? null : new FileContainer(image);
     }
 
     @Override
-    public void setImage(File image) {
+    public void setImage(final File image) {
         this.image = (image == null) ? null : new FileContainer(image);
     }
 
     @Override
-    public void setImage(BufferedImage image) {
+    public void setImage(final BufferedImage image) {
         this.image = (image == null) ? null : new FileContainer(image, "png");
     }
 
     @Override
-    public void setImage(BufferedImage image, String type) {
+    public void setImage(final BufferedImage image, final String type) {
         this.image = (image == null) ? null : new FileContainer(image, type);
     }
 
     @Override
-    public void setImage(byte[] image) {
+    public void setImage(final byte[] image) {
         this.image = (image == null) ? null : new FileContainer(image, "png");
     }
 
     @Override
-    public void setImage(byte[] image, String type) {
+    public void setImage(final byte[] image, final String type) {
         this.image = (image == null) ? null : new FileContainer(image, type);
     }
 
     @Override
-    public void setImage(InputStream image) {
+    public void setImage(final InputStream image) {
         this.image = (image == null) ? null : new FileContainer(image, "png");
     }
 
     @Override
-    public void setImage(InputStream image, String type) {
+    public void setImage(final InputStream image, final String type) {
         this.image = (image == null) ? null : new FileContainer(image, type);
     }
 
     @Override
-    public void addRoleToWhitelist(Role role) {
+    public void addRoleToWhitelist(final Role role) {
         if (whitelist == null) {
             whitelist = new HashSet<>();
         }
@@ -127,12 +127,12 @@ public class CustomEmojiBuilderDelegateImpl implements CustomEmojiBuilderDelegat
     }
 
     @Override
-    public void setWhitelist(Collection<Role> roles) {
+    public void setWhitelist(final Collection<Role> roles) {
         whitelist = roles == null ? null : new HashSet<>(roles);
     }
 
     @Override
-    public void setWhitelist(Role... roles) {
+    public void setWhitelist(final Role... roles) {
         setWhitelist(roles == null ? null : Arrays.asList(roles));
     }
 
@@ -144,16 +144,16 @@ public class CustomEmojiBuilderDelegateImpl implements CustomEmojiBuilderDelegat
         if (image == null) {
             throw new IllegalStateException("The image is no optional parameter!");
         }
-        ObjectNode body = JsonNodeFactory.instance.objectNode()
+        final ObjectNode body = JsonNodeFactory.instance.objectNode()
                 .put("name", name);
 
         if (whitelist != null) {
-            ArrayNode jsonRoles = body.putArray("roles");
+            final ArrayNode jsonRoles = body.putArray("roles");
             whitelist.stream().map(Role::getIdAsString).forEach(jsonRoles::add);
         }
 
         return image.asByteArray(server.getApi()).thenAccept(bytes -> {
-            String base64Icon = "data:image/" + image.getFileType() + ";base64,"
+            final String base64Icon = "data:image/" + image.getFileType() + ";base64,"
                     + Base64.getEncoder().encodeToString(bytes);
             body.put("image", base64Icon);
         }).thenCompose(aVoid ->

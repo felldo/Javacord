@@ -19,7 +19,7 @@ public class UserCache {
 
     private final Cache<User> cache;
 
-    private UserCache(Cache<User> cache) {
+    private UserCache(final Cache<User> cache) {
         this.cache = cache;
     }
 
@@ -38,7 +38,7 @@ public class UserCache {
      * @param user The user to add.
      * @return The new user cache.
      */
-    public UserCache addUser(User user) {
+    public UserCache addUser(final User user) {
         return new UserCache(cache.addElement(user));
     }
 
@@ -48,7 +48,7 @@ public class UserCache {
      * @param user The user to remove.
      * @return The new user cache.
      */
-    public UserCache removeUser(User user) {
+    public UserCache removeUser(final User user) {
         return new UserCache(cache.removeElement(user));
     }
 
@@ -67,7 +67,7 @@ public class UserCache {
      * @param id The id of the user.
      * @return The user with the given id.
      */
-    public Optional<User> getUserById(long id) {
+    public Optional<User> getUserById(final long id) {
         return cache.findAnyByIndex(ID_INDEX_NAME, id);
     }
 

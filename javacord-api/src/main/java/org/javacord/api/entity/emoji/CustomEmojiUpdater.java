@@ -22,7 +22,7 @@ public class CustomEmojiUpdater {
      *
      * @param emoji The custom emoji to update.
      */
-    public CustomEmojiUpdater(KnownCustomEmoji emoji) {
+    public CustomEmojiUpdater(final KnownCustomEmoji emoji) {
         delegate = DelegateFactory.createCustomEmojiUpdaterDelegate(emoji);
     }
 
@@ -32,7 +32,7 @@ public class CustomEmojiUpdater {
      * @param reason The reason for this update.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiUpdater setAuditLogReason(String reason) {
+    public CustomEmojiUpdater setAuditLogReason(final String reason) {
         delegate.setAuditLogReason(reason);
         return this;
     }
@@ -43,7 +43,7 @@ public class CustomEmojiUpdater {
      * @param name The new name of the emoji.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiUpdater setName(String name) {
+    public CustomEmojiUpdater setName(final String name) {
         delegate.setName(name);
         return this;
     }
@@ -54,7 +54,7 @@ public class CustomEmojiUpdater {
      * @param role The role to add.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiUpdater addRoleToWhitelist(Role role) {
+    public CustomEmojiUpdater addRoleToWhitelist(final Role role) {
         delegate.addRoleToWhitelist(role);
         return this;
     }
@@ -66,7 +66,7 @@ public class CustomEmojiUpdater {
      * @param role The role to remove.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiUpdater removeRoleFromWhitelist(Role role) {
+    public CustomEmojiUpdater removeRoleFromWhitelist(final Role role) {
         delegate.removeRoleFromWhitelist(role);
         return this;
     }
@@ -88,7 +88,7 @@ public class CustomEmojiUpdater {
      * @param roles The roles which should be whitelisted.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiUpdater setWhitelist(Collection<Role> roles) {
+    public CustomEmojiUpdater setWhitelist(final Collection<Role> roles) {
         delegate.setWhitelist(roles);
         return this;
     }
@@ -100,7 +100,7 @@ public class CustomEmojiUpdater {
      * @param roles The roles which should be whitelisted.
      * @return The current instance in order to chain call methods.
      */
-    public CustomEmojiUpdater setWhitelist(Role... roles) {
+    public CustomEmojiUpdater setWhitelist(final Role... roles) {
         delegate.setWhitelist(roles);
         return this;
     }

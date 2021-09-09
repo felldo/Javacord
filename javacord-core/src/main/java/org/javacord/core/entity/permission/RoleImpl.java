@@ -96,7 +96,7 @@ public class RoleImpl implements Role, InternalRoleAttachableListenerManager {
      * @param server The server of the role.
      * @param data   The json data of the role.
      */
-    public RoleImpl(DiscordApiImpl api, ServerImpl server, JsonNode data) {
+    public RoleImpl(final DiscordApiImpl api, final ServerImpl server, final JsonNode data) {
         this.api = api;
         this.server = server;
         this.id = data.get("id").asLong();
@@ -124,7 +124,7 @@ public class RoleImpl implements Role, InternalRoleAttachableListenerManager {
      *
      * @param color The color to set.
      */
-    public void setColor(int color) {
+    public void setColor(final int color) {
         this.color = color;
     }
 
@@ -133,7 +133,7 @@ public class RoleImpl implements Role, InternalRoleAttachableListenerManager {
      *
      * @param hoist The hoist flag to set.
      */
-    public void setHoist(boolean hoist) {
+    public void setHoist(final boolean hoist) {
         this.hoist = hoist;
     }
 
@@ -142,7 +142,7 @@ public class RoleImpl implements Role, InternalRoleAttachableListenerManager {
      *
      * @param mentionable The mentionable flag to set.
      */
-    public void setMentionable(boolean mentionable) {
+    public void setMentionable(final boolean mentionable) {
         this.mentionable = mentionable;
     }
 
@@ -151,7 +151,7 @@ public class RoleImpl implements Role, InternalRoleAttachableListenerManager {
      *
      * @param name The name to set.
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -160,7 +160,7 @@ public class RoleImpl implements Role, InternalRoleAttachableListenerManager {
      *
      * @param permissions The permissions to set.
      */
-    public void setPermissions(PermissionsImpl permissions) {
+    public void setPermissions(final PermissionsImpl permissions) {
         this.permissions = permissions;
     }
 
@@ -169,7 +169,7 @@ public class RoleImpl implements Role, InternalRoleAttachableListenerManager {
      *
      * @param position The raw position to set.
      */
-    public void setRawPosition(int position) {
+    public void setRawPosition(final int position) {
         this.rawPosition = position;
     }
 
@@ -231,7 +231,7 @@ public class RoleImpl implements Role, InternalRoleAttachableListenerManager {
     }
 
     @Override
-    public boolean hasUser(User user) {
+    public boolean hasUser(final User user) {
         return ((UserImpl) user).getMember()
                 .filter(member -> member.getServer().equals(server))
                 .map(Member.class::cast)
@@ -267,7 +267,7 @@ public class RoleImpl implements Role, InternalRoleAttachableListenerManager {
      * @throws IllegalArgumentException If the roles are on different servers.
      */
     @Override
-    public int compareTo(Role role) {
+    public int compareTo(final Role role) {
         if (!role.getServer().equals(getServer())) {
             throw new IllegalArgumentException("Only roles from the same server can be compared for order");
         }
@@ -275,7 +275,7 @@ public class RoleImpl implements Role, InternalRoleAttachableListenerManager {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return (this == o)
                 || !((o == null)
                 || (getClass() != o.getClass())

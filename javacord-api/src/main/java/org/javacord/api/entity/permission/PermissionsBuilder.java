@@ -25,7 +25,7 @@ public class PermissionsBuilder {
      *
      * @param permissions The permissions which should be copied.
      */
-    public PermissionsBuilder(Permissions permissions) {
+    public PermissionsBuilder(final Permissions permissions) {
         delegate = DelegateFactory.createPermissionsBuilderDelegate(permissions);
     }
 
@@ -36,7 +36,7 @@ public class PermissionsBuilder {
      * @param state The state to set.
      * @return The current instance in order to chain call methods.
      */
-    public PermissionsBuilder setState(PermissionType type, PermissionState state) {
+    public PermissionsBuilder setState(final PermissionType type, final PermissionState state) {
         delegate.setState(type, state);
         return this;
     }
@@ -47,8 +47,8 @@ public class PermissionsBuilder {
      * @param types The types to change.
      * @return The current instance in order to chain call methods.
      */
-    public PermissionsBuilder setAllowed(PermissionType... types) {
-        for (PermissionType type : types) {
+    public PermissionsBuilder setAllowed(final PermissionType... types) {
+        for (final PermissionType type : types) {
             setState(type, PermissionState.ALLOWED);
         }
         return this;
@@ -69,8 +69,8 @@ public class PermissionsBuilder {
      * @param types The types to change.
      * @return The current instance in order to chain call methods.
      */
-    public PermissionsBuilder setDenied(PermissionType... types) {
-        for (PermissionType type : types) {
+    public PermissionsBuilder setDenied(final PermissionType... types) {
+        for (final PermissionType type : types) {
             setState(type, PermissionState.DENIED);
         }
         return this;
@@ -91,8 +91,8 @@ public class PermissionsBuilder {
      * @param types The types to change.
      * @return The current instance in order to chain call methods.
      */
-    public PermissionsBuilder setUnset(PermissionType... types) {
-        for (PermissionType type : types) {
+    public PermissionsBuilder setUnset(final PermissionType... types) {
+        for (final PermissionType type : types) {
             setState(type, PermissionState.UNSET);
         }
         return this;
@@ -113,7 +113,7 @@ public class PermissionsBuilder {
      * @param type The type to check.
      * @return The state of the given type.
      */
-    public PermissionState getState(PermissionType type) {
+    public PermissionState getState(final PermissionType type) {
         return delegate.getState(type);
     }
 

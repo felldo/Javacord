@@ -27,30 +27,30 @@ public class SelectMenuInteractionImpl extends MessageComponentInteractionImpl i
      * @param channel  The channel in which the interaction happened. Can be {@code null}.
      * @param jsonData The json data of the interaction.
      */
-    public SelectMenuInteractionImpl(DiscordApiImpl api, TextChannel channel, JsonNode jsonData) {
+    public SelectMenuInteractionImpl(final DiscordApiImpl api, final TextChannel channel, final JsonNode jsonData) {
         super(api, channel, jsonData);
 
-        JsonNode messageObject = jsonData.get("message");
-        JsonNode componentsObject = messageObject.get("components");
+        final JsonNode messageObject = jsonData.get("message");
+        final JsonNode componentsObject = messageObject.get("components");
 
-        JsonNode dataObject = jsonData.get("data");
+        final JsonNode dataObject = jsonData.get("data");
 
-        for (JsonNode actionRow : componentsObject) {
-            for (JsonNode interaction : actionRow.get("components")) {
+        for (final JsonNode actionRow : componentsObject) {
+            for (final JsonNode interaction : actionRow.get("components")) {
                 if (interaction.get("custom_id").asText().equals(dataObject.get("custom_id").asText())) {
                     placeholder = interaction.has("placeholder") ? interaction.get("placeholder").asText() : null;
                     maximumValues = interaction.has("max_value") ? interaction.get("max_value").asInt() : 1;
                     minimumValues = interaction.has("min_value") ? interaction.get("min_values").asInt() : 1;
-                    for (JsonNode optionObject : interaction.get("options")) {
+                    for (final JsonNode optionObject : interaction.get("options")) {
                         selectMenuOptions.add(new SelectMenuOptionImpl(optionObject));
                     }
                 }
             }
         }
 
-        JsonNode valuesArray = dataObject.get("values");
+        final JsonNode valuesArray = dataObject.get("values");
 
-        for (JsonNode jsonNode : valuesArray) {
+        for (final JsonNode jsonNode : valuesArray) {
             chosenSelectMenuOption.addAll(selectMenuOptions.stream()
                     .filter(option -> option.getValue().equals(jsonNode.asText())).collect(Collectors.toList()));
         }

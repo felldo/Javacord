@@ -29,9 +29,9 @@ public class ServerChangeModeratorsOnlyChannelEventImpl
      * @param newModeratorsOnlyChannel The new moderators-only channel of the server.
      * @param oldModeratorsOnlyChannel The old moderators-only updates channel of the server.
      */
-    public ServerChangeModeratorsOnlyChannelEventImpl(ServerImpl server,
-                                                      ServerTextChannel newModeratorsOnlyChannel,
-                                                      ServerTextChannel oldModeratorsOnlyChannel) {
+    public ServerChangeModeratorsOnlyChannelEventImpl(final ServerImpl server,
+                                                      final ServerTextChannel newModeratorsOnlyChannel,
+                                                      final ServerTextChannel oldModeratorsOnlyChannel) {
         super(server);
         this.newModeratorsOnlyChannel = newModeratorsOnlyChannel;
         this.oldModeratorsOnlyChannel = oldModeratorsOnlyChannel;

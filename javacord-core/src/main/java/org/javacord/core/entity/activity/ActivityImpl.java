@@ -36,7 +36,7 @@ public class ActivityImpl implements Activity {
      * @param api The discord api instance.
      * @param data The json data of the activity.
      */
-    public ActivityImpl(DiscordApiImpl api, JsonNode data) {
+    public ActivityImpl(final DiscordApiImpl api, final JsonNode data) {
         this.type = ActivityType.getActivityTypeById(data.get("type").asInt());
         this.name = data.get("name").asText();
         this.streamingUrl = data.has("url") ? data.get("url").asText(null) : null;
@@ -46,7 +46,7 @@ public class ActivityImpl implements Activity {
         this.assets = data.has("assets") ? new ActivityAssetsImpl(this, data.get("assets")) : null;
         this.applicationId = data.has("application_id") ? data.get("application_id").asLong() : null;
         if (data.has("timestamps")) {
-            JsonNode timestamps = data.get("timestamps");
+            final JsonNode timestamps = data.get("timestamps");
             this.startTime = timestamps.has("start") ? timestamps.get("start").asLong() : null;
             this.endTime = timestamps.has("end") ? timestamps.get("end").asLong() : null;
         } else {
@@ -54,7 +54,7 @@ public class ActivityImpl implements Activity {
             this.endTime = null;
         }
         if (data.has("emoji")) {
-            JsonNode emoji = data.get("emoji");
+            final JsonNode emoji = data.get("emoji");
             if (emoji.has("id")) {
                 this.emoji = api.getKnownCustomEmojiOrCreateCustomEmoji(emoji);
             } else {
@@ -72,7 +72,7 @@ public class ActivityImpl implements Activity {
      * @param name The name of the activity.
      * @param streamingUrl The streamingUrl of the activity.
      */
-    public ActivityImpl(ActivityType type, String name, String streamingUrl) {
+    public ActivityImpl(final ActivityType type, final String name, final String streamingUrl) {
         this.type = type;
         this.name = name;
         this.streamingUrl = streamingUrl;
@@ -142,11 +142,11 @@ public class ActivityImpl implements Activity {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (!(obj instanceof ActivityImpl)) {
             return false;
         }
-        ActivityImpl otherActivity = (ActivityImpl) obj;
+        final ActivityImpl otherActivity = (ActivityImpl) obj;
         return Objects.deepEquals(type, otherActivity.type)
                 && Objects.deepEquals(name, otherActivity.name)
                 && Objects.deepEquals(streamingUrl, otherActivity.streamingUrl)
@@ -162,17 +162,17 @@ public class ActivityImpl implements Activity {
     @Override
     public int hashCode() {
         int hash = 42;
-        int typeHash = type.hashCode();
-        int nameHash = name == null ? 0 : name.hashCode();
-        int streamingUrlHash = streamingUrl == null ? 0 : streamingUrl.hashCode();
-        int detailsHash = details == null ? 0 : details.hashCode();
-        int stateHash = state == null ? 0 : state.hashCode();
-        int partyHash = party == null ? 0 : party.hashCode();
-        int assetsHash = assets == null ? 0 : assets.hashCode();
-        int applicationIdHash = applicationId == null ? 0 : applicationId.toString().hashCode();
-        int startTimeHash = startTime == null ? 0 : startTime.toString().hashCode();
-        int endTimeHash = endTime == null ? 0 : endTime.toString().hashCode();
-        int emojiHash = emoji == null ? 0 : emoji.hashCode();
+        final int typeHash = type.hashCode();
+        final int nameHash = name == null ? 0 : name.hashCode();
+        final int streamingUrlHash = streamingUrl == null ? 0 : streamingUrl.hashCode();
+        final int detailsHash = details == null ? 0 : details.hashCode();
+        final int stateHash = state == null ? 0 : state.hashCode();
+        final int partyHash = party == null ? 0 : party.hashCode();
+        final int assetsHash = assets == null ? 0 : assets.hashCode();
+        final int applicationIdHash = applicationId == null ? 0 : applicationId.toString().hashCode();
+        final int startTimeHash = startTime == null ? 0 : startTime.toString().hashCode();
+        final int endTimeHash = endTime == null ? 0 : endTime.toString().hashCode();
+        final int emojiHash = emoji == null ? 0 : emoji.hashCode();
 
         hash = hash * 11 + typeHash;
         hash = hash * 13 + nameHash;

@@ -31,7 +31,7 @@ public enum DiscordClient {
      *
      * @param name The name for the client, as it appears in the Discord REST-api.
      */
-    DiscordClient(String name) {
+    DiscordClient(final String name) {
         this.name = name;
     }
 

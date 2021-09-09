@@ -44,7 +44,7 @@ public final class MemberImpl implements Member {
      * @param user A user object in case the json does not contain user data (e.g., for message create events).
      *             If the json contains a non-null user field, this parameter is ignored.
      */
-    public MemberImpl(DiscordApiImpl api, ServerImpl server, JsonNode data, UserImpl user) {
+    public MemberImpl(final DiscordApiImpl api, final ServerImpl server, final JsonNode data, final UserImpl user) {
         this.api = api;
         this.server = server;
 
@@ -61,7 +61,7 @@ public final class MemberImpl implements Member {
         }
 
         roleIds = new ArrayList<>();
-        for (JsonNode roleIdJson : data.get("roles")) {
+        for (final JsonNode roleIdJson : data.get("roles")) {
             roleIds.add(roleIdJson.asLong());
         }
         roleIds.add(server.getEveryoneRole().getId());
@@ -91,9 +91,9 @@ public final class MemberImpl implements Member {
         }
     }
 
-    private MemberImpl(DiscordApiImpl api, ServerImpl server, UserImpl user, String nickname, List<Long> roleIds,
-                       String joinedAt, String serverBoostingSince, boolean selfDeafened,
-                       boolean selfMuted, boolean pending) {
+    private MemberImpl(final DiscordApiImpl api, final ServerImpl server, final UserImpl user, final String nickname, final List<Long> roleIds,
+                       final String joinedAt, final String serverBoostingSince, final boolean selfDeafened,
+                       final boolean selfMuted, final boolean pending) {
         this.api = api;
         this.server = server;
         this.user = user;
@@ -112,7 +112,7 @@ public final class MemberImpl implements Member {
      * @param user The new user.
      * @return The new member.
      */
-    public MemberImpl setUser(UserImpl user) {
+    public MemberImpl setUser(final UserImpl user) {
         return new MemberImpl(
                 api, server, user, nickname, roleIds, joinedAt, serverBoostingSince, selfDeafened, selfMuted, pending);
     }
@@ -123,7 +123,7 @@ public final class MemberImpl implements Member {
      * @param partialUserJson The new partial user data.
      * @return The new member.
      */
-    public MemberImpl setPartialUser(JsonNode partialUserJson) {
+    public MemberImpl setPartialUser(final JsonNode partialUserJson) {
         return new MemberImpl(api, server, user.replacePartialUserData(partialUserJson), nickname, roleIds, joinedAt,
                 serverBoostingSince, selfDeafened, selfMuted, pending);
     }
@@ -134,7 +134,7 @@ public final class MemberImpl implements Member {
      * @param roleIds The new role ids.
      * @return The new member.
      */
-    public MemberImpl setRoleIds(List<Long> roleIds) {
+    public MemberImpl setRoleIds(final List<Long> roleIds) {
         roleIds.add(server.getEveryoneRole().getId());
         return new MemberImpl(
                 api, server, user, nickname, roleIds, joinedAt, serverBoostingSince, selfDeafened, selfMuted, pending);
@@ -155,7 +155,7 @@ public final class MemberImpl implements Member {
      * @param nickname The new nickname.
      * @return The new member.
      */
-    public MemberImpl setNickname(String nickname) {
+    public MemberImpl setNickname(final String nickname) {
         return new MemberImpl(
                 api, server, user, nickname, roleIds, joinedAt, serverBoostingSince, selfDeafened, selfMuted, pending);
     }
@@ -166,7 +166,7 @@ public final class MemberImpl implements Member {
      * @param serverBoostingSince The new timestamp when the user started boosting the server.
      * @return The new member.
      */
-    public MemberImpl setServerBoostingSince(String serverBoostingSince) {
+    public MemberImpl setServerBoostingSince(final String serverBoostingSince) {
         return new MemberImpl(
                 api, server, user, nickname, roleIds, joinedAt, serverBoostingSince, selfDeafened, selfMuted, pending);
     }
@@ -216,7 +216,7 @@ public final class MemberImpl implements Member {
     }
 
     @Override
-    public boolean hasRole(Role role) {
+    public boolean hasRole(final Role role) {
         return roleIds.contains(role.getId());
     }
 

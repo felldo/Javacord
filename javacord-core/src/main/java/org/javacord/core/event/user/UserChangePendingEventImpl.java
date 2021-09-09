@@ -26,7 +26,7 @@ public class UserChangePendingEventImpl extends ServerUserEventImpl
      * @param oldMember The old member.
      * @param newMember The new member.
      */
-    public UserChangePendingEventImpl(Member oldMember, Member newMember) {
+    public UserChangePendingEventImpl(final Member oldMember, final Member newMember) {
         super(newMember.getUser(), newMember.getServer());
         this.oldPending = oldMember.isPending();
         this.newPending = newMember.isPending();

@@ -26,7 +26,7 @@ public class ServerChangeRegionEventImpl extends ServerEventImpl implements Serv
      * @param newRegion The new region of the server.
      * @param oldRegion The old region of the server.
      */
-    public ServerChangeRegionEventImpl(Server server, Region newRegion, Region oldRegion) {
+    public ServerChangeRegionEventImpl(final Server server, final Region newRegion, final Region oldRegion) {
         super(server);
         this.newRegion = newRegion;
         this.oldRegion = oldRegion;
