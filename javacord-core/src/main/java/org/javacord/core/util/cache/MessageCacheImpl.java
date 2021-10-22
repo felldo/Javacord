@@ -32,7 +32,7 @@ public class MessageCacheImpl implements MessageCache, Cleanupable {
 
 
     /**
-     * The logger of this class.
+     * The logger of this class. Added something erlse.
      */
     private static final Logger logger = LoggerUtil.getLogger(MessageCacheImpl.class);
 
