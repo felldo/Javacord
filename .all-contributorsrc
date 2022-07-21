@@ -18,7 +18,8 @@
         "code",
         "doc",
         "review",
-        "question"
+        "question",
+        "ideas"
       ]
     },
     {
@@ -94,7 +95,7 @@
     }
   ],
   "projectName": "Javacord",
-  "projectOwner": "Javacord",
+  "projectOwner": "KILLEliteMaste",
   "repoType": "github",
   "repoHost": "https://github.com"
 }
