@@ -49,6 +49,7 @@ import org.javacord.api.interaction.MessageContextMenu;
 import org.javacord.api.interaction.ServerApplicationCommandPermissions;
 import org.javacord.api.interaction.SlashCommand;
 import org.javacord.api.interaction.UserContextMenu;
+import org.javacord.api.listener.AttachableListener;
 import org.javacord.api.listener.GloballyAttachableListener;
 import org.javacord.api.listener.ObjectAttachableListener;
 import org.javacord.api.util.auth.Authenticator;
@@ -410,6 +411,12 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     private final Map<Class<?>, Map<Long, Map<Class<? extends ObjectAttachableListener>,
             Map<ObjectAttachableListener, ListenerManagerImpl<? extends ObjectAttachableListener>>>>>
             objectListeners = Collections.synchronizedMap(new ConcurrentHashMap<>());
+
+    /**
+     * A map containing all listener managers for each attached listener.
+     */
+    private final Map<AttachableListener, ListenerManager<? extends AttachableListener>> listenerManagerMap
+            = new ConcurrentHashMap<>();
 
     /**
      * Creates a new discord api instance that can be used for auto-ratelimited REST calls,
@@ -1246,8 +1253,12 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
                         .computeIfAbsent(objectClass, key -> new ConcurrentHashMap<>())
                         .computeIfAbsent(objectId, key -> new ConcurrentHashMap<>())
                         .computeIfAbsent(listenerClass, c -> Collections.synchronizedMap(new LinkedHashMap<>()));
-        return (ListenerManager<T>) listeners.computeIfAbsent(
+        ListenerManager<T> listenerManager = (ListenerManager<T>) listeners.computeIfAbsent(
                 listener, key -> new ListenerManagerImpl<>(this, listener, listenerClass, objectClass, objectId));
+
+        listenerManagerMap.put(listener, listenerManager);
+
+        return listenerManager;
     }
 
     /**
@@ -1286,6 +1297,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
                 return;
             }
             classListeners.remove(listener);
+            listenerManagerMap.remove(listener);
             listenerManager.removed();
             // Clean it up
             if (classListeners.isEmpty()) {
@@ -1320,6 +1332,8 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
             // Remove all listeners
             objects.computeIfPresent(objectId, (id, listeners) -> {
                 listeners.values().stream()
+                        .peek(objectAttachableListenerListenerManagerMap ->
+                                objectAttachableListenerListenerManagerMap.keySet().forEach(listenerManagerMap::remove))
                         .flatMap(map -> map.values().stream())
                         .forEach(ListenerManagerImpl::removed);
                 listeners.clear();
@@ -2182,9 +2196,13 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     @Override
     @SuppressWarnings("unchecked")
     public <T extends GloballyAttachableListener> ListenerManager<T> addListener(Class<T> listenerClass, T listener) {
-        return (ListenerManager<T>) listeners
+        ListenerManager<T> listenerManager = (ListenerManager<T>) listeners
                 .computeIfAbsent(listenerClass, key -> Collections.synchronizedMap(new LinkedHashMap<>()))
                 .computeIfAbsent(listener, key -> new ListenerManagerImpl<>(this, listener, listenerClass));
+
+        listenerManagerMap.put(listener, listenerManager);
+
+        return listenerManager;
     }
 
     @Override
@@ -2200,6 +2218,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
                 return;
             }
             classListeners.remove(listener);
+            listenerManagerMap.remove(listener);
             listenerManager.removed();
             // Clean it up
             if (classListeners.isEmpty()) {
@@ -2216,6 +2235,16 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
                 .filter(listenerClass -> listenerClass != GloballyAttachableListener.class)
                 .map(listenerClass -> (Class<GloballyAttachableListener>) listenerClass)
                 .forEach(listenerClass -> removeListener(listenerClass, listener));
+    }
+
+    /**
+     * Gets the listener manager for the given listener.
+     *
+     * @param listener The listener.
+     * @return The listener manager.
+     */
+    public ListenerManager<? extends AttachableListener> getListenerManager(AttachableListener listener) {
+        return listenerManagerMap.get(listener);
     }
 
     @Override

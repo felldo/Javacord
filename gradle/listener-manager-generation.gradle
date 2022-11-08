@@ -58,7 +58,8 @@ task generateListenerManagers {
         // collect the attachable listener interfaces
         def attachableInterfacesMap = javacordApi.sourceSets.main.allJava.matching {
             include 'org/javacord/api/listener/**/*AttachableListener.java'
-            exclude 'org/javacord/api/listener/**/ObjectAttachableListener.java'
+            exclude 'org/javacord/api/listener/**/ObjectAttachableListener.java',
+                    'org/javacord/api/listener/**/AttachableListener.java'
         }.collectMany {
             JavaParser.parse(it).findAll(ClassOrInterfaceDeclaration)*.resolve()
         }.collectEntries {

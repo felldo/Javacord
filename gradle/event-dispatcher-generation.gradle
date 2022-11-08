@@ -57,6 +57,7 @@ project(':javacord-core') {
                     .addImport(typeSolver.solveType('org.javacord.core.DiscordApiImpl').qualifiedName)
                     .addImport(typeSolver.solveType('org.javacord.core.util.event.EventDispatcherBase').qualifiedName)
                     .addImport('org.javacord.api.listener.message.MessageAttachableListenerManager')
+                    .addImport('org.javacord.core.event.EventImpl')
             def eventDispatcherClass = eventDispatcherFile
                     .addClass('EventDispatcher')
                     .addSingleMemberAnnotation(Generated, '"event-dispatcher-generation.gradle"')
@@ -258,7 +259,10 @@ project(':javacord-core') {
                             '\n@param event The event.'
                 }
                 [body, singletonBody, idBody]*.addStatement """
-                    dispatchEvent(queueSelector, listeners, listener -> listener.${listenerMethod.name}(event));
+                    dispatchEvent(queueSelector, listeners, listener -> {
+                    ((EventImpl) event).setListenerManager(getApi().getListenerManager(listener));
+                    listener.${listenerMethod.name}(event);
+                });
                 """
 
                 if (identicalMethods) {
