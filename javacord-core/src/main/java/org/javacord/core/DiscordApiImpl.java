@@ -415,8 +415,15 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     /**
      * A map containing all listener managers for each attached listener.
      */
-    private final Map<AttachableListener, ListenerManager<? extends AttachableListener>> listenerManagerMap
+    private final Map<GloballyAttachableListener, ListenerManager<? extends AttachableListener>> listenerManagerMap
             = new ConcurrentHashMap<>();
+
+    /**
+     * A map containing all listener managers for each object attached listener.
+     */
+    private final Map<Class<?>, Map<Long, Map<Class<? extends ObjectAttachableListener>,
+            Map<ObjectAttachableListener, ListenerManagerImpl<? extends ObjectAttachableListener>>>>>
+            objectListenerManagerMap = new ConcurrentHashMap<>();
 
     /**
      * Creates a new discord api instance that can be used for auto-ratelimited REST calls,
@@ -1253,10 +1260,15 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
                         .computeIfAbsent(objectClass, key -> new ConcurrentHashMap<>())
                         .computeIfAbsent(objectId, key -> new ConcurrentHashMap<>())
                         .computeIfAbsent(listenerClass, c -> Collections.synchronizedMap(new LinkedHashMap<>()));
-        ListenerManager<T> listenerManager = (ListenerManager<T>) listeners.computeIfAbsent(
+        ListenerManagerImpl<T> listenerManager = (ListenerManagerImpl<T>) listeners.computeIfAbsent(
                 listener, key -> new ListenerManagerImpl<>(this, listener, listenerClass, objectClass, objectId));
 
-        listenerManagerMap.put(listener, listenerManager);
+        Map<ObjectAttachableListener, ListenerManagerImpl<? extends ObjectAttachableListener>> objectListenerManager =
+                objectListenerManagerMap
+                .computeIfAbsent(objectClass, key -> new ConcurrentHashMap<>())
+                .computeIfAbsent(objectId, key -> new ConcurrentHashMap<>())
+                .computeIfAbsent(listenerClass, c -> new ConcurrentHashMap<>());
+        objectListenerManager.computeIfAbsent(listener, key -> listenerManager);
 
         return listenerManager;
     }
@@ -1273,6 +1285,7 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
     public <T extends ObjectAttachableListener> void removeObjectListener(
             Class<?> objectClass, long objectId, Class<T> listenerClass, T listener) {
         synchronized (objectListeners) {
+            System.out.println("DiscordApiImpl#removeObjectListener");
             if (objectClass == null) {
                 return;
             }
@@ -1297,7 +1310,6 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
                 return;
             }
             classListeners.remove(listener);
-            listenerManagerMap.remove(listener);
             listenerManager.removed();
             // Clean it up
             if (classListeners.isEmpty()) {
@@ -1306,6 +1318,40 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
                     objectListener.remove(objectId);
                     if (objectListener.isEmpty()) {
                         objectListeners.remove(objectClass);
+                    }
+                }
+            }
+
+            Map<Long, Map<Class<? extends ObjectAttachableListener>, Map<ObjectAttachableListener, ListenerManagerImpl<? extends ObjectAttachableListener>>>>
+                    objectListenerManager = objectListenerManagerMap.get(objectClass);
+            if (objectListenerManager == null) {
+                return;
+            }
+            Map<Class<? extends ObjectAttachableListener>, Map<ObjectAttachableListener,
+                    ListenerManagerImpl<? extends ObjectAttachableListener>>> listenersManager =
+                    objectListenerManager.get(objectId);
+            if (listenersManager == null) {
+                return;
+            }
+            Map<ObjectAttachableListener, ListenerManagerImpl<? extends ObjectAttachableListener>>
+                    classListenersManager =
+                    listenersManager.get(listenerClass);
+            if (classListenersManager == null) {
+                return;
+            }
+            ListenerManagerImpl<? extends ObjectAttachableListener> listenerManagerManager =
+                    classListenersManager.get(listener);
+            if (listenerManagerManager == null) {
+                return;
+            }
+
+            // Clean it up
+            if (classListenersManager.isEmpty()) {
+                listenersManager.remove(listenerClass);
+                if (listenersManager.isEmpty()) {
+                    objectListenerManager.remove(objectId);
+                    if (objectListenerManager.isEmpty()) {
+                        objectListenerManagerMap.remove(objectClass);
                     }
                 }
             }
@@ -2243,7 +2289,11 @@ public class DiscordApiImpl implements DiscordApi, DispatchQueueSelector {
      * @param listener The listener.
      * @return The listener manager.
      */
-    public ListenerManager<? extends AttachableListener> getListenerManager(AttachableListener listener) {
+    public ListenerManager<? extends AttachableListener> getListenerManager(GloballyAttachableListener listener) {
+        return listenerManagerMap.get(listener);
+    }
+
+    public ListenerManager<? extends AttachableListener> getObjectListenerManager(AttachableListener listener) {
         return listenerManagerMap.get(listener);
     }
 
