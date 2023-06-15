@@ -49,6 +49,7 @@ public class VoiceStateUpdateHandler extends PacketHandler {
 
     @Override
     public void handle(JsonNode packet) {
+        logger.debug("Received voice state update packet with content: {}", packet);
         if (!packet.hasNonNull("user_id")) {
             return;
         }

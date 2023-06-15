@@ -1,17 +1,21 @@
 package org.javacord.core.util.handler.guild;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.apache.logging.log4j.Logger;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.event.server.VoiceServerUpdateEvent;
 import org.javacord.core.audio.AudioConnectionImpl;
 import org.javacord.core.event.server.VoiceServerUpdateEventImpl;
 import org.javacord.core.util.event.DispatchQueueSelector;
 import org.javacord.core.util.gateway.PacketHandler;
+import org.javacord.core.util.logging.LoggerUtil;
 
 /**
  * Handles the voice server update packet.
  */
 public class VoiceServerUpdateHandler extends PacketHandler {
+
+    private static final Logger logger = LoggerUtil.getLogger(VoiceServerUpdateHandler.class);
 
     /**
      * Creates a new instance of this class.
@@ -24,6 +28,7 @@ public class VoiceServerUpdateHandler extends PacketHandler {
 
     @Override
     public void handle(JsonNode packet) {
+        logger.debug("Received voice server update packet with content: {}", packet);
         String token = packet.get("token").asText();
         String endpoint = packet.get("endpoint").asText();
         long serverId = packet.get("guild_id").asLong();

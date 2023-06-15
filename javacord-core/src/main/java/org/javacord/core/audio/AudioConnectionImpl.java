@@ -118,6 +118,7 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
      */
     public AudioConnectionImpl(ServerVoiceChannel channel, CompletableFuture<AudioConnection> readyFuture,
                                boolean muted, boolean deafened) {
+        logger.debug("Creating audio connection in channel {}", channel);
         this.channel = channel;
         this.readyFuture = readyFuture;
         id = idCounter.getAndIncrement();
@@ -273,6 +274,7 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
      * @return Whether it will try to connect or not.
      */
     public synchronized boolean tryConnect() {
+        logger.debug("tryConnect audio connection {}", toString());
         if (movingFuture != null && !movingFuture.isDone()) {
             movingFuture.complete(null);
             return true;
@@ -291,6 +293,7 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
      * Performs a full reconnect of the audio connection by sending a new voice state update.
      */
     public void reconnect() {
+        logger.debug("Reconnecting audio connection {}", toString());
         websocketAdapter = null;
         sessionId = null;
         token = null;
@@ -340,6 +343,7 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
 
     @Override
     public CompletableFuture<Void> moveTo(ServerVoiceChannel destChannel, boolean selfMute, boolean selfDeafen) {
+        logger.debug("Moving audio connection {} to {}", toString(), destChannel);
         movingFuture = new CompletableFuture<>();
         if (!destChannel.getServer().equals(getChannel().getServer())) {
             movingFuture.completeExceptionally(
@@ -357,6 +361,7 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
 
     @Override
     public CompletableFuture<Void> close() {
+        logger.debug("Closing audio connection {}", toString());
         disconnectFuture = new CompletableFuture<>();
         websocketAdapter.disconnect();
         api.getWebSocketAdapter()
@@ -367,6 +372,7 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
 
     @Override
     public Optional<AudioSource> getAudioSource() {
+        logger.debug("Getting audio source for audio connection {}", toString());
         try {
             return Optional.ofNullable(currentSource.get(0, TimeUnit.MILLISECONDS));
         } catch (InterruptedException e) {

@@ -70,6 +70,7 @@ public class AudioWebSocketAdapter extends WebSocketAdapter {
      * @param connection The connection for the adapter.
      */
     public AudioWebSocketAdapter(AudioConnectionImpl connection) {
+        logger.debug("Creating new audio websocket adapter for {}", connection);
         this.connection = connection;
         reconnect = true;
         api = (DiscordApiImpl) connection.getChannel().getApi();
@@ -119,6 +120,7 @@ public class AudioWebSocketAdapter extends WebSocketAdapter {
                 Thread.sleep(1000);
                 break;
             case SESSION_DESCRIPTION:
+                logger.debug("Received {} packet for {}", opcode.get().name(), connection);
                 sendSpeaking(websocket);
 
                 data = packet.get("d");
@@ -129,14 +131,18 @@ public class AudioWebSocketAdapter extends WebSocketAdapter {
                 connection.getReadyFuture().complete(connection);
                 break;
             case HEARTBEAT_ACK:
+                logger.trace("Received {} packet for {}", opcode.get().name(), connection);
                 // Handled in the heart
                 break;
             case RESUMED:
+                logger.debug("Received {} packet for {}", opcode.get().name(), connection);
                 resuming = false;
                 reconnectAttempt.set(0);
                 logger.info("Successfully resumed audio websocket connection for {}", connection);
                 break;
             default:
+                logger.debug("Received unknown audio websocket packet ({}, op: {}, content: {})",
+                        connection, op, packet);
                 break;
         }
     }
@@ -156,7 +162,9 @@ public class AudioWebSocketAdapter extends WebSocketAdapter {
 
     @Override
     public void onConnected(WebSocket websocket, Map<String, List<String>> headers) {
+        logger.info("Connected audio websocket for {}", connection);
         if (resuming) {
+            logger.debug("Resuming audio websocket connection for {}", connection);
             sendResume(websocket);
             socket.startSending();
         }
@@ -165,6 +173,7 @@ public class AudioWebSocketAdapter extends WebSocketAdapter {
     @Override
     public void onDisconnected(WebSocket websocket, WebSocketFrame serverCloseFrame,
                                WebSocketFrame clientCloseFrame, boolean closedByServer) {
+        logger.debug("Disconnected audio websocket for {}", connection);
 
         Optional<WebSocketFrame> closeFrameOptional =
                 Optional.ofNullable(closedByServer ? serverCloseFrame : clientCloseFrame);
@@ -201,10 +210,12 @@ public class AudioWebSocketAdapter extends WebSocketAdapter {
         switch (closeCode) {
             case AUTHENTICATION_FAILED:
             case SERVER_NOT_FOUND:
+                logger.debug("Closing audio websocket for {}", connection);
                 connection.close();
                 break;
             case SESSION_NO_LONGER_VALID:
             case DISCONNECTED:
+                logger.debug("Closing audio websocket for {}", connection);
                 if (!connection.getReadyFuture().isDone()) {
                     connection.getReadyFuture().completeExceptionally(
                             new IllegalStateException(
@@ -230,6 +241,7 @@ public class AudioWebSocketAdapter extends WebSocketAdapter {
             case UNKNOWN_PROTOCOL:
             case UNKNOWN_ENCRYPTION_MODE:
             case VOICE_SERVER_CRASHED:
+                logger.debug("Trying to resume audio websocket for {}", connection);
                 resuming = true;
                 logger.info("Trying to resume audio websocket in {} seconds!",
                         api.getReconnectDelay(reconnectAttempt.get()));
@@ -237,6 +249,7 @@ public class AudioWebSocketAdapter extends WebSocketAdapter {
                         .schedule(this::connect, api.getReconnectDelay(reconnectAttempt.get()), TimeUnit.SECONDS);
                 break;
             case NORMAL:
+                logger.debug("NORMAL Closing audio websocket for {}", connection);
                 if (!closedByServer && connection.getDisconnectFuture() != null) {
                     connection.getDisconnectFuture().complete(null);
                 } else {
@@ -244,6 +257,7 @@ public class AudioWebSocketAdapter extends WebSocketAdapter {
                 }
                 break;
             default:
+                logger.debug("DEFAULT Closing audio websocket for {}", connection);
                 reconnect();
                 break;
         }
@@ -301,6 +315,7 @@ public class AudioWebSocketAdapter extends WebSocketAdapter {
      * Disconnects from the websocket.
      */
     public void disconnect() {
+        logger.debug("Disconnecting audio websocket for {}", connection);
         reconnect = false;
         socket.stopSending();
         websocket.get().sendClose(WebSocketCloseReason.DISCONNECT.getNumericCloseCode());
