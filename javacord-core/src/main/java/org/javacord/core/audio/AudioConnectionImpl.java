@@ -274,7 +274,8 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
      * @return Whether it will try to connect or not.
      */
     public synchronized boolean tryConnect() {
-        logger.debug("tryConnect audio connection {}", toString());
+        logger.debug("tryConnect audio connection {} {} {} {} {}", toString(),
+                connectingOrConnected, sessionId, token, endpoint);
         if (movingFuture != null && !movingFuture.isDone()) {
             movingFuture.complete(null);
             return true;
@@ -294,13 +295,16 @@ public class AudioConnectionImpl implements AudioConnection, InternalAudioConnec
      */
     public void reconnect() {
         logger.debug("Reconnecting audio connection {}", toString());
-        websocketAdapter = null;
-        sessionId = null;
-        token = null;
-        endpoint = null;
-        connectingOrConnected = false;
-        api.getWebSocketAdapter()
-                .sendVoiceStateUpdate(getChannel().getServer(), getChannel(), isSelfMuted(), isSelfDeafened());
+        close().thenRun(() -> {
+            channel.connect();
+        });
+        //sessionId = null;
+        //token = null;
+        //endpoint = null;
+        //connectingOrConnected = false;
+        //channel.disconnect()
+        //api.getWebSocketAdapter()
+        // .sendVoiceStateUpdate(getChannel().getServer(), getChannel(), isSelfMuted(), isSelfDeafened());
     }
 
     /**
